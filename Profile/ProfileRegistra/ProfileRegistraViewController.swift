@@ -10,7 +10,7 @@ import UIKit
 import AFNetworking
 import Alamofire
 
-class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
+class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate{
     
     //property
     var password:String!
@@ -48,6 +48,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     var hobby:UITextField!
     
     var statusDetail:UITextView!
+    var placeHolder:UILabel!
     
     var innerBar:GTSlider!
     var innerValue:UILabel!
@@ -84,12 +85,18 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         scrollView!.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT*1.3+30)
         scrollView!.bounces = false
         
-        // init buttons
+        
         let button = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,43))
         button.setTitle("完成", forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(15)
         button.addTarget(self, action: "toRadarPage", forControlEvents: .TouchUpInside)
         
+        let backBtn = UIButton(frame: CGRectMake(0,20,80,43))
+        backBtn.setTitle("返回", forState: .Normal)
+        backBtn.titleLabel?.font = UIFont.systemFontOfSize(15)
+        backBtn.addTarget(self, action: "viewBack", forControlEvents: .TouchUpInside)
+        
+        // init buttons
         buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 70, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar_140", targetAction: "toImagePicker")
         let marginX:CGFloat = 35
         
@@ -137,7 +144,8 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         hobby = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*8/12+40, lineLength, 20))
         hobby.textColor = UIColor.whiteColor()
         hobby.font = UIFont(name: FONTNAME_NORMAL, size: 15)
-        hobby.text = "e.g. Music"
+        hobby.placeholder = "e.g. Music"
+        hobby.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
         let hobbyLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(hobby.frame)+2, lineLength, 1))
         hobbyLine.backgroundColor = UIColor.whiteColor()
         let moreDetailLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*9/12, labelWidth: 200, labelHeight: 100, labelText: "More Details")
@@ -147,7 +155,12 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         statusDetail.textColor = UIColor.whiteColor()
         statusDetail.bounces = false
         statusDetail.font = UIFont.systemFontOfSize(15)
-        statusDetail.text = "There is so much to.."
+        statusDetail.delegate = self
+        placeHolder = UILabel(frame: CGRectMake(5, 5, lineLength-5, 20))
+        placeHolder.text = "There is so much to.."
+        placeHolder.textColor = WHITEGRAY_COLOR
+        placeHolder.font = UIFont.systemFontOfSize(15)
+        self.statusDetail.addSubview(placeHolder)
         
         let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: 200, labelHeight: 100, labelText: "Inner")
         innerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
@@ -209,10 +222,19 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         self.scrollView!.addSubview(energyBar)
         self.scrollView!.addSubview(energyValue)
         self.view.addSubview(button)
+        self.view.addSubview(backBtn)
         self.view.addSubview(self.scrollView!)
         
         /*----------- ELCImagePicker Edition -----------*/
         
+    }
+    //textviewdelegate
+    func textViewDidChange(textView: UITextView) {
+        if(textView.text.isEmpty){
+            placeHolder.hidden = false
+        }else{
+            placeHolder.hidden = true
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -314,7 +336,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let resultLabel = UILabel(frame: CGRectMake(posX, posY, labelWidth, labelHeight))
         resultLabel.text = labelText
         resultLabel.font = UIFont(name: FONTNAME_BOLD, size: 16)
-        resultLabel.textColor = UIColor(red: 255.0/255.0, green: 90.0/255.0, blue: 85.0/255.0, alpha: 1.0) //ff5a55
+        resultLabel.textColor = ORANGE_COLOR
         resultLabel.numberOfLines = 1;
         return resultLabel
     }
@@ -330,6 +352,10 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         // Dispose of any resources that can be recreated.
     }
     
+    func viewBack(){
+        self.dismissViewControllerAnimated(true) { () -> Void in
+        }
+    }
     
     func toRadarPage(){
         let manager = AFHTTPRequestOperationManager()
@@ -419,7 +445,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             })
         }
     }
-    
     
     // MARK: Entering the image picker
     func toImagePicker(){

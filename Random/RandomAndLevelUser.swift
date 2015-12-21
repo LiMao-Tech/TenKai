@@ -8,6 +8,6 @@
 
 import UIKit
 
-class RandomAndLevelUser: BaseUser {
+class RandomAndLevelUser: TenUser {
     var distance = 0
 }

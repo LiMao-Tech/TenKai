@@ -80,31 +80,20 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         emailTF.backgroundColor = UIColor.blackColor()
         emailTF.delegate = self
         emailTF.returnKeyType = .Done
+        emailTF.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
         
         passwordTF.textColor = UIColor.whiteColor()
         passwordTF.backgroundColor = UIColor.blackColor()
         passwordTF.delegate = self
         passwordTF.returnKeyType = .Done
+        passwordTF.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
+        
     }
     
     func doneClicked(){
         self.view.endEditing(true)
     }
 
-    
-//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//        let trans = textField.frame.origin.y - 300
-//        if(trans<0){
-//            self.view.transform = CGAffineTransformMakeTranslation(0, trans)
-//        }
-//        return true
-//    }
-//    
-//    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-//        self.view.transform = CGAffineTransformMakeTranslation(0, 0)
-//        return true
-//    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
@@ -121,17 +110,31 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     }
     
     func login() {
+        let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (action) -> Void in
+        })
+        if self.passwordTF.text!.isEmpty || emailTF.text!.isEmpty {
+            let emptyAlertController = UIAlertController(title: "请输入邮箱和密码。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            self.presentViewController(emptyAlertController, animated: true, completion: nil)
+            emptyAlertController.addAction(cancelAction)
+        }
+        if !isValidEmail(emailTF.text!) {
+            let invalidEmailAlertController = UIAlertController(title: "请输入正确的邮箱。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            self.presentViewController(invalidEmailAlertController, animated: true, completion: nil)
+            invalidEmailAlertController.addAction(cancelAction)
+            return
+        }
+
         let afManager = AFHTTPRequestOperationManager()
         let timeStamp = Tools.getNormalTime(NSDate())
         
-        let stringHash = "281340731@qq.com123456\(timeStamp)\(UUID)\(DEVICE_TOKEN!)\(COMPANYCODE)"
-        let stringHashPrint = "281340731@qq.com|123456|\(timeStamp)|\(UUID)|\(DEVICE_TOKEN!)|\(COMPANYCODE)"
+        let stringHash = "\(emailTF.text!)\(passwordTF.text!)\(timeStamp)\(UUID)\(DEVICE_TOKEN!)\(COMPANYCODE)"
+//        let stringHashPrint = "\(emailTF.text!)|\(passwordTF.text!)|\(timeStamp)|\(UUID)|\(DEVICE_TOKEN!)|\(COMPANYCODE)"
         let hashResult = stringHash.sha256()
         
-        print(stringHashPrint)
-        print("hashresult"+hashResult)
+//        print(stringHashPrint)
+//        print("hashresult"+hashResult)
         
-        let url:NSString = LoginUrl+"?userID=281340731@qq.com&userPWD=123456&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
+        let url:NSString = LoginUrl+"?userID=\(emailTF.text!)&userPWD=\(passwordTF.text!)&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
         let urlNew = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         
         
@@ -141,23 +144,31 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         afManager.GET(urlNew!,
             parameters: nil,
             success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
-                print(responseObject)
-                
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    
+                let dict = responseObject as! NSDictionary
+                print(dict)
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
                     self.presentViewController(nVC, animated: true, completion: { () -> Void in
                     })
-                    
                 })
-                
             },
             failure: { (operation,error) in
                 print("Error: " + error.localizedDescription)
                 let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData
-                print(NSString(data: data, encoding: NSUTF8StringEncoding))
+//                let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                let dict = try! NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+                print(dict)
                 
+//                if(responseCode == 4000){
+//                    let AlertController = UIAlertController(title: "用户名不存在", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+//                    self.presentViewController(AlertController, animated: true, completion: nil)
+//                    AlertController.addAction(cancelAction)
+//                }else if(responseCode == 4003){
+//                    let AlertController = UIAlertController(title: "密码错误", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+//                    self.presentViewController(AlertController, animated: true, completion: nil)
+//                    AlertController.addAction(cancelAction)
+//                }
         })
     }
 

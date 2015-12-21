@@ -239,7 +239,7 @@ class EditProfileController: UIViewController,UIAlertViewDelegate,UINavigationCo
         let resultLabel = UILabel(frame: CGRectMake(posX, posY, labelWidth, labelHeight))
         resultLabel.text = labelText
         resultLabel.font = UIFont(name: FONTNAME_BOLD, size: 16)
-        resultLabel.textColor = UIColor(red: 255.0/255.0, green: 90.0/255.0, blue: 85.0/255.0, alpha: 1.0) //ff5a55
+        resultLabel.textColor = ORANGE_COLOR
         resultLabel.numberOfLines = 1;
         return resultLabel
     }

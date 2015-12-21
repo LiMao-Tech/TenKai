@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        //textfieldColor
+        
+        UITextField.appearance().tintColor = ORANGE_COLOR
         print(UUID)
         
         //----------------- remote notification started ----------------------//

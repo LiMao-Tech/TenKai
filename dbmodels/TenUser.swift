@@ -31,6 +31,8 @@ class TenUser: NSObject {
     var Lati : Double = -1
     var Longi : Double = -1
     var ProfileUrl = ""
+    var Average = 0
+    var Portrait = NSData()
 
     
 //    init(userName : String, gender : Int8, birthday : NSDate, joinedDate : NSDate,
@@ -44,6 +46,11 @@ class TenUser: NSObject {
 //            self.InnerScore = innerScore
 //            self.Energy = energy
 //    }
+    
+    override init() {
+        super.init()
+    }
+    
     init(loginDict:[String : AnyObject]) {
         super.init()
         self.initWithDict(loginDict)
