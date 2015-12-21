@@ -291,14 +291,14 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         // upload using POST:
         // TODO: error on AFNetworking connect with background
         
-        let manager = AFHTTPRequestOperationManager()
+        let afManager = AFHTTPRequestOperationManager()
         let parameters = ["id":"1","latitude" : lati,"longitude" : longi]
         
-        manager.requestSerializer = AFJSONRequestSerializer()
-        manager.responseSerializer = AFHTTPResponseSerializer()
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFHTTPResponseSerializer()
         //manager.responseSerializer.acceptableContentTypes =
         
-        manager.POST( UpdateLocationByIdURL,
+        afManager.POST(UpdateLocationByIdURL,
             parameters: parameters,
             success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
                 print("the respond object is: ")
@@ -314,5 +314,4 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         })
         
     }
-    
 }

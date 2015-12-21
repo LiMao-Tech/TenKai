@@ -55,10 +55,6 @@
 		D4EA5C2C1C13F669009E9927 /* PCoinUnlockedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */; };
 		D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */; };
 		D4EA5C2E1C13F669009E9927 /* PCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C271C13F669009E9927 /* PCoinViewController.swift */; };
-		D4EA5C361C14037B009E9927 /* LoginPinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C301C14037B009E9927 /* LoginPinController.swift */; };
-		D4EA5C371C14037B009E9927 /* LoginPinController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C311C14037B009E9927 /* LoginPinController.xib */; };
-		D4EA5C381C14037B009E9927 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C321C14037B009E9927 /* SignUpController.swift */; };
-		D4EA5C391C14037B009E9927 /* SignUpController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C331C14037B009E9927 /* SignUpController.xib */; };
 		D4EA5C3A1C14037B009E9927 /* WelcomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C341C14037B009E9927 /* WelcomeController.swift */; };
 		D4EA5C3B1C14037B009E9927 /* WelcomeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C351C14037B009E9927 /* WelcomeController.xib */; };
 		D4EA5C481C140BD8009E9927 /* ProfilePicsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C471C140BD8009E9927 /* ProfilePicsCollectionViewController.m */; };
@@ -314,9 +310,6 @@
 		640F3BE01C0C898700B31DA0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		640F3BE11C0C898700B31DA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		640F3BEF1C0CAED000B31DA0 /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
-		640F3BF21C0CAED000B31DA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		640F3BF41C0CAED000B31DA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
 		649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
@@ -365,10 +358,6 @@
 		D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinUnlockedCell.swift; sourceTree = "<group>"; };
 		D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinUnlockedModel.swift; sourceTree = "<group>"; };
 		D4EA5C271C13F669009E9927 /* PCoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinViewController.swift; sourceTree = "<group>"; };
-		D4EA5C301C14037B009E9927 /* LoginPinController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPinController.swift; sourceTree = "<group>"; };
-		D4EA5C311C14037B009E9927 /* LoginPinController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginPinController.xib; sourceTree = "<group>"; };
-		D4EA5C321C14037B009E9927 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
-		D4EA5C331C14037B009E9927 /* SignUpController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpController.xib; sourceTree = "<group>"; };
 		D4EA5C341C14037B009E9927 /* WelcomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeController.swift; sourceTree = "<group>"; };
 		D4EA5C351C14037B009E9927 /* WelcomeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeController.xib; sourceTree = "<group>"; };
 		D4EA5C461C140BD8009E9927 /* ProfilePicsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePicsCollectionViewController.h; sourceTree = "<group>"; };
@@ -621,13 +610,6 @@
 			name = LocationManager;
 			sourceTree = "<group>";
 		};
-		3B1F0A47EA5C6849B746868C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		640F3BD61C0C898700B31DA0 /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,16 +626,6 @@
 				640F3BE11C0C898700B31DA0 /* FMResultSet.m */,
 			);
 			path = fmdb;
-			sourceTree = "<group>";
-		};
-		640F3BEE1C0CAED000B31DA0 /* TimeTransformExtension */ = {
-			isa = PBXGroup;
-			children = (
-				640F3BEF1C0CAED000B31DA0 /* ActionViewController.swift */,
-				640F3BF11C0CAED000B31DA0 /* MainInterface.storyboard */,
-				640F3BF41C0CAED000B31DA0 /* Info.plist */,
-			);
-			path = TimeTransformExtension;
 			sourceTree = "<group>";
 		};
 		643F9C751BF6DCC300361C55 /* Other */ = {
@@ -698,9 +670,7 @@
 				640F3BD61C0C898700B31DA0 /* fmdb */,
 				D4EA5BD21C13E787009E9927 /* ADCircularMenu */,
 				C4CED31E1B88FB010008BCF2 /* TenTests */,
-				640F3BEE1C0CAED000B31DA0 /* TimeTransformExtension */,
 				C4CED3071B88FB010008BCF2 /* Products */,
-				3B1F0A47EA5C6849B746868C /* Pods */,
 				1255ABBAF454983E8551DED4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -869,10 +839,6 @@
 		D4EA5C2F1C14037B009E9927 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				D4EA5C301C14037B009E9927 /* LoginPinController.swift */,
-				D4EA5C311C14037B009E9927 /* LoginPinController.xib */,
-				D4EA5C321C14037B009E9927 /* SignUpController.swift */,
-				D4EA5C331C14037B009E9927 /* SignUpController.xib */,
 				D4EA5C341C14037B009E9927 /* WelcomeController.swift */,
 				D4EA5C351C14037B009E9927 /* WelcomeController.xib */,
 			);
@@ -1284,7 +1250,6 @@
 				D4EA5D4C1C14252B009E9927 /* 005.png in Resources */,
 				D4EA5D471C14252B009E9927 /* 002@2x.png in Resources */,
 				D4EA5DE11C14252B009E9927 /* 079@2x.png in Resources */,
-				D4EA5C391C14037B009E9927 /* SignUpController.xib in Resources */,
 				D4EA5D941C14252B009E9927 /* 041.png in Resources */,
 				D4EA5D961C14252B009E9927 /* 042.png in Resources */,
 				D4EA5D831C14252B009E9927 /* 032@2x.png in Resources */,
@@ -1382,7 +1347,6 @@
 				D4EA5D7D1C14252B009E9927 /* 029@2x.png in Resources */,
 				D4EA5DAB1C14252B009E9927 /* 052@2x.png in Resources */,
 				D4EA5DD01C14252B009E9927 /* 071.png in Resources */,
-				D4EA5C371C14037B009E9927 /* LoginPinController.xib in Resources */,
 				D4EA5D9E1C14252B009E9927 /* 046.png in Resources */,
 				D4EA5D641C14252B009E9927 /* 017.png in Resources */,
 				D4EA5D851C14252B009E9927 /* 033@2x.png in Resources */,
@@ -1552,9 +1516,7 @@
 				D4EA5BF51C13EA12009E9927 /* DKAssetGroupDetailVC.swift in Sources */,
 				D4EA5C761C142452009E9927 /* UserCell.swift in Sources */,
 				D4EA5C941C1424C6009E9927 /* RandomAndLevelUser.swift in Sources */,
-				D4EA5C361C14037B009E9927 /* LoginPinController.swift in Sources */,
 				D4EA5C7C1C142471009E9927 /* Helpers.swift in Sources */,
-				D4EA5C381C14037B009E9927 /* SignUpController.swift in Sources */,
 				D4EA5C851C1424A1009E9927 /* GTSlider.swift in Sources */,
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,
 				D4EA5DF11C1426C6009E9927 /* BaseUser.swift in Sources */,
@@ -1600,14 +1562,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		640F3BF11C0CAED000B31DA0 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				640F3BF21C0CAED000B31DA0 /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
 		C4CED30F1B88FB010008BCF2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

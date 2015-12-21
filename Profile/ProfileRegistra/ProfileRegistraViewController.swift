@@ -11,6 +11,7 @@ import AFNetworking
 import Alamofire
 
 class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
+    
     //property
     var password:String!
     var email:String!
@@ -18,14 +19,16 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     var tenUser:TenUser!
     var gender:Int?
     var marriage:Int?
-    // Image Picker Variables //
+    
+    // Image Picker Variables
     var chosenImage : UIImage?
     var imageUrl : String?
     var counter : Int?
+    
     //var ELCpicker : ELCImagePickerController? = ELCImagePickerController()
     var picker : UIImagePickerController? = UIImagePickerController()
     
-    // scrollView Variables //
+    // scrollView Variables
     var scrollView: UIScrollView!
     
     var username:UITextField!
@@ -86,25 +89,32 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         button.setTitle("完成", forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(15)
         button.addTarget(self, action: "toRadarPage", forControlEvents: .TouchUpInside)
+        
         buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 70, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar_140", targetAction: "toImagePicker")
         let marginX:CGFloat = 35
+        
         // init labels
         let basicInfoLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*2/12, labelWidth: 100, labelHeight: 100, labelText: "Basic Info")
         let userNameLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*3/12, labelWidth: 100, labelHeight: 100, labelText: "Username")
         let textX = CGRectGetMaxX(userNameLabel.frame) + 20
+        
         username = UITextField(frame: CGRectMake(textX,SCREEN_HEIGHT*3/12+40, lineLength, 20))
         username.textColor = UIColor.whiteColor()
         username.font = UIFont(name: FONTNAME_NORMAL, size: 15)
+        
         let userLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(username.frame)+2, lineLength, 1))
         userLine.backgroundColor = UIColor.whiteColor()
+        
         let dateOfBirthLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*4/12, labelWidth: 100, labelHeight: 100, labelText: "Date of Birth*")
         birthData = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*4/12+40, lineLength, 20))
         birthData.textColor = UIColor.whiteColor()
         birthData.font = UIFont(name: FONTNAME_NORMAL, size: 15)
+        
         let picker = UIDatePicker()
         picker.datePickerMode = .Date
         picker.addTarget(self, action: "dataDidChange:", forControlEvents: .ValueChanged)
         birthData.inputView = picker
+        
         let accessoryView = UIToolbar(frame: CGRectMake(0, 0, SCREEN_WIDTH, 35))
         let doneBtn = UIBarButtonItem(title: "完成", style: .Done, target: self, action: "doneClicked")
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
@@ -147,6 +157,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         innerValue = UILabel(frame: CGRectMake(CGRectGetMaxX(innerBar.frame)+10, SCREEN_HEIGHT*12/12+40, 20, 20))
         innerValue.text = "0"
         innerValue.textColor = UIColor.whiteColor()
+        
         let OuterLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*13/12, labelWidth: 200, labelHeight: 100, labelText: "Outer")
         outerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*13/12+40, lineLength-30, 20))
         outerBar.minimumValue = 0
@@ -155,6 +166,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         outerValue = UILabel(frame: CGRectMake(CGRectGetMaxX(outerBar.frame)+10, SCREEN_HEIGHT*13/12+40, 20, 20))
         outerValue.text = "0"
         outerValue.textColor = UIColor.whiteColor()
+        
         let EnergyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*14/12, labelWidth: 200, labelHeight: 100, labelText: "Energy")
         energyBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*14/12+40, lineLength-30, 20))
         energyBar.minimumValue = 0
@@ -163,11 +175,8 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         energyValue = UILabel(frame: CGRectMake(CGRectGetMaxX(energyBar.frame)+10, SCREEN_HEIGHT*14/12+40, 20, 20))
         energyValue.text = "0"
         energyValue.textColor = UIColor.whiteColor()
-        
-        
-        self.view.addSubview(button)
+
         self.scrollView!.addSubview(buttonProfile!)
-        
         self.scrollView!.addSubview(basicInfoLabel)
         self.scrollView!.addSubview(userNameLabel)
         self.scrollView!.addSubview(dateOfBirthLabel)
@@ -199,16 +208,10 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         self.scrollView!.addSubview(outerValue)
         self.scrollView!.addSubview(energyBar)
         self.scrollView!.addSubview(energyValue)
-        
+        self.view.addSubview(button)
         self.view.addSubview(self.scrollView!)
         
-        //self.scrollView.
-        
-        // Do any additional setup after loading the view.
-        
         /*----------- ELCImagePicker Edition -----------*/
-        
-        
         
     }
     
@@ -334,9 +337,9 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let format = NSDateFormatter()
         format.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let timeStamp = format.stringFromDate(time)
-        let stringHash = "\(email)\(password)\(UUID)\(timeStamp)\(DEVICETOKEN!)\(COMPANYCODE)"
+        let stringHash = "\(email)\(password)\(UUID)\(timeStamp)\(DEVICE_TOKEN!)\(COMPANYCODE)"
         let hashResult = stringHash.sha256()
-        let params = ["UserID":email,"UserPWD":password,"DeviceUUID":UUID,"lastLogin":timeStamp,"DeviceToken":DEVICETOKEN!,"HashValue":hashResult]
+        let params = ["UserID":email,"UserPWD":password,"DeviceUUID":UUID,"lastLogin":timeStamp,"DeviceToken":DEVICE_TOKEN!,"HashValue":hashResult]
         manager.requestSerializer = AFJSONRequestSerializer()
         manager.responseSerializer = AFJSONResponseSerializer()
         
@@ -357,7 +360,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
                 print(NSString(data: data, encoding: NSUTF8StringEncoding))
                 
         })
-
     }
     func postUsers(){
         let manager = AFHTTPRequestOperationManager()
@@ -387,9 +389,11 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let manager = AFHTTPRequestOperationManager()
         manager.requestSerializer = AFHTTPRequestSerializer()
         manager.responseSerializer = AFHTTPResponseSerializer()
+        
         let image = UIImageJPEGRepresentation(chosenImage!, 0.5)
         let picName = Tools.getFileNameTime(NSDate())+".jpeg"
         let params = ["id":tenUser.UserIndex]
+        
         manager.POST(HeadImageUrl, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) -> Void in
             data.appendPartWithFileData(image!, name: "upload", fileName: picName, mimeType: "image/jpeg")
             }, success: { (operation, responseObject) -> Void in
@@ -415,6 +419,8 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             })
         }
     }
+    
+    
     // MARK: Entering the image picker
     func toImagePicker(){
         //
@@ -466,7 +472,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         {
             picker!.sourceType = UIImagePickerControllerSourceType.Camera
             self.presentViewController(picker!, animated: true, completion: nil)
-            
         }
         else
         {
@@ -488,8 +493,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         }
     }
     
-    
-    
+
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         // TODO: add image into profile

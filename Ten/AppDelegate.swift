@@ -12,8 +12,7 @@ import PureLayout
 import CoreLocation
 import Foundation
 
-
-var DEVICETOKEN: AnyObject? = 0
+var DEVICE_TOKEN : String?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
@@ -51,9 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         default: return true
         }
         // ---------------------------- END for remote notification -----------------------------//
-
-        
-        NSThread.sleepForTimeInterval(1.0)
         
         // Shake to open tweaks menu
         if let rootViewController = window?.rootViewController {
@@ -81,17 +77,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-            print(deviceToken)
-            print("token:")
-            let trimEnds = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
-            let cleanToken = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
-//            NSUserDefaults.standardUserDefaults().setObject(cleanToken, forKey: "deviceToken")
-        DEVICETOKEN = cleanToken
-            print(cleanToken)
-            // TODO: save this cleanToken into server and to default user data
+        let trimEnds = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
+        DEVICE_TOKEN = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
+        print("Token: \(DEVICE_TOKEN!)")
+        
+        // TODO: save this cleanToken into server and to default user data
 
-//        DEVICETOKEN = NSUserDefaults.standardUserDefaults().objectForKey("deviceToken")
-        print("DEVICETOKEN:\(NSUserDefaults.standardUserDefaults().objectForKey("deviceToken"))")
     }
     
     // Failed to register for Push

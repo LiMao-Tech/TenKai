@@ -7,57 +7,84 @@
 //
 
 import UIKit
+import AFNetworking
+import CryptoSwift
 
 class WelcomeController: UIViewController,UITextFieldDelegate {
     
-    @IBOutlet weak var loginEmail: UITextField!
-    @IBOutlet weak var signupEmail: UITextField!
+    @IBOutlet weak var emailTF: UITextField!
+    @IBOutlet weak var passwordTF: UITextField!
+    
+    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var signupBtn: UIButton!
+    
+    @IBOutlet weak var unmatchedLB: UILabel!
+    
+    @IBAction func loginAct(sender: AnyObject) {
+        login()
+    }
+    
+    @IBAction func signupAct(sender: AnyObject) {
+        
+        var pwdTF : UITextField?
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "取消", style: .Cancel) { action -> Void in
+            self.unmatchedLB.hidden = true
+        }
+        
+        let nextAction: UIAlertAction = UIAlertAction(title: "验证", style: .Default) { action -> Void in
+            if pwdTF!.text! == self.passwordTF.text! {
+                self.navigationController?.navigationBar.hidden = false
+                let rpVC = RegistProfileViewController()
+                rpVC.email = self.emailTF.text!
+                rpVC.password = self.passwordTF.text!
+                self.presentViewController(rpVC, animated: true, completion: nil)
+            }
+            else {
+                self.unmatchedLB.hidden = false
+            }
+        }
+        
+        if self.passwordTF.text!.isEmpty || emailTF.text!.isEmpty {
+            let emptyAlertController = UIAlertController(title: "请输入邮箱和密码。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            self.presentViewController(emptyAlertController, animated: true, completion: nil)
+            emptyAlertController.addAction(cancelAction)
+        }
+        
+        else if !isValidEmail(emailTF.text!) {
+            let invalidEmailAlertController = UIAlertController(title: "请输入正确的邮箱。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            self.presentViewController(invalidEmailAlertController, animated: true, completion: nil)
+            invalidEmailAlertController.addAction(cancelAction)
+        }
+        else {
+            
+            let passwordAlertController = UIAlertController(title: "密码验证", message: "请重新输入密码以完成注册。", preferredStyle: UIAlertControllerStyle.Alert)
+            passwordAlertController.addAction(cancelAction)
+            passwordAlertController.addAction(nextAction)
+            passwordAlertController.addTextFieldWithConfigurationHandler { textField -> Void in
+                pwdTF = textField
+            }
+            self.presentViewController(passwordAlertController, animated: true, completion: nil)
+        }
+    }
     
     var splitView:UIView!
-    var submitBtn:UIButton!
-    
    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = BG_COLOR
-        loginEmail.textColor = UIColor.whiteColor()
-        loginEmail.backgroundColor = UIColor.blackColor()
-        signupEmail.textColor = UIColor.whiteColor()
-        signupEmail.backgroundColor = UIColor.blackColor()
-        signupEmail.delegate = self
-        loginEmail.delegate = self
-        loginEmail.returnKeyType = .Done
-        signupEmail.returnKeyType = .Done
-        //splitView
-        splitView = UIView(frame: CGRectMake(0,210,SCREEN_WIDTH,20))
-        let len = (SCREEN_WIDTH-60-50-20)/2
-        let line0 = UIView(frame: CGRectMake(30,10,len,1))
-        line0.backgroundColor = UIColor.whiteColor()
-        let orLabel = UILabel(frame: CGRectMake(40+len,0,50,20))
-        orLabel.text = "or"
-        orLabel.textAlignment = .Center
-        orLabel.font = UIFont(name: FONTNAME_NORMAL, size: 16)
-        orLabel.textColor = UIColor.whiteColor()
-        let line1 = UIView(frame: CGRectMake(100+len,10,len,1))
-        line1.backgroundColor = UIColor.whiteColor()
-        line0.alpha = 0.7
-        line1.alpha = 0.7
-
-        submitBtn = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,44))
-        submitBtn.setTitle("提交", forState: .Normal)
-        submitBtn.titleLabel?.font = UIFont.systemFontOfSize(15)
-        submitBtn.addTarget(self, action: "submitClick", forControlEvents: .TouchUpInside)
-        let splitLine = UIView(frame: CGRectMake(0,64,SCREEN_WIDTH,1))
-        splitLine.backgroundColor = UIColor.whiteColor()
-        splitLine.alpha = 0.7
-        self.view.addSubview(splitLine)
-        self.view.addSubview(splitView)
-        self.view.addSubview(submitBtn)
-        splitView.addSubview(line0)
-        splitView.addSubview(line1)
-        splitView.addSubview(orLabel)
         
+        self.unmatchedLB.hidden = true
+        self.view.backgroundColor = BG_COLOR
+        
+        emailTF.textColor = UIColor.whiteColor()
+        emailTF.backgroundColor = UIColor.blackColor()
+        emailTF.delegate = self
+        emailTF.returnKeyType = .Done
+        
+        passwordTF.textColor = UIColor.whiteColor()
+        passwordTF.backgroundColor = UIColor.blackColor()
+        passwordTF.delegate = self
+        passwordTF.returnKeyType = .Done
     }
     
     func doneClicked(){
@@ -77,30 +104,61 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
 //        self.view.transform = CGAffineTransformMakeTranslation(0, 0)
 //        return true
 //    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
     
-    func submitClick() {
-//        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-//        let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
-//        self.presentViewController(nVC, animated: true, completion: { () -> Void in
-//        })
-        if(!loginEmail.text!.isEmpty){
-            let pVC = LoginPinController()
-            pVC.emailAddr = loginEmail.text
-            self.presentViewController(pVC, animated: true, completion: { () -> Void in
-            })
-        }
-        else if(!signupEmail.text!.isEmpty){
-            let sVC = SignUpController()
-            sVC.emailAddr = signupEmail.text
-            self.presentViewController(sVC, animated: true, completion: { () -> Void in
-            })
-        }
+    
+    // MARK: - Helpers
+    func isValidEmail(testStr:String) -> Bool {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr)
     }
     
-    // MARK: - Navigation
+    func login() {
+        let afManager = AFHTTPRequestOperationManager()
+        let timeStamp = Tools.getNormalTime(NSDate())
+        
+        let stringHash = "281340731@qq.com123456\(timeStamp)\(UUID)\(DEVICE_TOKEN!)\(COMPANYCODE)"
+        let stringHashPrint = "281340731@qq.com|123456|\(timeStamp)|\(UUID)|\(DEVICE_TOKEN!)|\(COMPANYCODE)"
+        let hashResult = stringHash.sha256()
+        
+        print(stringHashPrint)
+        print("hashresult"+hashResult)
+        
+        let url:NSString = LoginUrl+"?userID=281340731@qq.com&userPWD=123456&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
+        let urlNew = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        
+        
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        afManager.GET(urlNew!,
+            parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
+                print(responseObject)
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    
+                    let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
+                    self.presentViewController(nVC, animated: true, completion: { () -> Void in
+                    })
+                    
+                })
+                
+            },
+            failure: { (operation,error) in
+                print("Error: " + error.localizedDescription)
+                let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData
+                print(NSString(data: data, encoding: NSUTF8StringEncoding))
+                
+        })
+    }
 
 }
