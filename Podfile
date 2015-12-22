@@ -1,9 +1,9 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 pod 'Tweaks'
 pod 'PureLayout'
-pod 'AFNetworking'
-pod 'AFNetworkActivityLogger'
+pod 'Alamofire', '~> 3.0'
 pod 'CryptoSwift'
 pod 'THPinViewController'
-pod 'Alamofire'
 
 use_frameworks!

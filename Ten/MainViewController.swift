@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import CoreLocation
 import Foundation
-import AFNetworking
+
 
 class MainViewController: UIViewController, ADCircularMenuDelegate {
 
@@ -288,30 +288,25 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func postLocationToServer(longi:NSString, lati: NSString){
         
-        // upload using POST:
-        // TODO: error on AFNetworking connect with background
-        
-        let afManager = AFHTTPRequestOperationManager()
+        // Post Location to Server
         let parameters = ["id":"1","latitude" : lati,"longitude" : longi]
         
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFHTTPResponseSerializer()
-        //manager.responseSerializer.acceptableContentTypes =
-        
-        afManager.POST(UpdateLocationByIdURL,
-            parameters: parameters,
-            success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
-                print("the respond object is: ")
-                print( operation.responseData )
-                let str = NSString(data: responseObject! as! NSData, encoding: NSUTF8StringEncoding)
-                print(str);
+        ALAMO_MANAGER.request(.POST, UpdateLocationByIdURL, parameters: parameters, encoding: .JSON) .responseJSON {
+            response in
+            if response.result.isSuccess {
+                print(response.request)
+                print(response.response)
+                print(response.result)
                 
-            },
-            failure: { (operation,error) in
-                print("Error: " + error.localizedDescription)
-                let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData
-                print(NSString(data: data, encoding: NSUTF8StringEncoding))
-        })
+                let responseStr = String(data: response.data!, encoding: NSUTF8StringEncoding)
+                print(responseStr)
+            }
+            else {
+                print("Something is Wrong.")
+                
+            }
+            
+        }
         
     }
 }

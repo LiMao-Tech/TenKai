@@ -8,6 +8,7 @@
 
 import UIKit
 import THPinViewController
+
 class SettingsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var settingList:UITableView!
     var logoutBtn:UIButton!

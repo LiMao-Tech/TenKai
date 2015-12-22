@@ -11,8 +11,11 @@ import Tweaks
 import PureLayout
 import CoreLocation
 import Foundation
+import Alamofire
 
 var DEVICE_TOKEN : String?
+let ALAMO_MANAGER = Alamofire.Manager.sharedInstance
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {

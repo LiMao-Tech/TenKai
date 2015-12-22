@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AFNetworking
 import Alamofire
 
 class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate{
@@ -32,7 +31,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     var scrollView: UIScrollView!
     
     var username:UITextField!
-    
     var birthData:UITextField!
     
     var buttonProfile : UIButton!
@@ -130,25 +128,33 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let birthLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(birthData.frame)+2, lineLength, 1))
         birthLine.backgroundColor = UIColor.whiteColor()
         let sexLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*5/12, labelWidth: 200, labelHeight: 100, labelText: "Sex*")
+        
         feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 62, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Female", action: "sexBtnClicked:")
         maleBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*5/12+40, 50, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Male", action: "sexBtnClicked:")
         let marriageLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*6/12, labelWidth: 200, labelHeight: 100, labelText: "Marriage")
         singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Single", action: "marriageBtnClicked:")
         marriedBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*6/12+40, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Married", action: "marriageBtnClicked:")
+        
+        // Email Label
         let emailLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*7/12, labelWidth: 200, labelHeight: 100, labelText: "Email")
         emailAddr = UILabel(frame: CGRectMake(textX, SCREEN_HEIGHT*7/12+40, lineLength, 20))
         emailAddr.textColor = UIColor(red: 137.0/255.0, green: 142.0/255.0, blue: 153.0/255.0, alpha: 1.0)
         emailAddr.font = UIFont(name: FONTNAME_NORMAL, size: 15)
         emailAddr.text = email
+        
+        // Hobby Label
         let hobbyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*8/12, labelWidth: 200, labelHeight: 100, labelText: "Hobby")
         hobby = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*8/12+40, lineLength, 20))
         hobby.textColor = UIColor.whiteColor()
         hobby.font = UIFont(name: FONTNAME_NORMAL, size: 15)
         hobby.placeholder = "e.g. Music"
         hobby.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
+
         let hobbyLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(hobby.frame)+2, lineLength, 1))
         hobbyLine.backgroundColor = UIColor.whiteColor()
         let moreDetailLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*9/12, labelWidth: 200, labelHeight: 100, labelText: "More Details")
+        
+        // Status Label
         let statusLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*10/12, labelWidth: 200, labelHeight: 100, labelText: "Status")
         statusDetail = UITextView(frame: CGRectMake(textX, SCREEN_HEIGHT*10/12+40, lineLength, SCREEN_HEIGHT*2/12-10))
         statusDetail.backgroundColor = UIColor.blackColor()
@@ -162,6 +168,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         placeHolder.font = UIFont.systemFontOfSize(15)
         self.statusDetail.addSubview(placeHolder)
         
+        // Inner Label
         let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: 200, labelHeight: 100, labelText: "Inner")
         innerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
         innerBar.minimumValue = 0
@@ -228,6 +235,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         /*----------- ELCImagePicker Edition -----------*/
         
     }
+    
     //textviewdelegate
     func textViewDidChange(textView: UITextView) {
         if(textView.text.isEmpty){
@@ -236,10 +244,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             placeHolder.hidden = true
         }
     }
-    
-    override func viewWillAppear(animated: Bool) {
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named:"navBar_profile"), forBarMetrics: .Default)
-        }
     
     func sexBtnClicked(sender:SettingButton){
         sender.enabled = false
@@ -326,7 +330,8 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     
     func initLabel(posX posX:CGFloat, posY: CGFloat, labelWidth: CGFloat, labelHeight: CGFloat, labelText: String) -> UILabel{
         
-        /*UILabel(frame: CGRectMake(scrowViewWidth/10, scrowViewHeight*3/10, 200, 100))
+        /*
+        UILabel(frame: CGRectMake(scrowViewWidth/10, scrowViewHeight*3/10, 200, 100))
         basicInfoLabel.text = "Basic Info"
         basicInfoLabel.font = UIFont(name: "Arial-Bold", size: 20)
         basicInfoLabel.textColor = UIColor.redColor()
@@ -346,10 +351,9 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         return resultTextField
     }
     
-    
+    // Resign Active
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func viewBack(){
@@ -358,85 +362,103 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     }
     
     func toRadarPage(){
-        let manager = AFHTTPRequestOperationManager()
+
         let time = NSDate()
         let format = NSDateFormatter()
         format.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let timeStamp = format.stringFromDate(time)
         let stringHash = "\(email)\(password)\(UUID)\(timeStamp)\(DEVICE_TOKEN!)\(COMPANYCODE)"
+        
         let hashResult = stringHash.sha256()
         let params = ["UserID":email,"UserPWD":password,"DeviceUUID":UUID,"lastLogin":timeStamp,"DeviceToken":DEVICE_TOKEN!,"HashValue":hashResult]
-        manager.requestSerializer = AFJSONRequestSerializer()
-        manager.responseSerializer = AFJSONResponseSerializer()
         
-        manager.POST( LoginUrl,
-            parameters: params,
-            success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
-                let dict = responseObject as! [String : AnyObject]
+        ALAMO_MANAGER.request(.POST, LoginUrl, parameters: params, encoding: .JSON) .responseJSON {
+            response in
+            if response.result.isSuccess {
+                let dataStr = String(response.data)
+                print(dataStr)
+                print(response.result.value)
+                
+                let dict = response.result.value as! [String : AnyObject]
                 self.tenLogin = TenLogin(loginDict: dict)
-                print(self.tenLogin.LoginIndex)
-                print("loginpostSuccess")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.postUsers()
                 })
-            },
-            failure: { (operation,error) in
-                print("Error: " + error.localizedDescription)
-                let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData
-                print(NSString(data: data, encoding: NSUTF8StringEncoding))
-                
-        })
+            }
+            else {
+                print("Registration Failed.")
+            }
+        }
     }
+    
     func postUsers(){
-        let manager = AFHTTPRequestOperationManager()
-        manager.requestSerializer = AFJSONRequestSerializer()
-        manager.responseSerializer = AFJSONResponseSerializer()
         
         let birthday = Tools.formatStringTime(birthData.text!)
         let joinTime = Tools.getNormalTime(NSDate())
         
-        let params = ["UserName":username.text!,"Gender":gender!,"Birthday":birthday,"JoinedDate":joinTime,"PCoin":0,"OuterScore":Int(outerBar.value),"InnerScore":Int(innerBar.value),"Energy":Int(energyBar.value),"Hobby":hobby.text!,"Quote":statusDetail.text!,"Lati":0,"Longi":0]
-//        print("userParams:\(params)")
-        manager.POST(UserUrl, parameters: params, success: { (operation, responseObject) -> Void in
-            print(responseObject)
-            let dict = responseObject as! [String : AnyObject]
-            self.tenUser = TenUser.init(loginDict: dict)
-            print (self.tenUser.Birthday)
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                self.postImage()
-            })
+        let params = ["UserName":username.text!,
+            "Gender":gender!,
+            "Birthday" : birthday,
+            "JoinedDate" : joinTime,
+            "PCoin" : "\(0)",
+            "OuterScore" : "\(Int(outerBar.value))",
+            "InnerScore" : "\(Int(innerBar.value))",
+            "Energy" : "\(Int(energyBar.value))",
+            "Hobby" : hobby.text!,
+            "Quote" : statusDetail.text!,
+            "Lati" : "\(0)",
+            "Longi" : "\(0)"]
+        
+        ALAMO_MANAGER.request(.POST, UserUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON {
+            response in
+            if response.result.isSuccess {
+                print(response.result.value)
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    let dict = response.result.value as! [String : AnyObject]
+                    self.tenUser = TenUser(loginDict: dict)
+                    self.postImage()
+                })
+            }
+            else {
+                print("Post User Failed")
+            }
+        }
+    }
+    
+    func postImage() {
+
+        let image = UIImageJPEGRepresentation(chosenImage!, 0.5)
+        let picName = Tools.getFileNameTime(NSDate())+".jpeg"
+        let params = ["id": String(tenUser.UserIndex)]
+
+        ALAMO_MANAGER.upload(.POST, HeadImageUrl,headers: params, multipartFormData: {multipartFormData -> Void in
+                multipartFormData.appendBodyPart(data: image!, name: "upload", fileName: picName, mimeType: "image/jpeg")
             },
-            failure: { (operation, error) -> Void in
-                print("postUserError:"+error.localizedDescription)
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .Success(request: let upload, _, _):
+                    upload.responseJSON {
+                        response in
+                        print(response)
+                        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                            self.putUserIndex()
+                        })
+                    }
+                    
+                case .Failure(let encodingError):
+                    print(encodingError)
+                }
         })
     }
     
-    func postImage(){
-        let manager = AFHTTPRequestOperationManager()
-        manager.requestSerializer = AFHTTPRequestSerializer()
-        manager.responseSerializer = AFHTTPResponseSerializer()
-        
-        let image = UIImageJPEGRepresentation(chosenImage!, 0.5)
-        let picName = Tools.getFileNameTime(NSDate())+".jpeg"
-        let params = ["id":tenUser.UserIndex]
-        
-        manager.POST(HeadImageUrl, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) -> Void in
-            data.appendPartWithFileData(image!, name: "upload", fileName: picName, mimeType: "image/jpeg")
-            }, success: { (operation, responseObject) -> Void in
-            let str = NSString(data: responseObject as! NSData, encoding: NSUTF8StringEncoding)
-            print(str)
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                self.putUserIndex()
-                //push note
-            })
-            },
-                failure: { (operation, error) -> Void in
-                print("imageUpLoadError:"+error.localizedDescription)
-            })
-        }
-
+    
     func putUserIndex(){
-        Alamofire.request(.PUT, LoginUrl+"/\(tenLogin.LoginIndex)", parameters: ["LoginIndex": tenLogin.LoginIndex,"UserIndex": tenUser.UserIndex,"UserID": tenLogin.UserID,"UserPWD": tenLogin.UserPWD,"LastLogin": tenLogin.LastLogin,"DeviceUUID": tenLogin.DeviceUUID,"DeviceToken": tenLogin.DeviceToken,"HashValue": tenLogin.HashValue]).response { (response) -> Void in
+        let params : [String : AnyObject] = ["LoginIndex": tenLogin.LoginIndex,"UserIndex": tenUser.UserIndex,"UserID": tenLogin.UserID,"UserPWD": tenLogin.UserPWD,"LastLogin": tenLogin.LastLogin,"DeviceUUID": tenLogin.DeviceUUID,"DeviceToken": tenLogin.DeviceToken,"HashValue": tenLogin.HashValue]
+        
+        let putUrl = LoginUrl+"/\(tenLogin.LoginIndex)"
+
+        Alamofire.request(.PUT, putUrl, parameters: params).response {
+            response in
             let data = NSString(data: response.2!, encoding: NSUTF8StringEncoding)
             print(data)
             let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
@@ -479,6 +501,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         alert.addAction(cameraAction)
         alert.addAction(gallaryAction)
         alert.addAction(cancelAction)
+        
         // Present the controller
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
@@ -503,6 +526,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             openGallary()
         }
     }
+    
     func openGallary()
     {
         picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
@@ -534,4 +558,4 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     }
     
     
-}// end of the class
+} // end of the class
