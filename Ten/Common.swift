@@ -8,7 +8,7 @@
 
 import UIKit
 
-//urls
+// urls
 let LocationNotiName = "LocationNotification"
 let UpdateLocationByIdURL = "http://www.code-desire.com.tw/LiMaoMVC/TenUsers/UpdateLocationByID"
 let MainUrl = "http://www.limao-tech.com/Ten/api/"
@@ -21,7 +21,7 @@ let SCREEN = UIScreen.mainScreen().bounds
 let SCREEN_HEIGHT = SCREEN.height
 let SCREEN_WIDTH = SCREEN.width
 
-//uiFrames
+// uiFrames
 let BUTTON_DENO : CGFloat = 15
 let NAV_BAR_HEIGHT : CGFloat = SCREEN_HEIGHT == 568 ? 44 : 66
 let TOOL_BAR_HEIGHT : CGFloat = SCREEN_HEIGHT == 568 ? 48 : 73

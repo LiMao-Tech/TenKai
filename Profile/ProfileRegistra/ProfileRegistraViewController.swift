@@ -24,14 +24,13 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     var imageUrl : String?
     var counter : Int?
     
-    //var ELCpicker : ELCImagePickerController? = ELCImagePickerController()
     var picker : UIImagePickerController? = UIImagePickerController()
     
     // scrollView Variables
     var scrollView: UIScrollView!
     
     var username:UITextField!
-    var birthData:UITextField!
+    var birthDate:UITextField!
     
     var buttonProfile : UIButton!
     
@@ -111,21 +110,21 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         userLine.backgroundColor = UIColor.whiteColor()
         
         let dateOfBirthLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*4/12, labelWidth: 100, labelHeight: 100, labelText: "Date of Birth*")
-        birthData = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*4/12+40, lineLength, 20))
-        birthData.textColor = UIColor.whiteColor()
-        birthData.font = UIFont(name: FONTNAME_NORMAL, size: 15)
+        birthDate = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*4/12+40, lineLength, 20))
+        birthDate.textColor = UIColor.whiteColor()
+        birthDate.font = UIFont(name: FONTNAME_NORMAL, size: 15)
         
         let picker = UIDatePicker()
         picker.datePickerMode = .Date
         picker.addTarget(self, action: "dataDidChange:", forControlEvents: .ValueChanged)
-        birthData.inputView = picker
+        birthDate.inputView = picker
         
         let accessoryView = UIToolbar(frame: CGRectMake(0, 0, SCREEN_WIDTH, 35))
         let doneBtn = UIBarButtonItem(title: "完成", style: .Done, target: self, action: "doneClicked")
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         accessoryView.setItems([space,doneBtn], animated: true)
-        birthData.inputAccessoryView = accessoryView
-        let birthLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(birthData.frame)+2, lineLength, 1))
+        birthDate.inputAccessoryView = accessoryView
+        let birthLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(birthDate.frame)+2, lineLength, 1))
         birthLine.backgroundColor = UIColor.whiteColor()
         let sexLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*5/12, labelWidth: 200, labelHeight: 100, labelText: "Sex*")
         
@@ -212,7 +211,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         self.scrollView!.addSubview(EnergyLabel)
         self.scrollView!.addSubview(username)
         self.scrollView!.addSubview(userLine)
-        self.scrollView!.addSubview(birthData)
+        self.scrollView!.addSubview(birthDate)
         self.scrollView!.addSubview(birthLine)
         self.scrollView!.addSubview(feMaleBtn)
         self.scrollView!.addSubview(maleBtn)
@@ -305,11 +304,13 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     }
     
     func doneClicked(){
-        birthData.resignFirstResponder()
+        birthDate.resignFirstResponder()
     }
     
-    func dataDidChange(sender:UIDatePicker){
-        birthData.text = sender.date.description
+    func dataDidChange(picker : UIDatePicker){
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        birthDate.text = formatter.stringFromDate(picker.date)
     }
     
     // UI Helper Functions
@@ -370,20 +371,25 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let stringHash = "\(email)\(password)\(UUID)\(timeStamp)\(DEVICE_TOKEN!)\(COMPANYCODE)"
         
         let hashResult = stringHash.sha256()
-        let params = ["UserID":email,"UserPWD":password,"DeviceUUID":UUID,"lastLogin":timeStamp,"DeviceToken":DEVICE_TOKEN!,"HashValue":hashResult]
+        let params = [
+            "UserID":email,
+            "UserPWD":password,
+            "DeviceUUID":UUID,
+            "lastLogin":timeStamp,
+            "DeviceToken":DEVICE_TOKEN!,
+            "HashValue":hashResult
+        ]
         
         ALAMO_MANAGER.request(.POST, LoginUrl, parameters: params, encoding: .JSON) .responseJSON {
             response in
             if response.result.isSuccess {
-                let dataStr = String(response.data)
-                print(dataStr)
+
+                print("To radar Page")
                 print(response.result.value)
                 
                 let dict = response.result.value as! [String : AnyObject]
                 self.tenLogin = TenLogin(loginDict: dict)
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.postUsers()
-                })
+                self.postUser()
             }
             else {
                 print("Registration Failed.")
@@ -391,33 +397,38 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         }
     }
     
-    func postUsers(){
+    func postUser(){
         
-        let birthday = Tools.formatStringTime(birthData.text!)
+        let birthday = birthDate.text!
         let joinTime = Tools.getNormalTime(NSDate())
         
-        let params = ["UserName":username.text!,
-            "Gender":gender!,
+        let params = [
+            "UserName" : username.text!,
+            "PhoneType" : "0",
+            "Gender" : gender!,
+            "Marrige" : "0",
             "Birthday" : birthday,
             "JoinedDate" : joinTime,
-            "PCoin" : "\(0)",
-            "OuterScore" : "\(Int(outerBar.value))",
-            "InnerScore" : "\(Int(innerBar.value))",
-            "Energy" : "\(Int(energyBar.value))",
+            "PCoin" : "0",
+            "OuterScore" : Int(outerBar.value),
+            "InnerScore" : Int(innerBar.value),
+            "Energy" : Int(energyBar.value),
             "Hobby" : hobby.text!,
             "Quote" : statusDetail.text!,
-            "Lati" : "\(0)",
-            "Longi" : "\(0)"]
+            "Lati" : "0",
+            "Longi" : "0"
+        ]
         
-        ALAMO_MANAGER.request(.POST, UserUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON {
+        ALAMO_MANAGER.request(.POST, UserUrl, parameters: params as? [String : String], encoding: .JSON) .responseJSON {
             response in
             if response.result.isSuccess {
+
+                print("postUser")
                 print(response.result.value)
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    let dict = response.result.value as! [String : AnyObject]
-                    self.tenUser = TenUser(loginDict: dict)
-                    self.postImage()
-                })
+                
+                let dict = response.result.value as! [String : AnyObject]
+                self.tenUser = TenUser(loginDict: dict)
+                self.postImage()
             }
             else {
                 print("Post User Failed")
@@ -428,24 +439,28 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     func postImage() {
 
         let image = UIImageJPEGRepresentation(chosenImage!, 0.5)
-        let picName = Tools.getFileNameTime(NSDate())+".jpeg"
+        
+        // How did you know it is jpeg?
+        let picName = Tools.getFileNameTime(NSDate())+".png"
         let params = ["id": String(tenUser.UserIndex)]
 
         ALAMO_MANAGER.upload(.POST, HeadImageUrl,headers: params, multipartFormData: {multipartFormData -> Void in
-                multipartFormData.appendBodyPart(data: image!, name: "upload", fileName: picName, mimeType: "image/jpeg")
+                multipartFormData.appendBodyPart(data: image!, name: "upload", fileName: picName, mimeType: "image/png")
             },
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                 case .Success(request: let upload, _, _):
                     upload.responseJSON {
                         response in
-                        print(response)
-                        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                            self.putUserIndex()
-                        })
+                        
+                        print("postImage")
+                        print(response.result.value)
+                        
+                        self.putUserIndex()
                     }
                     
                 case .Failure(let encodingError):
+                    print("Failed to post Image")
                     print(encodingError)
                 }
         })
@@ -453,14 +468,25 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     
     
     func putUserIndex(){
-        let params : [String : AnyObject] = ["LoginIndex": tenLogin.LoginIndex,"UserIndex": tenUser.UserIndex,"UserID": tenLogin.UserID,"UserPWD": tenLogin.UserPWD,"LastLogin": tenLogin.LastLogin,"DeviceUUID": tenLogin.DeviceUUID,"DeviceToken": tenLogin.DeviceToken,"HashValue": tenLogin.HashValue]
+        let params : [String : String] = [
+            "LoginIndex": String(tenLogin.LoginIndex),
+            "UserIndex": String(tenUser.UserIndex),
+            "UserID": tenLogin.UserID,
+            "UserPWD": tenLogin.UserPWD,
+            "LastLogin": tenLogin.LastLogin,
+            "DeviceUUID": tenLogin.DeviceUUID,
+            "DeviceToken": tenLogin.DeviceToken,
+            "HashValue": tenLogin.HashValue
+        ]
         
         let putUrl = LoginUrl+"/\(tenLogin.LoginIndex)"
 
-        Alamofire.request(.PUT, putUrl, parameters: params).response {
+        Alamofire.request(.PUT, putUrl, parameters: params) .responseJSON {
             response in
-            let data = NSString(data: response.2!, encoding: NSUTF8StringEncoding)
-            print(data)
+            
+            print("postUserIndex")
+            print(response.result.value)
+            
             let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
             self.presentViewController(nVC, animated: true, completion: { () -> Void in
@@ -492,10 +518,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
                 
         }
         
-        // Add the actions
-        
-        //ELCpicker?.imagePickerDelegate = self
-        //ELCpicker?.maximumImagesCount = 1 //TODO: Tuantuan, this is where you can change the number of image you want to select
         picker?.delegate = self
         
         alert.addAction(cameraAction)

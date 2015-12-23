@@ -112,6 +112,13 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     }
     
     func login() {
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
+        
+        self.presentViewController(nVC, animated: true, completion: nil)
+        
+        return
         let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler:nil)
         
         if self.passwordTF.text!.isEmpty || emailTF.text!.isEmpty {

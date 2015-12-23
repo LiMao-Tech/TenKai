@@ -31,6 +31,7 @@ class EditProfileController: UIViewController,UIAlertViewDelegate,UINavigationCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.backgroundColor = BG_COLOR
         self.title = ProfileTitle
         chosenImage = UIImage()
@@ -93,8 +94,6 @@ class EditProfileController: UIViewController,UIAlertViewDelegate,UINavigationCo
         button.titleLabel?.font = UIFont.systemFontOfSize(15)
         button.addTarget(self, action: "editDone", forControlEvents: .TouchUpInside)
         
-        
-        
         self.view.addSubview(buttonProfile)
         self.view.addSubview(userName)
         self.view.addSubview(scroll)
@@ -121,14 +120,14 @@ class EditProfileController: UIViewController,UIAlertViewDelegate,UINavigationCo
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(animated: Bool) {
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named:"navBar_profile"), forBarMetrics: .Default)
+
     }
     
     func editDone(){
+        // TODO: what is this?
         print("done")
     }
     
@@ -169,15 +168,12 @@ class EditProfileController: UIViewController,UIAlertViewDelegate,UINavigationCo
                 
         }
         
-        // Add the actions
-        
-        //ELCpicker?.imagePickerDelegate = self
-        //ELCpicker?.maximumImagesCount = 1 //TODO: Tuantuan, this is where you can change the number of image you want to select
         picker?.delegate = self
         
         alert.addAction(cameraAction)
         alert.addAction(gallaryAction)
         alert.addAction(cancelAction)
+        
         // Present the controller
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {

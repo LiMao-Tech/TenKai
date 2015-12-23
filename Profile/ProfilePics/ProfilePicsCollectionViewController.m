@@ -18,18 +18,15 @@
 
 @implementation ProfilePicsCollectionViewController
 
-NSUInteger num = 0;
-
 enum CELLSIZE {
     STDSIZE = 1,
     LSIZE = 2
 };
 
-NSString *ProfilePicsCellIdentifier = @"ppCell";
-NSString *ProfilePicsCellXibName = @"ProfilePicsCollectionViewCell";
-
-NSString *hostName = @"http://www.code-desire.com.tw";
-NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/";
+static NSString *ProfilePicsCellIdentifier = @"ppCell";
+static NSString *ProfilePicsCellXibName = @"ProfilePicsCollectionViewCell";
+static NSString *hostName = @"http://www.code-desire.com.tw";
+static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/";
 
 - (id) initWithHeight:(CGFloat) height Width: (CGFloat)width ToolbarHeight: (CGFloat) toolbarHeight {
     self = [super init];
@@ -44,12 +41,16 @@ NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // init the layout data
+    self.numberOfPics = 10;
+    self.BLOCK_DIM = SCREEN_WIDTH / 4;
     [self dataInit];
     
     // init the layout
     LMCollectionViewLayout * layout = [[LMCollectionViewLayout alloc] init];
     layout.delegate = self;
-    layout.blockPixels = CGSizeMake(75,75);
+    layout.blockPixels = CGSizeMake(self.BLOCK_DIM, self.BLOCK_DIM);
     
     // init the view
     self.lmCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-TOOL_BAR_HEIGHT) collectionViewLayout:layout];
@@ -84,7 +85,6 @@ NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/"
     UIBarButtonItem * padding = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     padding.width = (SCREEN_WIDTH - 4*optionItem.width)/3;
 
-    
     NSMutableArray * itemArr = [[NSMutableArray alloc] init] ;
     [itemArr addObject:optionItem];
     [itemArr addObject:padding];
@@ -105,6 +105,12 @@ NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/"
     [self.lmCollectionView reloadData];
 }
 
+
+- (void) didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+
 - (void) toolBarOption {
     
 }
@@ -123,24 +129,20 @@ NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/"
 
 
 - (void)dataInit {
-    num = 0;
+    self.num = 0;
     self.numbers = [@[] mutableCopy];
     self.numberWidths = @[].mutableCopy;
     self.numberHeights = @[].mutableCopy;
     
-    for(; num < 15; num++) {
-        [self.numbers addObject:@(num)];
+    for(; self.num <= self.numberOfPics; self.num++) {
+        [self.numbers addObject:@(self.num)];
         [self.numberWidths addObject:@([self randomLength])];
         [self.numberHeights addObject:@([self randomLength])];
     }
 }
+
 - (void) viewDidAppear:(BOOL)animated {
     [self.lmCollectionView reloadData];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*
@@ -173,7 +175,7 @@ NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/"
  */
 
 - (UIColor*) colorForNumber:(NSNumber*)num {
-    return [UIColor colorWithHue:((19 * num.intValue) % 255)/255.f saturation:1.f brightness:1.f alpha:1.f];
+    return [UIColor colorWithHue:((19 * num.intValue) % 255)/255.f saturation:1.f brightness:1.f alpha:.8f];
 }
 
 #pragma mark - UICollectionView Delegate
@@ -191,32 +193,37 @@ NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/"
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    ProfilePicsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:ProfilePicsCellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [self colorForNumber:self.numbers[indexPath.row]];
-    
-    UILabel* label = (id)[cell viewWithTag:5];
-    if(!label) label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
-    label.tag = 5;
-    label.textColor = [UIColor blackColor];
-    label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
-    label.backgroundColor = [UIColor clearColor];
-
-    // Configure the cell
-    NSString *cellImageUrlStr = [NSString stringWithFormat:@"%@%ld.png", cloudAddrYumen, (long)indexPath.row];
-    NSURL * cellImageUrl = [NSURL URLWithString:cellImageUrlStr];
-    
-    
-    [self downloadImageWithURL:cellImageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
-        if (succeeded) {
-            // change the image in the cell
-            [cell.cellImage setImage: image];
-            
-            // cache the image for use later (when scrolling up)
-        }
-        else {
-            NSLog(@"Waiting for image.");
-        }
-    }];
+    ProfilePicsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier : ProfilePicsCellIdentifier forIndexPath:indexPath];
+    if (indexPath.row == self.numberOfPics) {
+        [cell.cellImage setImage: [UIImage imageNamed: @"btn_chat_plus"]];
+    }
+    else {
+        cell.backgroundColor = [self colorForNumber:self.numbers[indexPath.row]];
+        
+        UILabel* label = (id)[cell viewWithTag:5];
+        if(!label) label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
+        label.tag = 5;
+        label.textColor = [UIColor blackColor];
+        label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
+        label.backgroundColor = [UIColor clearColor];
+        
+        // Configure the cell
+        NSString *cellImageUrlStr = [NSString stringWithFormat:@"%@%ld.png", cloudAddrYumen, (long)indexPath.row];
+        NSURL * cellImageUrl = [NSURL URLWithString : cellImageUrlStr];
+        
+        
+        [self downloadImageWithURL:cellImageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
+            if (succeeded) {
+                // change the image in the cell
+                [cell.cellImage setImage: image];
+                
+                // cache the image for use later (when scrolling up)
+            }
+            else {
+                NSLog(@"Waiting for image.");
+            }
+        }];
+    }
 
     return cell;
 }
@@ -265,7 +272,7 @@ NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/"
     
     [self.lmCollectionView performBatchUpdates:^{
         NSInteger index = indexPath.row;
-        [self.numbers insertObject:@(++num) atIndex:index];
+        [self.numbers insertObject:@(++self.num) atIndex:index];
         [self.numberWidths insertObject:@(STDSIZE) atIndex:index];
         [self.numberHeights insertObject:@(STDSIZE) atIndex:index];
         

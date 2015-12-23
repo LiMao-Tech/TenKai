@@ -8,17 +8,20 @@
 
 import Foundation
 
-class Tools:NSObject{
+class Tools : NSObject{
+    
     class func getNormalTime(date:NSDate) -> String{
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.stringFromDate(date)
     }
-    class func formatStringTime(time:String) ->String{
+    
+    class func formatStringTime(time: String) -> String{
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
         return Tools.getNormalTime(formatter.dateFromString(time)!)
     }
+    
     class func getFileNameTime(date:NSDate) -> String{
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyyMMddHHmmss"

@@ -13,11 +13,9 @@ Backend.
 */
 
 class TenUser: NSObject {
-    
-    var PhoneType : Int = 0
-    
     var UserIndex : Int = 0
     var UserName : String = ""
+    var PhoneType : Int = 0
     var Gender : Int = 0
     var Marriage: Int = 0
     var Birthday : String = ""
@@ -32,6 +30,7 @@ class TenUser: NSObject {
     var Longi : Double = -1
     var ProfileUrl = ""
     var Average = 0
+    
     var Portrait = NSData()
 
     
@@ -60,8 +59,6 @@ class TenUser: NSObject {
     func initWithDict(loginDict:[String : AnyObject]){
         self.setValuesForKeysWithDictionary(loginDict)
     }
-    
-    
     
     func updateCoordinates(lati : Double, longi : Double) -> Bool {
         self.Lati = lati

@@ -16,6 +16,11 @@
     CGFloat SCREEN_HEIGHT;
     CGFloat TOOL_BAR_HEIGHT;
 }
+
+@property (nonatomic) NSInteger numberOfPics;
+@property (nonatomic) CGFloat BLOCK_DIM;
+@property (nonatomic) NSUInteger num;
+
 @property (strong, nonatomic) UICollectionView * lmCollectionView;
 
 @property (nonatomic) NSMutableArray* numbers;
