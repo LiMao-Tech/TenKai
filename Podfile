@@ -4,6 +4,6 @@ pod 'Tweaks'
 pod 'PureLayout'
 pod 'Alamofire', '~> 3.0'
 pod 'CryptoSwift'
-pod 'THPinViewController'
+pod 'AFNetworking', '~> 3.0'
 
 use_frameworks!

@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AFNetworkActivityLogger.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,11 +29,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>THPinViewController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Tweaks.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,42 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1F78ADC0BD49FE8B4FEAD72A89957AA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6C47374726E463087D55B4250373F519</key>
+		<key>4DEA87B96D85C7FE644B1C9D6FA9C315</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8A23233F4E09B179FB3B207386949A10</key>
+		<key>615E9FA716FFED7940751E46CD382D61</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>952FE1EB61CA49FEC151B1763B93E741</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A05357DCED657147133A0B7DC7AD5B6B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AD92CB560CCD279E630ADE73283AC02D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C205B242FE85C910C1FF57CF968FD032</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D4D03A754C0A0E8DD92FD8C1DCE76333</key>
 		<dict>
 			<key>primary</key>
 			<true/>

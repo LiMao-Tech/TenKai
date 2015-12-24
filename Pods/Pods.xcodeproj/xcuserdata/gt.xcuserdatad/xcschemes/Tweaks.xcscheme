@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '400EEFCAEB78FADF08E725A9'
+               BlueprintIdentifier = 'F3B2BCB31C4C844AEAD34A52'
                BlueprintName = 'Tweaks'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Tweaks.framework'>

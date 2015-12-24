@@ -404,7 +404,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         
         let params = [
             "UserName" : username.text!,
-            "PhoneType" : "0",
+            "PhoneType" : 0,
             "Gender" : gender!,
             "Marrige" : "0",
             "Birthday" : birthday,
@@ -415,11 +415,11 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             "Energy" : Int(energyBar.value),
             "Hobby" : hobby.text!,
             "Quote" : statusDetail.text!,
-            "Lati" : "0",
-            "Longi" : "0"
+            "Lati" : 0,
+            "Longi" : 0
         ]
         
-        ALAMO_MANAGER.request(.POST, UserUrl, parameters: params as? [String : String], encoding: .JSON) .responseJSON {
+        ALAMO_MANAGER.request(.POST, UserUrl, parameters: (params as! [String : AnyObject]), encoding: .JSON) .responseJSON {
             response in
             if response.result.isSuccess {
 
@@ -438,25 +438,26 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     
     func postImage() {
 
-        let image = UIImageJPEGRepresentation(chosenImage!, 0.5)
+//        let image = UIImageJPEGRepresentation(chosenImage!, 0.3)
+        let image = UIImagePNGRepresentation(chosenImage!)
         
         // How did you know it is jpeg?
         let picName = Tools.getFileNameTime(NSDate())+".png"
-        let params = ["id": String(tenUser.UserIndex)]
-
-        ALAMO_MANAGER.upload(.POST, HeadImageUrl,headers: params, multipartFormData: {multipartFormData -> Void in
+        let params : NSDictionary = ["id": tenUser.UserIndex]
+        
+        
+        ALAMO_MANAGER.upload(.POST, HeadImageUrl,headers: nil, multipartFormData: {multipartFormData -> Void in
                 multipartFormData.appendBodyPart(data: image!, name: "upload", fileName: picName, mimeType: "image/png")
             },
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                 case .Success(request: let upload, _, _):
-                    upload.responseJSON {
+                    upload.response {
                         response in
-                        
                         print("postImage")
-                        print(response.result.value)
+                        print(response.1)
                         
-                        self.putUserIndex()
+//                        self.putUserIndex()
                     }
                     
                 case .Failure(let encodingError):

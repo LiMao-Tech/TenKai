@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CryptoSwift
+import AFNetworking
 
 class WelcomeController: UIViewController,UITextFieldDelegate {
     
@@ -113,12 +114,12 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     
     func login() {
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
-        
-        self.presentViewController(nVC, animated: true, completion: nil)
-        
-        return
+//        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//        let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
+//        
+//        self.presentViewController(nVC, animated: true, completion: nil)
+//        
+//        return
         let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler:nil)
         
         if self.passwordTF.text!.isEmpty || emailTF.text!.isEmpty {
@@ -140,30 +141,29 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         let url:NSString = LoginUrl+"?userID=\(emailTF.text!)&userPWD=\(passwordTF.text!)&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
         let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         
-        ALAMO_MANAGER.request(.GET, urlComplete!) .responseJSON {
-            response in
-            
-            if response.result.isSuccess {
-                print(response.result.value)
-                
-                if response.response?.statusCode == 401 {
-                    let emptyAlertController = UIAlertController(title: "请输入正确的邮箱和密码。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-                    self.presentViewController(emptyAlertController, animated: true, completion: nil)
-                    emptyAlertController.addAction(self.cancelAction!)
-
-                }
-                else {
-                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                        let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
-                        
-                        self.presentViewController(nVC, animated: true, completion: nil)
+        
+        let manager = AFHTTPRequestOperationManager()
+        
+        manager.requestSerializer = AFJSONRequestSerializer()
+        manager.responseSerializer = AFJSONResponseSerializer()
+        
+        manager.GET( urlComplete!,
+            parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
+                print(responseObject)
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
+                    self.presentViewController(nVC, animated: true, completion: { () -> Void in
                     })
-                }
-            }
-            else {
-                print("Get User Failed.")
-            }
-        }
+                })
+            },
+            failure: { (operation,error) in
+                print(operation?.response?.statusCode)
+                print("Error: " + error.localizedDescription)
+                let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData
+                print(NSString(data: data, encoding: NSUTF8StringEncoding))
+            })
+
     }
 }

@@ -9,7 +9,6 @@
 /*
 Note: This model follows c sharp naming convention since is used with ASP .Net
 Backend.
-
 */
 
 class TenUser: NSObject {
@@ -53,7 +52,6 @@ class TenUser: NSObject {
     init(loginDict:[String : AnyObject]) {
         super.init()
         self.initWithDict(loginDict)
-        UserName.hashValue
     }
     
     func initWithDict(loginDict:[String : AnyObject]){

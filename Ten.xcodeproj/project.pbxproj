@@ -19,6 +19,7 @@
 		643F9C741BF6D95A00361C55 /* Radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643F9C731BF6D95A00361C55 /* Radar.gif */; };
 		644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D0D1C286210002E65CE /* SharedUser.swift */; };
 		644F1D111C2863C1002E65CE /* UserCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D101C2863C1002E65CE /* UserCacheTool.swift */; };
+		644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
 		64F5CEBF1BD8B51800512972 /* PT_Sans-Web-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951C1BD8996900F1B6CA /* PT_Sans-Web-Bold.ttf */; };
@@ -312,6 +313,7 @@
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
 		644F1D0D1C286210002E65CE /* SharedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUser.swift; sourceTree = "<group>"; };
 		644F1D101C2863C1002E65CE /* UserCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCacheTool.swift; sourceTree = "<group>"; };
+		644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFNetworkTools.swift; sourceTree = "<group>"; };
 		649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
 		649B951C1BD8996900F1B6CA /* PT_Sans-Web-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Bold.ttf"; sourceTree = "<group>"; };
@@ -638,6 +640,7 @@
 			isa = PBXGroup;
 			children = (
 				644F1D101C2863C1002E65CE /* UserCacheTool.swift */,
+				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1482,6 +1485,7 @@
 				D4EA5C2B1C13F669009E9927 /* PCoinTransferModel.swift in Sources */,
 				C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */,
 				D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */,
+				644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */,
 				D4EA5BFA1C13EA12009E9927 /* DKImagePickerController.swift in Sources */,
 				D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */,
 				D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */,

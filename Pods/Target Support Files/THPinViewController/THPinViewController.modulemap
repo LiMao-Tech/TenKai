@@ -1,6 +1,0 @@
-framework module THPinViewController {
-  umbrella header "THPinViewController-umbrella.h"
-
-  export *
-  module * { export * }
-}
