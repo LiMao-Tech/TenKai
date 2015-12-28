@@ -15,11 +15,11 @@ class TenUser: NSObject {
     var UserIndex : Int = 0
     var UserName : String = ""
     var PhoneType : Int = 0
-    var Gender : Int = 0
-    var Marriage: Int = 0
+    var Gender : Int = -1
+    var Marriage: Int = -1
     var Birthday : String = ""
     var JoinedDate : String = ""
-    var PCoin : Double = 1
+    var PCoin : Double = 0
     var OuterScore : Int = 0
     var InnerScore : Int = 0
     var Energy : Int = 0
@@ -33,29 +33,18 @@ class TenUser: NSObject {
     var Portrait = NSData()
 
     
-//    init(userName : String, gender : Int8, birthday : NSDate, joinedDate : NSDate,
-//        pCoin : Double, outerScore : Int, innerScore : Int, energy : Int) {
-//            self.UserName = userName
-//            self.Gender = gender
-//            self.Birthday = birthday
-//            self.JoinedDate = joinedDate
-//            self.PCoin = pCoin
-//            self.OuterScore = outerScore
-//            self.InnerScore = innerScore
-//            self.Energy = energy
-//    }
-    
     override init() {
         super.init()
     }
     
-    init(loginDict:[String : AnyObject]) {
+    init(dict:[String : AnyObject]) {
         super.init()
-        self.initWithDict(loginDict)
+        self.ValueWithDict(dict)
     }
     
-    func initWithDict(loginDict:[String : AnyObject]){
-        self.setValuesForKeysWithDictionary(loginDict)
+    func ValueWithDict(dict:[String : AnyObject]){
+        self.setValuesForKeysWithDictionary(dict)
+        self.Average = (self.InnerScore + self.OuterScore)/2
     }
     
     func updateCoordinates(lati : Double, longi : Double) -> Bool {

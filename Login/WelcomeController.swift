@@ -105,7 +105,6 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     
     // MARK: - Helpers
     func isValidEmail(testStr:String) -> Bool {
-        // println("validate calendar: \(testStr)")
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
@@ -114,12 +113,6 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     
     func login() {
         
-//        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-//        let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
-//        
-//        self.presentViewController(nVC, animated: true, completion: nil)
-//        
-//        return
         let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler:nil)
         
         if self.passwordTF.text!.isEmpty || emailTF.text!.isEmpty {
@@ -141,29 +134,37 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         let url:NSString = LoginUrl+"?userID=\(emailTF.text!)&userPWD=\(passwordTF.text!)&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
         let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         
-        
-        let manager = AFHTTPRequestOperationManager()
-        
-        manager.requestSerializer = AFJSONRequestSerializer()
-        manager.responseSerializer = AFJSONResponseSerializer()
-        
-        manager.GET( urlComplete!,
-            parameters: nil,
-            success: { (operation: AFHTTPRequestOperation!,responseObject: AnyObject!) in
-                print(responseObject)
+        AFNetworkTools.getMethod(urlComplete!, success: { (task, response) -> Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                print(response)
+                let dict = response as! NSDictionary
+                SharedUser.changeValue(dict as! [String : AnyObject])
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
+                    let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+                    UserCacheTool().addUserInfo(dict)
+                    NSUserDefaults.standardUserDefaults().setValue(SharedUser.StandardUser().UserIndex, forKey: "Logined")
                     self.presentViewController(nVC, animated: true, completion: { () -> Void in
                     })
+
+                })            })
+            },failure: { (task, error) -> Void in
+                let opera = task?.response as! NSHTTPURLResponse
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    switch opera.statusCode{
+                    case 401:
+                        self.unmatchedLB.hidden = false
+                        self.unmatchedLB.text = "用户名或密码错误"
+                    case 404:
+                        self.unmatchedLB.hidden = false
+                        self.unmatchedLB.text = "用户不存在"
+                    default:
+                        break
+                    }
                 })
-            },
-            failure: { (operation,error) in
-                print(operation?.response?.statusCode)
-                print("Error: " + error.localizedDescription)
-                let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData
-                print(NSString(data: data, encoding: NSUTF8StringEncoding))
-            })
+                
+        })
+       
 
     }
 }

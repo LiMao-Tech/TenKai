@@ -16,8 +16,8 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     var email:String!
     var tenLogin:TenLogin!
     var tenUser:TenUser!
-    var gender:Int?
-    var marriage:Int?
+    var gender:Int = -1
+    var marriage:Int = -1
     
     // Image Picker Variables
     var chosenImage : UIImage?
@@ -56,7 +56,11 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     var energyBar:GTSlider!
     var energyValue:UILabel!
     
+    var button:UIButton!
+    
     let lineLength:CGFloat = SCREEN_WIDTH*0.5
+    
+    var indicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +87,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         scrollView!.bounces = false
         
         
-        let button = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,43))
+        button = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,43))
         button.setTitle("完成", forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(15)
         button.addTarget(self, action: "toRadarPage", forControlEvents: .TouchUpInside)
@@ -95,6 +99,10 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         
         // init buttons
         buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 70, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar_140", targetAction: "toImagePicker")
+        buttonProfile.layer.masksToBounds = true
+        buttonProfile.layer.cornerRadius = buttonProfile.bounds.width*0.5
+        
+        
         let marginX:CGFloat = 35
         
         // init labels
@@ -194,6 +202,13 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         energyValue = UILabel(frame: CGRectMake(CGRectGetMaxX(energyBar.frame)+10, SCREEN_HEIGHT*14/12+40, 20, 20))
         energyValue.text = "0"
         energyValue.textColor = UIColor.whiteColor()
+        
+        indicator = UIActivityIndicatorView(frame: CGRectMake(0,0,30,30))
+        indicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        indicator.activityIndicatorViewStyle = .White
+        
+        self.view.addSubview(indicator)
+        
 
         self.scrollView!.addSubview(buttonProfile!)
         self.scrollView!.addSubview(basicInfoLabel)
@@ -316,11 +331,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     // UI Helper Functions
     func initButton(posX posX: CGFloat, posY: CGFloat, btnWidth: CGFloat, btnHeight: CGFloat, imageName: String, targetAction: Selector) -> UIButton{
         
-        /*UIButton(frame: CGRectMake(0, 0, 110, 110))
-        buttonProfile.center = CGPointMake(self.scrollView!.frame.width/2, self.scrollView!.frame.height/5)
-        buttonProfile.setImage(UIImage(named: "user_pic_110"), forState: UIControlState.Normal)
-        buttonProfile.addTarget(self, action: "toImagePicker", forControlEvents: UIControlEvents.TouchUpInside)*/
-        
         let result = UIButton(frame: CGRectMake(0, 0, btnWidth, btnHeight))
         result.center = CGPointMake(posX, posY)
         result.setImage(UIImage(named: imageName), forState: UIControlState.Normal)
@@ -330,15 +340,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     }
     
     func initLabel(posX posX:CGFloat, posY: CGFloat, labelWidth: CGFloat, labelHeight: CGFloat, labelText: String) -> UILabel{
-        
-        /*
-        UILabel(frame: CGRectMake(scrowViewWidth/10, scrowViewHeight*3/10, 200, 100))
-        basicInfoLabel.text = "Basic Info"
-        basicInfoLabel.font = UIFont(name: "Arial-Bold", size: 20)
-        basicInfoLabel.textColor = UIColor.redColor()
-        basicInfoLabel.numberOfLines = 1;
-        //print("\(scrowViewWidth/8) and \(scrowViewHeight*3/10)")*/
-        
         let resultLabel = UILabel(frame: CGRectMake(posX, posY, labelWidth, labelHeight))
         resultLabel.text = labelText
         resultLabel.font = UIFont(name: FONTNAME_BOLD, size: 16)
@@ -363,7 +364,17 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     }
     
     func toRadarPage(){
-
+        if(username.text!.isEmpty && birthDate.text!.isEmpty){
+            let cancelAction = UIAlertAction(title: "确定", style: .Cancel) { action -> Void in
+                self.scrollView.scrollRectToVisible(CGRectMake(0, 0, 100, 100), animated: true)
+            }
+            let emptyAlertController = UIAlertController(title: "请输入用户名和密码。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            self.presentViewController(emptyAlertController, animated: true, completion: nil)
+            emptyAlertController.addAction(cancelAction)
+            return
+        }
+        button.enabled = false
+        indicator.startAnimating()
         let time = NSDate()
         let format = NSDateFormatter()
         format.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -379,22 +390,16 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             "DeviceToken":DEVICE_TOKEN!,
             "HashValue":hashResult
         ]
-        
-        ALAMO_MANAGER.request(.POST, LoginUrl, parameters: params, encoding: .JSON) .responseJSON {
-            response in
-            if response.result.isSuccess {
-
-                print("To radar Page")
-                print(response.result.value)
-                
-                let dict = response.result.value as! [String : AnyObject]
-                self.tenLogin = TenLogin(loginDict: dict)
-                self.postUser()
-            }
-            else {
+        AFNetworkTools.postMethod(LoginUrl, parameters: params, success: { (task, response) -> Void in
+            print("To radar Page")
+            print(response)
+            let dict = response as! [String : AnyObject]
+            self.tenLogin = TenLogin(loginDict: dict)
+            self.postUser()
+            },failure: { (task, error) -> Void in
                 print("Registration Failed.")
-            }
-        }
+                print(error.localizedDescription)
+        })
     }
     
     func postUser(){
@@ -405,7 +410,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let params = [
             "UserName" : username.text!,
             "PhoneType" : 0,
-            "Gender" : gender!,
+            "Gender" : gender,
             "Marrige" : "0",
             "Birthday" : birthday,
             "JoinedDate" : joinTime,
@@ -418,60 +423,40 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             "Lati" : 0,
             "Longi" : 0
         ]
-        
-        ALAMO_MANAGER.request(.POST, UserUrl, parameters: (params as! [String : AnyObject]), encoding: .JSON) .responseJSON {
-            response in
-            if response.result.isSuccess {
-
-                print("postUser")
-                print(response.result.value)
-                
-                let dict = response.result.value as! [String : AnyObject]
-                self.tenUser = TenUser(loginDict: dict)
-                self.postImage()
-            }
-            else {
+        AFNetworkTools.postMethod(UserUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            print("postUser")
+            print(response)
+            let dict = response as! NSDictionary
+            SharedUser.changeValue(dict as! [String : AnyObject])
+            self.postImage()
+            },failure: { (task, error) -> Void in
                 print("Post User Failed")
-            }
-        }
+        })
     }
     
     func postImage() {
 
-//        let image = UIImageJPEGRepresentation(chosenImage!, 0.3)
-        let image = UIImagePNGRepresentation(chosenImage!)
+        let image = UIImageJPEGRepresentation(chosenImage!, 0.75)
+//        let image = UIImagePNGRepresentation(chosenImage!)
+        tenUser.Portrait = image!
+        let params : NSDictionary = ["id": SharedUser.StandardUser().UserIndex]
         
-        // How did you know it is jpeg?
-        let picName = Tools.getFileNameTime(NSDate())+".png"
-        let params : NSDictionary = ["id": tenUser.UserIndex]
-        
-        
-        ALAMO_MANAGER.upload(.POST, HeadImageUrl,headers: nil, multipartFormData: {multipartFormData -> Void in
-                multipartFormData.appendBodyPart(data: image!, name: "upload", fileName: picName, mimeType: "image/png")
-            },
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .Success(request: let upload, _, _):
-                    upload.response {
-                        response in
-                        print("postImage")
-                        print(response.1)
-                        
-//                        self.putUserIndex()
-                    }
-                    
-                case .Failure(let encodingError):
-                    print("Failed to post Image")
-                    print(encodingError)
-                }
+        AFNetworkTools.postHeadImage(HeadImageUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                print("post Image")
+                print(response)
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.putUserIndex()
+            })
+            },failure: { (task, error) -> Void in
+                print(error.localizedDescription)
         })
     }
     
     
     func putUserIndex(){
-        let params : [String : String] = [
-            "LoginIndex": String(tenLogin.LoginIndex),
-            "UserIndex": String(tenUser.UserIndex),
+        let params = [
+            "LoginIndex": tenLogin.LoginIndex,
+            "UserIndex": tenUser.UserIndex,
             "UserID": tenLogin.UserID,
             "UserPWD": tenLogin.UserPWD,
             "LastLogin": tenLogin.LastLogin,
@@ -481,23 +466,28 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         ]
         
         let putUrl = LoginUrl+"/\(tenLogin.LoginIndex)"
+        AFNetworkTools.putMethod(putUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            print(response)
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.button.enabled = true
+                self.indicator.stopAnimating()
+                NSUserDefaults.standardUserDefaults().setValue(self.tenUser.UserIndex, forKey: "Logined")
+                UserCacheTool().addUserInfoByUser(SharedUser.StandardUser())
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                    let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+                    self.presentViewController(nVC, animated: true, completion: { () -> Void in
+                    })
 
-        Alamofire.request(.PUT, putUrl, parameters: params) .responseJSON {
-            response in
-            
-            print("postUserIndex")
-            print(response.result.value)
-            
-            let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController")
-            self.presentViewController(nVC, animated: true, completion: { () -> Void in
-            })
-        }
+                })            })
+            },failure:  { (task, error) -> Void in
+                print(error.localizedDescription)
+        })
     }
     
     // MARK: Entering the image picker
     func toImagePicker(){
-        //
+        
         print("going to do imagepicker here")
         
         let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -574,6 +564,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let image=info[UIImagePickerControllerOriginalImage] as? UIImage
         chosenImage = image
         self.buttonProfile?.setImage(image, forState: UIControlState.Normal)
+        
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

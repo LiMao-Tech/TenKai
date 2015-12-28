@@ -89,7 +89,10 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
     
     
     func logout(){
-        print("logout")
+        UserCacheTool().deleteUserInfo()
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
+        let wVC = WelcomeController()
+        self.presentViewController(wVC, animated: true, completion: nil)
     }
     
     //thpindelegatemethod

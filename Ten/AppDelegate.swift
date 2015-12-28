@@ -25,7 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        //textfieldColor
+        //remember User
+        let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as? Int
+        if((userIndex) != nil){
+            let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+            UserCacheTool().getUserInfo(userIndex!)
+            self.window?.rootViewController = nVC
+        }
         
         UITextField.appearance().tintColor = ORANGE_COLOR
         print(UUID)

@@ -10,10 +10,10 @@ import UIKit
 
 class SharedUser: TenUser {
     static let sharedUser = SharedUser()
-    class func getSharedUser() -> SharedUser{
+    class func StandardUser() -> SharedUser{
         return sharedUser
     }
-    override init() {
-        super.init()
+    class func changeValue(dict:[String:AnyObject]){
+        sharedUser.setValuesForKeysWithDictionary(dict)
     }
 }
