@@ -14,13 +14,13 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     //property
     var password:String!
     var email:String!
-    var tenLogin:TenLogin!
-    var tenUser:TenUser!
+    var tenLogin:TenLogin?
+    var tenUser:TenUser?
     var gender:Int = -1
     var marriage:Int = -1
     
     // Image Picker Variables
-    var chosenImage : UIImage?
+    var chosenImage : UIImage = UIImage()
     var imageUrl : String?
     var counter : Int?
     
@@ -66,7 +66,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         super.viewDidLoad()
         self.view.backgroundColor = BG_COLOR
         self.title = ProfileTitle
-        chosenImage = UIImage()
         
         let titleView = UIView(frame: CGRectMake(0,0,SCREEN_WIDTH,63))
         self.view.addSubview(titleView)
@@ -242,6 +241,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         self.scrollView!.addSubview(outerValue)
         self.scrollView!.addSubview(energyBar)
         self.scrollView!.addSubview(energyValue)
+        
         self.view.addSubview(button)
         self.view.addSubview(backBtn)
         self.view.addSubview(self.scrollView!)
@@ -347,6 +347,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         resultLabel.numberOfLines = 1;
         return resultLabel
     }
+    
     func initTextFiled(posX posX:CGFloat, posY: CGFloat, width: CGFloat, height: CGFloat)->UITextField{
         let resultTextField = UITextField(frame: CGRectMake(posX, posY, width, height))
         resultTextField.font = UIFont(name: FONTNAME_NORMAL, size: 15)
@@ -363,16 +364,23 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         }
     }
     
-    func toRadarPage(){
-        if(username.text!.isEmpty && birthDate.text!.isEmpty){
+    func toRadarPage() {
+        
+        let sex = maleBtn.enabled || feMaleBtn.enabled
+        let marriage = singleBtn.enabled || marriedBtn.enabled
+        
+        if(username.text!.isEmpty || birthDate.text!.isEmpty || !sex || !marriage) {
             let cancelAction = UIAlertAction(title: "确定", style: .Cancel) { action -> Void in
                 self.scrollView.scrollRectToVisible(CGRectMake(0, 0, 100, 100), animated: true)
             }
-            let emptyAlertController = UIAlertController(title: "请输入用户名和密码。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let emptyAlertController = UIAlertController(title: "请输入必要的信息及头像。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
             self.presentViewController(emptyAlertController, animated: true, completion: nil)
             emptyAlertController.addAction(cancelAction)
+            
             return
         }
+        
         button.enabled = false
         indicator.startAnimating()
         let time = NSDate()
@@ -423,6 +431,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             "Lati" : 0,
             "Longi" : 0
         ]
+        
         AFNetworkTools.postMethod(UserUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print("postUser")
             print(response)
@@ -436,42 +445,45 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     
     func postImage() {
 
-        let image = UIImageJPEGRepresentation(chosenImage!, 0.75)
+        let image = UIImageJPEGRepresentation(chosenImage, 0.75)
 //        let image = UIImagePNGRepresentation(chosenImage!)
-        tenUser.Portrait = image!
-        let params : NSDictionary = ["id": SharedUser.StandardUser().UserIndex]
-        
-        AFNetworkTools.postHeadImage(HeadImageUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        if image != nil {
+            tenUser = SharedUser.StandardUser()
+            tenUser!.Portrait = image!
+            let params : NSDictionary = ["id": SharedUser.StandardUser().UserIndex]
+            
+            AFNetworkTools.postHeadImage(HeadImageUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("post Image")
                 print(response)
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                self.putUserIndex()
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.putUserIndex()
+                })
+                },failure: { (task, error) -> Void in
+                    print(error.localizedDescription)
             })
-            },failure: { (task, error) -> Void in
-                print(error.localizedDescription)
-        })
+        }
     }
     
     
     func putUserIndex(){
         let params = [
-            "LoginIndex": tenLogin.LoginIndex,
-            "UserIndex": tenUser.UserIndex,
-            "UserID": tenLogin.UserID,
-            "UserPWD": tenLogin.UserPWD,
-            "LastLogin": tenLogin.LastLogin,
-            "DeviceUUID": tenLogin.DeviceUUID,
-            "DeviceToken": tenLogin.DeviceToken,
-            "HashValue": tenLogin.HashValue
+            "LoginIndex": tenLogin!.LoginIndex,
+            "UserIndex": tenUser!.UserIndex,
+            "UserID": tenLogin!.UserID,
+            "UserPWD": tenLogin!.UserPWD,
+            "LastLogin": tenLogin!.LastLogin,
+            "DeviceUUID": tenLogin!.DeviceUUID,
+            "DeviceToken": tenLogin!.DeviceToken,
+            "HashValue": tenLogin!.HashValue
         ]
         
-        let putUrl = LoginUrl+"/\(tenLogin.LoginIndex)"
+        let putUrl = LoginUrl+"/\(tenLogin!.LoginIndex)"
         AFNetworkTools.putMethod(putUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print(response)
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.button.enabled = true
                 self.indicator.stopAnimating()
-                NSUserDefaults.standardUserDefaults().setValue(self.tenUser.UserIndex, forKey: "Logined")
+                NSUserDefaults.standardUserDefaults().setValue(self.tenUser!.UserIndex, forKey: "Logined")
                 UserCacheTool().addUserInfoByUser(SharedUser.StandardUser())
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
@@ -496,8 +508,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             {
                 UIAlertAction in
                 self.openCamera()
-                
-        }
+            }
         let gallaryAction = UIAlertAction(title: "Gallary", style: UIAlertActionStyle.Default)
             {
                 UIAlertAction in
@@ -507,7 +518,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
             {
                 UIAlertAction in
                 
-        }
+            }
         
         picker?.delegate = self
         
@@ -560,11 +571,12 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         
         // TODO: add image into profile
         // chosenImages
-        picker .dismissViewControllerAnimated(true, completion: nil)
-        let image=info[UIImagePickerControllerOriginalImage] as? UIImage
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         chosenImage = image
         self.buttonProfile?.setImage(image, forState: UIControlState.Normal)
-        
+        self.buttonProfile.contentMode = UIViewContentMode.ScaleAspectFit
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

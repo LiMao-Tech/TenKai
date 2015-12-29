@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "LMCollectionViewLayout.h"
 
+#import "AFNetworking/AFNetworking.h"
+#import "AFNetworking/AFHTTPSessionManager.h"
+#import "AFNetworking/AFURLSessionManager.h"
+
 @interface ProfilePicsCollectionViewController : UIViewController <LMCollectionViewLayoutDelegate> {
     BOOL isAnimating;
     
@@ -22,6 +26,7 @@
 @property (nonatomic) NSUInteger num;
 
 @property (strong, nonatomic) UICollectionView * lmCollectionView;
+@property (strong, nonatomic) AFHTTPSessionManager * afHttpManager;
 
 @property (nonatomic) NSMutableArray* numbers;
 @property (nonatomic) NSMutableArray* numberWidths;

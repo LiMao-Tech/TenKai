@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 class Tools : NSObject{
     
     class func getNormalTime(date:NSDate) -> String{

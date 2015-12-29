@@ -10,6 +10,7 @@ import UIKit
 import AFNetworking
 
 class AFNetworkTools: NSObject {
+    
     class func getMethod(url:String,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
         let manager = AFHTTPSessionManager()
         manager.requestSerializer = AFJSONRequestSerializer()
@@ -21,6 +22,7 @@ class AFNetworkTools: NSObject {
             print(task?.response)
         })
     }
+    
     class func postMethod(url:String,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
         let manager = AFHTTPSessionManager()
         manager.requestSerializer = AFJSONRequestSerializer()
@@ -45,6 +47,7 @@ class AFNetworkTools: NSObject {
                 failure(task,error)
         })
     }
+    
     class func putMethod(url:String,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
         let manager = AFHTTPSessionManager()
         manager.requestSerializer = AFJSONRequestSerializer()

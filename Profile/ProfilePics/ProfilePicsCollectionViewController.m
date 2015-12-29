@@ -25,8 +25,8 @@ enum CELLSIZE {
 
 static NSString *ProfilePicsCellIdentifier = @"ppCell";
 static NSString *ProfilePicsCellXibName = @"ProfilePicsCollectionViewCell";
-static NSString *hostName = @"http://www.code-desire.com.tw";
-static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/Images/";
+static NSString *hostName = @"http://www.limao-tech.com/Ten/";
+static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImages";
 
 - (id) initWithHeight:(CGFloat) height Width: (CGFloat)width ToolbarHeight: (CGFloat) toolbarHeight {
     self = [super init];
@@ -41,6 +41,12 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // afnetoworking
+    
+    self.afHttpManager = [[AFHTTPSessionManager alloc] init];
+    self.afHttpManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
+    self.afHttpManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
     
     // init the layout data
     self.numberOfPics = 10;
@@ -60,6 +66,15 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
     self.lmCollectionView.alwaysBounceVertical = YES;
     self.lmCollectionView.delegate = self;
     self.lmCollectionView.dataSource = (id)self;
+    
+    // add Image Button
+    UIBarButtonItem *addImageBtn = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"新增"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(addImage)];
+    
+    self.navigationItem.rightBarButtonItem = addImageBtn;
     
     // create toolbar
     UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0,SCREEN_HEIGHT-TOOL_BAR_HEIGHT, SCREEN_WIDTH, TOOL_BAR_HEIGHT)];
@@ -127,6 +142,35 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
     
 }
 
+- (void) addImage {
+    
+}
+
+// SharedUser.StandardUser().UserIndex
+- (void) postImage:(NSData *) imageData toUrl: (NSString *) targetUrl {
+    
+    NSDictionary * params = @{@"id" : @1};
+    
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString * fileDate = [formatter stringFromDate:[[NSDate alloc] init]];
+    NSString * fileName = [fileDate stringByAppendingString:@".png"];
+
+    [self.afHttpManager POST:targetUrl parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData
+                                    name:@"upload"
+                                fileName:fileName
+                                mimeType:@"image/png"];
+    } progress: ^(NSProgress * uploadProgress) {
+        
+    } success: ^(NSURLSessionDataTask * task , id responseObject) {
+         
+     } failure:^(NSURLSessionDataTask * task , NSError * error ) {
+         
+     }];
+    
+
+}
 
 - (void)dataInit {
     self.num = 0;
@@ -134,7 +178,7 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
     self.numberWidths = @[].mutableCopy;
     self.numberHeights = @[].mutableCopy;
     
-    for(; self.num <= self.numberOfPics; self.num++) {
+    for(; self.num < self.numberOfPics; self.num++) {
         [self.numbers addObject:@(self.num)];
         [self.numberWidths addObject:@([self randomLength])];
         [self.numberHeights addObject:@([self randomLength])];
@@ -180,7 +224,7 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
 
 #pragma mark - UICollectionView Delegate
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self magnifyCellAtIndexPath:indexPath];
 }
@@ -194,37 +238,32 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     ProfilePicsCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier : ProfilePicsCellIdentifier forIndexPath:indexPath];
-    if (indexPath.row == self.numberOfPics) {
-        [cell.cellImage setImage: [UIImage imageNamed: @"btn_chat_plus"]];
-    }
-    else {
-        cell.backgroundColor = [self colorForNumber:self.numbers[indexPath.row]];
+    cell.backgroundColor = [self colorForNumber:self.numbers[indexPath.row]];
         
-        UILabel* label = (id)[cell viewWithTag:5];
-        if(!label) label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
-        label.tag = 5;
-        label.textColor = [UIColor blackColor];
-        label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
-        label.backgroundColor = [UIColor clearColor];
-        
-        // Configure the cell
-        NSString *cellImageUrlStr = [NSString stringWithFormat:@"%@%ld.png", cloudAddrYumen, (long)indexPath.row];
-        NSURL * cellImageUrl = [NSURL URLWithString : cellImageUrlStr];
+    UILabel* label = (id)[cell viewWithTag:5];
+    if(!label) label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
+    label.tag = 5;
+    label.textColor = [UIColor blackColor];
+    label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
+    label.backgroundColor = [UIColor clearColor];
+    
+    // Configure the cell
+    NSString *cellImageUrlStr = [NSString stringWithFormat:@"%@%ld.png", cloudAddrYumen,(long)indexPath.row];
+    NSURL * cellImageUrl = [NSURL URLWithString : cellImageUrlStr];
         
         
-        [self downloadImageWithURL:cellImageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
-            if (succeeded) {
-                // change the image in the cell
-                [cell.cellImage setImage: image];
-                
-                // cache the image for use later (when scrolling up)
-            }
-            else {
-                NSLog(@"Waiting for image.");
-            }
-        }];
-    }
-
+    [self downloadImageWithURL:cellImageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
+        if (succeeded) {
+            // change the image in the cell
+            [cell.cellImage setImage: image];
+            
+            // cache the image for use later (when scrolling up)
+        }
+        else {
+            NSLog(@"Waiting for image.");
+        }
+    }];
+    
     return cell;
 }
 
@@ -282,7 +321,7 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
     }];
 }
 
-- (void)magnifyCellAtIndexPath:(NSIndexPath *)indexPath {
+- (void) magnifyCellAtIndexPath:(NSIndexPath *)indexPath {
     if(!self.numbers.count || indexPath.row > self.numbers.count) return;
     
     if(isAnimating) return;
@@ -321,7 +360,7 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/Barter/I
     return 1;
 }
 
-- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
+- (void) downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request

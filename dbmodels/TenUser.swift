@@ -30,7 +30,7 @@ class TenUser: NSObject {
     var ProfileUrl = ""
     var Average = 0
     
-    var Portrait = NSData()
+    var Portrait : NSData?
 
     
     override init() {

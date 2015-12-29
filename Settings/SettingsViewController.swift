@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import THPinViewController
 
 class SettingsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var settingList:UITableView!
@@ -94,40 +93,6 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
         let wVC = WelcomeController()
         self.presentViewController(wVC, animated: true, completion: nil)
     }
-    
-    //thpindelegatemethod
-    func pinLengthForPinView(pinView: THPinView!) -> UInt {
-        return 4
-    }
-    func pinView(pinView: THPinView!, isPinValid pin: String!) -> Bool {
-        return true
-    }
-    func userCanRetryInPinViewController(pinViewController: THPinViewController!) -> Bool {
-        return self.remainingPinEntries > 0
-    }
-    func incorrectPinEnteredInPinViewController(pinViewController: THPinViewController!){
-        
-    }
-    func pinViewControllerWillDismissAfterPinEntryWasSuccessful(pinViewController: THPinViewController!){
-        
-    }
-    func pinViewControllerDidDismissAfterPinEntryWasSuccessful(pinViewController: THPinViewController!){
-        
-    }
-    func pinViewControllerWillDismissAfterPinEntryWasUnsuccessful(pinViewController: THPinViewController!){
-        
-    }
-    func pinViewControllerDidDismissAfterPinEntryWasUnsuccessful(pinViewController: THPinViewController!){
-        
-    }
-    func pinViewControllerWillDismissAfterPinEntryWasCancelled(pinViewController: THPinViewController!){
-        
-    }
-    func pinViewControllerDidDismissAfterPinEntryWasCancelled(pinViewController: THPinViewController!){
-        
-    }
-
-        
 
     /*
     // MARK: - Navigation

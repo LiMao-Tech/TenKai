@@ -48,7 +48,7 @@
     self = [super init];
     _screenFrame = frame;
     _startingPoint= CGPointMake(BUTTON_DENO, _screenFrame.size.height*(BUTTON_DENO-1)/BUTTON_DENO);
-    NSArray * names = [[NSArray alloc] initWithObjects: @"btn_menu_search_female", @"btn_menu_search_male", @"btn_menu_search_all", @"btn_menu_profile", @"btn_menu_chat_normal", @"btn_menu_notification_normal", @"btn_menu_setting", nil];
+    NSArray * names = [[NSArray alloc] initWithObjects: @"btn_menu_search_female", @"btn_menu_search_male", @"btn_menu_search_all", @"btn_menu_profile", @"btn_menu_radar", @"btn_menu_chat_normal", @"btn_menu_notification_normal", @"btn_menu_setting", nil];
     if (self)
     {
         _iNumberOfButtons = names.count;
@@ -139,15 +139,15 @@
     
     //1st circle initialization
     float incAngle = ( 117/3 )*M_PI/180.0 ;
-    float curAngle = -1.19;//more value more to left;
+    float curAngle = -1.19; //more value more to left;
     float circleRadius = _fInnerRadius;
     
     for (int i = 0; i < _iNumberOfButtons; i++)
     {
         if(i == 3)//2nd circle
         {
-            curAngle = -1.09;
-            incAngle = ( 105/5 )*M_PI/180.0;
+            curAngle = -1.35;
+            incAngle = ( 100/5 )*M_PI/180.0;
             circleRadius = _fInnerRadius + 60;
         }
 

@@ -235,25 +235,28 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.navigationController?.pushViewController(pVC, animated: true)
         
         case 4:
+            self.circularMenuVC.resignFirstResponder()
+            
+        case 5:
             self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
             self.navigationController?.navigationBar.hidden = false
             let cVC = ChatViewController()
             self.navigationController?.pushViewController(cVC, animated: true)
             
-        case 5:
+        case 6:
             self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
             self.navigationController?.navigationBar.hidden = false
             let nVC = NotificationViewController()
             self.navigationController?.pushViewController(nVC, animated: true)
             
-        case 6:
+        case 7:
             self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
             self.navigationController?.navigationBar.hidden = false
             let sVC = SettingsViewController()
             self.navigationController?.pushViewController(sVC, animated: true)
             
         default:
-            print("Not Implemented yet!")
+            self.circularMenuVC.resignFirstResponder()
         }
 
     }
