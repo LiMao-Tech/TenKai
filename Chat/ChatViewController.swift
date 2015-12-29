@@ -11,11 +11,13 @@ import UIKit
 
 let screenBounds = UIScreen.mainScreen().bounds
 
-class ChatViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     var tabView:UIView!
     var userList:UITableView!
     var modelType:chatType = .Active
     var selectedBtn:SettingButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = ChatTitle
@@ -24,6 +26,7 @@ class ChatViewController: UIViewController,UITableViewDataSource,UITableViewDele
         //        userList.reloadData()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
     func setup(){
         tabView = UIView(frame: CGRectMake(0, 64, SCREEN_WIDTH, TAP_BAR_HEIGHT))
         let item = SettingButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))

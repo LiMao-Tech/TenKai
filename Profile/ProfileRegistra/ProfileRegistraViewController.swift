@@ -105,8 +105,8 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let marginX:CGFloat = 35
         
         // init labels
-        let basicInfoLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*2/12, labelWidth: 100, labelHeight: 100, labelText: "Basic Info")
-        let userNameLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*3/12, labelWidth: 100, labelHeight: 100, labelText: "Username")
+        let basicInfoLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*2/12, labelWidth: 100, labelHeight: 100, labelText: "基本信息")
+        let userNameLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*3/12, labelWidth: 100, labelHeight: 100, labelText: "用户名＊")
         let textX = CGRectGetMaxX(userNameLabel.frame) + 20
         
         username = UITextField(frame: CGRectMake(textX,SCREEN_HEIGHT*3/12+40, lineLength, 20))
@@ -116,7 +116,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let userLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(username.frame)+2, lineLength, 1))
         userLine.backgroundColor = UIColor.whiteColor()
         
-        let dateOfBirthLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*4/12, labelWidth: 100, labelHeight: 100, labelText: "Date of Birth*")
+        let dateOfBirthLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*4/12, labelWidth: 100, labelHeight: 100, labelText: "生日＊")
         birthDate = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*4/12+40, lineLength, 20))
         birthDate.textColor = UIColor.whiteColor()
         birthDate.font = UIFont(name: FONTNAME_NORMAL, size: 15)
@@ -133,23 +133,23 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         birthDate.inputAccessoryView = accessoryView
         let birthLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(birthDate.frame)+2, lineLength, 1))
         birthLine.backgroundColor = UIColor.whiteColor()
-        let sexLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*5/12, labelWidth: 200, labelHeight: 100, labelText: "Sex*")
+        let sexLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*5/12, labelWidth: 200, labelHeight: 100, labelText: "性别＊")
         
-        feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 62, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Female", action: "sexBtnClicked:")
-        maleBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*5/12+40, 50, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Male", action: "sexBtnClicked:")
-        let marriageLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*6/12, labelWidth: 200, labelHeight: 100, labelText: "Marriage")
-        singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Single", action: "marriageBtnClicked:")
-        marriedBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*6/12+40, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Married", action: "marriageBtnClicked:")
+        feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 62, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  女", action: "sexBtnClicked:")
+        maleBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*5/12+40, 50, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  男", action: "sexBtnClicked:")
+        let marriageLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*6/12, labelWidth: 200, labelHeight: 100, labelText: "婚姻＊")
+        singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身", action: "marriageBtnClicked:")
+        marriedBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*6/12+40, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚", action: "marriageBtnClicked:")
         
         // Email Label
-        let emailLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*7/12, labelWidth: 200, labelHeight: 100, labelText: "Email")
+        let emailLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*7/12, labelWidth: 200, labelHeight: 100, labelText: "邮箱")
         emailAddr = UILabel(frame: CGRectMake(textX, SCREEN_HEIGHT*7/12+40, lineLength, 20))
         emailAddr.textColor = UIColor(red: 137.0/255.0, green: 142.0/255.0, blue: 153.0/255.0, alpha: 1.0)
         emailAddr.font = UIFont(name: FONTNAME_NORMAL, size: 15)
         emailAddr.text = email
         
         // Hobby Label
-        let hobbyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*8/12, labelWidth: 200, labelHeight: 100, labelText: "Hobby")
+        let hobbyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*8/12, labelWidth: 200, labelHeight: 100, labelText: "兴趣")
         hobby = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*8/12+40, lineLength, 20))
         hobby.textColor = UIColor.whiteColor()
         hobby.font = UIFont(name: FONTNAME_NORMAL, size: 15)
@@ -158,10 +158,10 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
 
         let hobbyLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(hobby.frame)+2, lineLength, 1))
         hobbyLine.backgroundColor = UIColor.whiteColor()
-        let moreDetailLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*9/12, labelWidth: 200, labelHeight: 100, labelText: "More Details")
+        let moreDetailLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*9/12, labelWidth: 200, labelHeight: 100, labelText: "更多细节")
         
         // Status Label
-        let statusLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*10/12, labelWidth: 200, labelHeight: 100, labelText: "Status")
+        let statusLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*10/12, labelWidth: 200, labelHeight: 100, labelText: "状态")
         statusDetail = UITextView(frame: CGRectMake(textX, SCREEN_HEIGHT*10/12+40, lineLength, SCREEN_HEIGHT*2/12-10))
         statusDetail.backgroundColor = UIColor.blackColor()
         statusDetail.textColor = UIColor.whiteColor()
@@ -169,13 +169,13 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         statusDetail.font = UIFont.systemFontOfSize(15)
         statusDetail.delegate = self
         placeHolder = UILabel(frame: CGRectMake(5, 5, lineLength-5, 20))
-        placeHolder.text = "There is so much to.."
+        placeHolder.text = "有很多要说。。。"
         placeHolder.textColor = WHITEGRAY_COLOR
         placeHolder.font = UIFont.systemFontOfSize(15)
         self.statusDetail.addSubview(placeHolder)
         
         // Inner Label
-        let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: 200, labelHeight: 100, labelText: "Inner")
+        let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: 200, labelHeight: 100, labelText: "内在")
         innerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
         innerBar.minimumValue = 0
         innerBar.maximumValue = 10
@@ -184,7 +184,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         innerValue.text = "0"
         innerValue.textColor = UIColor.whiteColor()
         
-        let OuterLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*13/12, labelWidth: 200, labelHeight: 100, labelText: "Outer")
+        let OuterLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*13/12, labelWidth: 200, labelHeight: 100, labelText: "外在")
         outerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*13/12+40, lineLength-30, 20))
         outerBar.minimumValue = 0
         outerBar.maximumValue = 10
@@ -193,7 +193,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         outerValue.text = "0"
         outerValue.textColor = UIColor.whiteColor()
         
-        let EnergyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*14/12, labelWidth: 200, labelHeight: 100, labelText: "Energy")
+        let EnergyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*14/12, labelWidth: 200, labelHeight: 100, labelText: "能量")
         energyBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*14/12+40, lineLength-30, 20))
         energyBar.minimumValue = 0
         energyBar.maximumValue = 10

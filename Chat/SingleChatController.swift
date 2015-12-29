@@ -9,6 +9,7 @@
 import UIKit
 
 class SingleChatController: UIViewController,UITableViewDelegate,UITableViewDataSource,GTFaceButtonDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    
     let screenBounds = UIScreen.mainScreen().bounds.size
     var messages = NSMutableArray()
     var bottom : UIView!
@@ -76,7 +77,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         messageList.delegate = self
         messageList.bounces = true
         initialFrame = messageList.frame
-        //        getMessages()
+        // getMessages()
         self.rollToLastRow()
         messageList.allowsSelection = false
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
@@ -303,6 +304,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         needTransfrom = true
         self.view.endEditing(true)
     }
+    
     /**
     点击发送按钮调用
     */
@@ -411,6 +413,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         }
         return attrString.string
     }
+    
     /**
     *  string转attributeString
     */
@@ -426,6 +429,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
                     array.append(result!)
             }
         }
+        
         if(array.count > 0){
             isString = false
             let len = text.length - (array[array.count-1].range.location + array[array.count-1].range.length)

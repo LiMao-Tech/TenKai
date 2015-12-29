@@ -68,6 +68,7 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     self.lmCollectionView.dataSource = (id)self;
     
     // add Image Button
+    
     UIBarButtonItem *addImageBtn = [[UIBarButtonItem alloc]
                                    initWithTitle:@"新增"
                                    style:UIBarButtonItemStylePlain

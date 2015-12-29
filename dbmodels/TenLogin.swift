@@ -15,25 +15,16 @@ Backend.
 
 
 class TenLogin : NSObject {
+    
     var LoginIndex : Int = 0
     var UserIndex : Int = 0
     var UserID : String = ""
     var UserPWD : String = ""
     var LastLogin : String = ""
-    var DeviceUUID : String = "" // 16 bytes == 128 bits
+    var DeviceUUID : String = ""    // 16 bytes == 128 bits
     var DeviceToken : String = ""  // 64 bytes
     var HashValue : String = ""     // 64 bytes
-    
-//    init(userID : String, userPWD : String, lastLogin : NSDate,
-//        deviceUUID : [UInt8], deviceToken : [UInt8], hashValue : [UInt8]) {
-//        
-//        self.UserID = userID
-//        self.UserPWD = userPWD
-//        self.LastLogin = lastLogin
-//        self.DeviceUUID = deviceUUID
-//        self.DeviceToken = deviceToken
-//        self.HashValue = hashValue
-//    }
+
     init(loginDict:[String : AnyObject]){
         super.init()
         self.setValuesForKeysWithDictionary(loginDict)

@@ -13,13 +13,14 @@ enum ChatBelongType:Int {
     case Other
 }
 
-enum ChatMessageType: Int{
+enum ChatMessageType: Int {
     case Message
     case Image
     case Pcoin
 }
 
 class SingleChatMessage: NSObject {
+    
     var SenderId = 0
     var receiverId = 0
     var MsgId = 0
@@ -27,7 +28,7 @@ class SingleChatMessage: NSObject {
     var Msg = ""
     var isString = true
     var attrMsg = NSMutableAttributedString()
-    var nickName:NSString = ""
+    var nickName : String?
     var timeHide = false
     var belongType = ChatBelongType.Me
     var messageType = ChatMessageType.Message

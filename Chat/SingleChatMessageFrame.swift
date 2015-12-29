@@ -25,7 +25,8 @@ class SingleChatMessageFrame: NSObject {
                 contentHeight = chatMessage.attrMsg.boundingRectWithSize(maxSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).height
                 }
                 cellHeight = contentHeight + 60
-            }else if(chatMessage.messageType == ChatMessageType.Message){
+            }
+            else if(chatMessage.messageType == ChatMessageType.Message){
                 
             }
            

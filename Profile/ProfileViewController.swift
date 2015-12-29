@@ -103,7 +103,10 @@ class ProfileViewController: UIViewController {
     
     func pushPictureCollectionView() {
         
+        
         let pPCVC = ProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT)
+        let backBtn = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = backBtn
         self.navigationController?.pushViewController(pPCVC, animated: true)
     }
     
