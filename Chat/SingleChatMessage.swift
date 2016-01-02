@@ -37,9 +37,8 @@ class SingleChatMessage: NSObject {
         super.init()
     }
     
-    init(dict :NSDictionary){
+    init(dict :NSDictionary) {
         super.init()
         self.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
     }
-    
 }

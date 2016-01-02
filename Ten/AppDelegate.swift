@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         //remember User
         let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as? Int
-        if((userIndex) != nil){
+        if userIndex != nil {
             let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
             UserCacheTool().getUserInfo(userIndex!)
@@ -193,6 +193,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
         print("in Will Terminate State, byebye")
     }
 

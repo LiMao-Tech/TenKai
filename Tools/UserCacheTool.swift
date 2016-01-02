@@ -10,6 +10,7 @@ import UIKit
 
 
 class UserCacheTool: NSObject {
+    
      var dbq:FMDatabaseQueue!
  
      override init() {
@@ -39,6 +40,7 @@ class UserCacheTool: NSObject {
             }
         }
     }
+    
     func addUserPortrait(portrait:UIImage){
         let date = UIImagePNGRepresentation(portrait)
         let sql_update = "UPDATE USERINFO SET PORTRATI = ? WHERE USERINDEX = ?"
@@ -84,6 +86,7 @@ class UserCacheTool: NSObject {
         }
         return SharedUser.StandardUser()
     }
+    
     func deleteUserInfo(){
         let sql_delete = "DELETE FROM USERINFO WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in

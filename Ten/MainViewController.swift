@@ -68,16 +68,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         distanceLabel.textColor = UIColor.whiteColor()
         distanceLabel.font = UIFont(name: FONTNAME_NORMAL, size: 16)
         distanceLabel.textAlignment = .Center
-        
-        // gif
-//        let l = SCREEN_WIDTH*0.915
-//        let gifView = YLImageView(frame: CGRectMake(0, 0, l, l))
-//        gifView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-//        
-//        YLGIFImage.setPrefetchNum(5)
-//        let path = NSBundle.mainBundle().URLForResource("Radar", withExtension: "gif")?.absoluteString as String!
-//        gifView.image = YLGIFImage(contentsOfFile: path)
-        
+
         //setupButtons
         setupButtons()
         
@@ -112,8 +103,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         refreshBtn.setImage(UIImage(named: "btn_radar_refresh"), forState: .Normal)
         refreshBtn.addTarget(self, action: "refreshBtnClicked", forControlEvents: .TouchUpInside)
         
-//        self.view.addSubview(bg)
-//        self.view.addSubview(gifView)
         self.view.addSubview(menuButton)
         self.view.addSubview(randomButton)
         self.view.addSubview(distance)
@@ -148,6 +137,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     func refreshBtnClicked(){
+        
+        // TODO:
         print("refresh")
     }
     
@@ -206,9 +197,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     
     func circularMenuClickedButtonAtIndex(buttonIndex: Int32) {
-        // did select subMenu
-        
-        print("selected: \(buttonIndex)")
         
         //TODO: add more pos to different pages
         

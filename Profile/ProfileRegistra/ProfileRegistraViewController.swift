@@ -410,7 +410,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         })
     }
     
-    func postUser(){
+    func postUser() {
         
         let birthday = birthDate.text!
         let joinTime = Tools.getNormalTime(NSDate())

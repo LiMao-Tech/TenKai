@@ -10,11 +10,16 @@ import UIKit
 
 // urls
 let LocationNotiName = "LocationNotification"
-let UpdateLocationByIdURL = "http://www.code-desire.com.tw/LiMaoMVC/TenUsers/UpdateLocationByID"
-let MainUrl = "http://www.limao-tech.com/Ten/api/"
-let LoginUrl = MainUrl + "TenLogins"
-let UserUrl = MainUrl + "TenUsers"
-let HeadImageUrl = "http://www.limao-tech.com/Ten/TenImage/UploadProfileImage"
+
+let HomeUrl = "http://www.limao-tech.com/"
+
+let ApiUrl = HomeUrl + "Ten/api/"
+let LoginUrl = ApiUrl + "TenLogins"
+let UserUrl = ApiUrl + "TenUsers"
+let MsgUrl = ApiUrl + "TenMsgs"
+
+let UpdateLocationByIdURL = HomeUrl + "Ten/TenUsers/UpdateLocationByID"
+let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage"
 
 //screenFrame
 let SCREEN = UIScreen.mainScreen().bounds
@@ -55,5 +60,5 @@ let RandomTitle = "随机"
 //Colors
 let BG_COLOR = UIColor(red: 29.0/255.0, green: 29.0/255.0, blue: 29.0/255.0, alpha: 1.0)
 let NAV_BAR_COLOR = UIColor(red: 25.0/255.0, green: 25.0/255.0, blue: 25.0/255.0, alpha: 1.0)
-let ORANGE_COLOR = UIColor(red: 255.0/255.0, green: 90.0/255.0, blue: 85.0/255.0, alpha: 1.0)//ff5a55
+let ORANGE_COLOR = UIColor(red: 255.0/255.0, green: 90.0/255.0, blue: 85.0/255.0, alpha: 1.0) //ff5a55
 let WHITEGRAY_COLOR = UIColor(red: 95.0/255.0, green: 95.0/255.0, blue: 95.0/255.0, alpha: 1.0)

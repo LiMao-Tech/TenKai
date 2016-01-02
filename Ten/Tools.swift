@@ -12,21 +12,21 @@ import Foundation
 
 class Tools : NSObject{
     
+    static let Formatter = NSDateFormatter()
+    
     class func getNormalTime(date:NSDate) -> String{
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return formatter.stringFromDate(date)
+        Formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return Formatter.stringFromDate(date)
     }
     
     class func formatStringTime(time: String) -> String{
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
-        return Tools.getNormalTime(formatter.dateFromString(time)!)
+        Formatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
+        return Tools.getNormalTime(Formatter.dateFromString(time)!)
     }
     
     class func getFileNameTime(date:NSDate) -> String{
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyyMMddHHmmss"
-        return formatter.stringFromDate(date)
+        Formatter.dateFormat = "yyyyMMddHHmmss"
+        return Formatter.stringFromDate(date)
     }
+    
 }

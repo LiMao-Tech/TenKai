@@ -2,15 +2,21 @@
 //  SingleChatController.swift
 //  swiftChat
 //
-//  Created by gt on 15/9/1.
+//  Created by gt on 15/9/1. Modifed by Yumen Cao
 //  Copyright (c) 2015年 gt. All rights reserved.
 //
 
 import UIKit
 
-class SingleChatController: UIViewController,UITableViewDelegate,UITableViewDataSource,GTFaceButtonDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-    
-    let screenBounds = UIScreen.mainScreen().bounds.size
+class SingleChatController : UIViewController,
+                            UITableViewDelegate,
+                            UITableViewDataSource,
+                            GTFaceButtonDelegate,
+                            UITextViewDelegate,
+                            UIActionSheetDelegate,
+                            UIImagePickerControllerDelegate,
+                            UINavigationControllerDelegate
+{
     var messages = NSMutableArray()
     var bottom : UIView!
     var addBtn : UIButton!
@@ -39,50 +45,8 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         refreshControl()
         // Do any additional setup after loading the view.
     }
-    func setup(){
-        let background = UIImageView(frame: CGRectMake(0, 0, screenBounds.width, screenBounds.height))
-        background.image = UIImage(named: "bg_chat_")
-        self.view.backgroundColor = UIColor.clearColor()
-        faceView = GTFaceView(faceDelegateTemp:self)
-        bottom = UIView(frame: CGRectMake(0, screenBounds.height-44, screenBounds.width, 44))
-        self.view.addSubview(bottom)
-        bottomImage = UIImageView(frame: bottom.bounds)
-        bottomImage.image = UIImage(named: "navBar_blank")
-        bottom.addSubview(bottomImage)
-        addBtn = UIButton(frame: CGRectMake(margin, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
-        addBtn.setImage(UIImage(named: "btn_chat_plus"), forState:UIControlState.Normal)
-        addBtn.addTarget(self, action: "addBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
-        bottom.addSubview(addBtn)
-        faceBtn = UIButton(frame: CGRectMake(CGRectGetMaxX(addBtn.frame) + margin, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
-        faceBtn.setImage(UIImage(named: "btn_chat_emoji"), forState:UIControlState.Normal)
-        faceBtn.addTarget(self, action: "faceBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
-        bottom.addSubview(faceBtn)
-        sendBtn = UIButton(frame: CGRectMake(screenBounds.width-35, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
-        sendBtn.setImage(UIImage(named: "btn_chat_sendsmg"), forState:UIControlState.Normal)
-        //        sendBtn.addTarget(self, action: "sendBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
-        bottom.addSubview(sendBtn)
-        contentText = UITextView(frame: CGRectMake(CGRectGetMaxX(faceBtn.frame) + margin, 6, screenBounds.width-3*iconSize-5*margin, 32))
-        contentText.delegate = self
-        contentText.layer.masksToBounds = true
-        contentText.layer.cornerRadius = 3
-        contentText.bounces = false
-        contentText.font = UIFont.systemFontOfSize(15)
-        bottom.addSubview(contentText)
-        messageList = UITableView(frame: CGRectMake(0, 64, screenBounds.width, screenBounds.height-64-44))
-        messageList.separatorStyle = UITableViewCellSeparatorStyle.None
-        messageList.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
-        self.view.addSubview(messageList)
-        messageList.allowsSelection = false
-        messageList.dataSource = self
-        messageList.delegate = self
-        messageList.bounces = true
-        initialFrame = messageList.frame
-        // getMessages()
-        self.rollToLastRow()
-        messageList.allowsSelection = false
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-    }
+    
+    
     
     func refreshControl(){
         let refresh = UIRefreshControl()
@@ -93,12 +57,11 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
     
     func refreshStateChange(refresh:UIRefreshControl){
         refresh.endRefreshing()
-        print("refreshed")
     }
 
     
     func getMessages(){
-        let url :NSURL = NSURL(string: "http://www.code-desire.com.tw/LiMao/upload/Joe/clsDbManager/chatGetMsgList.aspx")!
+
         let request : NSMutableURLRequest = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "post"
         let myID = NSUserDefaults.standardUserDefaults().objectForKey("myID") as! String
@@ -106,10 +69,12 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         let body = NSString(string:"MemberID=\(myID)&ReceiverID=\(memberID)")
         request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
         print(body)
+        
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response:NSURLResponse?, responseData: NSData?, error:NSError?) -> Void in
             let dict: NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
             let memberList = dict.objectForKey("Msg List") as! NSString
             let messagesContent = (try! NSJSONSerialization.JSONObjectWithData(memberList.dataUsingEncoding(NSUTF8StringEncoding)!, options:NSJSONReadingOptions.MutableContainers)) as! NSMutableArray
+            
             if(messagesContent.count > 0){
                 for message in messagesContent{
                     let chatFrame = SingleChatMessageFrame()
@@ -163,6 +128,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         cell?.chatFrame = message
         return cell!
     }
+    
     /**
     GTFaceButton代理函数
     */
@@ -181,13 +147,45 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         self.frameChange()
         
     }
-    /**
-    点击加号按钮
-    */
+    
+    func sendBtnClicked() {
+        
+        if((contentText.attributedText.length > 0) && !contentText.text.isEmpty){
+            let text = self.attributeStringToString()
+            
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let currTime = NSDate()
+            
+            let params : NSDictionary = [
+                "Sender": 1,
+                "Receiver": 1,
+                "PhoneType": 0,
+                "IsLocked": false,
+                "MsgType": 1,
+                "MsgTime": formatter.stringFromDate(currTime),
+                "MsgContent": text
+            ]
+            
+            AFNetworkTools.postMethod(MsgUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                print("postMsg")
+                print(response)
+                self.getMessages()
+                },
+                failure: { (task, error) -> Void in
+                    print("Post User Failed")
+            })
+            contentText.text = ""
+            frameChange()
+        }
+    }
+    
+    // 点击加号按钮
     func addBtnClicked(){
        let actionsheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Attach Photo", "Transfer P Coin")
         actionsheet.showInView(self.view)
     }
+    
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         switch buttonIndex {
         case 1:
@@ -198,6 +196,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
             break
         }
     }
+    
     func choosePhoto(){
         print("photo")
         let pickerController = DKImagePickerController()
@@ -225,9 +224,8 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
     func transformCoin(){
         print("coin")
     }
-    /**
-    点击表情按钮
-    */
+    
+    // 点击表情按钮
     func faceBtnClicked(){
         if(keyboardIsShow){
             needTransfrom = false
@@ -245,13 +243,11 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         }
         contentText.becomeFirstResponder()
     }
-    /**
-    键盘弹出
-    */
+    
+    // 键盘弹出
     func keyboardWillShow(note:NSNotification){
 
         let userInfo:NSDictionary = note.userInfo!
-//        print(userInfo)
         let aValue = userInfo.objectForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
         let value = aValue.CGRectValue()
         let h = value.height
@@ -274,9 +270,8 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         }
         keyBoardHeight = h
     }
-    /**
-    键盘收回
-    */
+    
+    // 键盘收回
     func keyboardWillHide(note:NSNotification){
         let userInfo:NSDictionary = note.userInfo!
         let aValue = userInfo.objectForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
@@ -305,34 +300,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         self.view.endEditing(true)
     }
     
-    /**
-    点击发送按钮调用
-    */
-    func sendBtnClicked(){
-        if((contentText.attributedText.length > 0) && !contentText.text.isEmpty){
-            let text = self.attributeStringToString()
-            let url :NSURL = NSURL(string: "http://www.code-desire.com.tw/LiMao/upload/Joe/clsDbManager/ChatPost.aspx")!
-            let request : NSMutableURLRequest = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = "post"
-            let myID = NSUserDefaults.standardUserDefaults().objectForKey("myID") as! String
-            let memberID = member.objectForKey("MemberId") as! Int
-            let body = NSString(string:"MemberID=\(myID)&ReceiverID=\(memberID)&Msg=\(text)")
-            request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
-//            print(body)
-//            print(self.contentText.attributedText)
-//            print("---------------------")
-//            print(self.contentText.text)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response, responseData, error) -> Void in
-//               let dict: NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.getMessages()
-                    print("datareloaded")
-                })
-            })
-        contentText.text = ""
-            frameChange()
-        }
-    }
+    
     /**
     当输入变化时调用
     */
@@ -364,17 +332,19 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
             var faceFrame = self.faceBtn.frame
             var sendFrame = self.sendBtn.frame
             bottomFrame.size.height = contentFrame.size.height + 12
-            if(!keyboardIsShow){
-                bottomFrame.origin.y = screenBounds.height - bottomFrame.size.height
+            if !keyboardIsShow {
+                bottomFrame.origin.y = SCREEN_HEIGHT - bottomFrame.size.height
             }
-            else{
-                bottomFrame.origin.y = screenBounds.height - bottomFrame.size.height - keyBoardHeight
+            else {
+                bottomFrame.origin.y = SCREEN_HEIGHT - bottomFrame.size.height - keyBoardHeight
             }
+            
             tableFrame.size.height = bottomFrame.origin.y - 64
             contentFrame.origin.y = bottomFrame.height - contentFrame.size.height - 6
             addFrame.origin.y = bottomFrame.height - 36
             sendFrame.origin.y = bottomFrame.height - 36
             faceFrame.origin.y = bottomFrame.height - 36
+            
             self.sendBtn.frame = sendFrame
             self.addBtn.frame = addFrame
             self.faceBtn.frame = faceFrame
@@ -382,6 +352,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
             self.bottom.frame = bottomFrame
             self.bottomImage.frame = self.bottom.bounds
             self.contentText.frame = contentFrame
+            
             contentHeight = contentFrame.size.height
         }
         contentFrame.size = self.contentText.contentSize
@@ -397,10 +368,68 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
             messageList.scrollToRowAtIndexPath(index, atScrollPosition: UITableViewScrollPosition.Top, animated: false)
         }
     }
-    /**
-    *  attributeString转换String
-    */
-    func attributeStringToString()->String{
+    
+    func setup(){
+        let background = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
+        background.image = UIImage(named: "bg_chat_")
+        self.view.backgroundColor = UIColor.clearColor()
+        faceView = GTFaceView(faceDelegateTemp:self)
+        
+        bottom = UIView(frame: CGRectMake(0, SCREEN_HEIGHT-44, SCREEN_WIDTH, 44))
+        
+        bottomImage = UIImageView(frame: bottom.bounds)
+        bottomImage.image = UIImage(named: "navBar_blank")
+        
+        addBtn = UIButton(frame: CGRectMake(margin, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
+        addBtn.setImage(UIImage(named: "btn_chat_plus"), forState:UIControlState.Normal)
+        addBtn.addTarget(self, action: "addBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        faceBtn = UIButton(frame: CGRectMake(CGRectGetMaxX(addBtn.frame) + margin, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
+        faceBtn.setImage(UIImage(named: "btn_chat_emoji"), forState:UIControlState.Normal)
+        faceBtn.addTarget(self, action: "faceBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        sendBtn = UIButton(frame: CGRectMake(SCREEN_WIDTH-35, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
+        sendBtn.setImage(UIImage(named: "btn_chat_sendsmg"), forState:UIControlState.Normal)
+        sendBtn.addTarget(self, action: "sendBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        contentText = UITextView(frame: CGRectMake(CGRectGetMaxX(faceBtn.frame) + margin, 6, SCREEN_WIDTH-3*iconSize-5*margin, 32))
+        contentText.delegate = self
+        contentText.layer.masksToBounds = true
+        contentText.layer.cornerRadius = 3
+        contentText.bounces = false
+        contentText.font = UIFont.systemFontOfSize(15)
+        
+        messageList = UITableView(frame: CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-44))
+        messageList.separatorStyle = UITableViewCellSeparatorStyle.None
+        messageList.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
+        messageList.allowsSelection = false
+        messageList.dataSource = self
+        messageList.delegate = self
+        messageList.bounces = true
+        messageList.allowsSelection = false
+        initialFrame = messageList.frame
+        
+        // add all the items
+        
+        bottom.addSubview(bottomImage)
+        bottom.addSubview(addBtn)
+        bottom.addSubview(faceBtn)
+        bottom.addSubview(sendBtn)
+        bottom.addSubview(contentText)
+        self.view.addSubview(bottom)
+        self.view.addSubview(messageList)
+        
+        // getMessages()
+        self.rollToLastRow()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    // attributeString转换String
+
+    func attributeStringToString() -> String {
+        
         let attrString = NSMutableAttributedString()
         attrString.appendAttributedString(contentText.attributedText)
         attrString.enumerateAttributesInRange(NSMakeRange(0, attrString.length), options: NSAttributedStringEnumerationOptions.Reverse) { (attrs, range, stop) -> Void in
@@ -414,9 +443,7 @@ class SingleChatController: UIViewController,UITableViewDelegate,UITableViewData
         return attrString.string
     }
     
-    /**
-    *  string转attributeString
-    */
+    // string转attributeString
     func stringToAttributeString(matchString:String) -> (text:NSMutableAttributedString,isString:Bool) {
         let Str:NSString = matchString as NSString
         var isString = true

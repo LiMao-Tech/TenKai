@@ -8,11 +8,13 @@
 
 import UIKit
 
-class SharedUser: TenUser {
+class SharedUser : TenUser {
     static let sharedUser = SharedUser()
+    
     class func StandardUser() -> SharedUser{
         return sharedUser
     }
+    
     class func changeValue(dict:[String:AnyObject]){
         sharedUser.setValuesForKeysWithDictionary(dict)
     }

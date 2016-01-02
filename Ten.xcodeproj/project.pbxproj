@@ -31,6 +31,7 @@
 		C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4CED30F1B88FB010008BCF2 /* Main.storyboard */; };
 		C4CED3161B88FB010008BCF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CED3141B88FB010008BCF2 /* LaunchScreen.xib */; };
 		C4CED3221B88FB010008BCF2 /* TenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED3211B88FB010008BCF2 /* TenTests.swift */; };
+		D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46894561C36D7CA004922EF /* LoginCacheTool.swift */; };
 		D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348D1BE9E26500F49D63 /* TenLogin.swift */; };
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
 		D4EA5BD51C13E787009E9927 /* ADCircularMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BD41C13E787009E9927 /* ADCircularMenuViewController.m */; };
@@ -330,6 +331,7 @@
 		C4CED31B1B88FB010008BCF2 /* TenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3201B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CED3211B88FB010008BCF2 /* TenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenTests.swift; sourceTree = "<group>"; };
+		D46894561C36D7CA004922EF /* LoginCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCacheTool.swift; sourceTree = "<group>"; };
 		D481348D1BE9E26500F49D63 /* TenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLogin.swift; sourceTree = "<group>"; };
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
 		D4EA5BD31C13E787009E9927 /* ADCircularMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADCircularMenuViewController.h; sourceTree = "<group>"; };
@@ -641,6 +643,7 @@
 			children = (
 				644F1D101C2863C1002E65CE /* UserCacheTool.swift */,
 				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
+				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1478,6 +1481,7 @@
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
 				D4EA5C781C142452009E9927 /* UserChatTableViewController.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
+				D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */,
 				D4EA5C861C1424A1009E9927 /* GTTextAttachment.swift in Sources */,
 				D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */,
 				640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */,
