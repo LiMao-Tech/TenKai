@@ -13,7 +13,7 @@ enum systemType{
 }
 
 enum chatType{
-    case Active, Inactive
+    case Active, InActive
 }
 
 class SettingButton: UIButton {

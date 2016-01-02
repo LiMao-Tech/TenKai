@@ -17,7 +17,7 @@ class SingleChatController : UIViewController,
                             UIImagePickerControllerDelegate,
                             UINavigationControllerDelegate
 {
-    var messages = NSMutableArray()
+    var messages = [SingleChatMessageFrame]()
     var bottom : UIView!
     var addBtn : UIButton!
     var faceBtn : UIButton!
@@ -46,12 +46,9 @@ class SingleChatController : UIViewController,
         // Do any additional setup after loading the view.
     }
     
-    
-    
     func refreshControl(){
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
-        
         self.messageList.addSubview(refresh)
     }
     
@@ -59,42 +56,41 @@ class SingleChatController : UIViewController,
         refresh.endRefreshing()
     }
 
-    
     func getMessages(){
-
-        let request : NSMutableURLRequest = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "post"
-        let myID = NSUserDefaults.standardUserDefaults().objectForKey("myID") as! String
-        let memberID = member.objectForKey("MemberId") as! Int
-        let body = NSString(string:"MemberID=\(myID)&ReceiverID=\(memberID)")
-        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
-        print(body)
         
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response:NSURLResponse?, responseData: NSData?, error:NSError?) -> Void in
-            let dict: NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-            let memberList = dict.objectForKey("Msg List") as! NSString
-            let messagesContent = (try! NSJSONSerialization.JSONObjectWithData(memberList.dataUsingEncoding(NSUTF8StringEncoding)!, options:NSJSONReadingOptions.MutableContainers)) as! NSMutableArray
-            
-            if(messagesContent.count > 0){
-                for message in messagesContent{
-                    let chatFrame = SingleChatMessageFrame()
-//                    print(message)
-                    let message = SingleChatMessage(dict: (message as! NSDictionary))
-                    let stringToAtt = self.stringToAttributeString(message.Msg)
-                    message.attrMsg = stringToAtt.text
-                    message.isString = stringToAtt.isString
-                    chatFrame.chatMessage = message
-                    if(Int(myID) != chatFrame.chatMessage.SenderId){
-                        chatFrame.chatMessage.belongType = ChatBelongType.Other
-                    }
-                    self.messages.addObject(chatFrame)
-                }
-            }
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                self.messageList.reloadData()
-                self.rollToLastRow()
-            })
-        })
+//        let request : NSMutableURLRequest = NSMutableURLRequest(URL: url)
+//        request.HTTPMethod = "post"
+//        let myID = NSUserDefaults.standardUserDefaults().objectForKey("myID") as! String
+//        let memberID = member.objectForKey("MemberId") as! Int
+//        let body = NSString(string:"MemberID=\(myID)&ReceiverID=\(memberID)")
+//        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
+//        print(body)
+//        
+//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response:NSURLResponse?, responseData: NSData?, error:NSError?) -> Void in
+//            let dict: NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
+//            let memberList = dict.objectForKey("Msg List") as! NSString
+//            let messagesContent = (try! NSJSONSerialization.JSONObjectWithData(memberList.dataUsingEncoding(NSUTF8StringEncoding)!, options:NSJSONReadingOptions.MutableContainers)) as! NSMutableArray
+//            
+//            if(messagesContent.count > 0){
+//                for message in messagesContent{
+//                    let chatFrame = SingleChatMessageFrame()
+////                    print(message)
+//                    let message = SingleChatMessage(dict: (message as! NSDictionary))
+//                    let stringToAtt = self.stringToAttributeString(message.Msg)
+//                    message.attrMsg = stringToAtt.text
+//                    message.isString = stringToAtt.isString
+//                    chatFrame.chatMessage = message
+//                    if(Int(myID) != chatFrame.chatMessage.SenderId){
+//                        chatFrame.chatMessage.belongType = ChatBelongType.Other
+//                    }
+//                    self.messages.addObject(chatFrame)
+//                }
+//            }
+//            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+//                self.messageList.reloadData()
+//                self.rollToLastRow()
+//            })
+//        })
     }
     
     deinit{
@@ -105,7 +101,7 @@ class SingleChatController : UIViewController,
         return messages.count
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let chatFrame = messages[indexPath.row] as! SingleChatMessageFrame
+        let chatFrame = messages[indexPath.row]
         return chatFrame.cellHeight
     }
     
@@ -113,7 +109,7 @@ class SingleChatController : UIViewController,
         let oID = "otherchat"
         let mID = "mechat"
         var cell: ChatBaseCell?
-        let message:SingleChatMessageFrame = messages[indexPath.row] as! SingleChatMessageFrame
+        let message:SingleChatMessageFrame = messages[indexPath.row]
         if(message.chatMessage.belongType == ChatBelongType.Other){
             cell = messageList.dequeueReusableCellWithIdentifier(oID) as? ChatBaseCell
             if(cell == nil){
@@ -170,7 +166,7 @@ class SingleChatController : UIViewController,
             AFNetworkTools.postMethod(MsgUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
-                self.getMessages()
+//                self.getMessages()
                 },
                 failure: { (task, error) -> Void in
                     print("Post User Failed")

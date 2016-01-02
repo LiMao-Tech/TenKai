@@ -16,7 +16,6 @@ class AFNetworkTools: NSObject {
     
     override init() {
         super.init()
-        
     }
     
     class func getMethod(url:String,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
@@ -29,6 +28,19 @@ class AFNetworkTools: NSObject {
         },failure: { (task, error) -> Void in
             failure(task,error)
             print(task?.response)
+        })
+    }
+    
+    class func getMethodWithParams(url:String,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
+        
+        sharedInstance.requestSerializer = AFJSONRequestSerializer()
+        sharedInstance.responseSerializer = AFJSONResponseSerializer()
+        
+        sharedInstance.GET(url, parameters: parameters, progress: nil, success: { (task, error) -> Void in
+            success(task,error)
+            },failure: { (task, error) -> Void in
+                failure(task,error)
+                print(task?.response)
         })
     }
     

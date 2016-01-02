@@ -12,6 +12,11 @@ class UserCell: UITableViewCell {
     var nameLabel:UILabel!
     var dotView:UIImageView!
     var splitLine:UIView!
+    var tenUser = TenUser(){
+        didSet{
+            
+        }
+    }
     @IBOutlet weak var lockBtn: UIButton!
     @IBOutlet weak var headImage: UIButton!
     override func awakeFromNib() {

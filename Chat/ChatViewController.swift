@@ -10,7 +10,8 @@
 import UIKit
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+    var userChatActive = [UserChatModel]()
+    var userChatInActive = [UserChatModel]()
     var tabView : UIView!
     var userList : UITableView!
     var modelType : chatType = .Active
@@ -19,9 +20,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = ChatTitle
-        
+        for uc in UserChatModel.AllChats{
+            if uc.tenUser.listType == .InActive {
+                userChatInActive.append(uc)
+            }else{
+                userChatActive.append(uc)
+            }
+        }
         setup()
         refreshControl()
+        
+        
         
         // userList.reloadData()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,19 +45,29 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return 90
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = userList.dequeueReusableCellWithIdentifier("userCell")
+        var cell = userList.dequeueReusableCellWithIdentifier("userCell") as? UserCell
         if(cell == nil){
             cell = UserCell.loadFromNib()
+        }
+        if(modelType == .Active){
+            cell?.tenUser = userChatActive[indexPath.row].tenUser
+        }else{
+            cell?.tenUser = userChatInActive[indexPath.row].tenUser
         }
         return cell!
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return (modelType == chatType.Active) ? userChatActive.count : userChatInActive.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sVC = SingleChatController()
+        if(modelType == .Active){
+            sVC.messages = userChatActive[indexPath.row].message
+        }else{
+            sVC.messages = userChatInActive[indexPath.row].message
+        }
         self.navigationController?.pushViewController(sVC, animated: true)
         self.userList.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -82,12 +101,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         itemActive.normalImage = UIImage(named: "tab_chat_activeChats_normal")
         itemActive.seletedImage = UIImage(named: "tab_chat_activeChats_highlight")
+        itemActive.chatModel = .Active
         itemActive.contentMode = .ScaleAspectFit
         itemActive.setImage(itemActive.seletedImage, forState: UIControlState.Normal)
         itemActive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
         
         itemInactive.normalImage = UIImage(named: "tab_chat_inactiveChats_normal")
         itemInactive.seletedImage = UIImage(named: "tab_chat_inactiveChats_highlight")
+        itemActive.chatModel = .InActive
         itemInactive.contentMode = .ScaleAspectFill
         itemInactive.setImage(itemInactive.normalImage, forState: UIControlState.Normal)
         itemInactive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)

@@ -21,6 +21,9 @@ let MsgUrl = ApiUrl + "TenMsgs"
 let UpdateLocationByIdURL = HomeUrl + "Ten/TenUsers/UpdateLocationByID"
 let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage"
 
+let DeviceTokenUrl = ""
+
+
 //screenFrame
 let SCREEN = UIScreen.mainScreen().bounds
 let SCREEN_HEIGHT = SCREEN.height

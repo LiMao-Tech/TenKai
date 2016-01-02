@@ -22,6 +22,7 @@
 		644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
+		64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BE65AF1C380BAC00DA599A /* UserChatModel.swift */; };
 		64F5CEBF1BD8B51800512972 /* PT_Sans-Web-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951C1BD8996900F1B6CA /* PT_Sans-Web-Bold.ttf */; };
 		64F5CEC01BD8B51A00512972 /* PT_Sans-Web-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951D1BD8996900F1B6CA /* PT_Sans-Web-BoldItalic.ttf */; };
 		64F5CEC11BD8B51C00512972 /* PT_Sans-Web-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951E1BD8996900F1B6CA /* PT_Sans-Web-Italic.ttf */; };
@@ -321,6 +322,7 @@
 		649B951D1BD8996900F1B6CA /* PT_Sans-Web-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-BoldItalic.ttf"; sourceTree = "<group>"; };
 		649B951E1BD8996900F1B6CA /* PT_Sans-Web-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Italic.ttf"; sourceTree = "<group>"; };
 		649B951F1BD8996900F1B6CA /* PT_Sans-Web-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Regular.ttf"; sourceTree = "<group>"; };
+		64BE65AF1C380BAC00DA599A /* UserChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatModel.swift; sourceTree = "<group>"; };
 		B84957B6987C4D31344DF3F5 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3061B88FB010008BCF2 /* Ten.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ten.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED30A1B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -664,8 +666,8 @@
 				D4EA5C901C1424C6009E9927 /* Random */,
 				D4EA5C871C1424AF009E9927 /* Notification */,
 				D4EA5C7E1C1424A1009E9927 /* GT */,
-				D4EA5C711C142452009E9927 /* User */,
 				D4EA5C6C1C142443009E9927 /* Level */,
+				D4EA5C711C142452009E9927 /* User */,
 				D4EA5C591C142430009E9927 /* Chat */,
 				D4EA5C2F1C14037B009E9927 /* Login */,
 				D4EA5C201C13F669009E9927 /* PCoin */,
@@ -884,6 +886,7 @@
 				D4EA5C601C142430009E9927 /* SingleChatController.swift */,
 				D4EA5C611C142430009E9927 /* SingleChatMessage.swift */,
 				D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */,
+				64BE65AF1C380BAC00DA599A /* UserChatModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1475,6 +1478,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */,
 				D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */,
 				644F1D111C2863C1002E65CE /* UserCacheTool.swift in Sources */,
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
@@ -1688,7 +1692,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.limaotech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e5ab0102-7075-4ff4-af31-ce6b055d9b4d";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Ten/Ten-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Ten/Ten-Bridging-Header.h";
@@ -1712,7 +1716,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.limaotech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e5ab0102-7075-4ff4-af31-ce6b055d9b4d";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Ten/Ten-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Ten/Ten-Bridging-Header.h";

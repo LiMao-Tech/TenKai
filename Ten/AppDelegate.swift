@@ -92,6 +92,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let trimEnds = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
         DEVICE_TOKEN = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
+        //修改DeviceToken
+        if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
+            //put deviceTokenByUserIndex
+            let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as! Int
+            AFNetworkTools.putMethod(DeviceTokenUrl, parameters: ["UserIndex":userIndex,"DeviceToken":DEVICE_TOKEN!], success: { (task, response) -> Void in
+                print("success")
+                }, failure: { (task, error) -> Void in
+                    print("DeviceToken put failed")
+                    print(error.localizedDescription)
+            })
+        }
         print("Token: \(DEVICE_TOKEN!)")
         
         // TODO: save this cleanToken into server and to default user data

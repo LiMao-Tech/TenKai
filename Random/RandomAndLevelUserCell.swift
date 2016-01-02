@@ -36,7 +36,7 @@ class RandomAndLevelUserCell: UITableViewCell {
         //nameLabel
         let namex = CGRectGetMaxX(headImage.frame) + 5
         let lableText:NSString = "userName"
-        let w = screenBounds.width - 190
+        let w = SCREEN_WIDTH - 190
         let attr = [NSFontAttributeName:UIFont.systemFontOfSize(17)]
         let size = lableText.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
         nameLabel = UILabel(frame: CGRectMake(namex, 10, size.width, size.height))
