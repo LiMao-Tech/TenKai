@@ -30,6 +30,7 @@ class SingleChatController : UIViewController,
                 let stringToAtt = self.stringToAttributeString(message.chatMessage.MsgContent)
                 message.chatMessage.attrMsg = stringToAtt.text
                 message.chatMessage.isString = stringToAtt.isString
+                message.chatMessage.messageType = ChatMessageType(rawValue: message.chatMessage.MsgType)!
                 if(message.chatMessage.Sender != SharedUser.StandardUser().UserIndex){
                     message.chatMessage.belongType = ChatBelongType.Other
                     }
@@ -189,19 +190,20 @@ class SingleChatController : UIViewController,
             let currTime = NSDate()
             
             let params : NSDictionary = [
-                "Sender": 1,
-                "Receiver": 1,
+                "Sender": SharedUser.StandardUser().UserIndex,
+                "Receiver": tenUser.UserIndex,
                 "PhoneType": 0,
                 "IsLocked": false,
-                "MsgType": 1,
+                "MsgType": 0,
                 "MsgTime": formatter.stringFromDate(currTime),
                 "MsgContent": text
             ]
-            
+            let chatFrame = SingleChatMessageFrame()
+            chatFrame.chatMessage = SingleChatMessage(dict: params)
+            UserChatModel.allChats().message[tenUser.UserIndex]?.append(chatFrame)
             AFNetworkTools.postMethod(MsgUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
-//                self.getMessages()
                 },
                 failure: { (task, error) -> Void in
                     print("Post User Failed")
