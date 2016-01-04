@@ -15,17 +15,15 @@ class SingleChatMessageFrame: NSObject {
     
     var chatMessage = SingleChatMessage() {
         didSet{
-            let screen = UIScreen.mainScreen().bounds.size
-            
             if chatMessage.messageType == ChatMessageType.Message {
                 
-                let width = screen.width-130
+                let width = SCREEN_WIDTH - 130
                 let font = UIFont.systemFontOfSize(15)
                 let attr = [NSFontAttributeName : font]
                 let maxSize:CGSize = CGSizeMake(width,CGFloat(MAXFLOAT))
                 
                 if(chatMessage.isString){
-                contentHeight = chatMessage.Msg.boundingRectWithSize(maxSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil).height
+                contentHeight = chatMessage.MsgContent.boundingRectWithSize(maxSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil).height
                 }else{
                 contentHeight = chatMessage.attrMsg.boundingRectWithSize(maxSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).height
                 }

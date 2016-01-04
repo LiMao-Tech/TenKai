@@ -15,7 +15,6 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     var password:String!
     var email:String!
     var tenLogin:TenLogin?
-    var tenUser:TenUser?
     var gender:Int = -1
     var marriage:Int = -1
     
@@ -448,8 +447,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let image = UIImageJPEGRepresentation(chosenImage, 0.75)
 //        let image = UIImagePNGRepresentation(chosenImage!)
         if image != nil {
-            tenUser = SharedUser.StandardUser()
-            tenUser!.Portrait = image!
+            SharedUser.StandardUser().Portrait = image!
             let params : NSDictionary = ["id": SharedUser.StandardUser().UserIndex]
             
             AFNetworkTools.postHeadImage(HeadImageUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
@@ -468,7 +466,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     func putUserIndex(){
         let params = [
             "LoginIndex": tenLogin!.LoginIndex,
-            "UserIndex": tenUser!.UserIndex,
+            "UserIndex": SharedUser.StandardUser().UserIndex,
             "UserID": tenLogin!.UserID,
             "UserPWD": tenLogin!.UserPWD,
             "LastLogin": tenLogin!.LastLogin,
@@ -480,10 +478,12 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let putUrl = LoginUrl+"/\(tenLogin!.LoginIndex)"
         AFNetworkTools.putMethod(putUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print(response)
+            let dict = response as! NSDictionary
+            SharedUser.changeValue(dict as! [String : AnyObject])
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.button.enabled = true
                 self.indicator.stopAnimating()
-                NSUserDefaults.standardUserDefaults().setValue(self.tenUser!.UserIndex, forKey: "Logined")
+                NSUserDefaults.standardUserDefaults().setValue(SharedUser.StandardUser().UserIndex, forKey: "Logined")
                 UserCacheTool().addUserInfoByUser(SharedUser.StandardUser())
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())

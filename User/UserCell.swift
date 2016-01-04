@@ -12,9 +12,18 @@ class UserCell: UITableViewCell {
     var nameLabel:UILabel!
     var dotView:UIImageView!
     var splitLine:UIView!
+    @IBOutlet weak var lastMessage: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     var tenUser = TenUser(){
         didSet{
-            
+            nameLabel.text = tenUser.UserName
+            message = UserChatModel.allChats().message[tenUser.UserIndex]!
+        }
+    }
+    var message = [SingleChatMessageFrame](){
+        didSet{
+            lastMessage.text = message.last?.chatMessage.MsgContent
+            timeLabel.text = message.last?.chatMessage.MsgTime
         }
     }
     @IBOutlet weak var lockBtn: UIButton!

@@ -92,16 +92,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let trimEnds = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
         DEVICE_TOKEN = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
-        //修改DeviceToken
+        //Put DeviceToken
         if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
             //put deviceTokenByUserIndex
             let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as! Int
-            AFNetworkTools.putMethod(DeviceTokenUrl, parameters: ["UserIndex":userIndex,"DeviceToken":DEVICE_TOKEN!], success: { (task, response) -> Void in
-                print("success")
-                }, failure: { (task, error) -> Void in
-                    print("DeviceToken put failed")
-                    print(error.localizedDescription)
-            })
+//            let params = ["userindex":userIndex,"devicetoken":DEVICE_TOKEN!]
+//            AFNetworkTools.postMethod(LoginUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+//                print("success")
+//                }, failure: { (task, error) -> Void in
+//                    print("DeviceToken put failed")
+//                    print(error.localizedDescription)
+//            })
         }
         print("Token: \(DEVICE_TOKEN!)")
         
@@ -113,6 +114,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         
         NSLog("Failed to get token; error: %@", error) //Log an error for debugging purposes, user doesn't need to know
+    }
+    
+    // Recive remote notification
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        
+        let params = ["receiver":SharedUser.StandardUser().UserIndex,"currIndex":SharedUser.StandardUser().MsgIndex]
+        AFNetworkTools.getMethodWithParams(MsgUrl,parameters: params, success: { (task, response) -> Void in
+            let userInfoArray = response as! NSArray
+            print(userInfoArray)
+            for info in userInfoArray{
+                let senderIndex = info["Sender"] as! Int
+                if(senderIndex == 0){
+                    break
+                }
+                
+                if(UserChatModel.allChats().userIndex.contains(senderIndex)){
+                    // add message to the dictionary 
+                    let messageFrame = SingleChatMessageFrame()
+                    messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
+                    UserChatModel.allChats().message[senderIndex]!.append(messageFrame)
+                }else{
+                    // add message to the dictionary
+                    UserChatModel.allChats().userIndex.append(senderIndex)
+                    let messageFrame = SingleChatMessageFrame()
+                    messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
+                    UserChatModel.allChats().message[senderIndex] = [messageFrame]
+                    //get userInfo
+                    AFNetworkTools.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
+                        let userDict = response as! NSDictionary
+                        let user = TenUser(dict: userDict as! [String : AnyObject])
+                        //add to allChats users
+                        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                            UserChatModel.allChats().tenUser.append(user)
+                        })
+                        // add message to the dictionary
+                                                }, failure: { (task, error) -> Void in
+                            print(error.localizedDescription)
+                    })
+                    
+                    print(UserChatModel.allChats().userIndex)
+                }
+            }
+            SharedUser.StandardUser().MsgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
+            UserCacheTool().upDateUserMsgInde(SharedUser.StandardUser().MsgIndex)
+            
+            },failure:  { (task, error) -> Void in
+              print(error.localizedDescription)
+        })
+        /*
+            nofiticationtype : notification? message(message,image,pcoin)? pcoin? or?
+            message:need UserIndex, messagetype, and Content
+        */
+        print(userInfo["aps"])
+        
     }
     
     // ---------------------------- END for remote notification -----------------------------//

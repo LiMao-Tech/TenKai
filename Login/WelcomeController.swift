@@ -147,17 +147,21 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 print(response)
                 let dict = response as! NSDictionary
-                SharedUser.changeValue(dict as! [String : AnyObject])
+                let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
+                if(!getResult.inDB){
+                    SharedUser.changeValue(dict as! [String : AnyObject])
+                    UserCacheTool().addUserInfoByUser(SharedUser.StandardUser())
+                }else{
+                    UserCacheTool().updateUserInfo(dict)
+                }
+                NSUserDefaults.standardUserDefaults().setValue(SharedUser.StandardUser().UserIndex, forKey: "Logined")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
-                    UserCacheTool().addUserInfo(dict)
-                    NSUserDefaults.standardUserDefaults().setValue(SharedUser.StandardUser().UserIndex, forKey: "Logined")
                     self.presentViewController(nVC, animated: true, completion: { () -> Void in
-                        
                     })
-
-                })            })
+                })
+            })
             },failure: { (task, error) -> Void in
                 let opera = task?.response as! NSHTTPURLResponse
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in

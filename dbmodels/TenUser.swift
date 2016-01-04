@@ -11,6 +11,6 @@ Note: This model follows c sharp naming convention since is used with ASP .Net
 Backend.
 */
 
-class TenUser: SharedUser {
+class TenUser: BaseUser {
     var listType = chatType.InActive
 }

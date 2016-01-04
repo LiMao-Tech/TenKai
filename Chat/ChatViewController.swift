@@ -10,8 +10,8 @@
 import UIKit
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var userChatActive = [UserChatModel]()
-    var userChatInActive = [UserChatModel]()
+    var userChatActive = [TenUser]()
+    var userChatInActive = [TenUser]()
     var tabView : UIView!
     var userList : UITableView!
     var modelType : chatType = .Active
@@ -20,20 +20,38 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = ChatTitle
-        for uc in UserChatModel.AllChats{
-            if uc.tenUser.listType == .InActive {
+        UserChatModel.allChats().addObserver(self, forKeyPath: "tenUser", options: NSKeyValueObservingOptions.New, context: nil)
+        separateUser()
+        setup()
+        refreshControl()
+//        print(userChatActive)
+//        print(userChatInActive)
+//        print(userChatInActive[0])
+//        print(UserChatModel.allChats().message[userChatInActive[0].UserIndex])
+        
+        // userList.reloadData()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func separateUser(){
+        userChatActive.removeAll()
+        userChatInActive.removeAll()
+        for uc in UserChatModel.allChats().tenUser{
+            if uc.listType == .InActive {
                 userChatInActive.append(uc)
             }else{
                 userChatActive.append(uc)
             }
         }
-        setup()
-        refreshControl()
-        
-        
-        
-        // userList.reloadData()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if(keyPath == "tenUser"){
+            print(UserChatModel.allChats().tenUser)
+            separateUser()
+            self.userList.reloadData()
+        }else{
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,9 +68,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell = UserCell.loadFromNib()
         }
         if(modelType == .Active){
-            cell?.tenUser = userChatActive[indexPath.row].tenUser
+            cell?.tenUser = userChatActive[indexPath.row]
         }else{
-            cell?.tenUser = userChatInActive[indexPath.row].tenUser
+            cell?.tenUser = userChatInActive[indexPath.row]
         }
         return cell!
     }
@@ -64,9 +82,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sVC = SingleChatController()
         if(modelType == .Active){
-            sVC.messages = userChatActive[indexPath.row].message
+            let user = userChatActive[indexPath.row]
+            sVC.tenUser = user
         }else{
-            sVC.messages = userChatInActive[indexPath.row].message
+            let user = userChatInActive[indexPath.row]
+            sVC.tenUser = user
         }
         self.navigationController?.pushViewController(sVC, animated: true)
         self.userList.deselectRowAtIndexPath(indexPath, animated: true)
@@ -108,7 +128,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         itemInactive.normalImage = UIImage(named: "tab_chat_inactiveChats_normal")
         itemInactive.seletedImage = UIImage(named: "tab_chat_inactiveChats_highlight")
-        itemActive.chatModel = .InActive
+        itemInactive.chatModel = .InActive
         itemInactive.contentMode = .ScaleAspectFill
         itemInactive.setImage(itemInactive.normalImage, forState: UIControlState.Normal)
         itemInactive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)

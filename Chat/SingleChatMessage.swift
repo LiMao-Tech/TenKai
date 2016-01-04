@@ -21,14 +21,16 @@ enum ChatMessageType: Int {
 
 class SingleChatMessage: NSObject {
     
-    var SenderId = 0
-    var receiverId = 0
-    var MsgId = 0
-    var sendTime = ""
-    var Msg = ""
+    var Sender = 0
+    var Receiver = 0
+    var MsgIndex = 0
+    var MsgTime = ""
+    var MsgContent = ""
+    var MsgType = 0
+    var PhoneType = 0
     var isString = true
+    var IsLocked = false
     var attrMsg = NSMutableAttributedString()
-    var nickName : String?
     var timeHide = false
     var belongType = ChatBelongType.Me
     var messageType = ChatMessageType.Message

@@ -17,6 +17,8 @@
 		640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BE11C0C898700B31DA0 /* FMResultSet.m */; };
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
 		643F9C741BF6D95A00361C55 /* Radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643F9C731BF6D95A00361C55 /* Radar.gif */; };
+		6444C7DA1C3A5EC200A3540D /* BaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6444C7D91C3A5EC200A3540D /* BaseUser.swift */; };
+		6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */; };
 		644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D0D1C286210002E65CE /* SharedUser.swift */; };
 		644F1D111C2863C1002E65CE /* UserCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D101C2863C1002E65CE /* UserCacheTool.swift */; };
 		644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */; };
@@ -313,6 +315,8 @@
 		640F3BE11C0C898700B31DA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
+		6444C7D91C3A5EC200A3540D /* BaseUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUser.swift; sourceTree = "<group>"; };
+		6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCacheTool.swift; sourceTree = "<group>"; };
 		644F1D0D1C286210002E65CE /* SharedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUser.swift; sourceTree = "<group>"; };
 		644F1D101C2863C1002E65CE /* UserCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCacheTool.swift; sourceTree = "<group>"; };
 		644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFNetworkTools.swift; sourceTree = "<group>"; };
@@ -644,6 +648,7 @@
 			isa = PBXGroup;
 			children = (
 				644F1D101C2863C1002E65CE /* UserCacheTool.swift */,
+				6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */,
 				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
 				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
 			);
@@ -753,6 +758,7 @@
 				D481348D1BE9E26500F49D63 /* TenLogin.swift */,
 				D481348E1BE9E26500F49D63 /* TenUser.swift */,
 				644F1D0D1C286210002E65CE /* SharedUser.swift */,
+				6444C7D91C3A5EC200A3540D /* BaseUser.swift */,
 			);
 			path = dbmodels;
 			sourceTree = "<group>";
@@ -1521,6 +1527,7 @@
 				D4EA5C651C142430009E9927 /* MeChatCell.swift in Sources */,
 				640F3BE31C0C898700B31DA0 /* FMDatabaseAdditions.m in Sources */,
 				D4EA5C2C1C13F669009E9927 /* PCoinUnlockedCell.swift in Sources */,
+				6444C7DA1C3A5EC200A3540D /* BaseUser.swift in Sources */,
 				D4EA5C581C142321009E9927 /* SettingsViewController.swift in Sources */,
 				D4EA5BF51C13EA12009E9927 /* DKAssetGroupDetailVC.swift in Sources */,
 				D4EA5C761C142452009E9927 /* UserCell.swift in Sources */,
@@ -1536,6 +1543,7 @@
 				D4EA5BD51C13E787009E9927 /* ADCircularMenuViewController.m in Sources */,
 				640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */,
 				D4EA5C051C13EAE3009E9927 /* LMCollectionViewLayout.m in Sources */,
+				6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
 				D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */,

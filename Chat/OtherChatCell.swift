@@ -19,7 +19,7 @@ class OtherChatCell: ChatBaseCell {
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
             
-            timeLabel.text = chatFrame.chatMessage.sendTime
+            timeLabel.text = chatFrame.chatMessage.MsgTime
         }
     }
     

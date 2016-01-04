@@ -36,7 +36,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8A-WY-aPw">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8A-WY-aPw" userLabel="timeLabel">
                         <rect key="frame" x="242" y="10" width="70" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="Frk-Ig-6df"/>
@@ -62,7 +62,9 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="headImage" destination="PKT-Xf-bcl" id="RMh-yN-Jbz"/>
+                <outlet property="lastMessage" destination="Vf6-BP-kHJ" id="TI0-aq-W3b"/>
                 <outlet property="lockBtn" destination="eS5-Hy-Ewc" id="239-0T-lgE"/>
+                <outlet property="timeLabel" destination="G8A-WY-aPw" id="Hbh-4q-V5k"/>
             </connections>
         </tableViewCell>
     </objects>

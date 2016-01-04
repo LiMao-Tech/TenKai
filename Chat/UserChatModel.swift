@@ -9,11 +9,14 @@
 import UIKit
 
 class UserChatModel: NSObject {
-    var tenUser = TenUser()
-    var message = [SingleChatMessageFrame]()
+    var userIndex = [Int]() //check if user exist
+    dynamic var tenUser = [TenUser]()
+    dynamic var message = [Int :[SingleChatMessageFrame]]()
+    var msgIndex = 1
+    private static var Chats = UserChatModel()
     
-    static var AllChats = [UserChatModel]()
-    class func allChats() -> [UserChatModel]{
-        return AllChats
+    class func allChats() -> UserChatModel{
+        return Chats
     }
+   
 }

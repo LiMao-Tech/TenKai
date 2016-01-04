@@ -13,7 +13,7 @@ class ChatBaseCell: UITableViewCell {
     
     class func loadFromNib() -> ChatBaseCell {
         var path : NSString = NSStringFromClass(self.classForCoder())
-        path = path.substringFromIndex(10)
+        path = path.substringFromIndex(4)
         return NSBundle.mainBundle().loadNibNamed("\(path)", owner: self, options: nil).last as! ChatBaseCell
     }
 }

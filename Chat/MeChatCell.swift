@@ -17,7 +17,7 @@ class MeChatCell: ChatBaseCell {
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
             conText.attributedText = chatFrame.chatMessage.attrMsg
-            time.text = chatFrame.chatMessage.sendTime
+            time.text = chatFrame.chatMessage.MsgTime
             let image = UIImage(named: "chat_send_nor")
             let w = image!.size.width/2
             let h = image!.size.height/2

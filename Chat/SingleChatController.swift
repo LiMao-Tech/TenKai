@@ -17,7 +17,26 @@ class SingleChatController : UIViewController,
                             UIImagePickerControllerDelegate,
                             UINavigationControllerDelegate
 {
-    var messages = [SingleChatMessageFrame]()
+    var tenUser = TenUser(){
+        didSet{
+            messages = UserChatModel.allChats().message[tenUser.UserIndex]!
+            
+        }
+    }
+    var messages: [SingleChatMessageFrame]!{
+        didSet{
+            if(messages.count > 0){
+            for message in messages{
+                let stringToAtt = self.stringToAttributeString(message.chatMessage.MsgContent)
+                message.chatMessage.attrMsg = stringToAtt.text
+                message.chatMessage.isString = stringToAtt.isString
+                if(message.chatMessage.Sender != SharedUser.StandardUser().UserIndex){
+                    message.chatMessage.belongType = ChatBelongType.Other
+                    }
+                }
+            }
+        }
+    }
     var bottom : UIView!
     var addBtn : UIButton!
     var faceBtn : UIButton!
@@ -43,8 +62,23 @@ class SingleChatController : UIViewController,
         super.viewDidLoad()
         setup()
         refreshControl()
+        UserChatModel.allChats().addObserver(self, forKeyPath: "message", options: .New, context: nil)
         // Do any additional setup after loading the view.
     }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if(keyPath == "message"){
+            print("messageChange")
+            self.messages = UserChatModel.allChats().message[tenUser.UserIndex]
+            
+            self.messageList.reloadData()
+            self.rollToLastRow()
+        }else{
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        }
+    }
+    //remove observer
+
     
     func refreshControl(){
         let refresh = UIRefreshControl()
@@ -95,6 +129,7 @@ class SingleChatController : UIViewController,
     
     deinit{
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        UserChatModel.allChats().removeObserver(self, forKeyPath: "message")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
