@@ -81,8 +81,9 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
         // config buttons
         menuButton.setImage(UIImage(named: "btn_menu"), forState: UIControlState.Normal)
-        randomButton.setImage(UIImage(named: "btn_radar_random"), forState: UIControlState.Normal)
         menuButton.addTarget(self, action: "menuButtonAction", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        randomButton.setImage(UIImage(named: "btn_radar_random"), forState: UIControlState.Normal)
         randomButton.addTarget(self, action: "randomButtonAction", forControlEvents: UIControlEvents.TouchUpInside)
         
         let distanceY = CGRectGetMinY(menuButton.frame) - 80
@@ -199,6 +200,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     func circularMenuClickedButtonAtIndex(buttonIndex: Int32) {
         
         //TODO: add more pos to different pages
+        self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
         
         switch buttonIndex {
         case 0:
@@ -217,7 +219,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.navigationController?.pushViewController(eVC, animated: true)
 
         case 3:
-            self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
             self.navigationController?.navigationBar.hidden = false
             let pVC = ProfileViewController()
             self.navigationController?.pushViewController(pVC, animated: true)

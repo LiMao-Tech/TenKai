@@ -85,6 +85,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="content" destination="kgC-Hp-9NF" id="f71-Cf-P6k"/>
                 <outlet property="context" destination="cIS-WJ-tiT" id="fku-FV-Z20"/>
                 <outlet property="headImage" destination="Aaz-mU-Ede" id="LbR-Rq-Zpi"/>
                 <outlet property="lockBtn" destination="kEe-xF-CRI" id="MCy-y7-5ea"/>

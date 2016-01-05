@@ -7,24 +7,33 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class RandomUserController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+
+
+class RandomUserController: UIViewController,
+                            UITableViewDelegate,
+                            UITableViewDataSource {
     
     // Declarations
-    var userList : UITableView!
+    var userListView : UITableView!
+    var userList = [AnyObject]()
     
     // View Controls
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = RandomTitle
-        userList = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64))
-        userList.dataSource = self
-        userList.delegate = self
-        userList.backgroundColor = BG_COLOR
-        userList.separatorStyle = .None
+        // Get users from the server and update the table view
+        getUserList()
         
-        self.view.addSubview(userList)
+        self.title = RandomTitle
+        userListView = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
+        userListView.dataSource = self
+        userListView.delegate = self
+        userListView.backgroundColor = BG_COLOR
+        userListView.separatorStyle = .None
+        
+        self.view.addSubview(userListView)
         refreshControl()
     }
     
@@ -32,10 +41,13 @@ class RandomUserController: UIViewController,UITableViewDelegate,UITableViewData
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
         
-        self.userList.addSubview(refresh)
+        self.userListView.addSubview(refresh)
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
+        
+        // TODO: Get Users here
+        getUserList()
         refresh.endRefreshing()
         print("refreshed")
     }
@@ -49,19 +61,53 @@ class RandomUserController: UIViewController,UITableViewDelegate,UITableViewData
         return UIStatusBarStyle.LightContent
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let otherProfileVC = OtherProfileViewController()
+        self.navigationController?.pushViewController(otherProfileVC, animated: true)
+    }
+    
+    
+    // Table view delegates
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        // TODO: 这个值要按屏幕比例来进行调整。
         return 75
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.userList.count
     }
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = userList.dequeueReusableCellWithIdentifier("RALUserCell") as? RandomAndLevelUserCell
-        if(cell == nil){
-            cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
+
+        let cell = RandomAndLevelUserCell()
+        let user = JSON(userList[indexPath.row] as! [String: AnyObject])
+        
+        cell.nameLabel.text = user["UserName"].stringValue
+        
+        let inner = user["InnerScore"].intValue
+        let outer = user["OuterScore"].intValue
+        let energy = user["Energy"].intValue
+        let avg = (inner+outer)/2
+
+        cell.innerLabel.text = "内在 \(inner)"
+        cell.outerLabel.text = "外在 \(outer)"
+        cell.energyLabel.text = "能量 \(energy)"
+        cell.avgLabel.text = "平均 \(avg)"
+        
+        cell.distanceLabel.text = "距离 0"
+        
+        return cell
+    }
+    
+    private func getUserList() -> Void {
+        ALAMO_MANAGER.request(.GET, UserUrl, parameters: nil)
+            .responseJSON { response in
+                if let values = response.result.value {
+                    self.userList = (values as? [AnyObject])!
+                    self.userListView.reloadData()
+                }
         }
-        cell?.RALuser = RandomAndLevelUser()
-        return cell!
     }
 
 }

@@ -134,22 +134,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                     let messageFrame = SingleChatMessageFrame()
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
                     UserChatModel.allChats().message[senderIndex]!.append(messageFrame)
-                }else{
+                }
+                else {
                     // add message to the dictionary
                     UserChatModel.allChats().userIndex.append(senderIndex)
                     let messageFrame = SingleChatMessageFrame()
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
                     UserChatModel.allChats().message[senderIndex] = [messageFrame]
-                    //get userInfo
+                    
+                    // get userInfo
                     AFNetworkTools.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
                         let userDict = response as! NSDictionary
                         let user = TenUser(dict: userDict as! [String : AnyObject])
+                        
                         //add to allChats users
-                        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                            UserChatModel.allChats().tenUser.append(user)
-                        })
+                        UserChatModel.allChats().tenUser.append(user)
+                        
                         // add message to the dictionary
-                                                }, failure: { (task, error) -> Void in
+                        },
+                        failure: { (task, error) -> Void in
                             print(error.localizedDescription)
                     })
                     

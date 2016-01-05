@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 
+
 class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate{
     
     //property

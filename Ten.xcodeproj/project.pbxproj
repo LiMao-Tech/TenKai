@@ -34,6 +34,9 @@
 		C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4CED30F1B88FB010008BCF2 /* Main.storyboard */; };
 		C4CED3161B88FB010008BCF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CED3141B88FB010008BCF2 /* LaunchScreen.xib */; };
 		C4CED3221B88FB010008BCF2 /* TenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED3211B88FB010008BCF2 /* TenTests.swift */; };
+		D44623FE1C3B2D2D0098AE53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44623FD1C3B2D2D0098AE53 /* ProfileViewController.swift */; };
+		D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44623FF1C3B2D720098AE53 /* MyProfileViewController.swift */; };
+		D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44624011C3B2D9E0098AE53 /* OtherProfileViewController.swift */; };
 		D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46894561C36D7CA004922EF /* LoginCacheTool.swift */; };
 		D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348D1BE9E26500F49D63 /* TenLogin.swift */; };
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
@@ -51,8 +54,6 @@
 		D4EA5C051C13EAE3009E9927 /* LMCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C041C13EAE3009E9927 /* LMCollectionViewLayout.m */; };
 		D4EA5C171C13F1F4009E9927 /* ProfileEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C0C1C13F1F4009E9927 /* ProfileEditController.swift */; };
 		D4EA5C1D1C13F1F4009E9927 /* ProfileRegistraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C141C13F1F4009E9927 /* ProfileRegistraViewController.swift */; };
-		D4EA5C1E1C13F1F4009E9927 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C151C13F1F4009E9927 /* ProfileViewController.swift */; };
-		D4EA5C1F1C13F1F4009E9927 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C161C13F1F4009E9927 /* ProfileViewController.xib */; };
 		D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */; };
 		D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */; };
 		D4EA5C2A1C13F669009E9927 /* PCoinTransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */; };
@@ -337,6 +338,9 @@
 		C4CED31B1B88FB010008BCF2 /* TenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3201B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CED3211B88FB010008BCF2 /* TenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenTests.swift; sourceTree = "<group>"; };
+		D44623FD1C3B2D2D0098AE53 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D44623FF1C3B2D720098AE53 /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		D44624011C3B2D9E0098AE53 /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		D46894561C36D7CA004922EF /* LoginCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCacheTool.swift; sourceTree = "<group>"; };
 		D481348D1BE9E26500F49D63 /* TenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLogin.swift; sourceTree = "<group>"; };
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
@@ -358,8 +362,6 @@
 		D4EA5C041C13EAE3009E9927 /* LMCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMCollectionViewLayout.m; sourceTree = "<group>"; };
 		D4EA5C0C1C13F1F4009E9927 /* ProfileEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditController.swift; sourceTree = "<group>"; };
 		D4EA5C141C13F1F4009E9927 /* ProfileRegistraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRegistraViewController.swift; sourceTree = "<group>"; };
-		D4EA5C151C13F1F4009E9927 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		D4EA5C161C13F1F4009E9927 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinHistoryCell.swift; sourceTree = "<group>"; };
 		D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinPurchaseCell.swift; sourceTree = "<group>"; };
 		D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinTransferCell.swift; sourceTree = "<group>"; };
@@ -752,6 +754,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D44623FC1C3B2D2D0098AE53 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				D44623FD1C3B2D2D0098AE53 /* ProfileViewController.swift */,
+				D44623FF1C3B2D720098AE53 /* MyProfileViewController.swift */,
+				D44624011C3B2D9E0098AE53 /* OtherProfileViewController.swift */,
+			);
+			path = ProfileView;
+			sourceTree = "<group>";
+		};
 		D481348C1BE9E26500F49D63 /* dbmodels */ = {
 			isa = PBXGroup;
 			children = (
@@ -808,11 +820,10 @@
 		D4EA5C0A1C13F1F4009E9927 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				D44623FC1C3B2D2D0098AE53 /* ProfileView */,
 				D4EA5C451C140BD8009E9927 /* ProfilePics */,
 				D4EA5C0B1C13F1F4009E9927 /* ProfileEdit */,
 				D4EA5C131C13F1F4009E9927 /* ProfileRegistra */,
-				D4EA5C151C13F1F4009E9927 /* ProfileViewController.swift */,
-				D4EA5C161C13F1F4009E9927 /* ProfileViewController.xib */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1381,7 +1392,6 @@
 				D4EA5DA91C14252B009E9927 /* 051@2x.png in Resources */,
 				D4EA5D681C14252B009E9927 /* 019.png in Resources */,
 				D4EA5D841C14252B009E9927 /* 033.png in Resources */,
-				D4EA5C1F1C13F1F4009E9927 /* ProfileViewController.xib in Resources */,
 				D4EA5D921C14252B009E9927 /* 040.png in Resources */,
 				D4EA5D751C14252B009E9927 /* 025@2x.png in Resources */,
 				D4EA5D951C14252B009E9927 /* 041@2x.png in Resources */,
@@ -1490,8 +1500,10 @@
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
 				D4EA5C781C142452009E9927 /* UserChatTableViewController.swift in Sources */,
+				D44623FE1C3B2D2D0098AE53 /* ProfileViewController.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
 				D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */,
+				D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */,
 				D4EA5C861C1424A1009E9927 /* GTTextAttachment.swift in Sources */,
 				D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */,
 				640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */,
@@ -1522,7 +1534,6 @@
 				D4EA5C4C1C140BFB009E9927 /* ProfilePicsCollectionViewCell.m in Sources */,
 				640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */,
 				D4EA5C171C13F1F4009E9927 /* ProfileEditController.swift in Sources */,
-				D4EA5C1E1C13F1F4009E9927 /* ProfileViewController.swift in Sources */,
 				D4EA5C841C1424A1009E9927 /* GTFaceView.swift in Sources */,
 				D4EA5C651C142430009E9927 /* MeChatCell.swift in Sources */,
 				640F3BE31C0C898700B31DA0 /* FMDatabaseAdditions.m in Sources */,
@@ -1547,6 +1558,7 @@
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
 				D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */,
+				D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */,
 				644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */,
 				D4EA5C6A1C142430009E9927 /* SingleChatMessage.swift in Sources */,
 				D4EA5C641C142430009E9927 /* ChatViewController.swift in Sources */,

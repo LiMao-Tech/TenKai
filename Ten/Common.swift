@@ -8,6 +8,16 @@
 
 import UIKit
 
+// Debug printing
+/*
+print("request: \(response.request)")  // original URL request
+print("response: \(response.response)") // URL response
+print("data: \(response.data)")     // server data
+print("result: \(response.result)")   // result of response serialization
+
+
+*/
+
 // urls
 let LocationNotiName = "LocationNotification"
 
@@ -58,7 +68,7 @@ let ProfileTitle = "首页"
 let SettingTitle = "设定"
 let PcoinTitle = "P Coin"
 let NotificationTitle = "通知"
-let RandomTitle = "随机"
+let RandomTitle = "随机用户"
 
 //Colors
 let BG_COLOR = UIColor(red: 29.0/255.0, green: 29.0/255.0, blue: 29.0/255.0, alpha: 1.0)

@@ -8,7 +8,11 @@
 
 import UIKit
 
-class EditProfileController: UIViewController,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
+class EditProfileController : UIViewController,
+                            UIAlertViewDelegate,
+                            UINavigationControllerDelegate,
+                            UIImagePickerControllerDelegate
+{
     var chosenImage : UIImage?
     var counter : Int?
     var buttonProfile : UIButton!

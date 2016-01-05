@@ -19,7 +19,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     func setup(){
         self.title = "等级\(level)"
-        userList = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64))
+        userList = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
         userList.dataSource = self
         userList.delegate = self
         userList.separatorStyle = .None

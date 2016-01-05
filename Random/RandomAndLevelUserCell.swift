@@ -9,14 +9,19 @@
 import UIKit
 
 class RandomAndLevelUserCell: UITableViewCell {
-    var headImage:UIButton!
-    var nameLabel:UILabel!
-    var innerLabel:UILabel!
-    var outerLabel:UILabel!
-    var avgLabel:UILabel!
-    var energyLabel:UILabel!
-    var distanceLabel:UILabel!
-    var splitLine:UIView!
+    
+    var headImage : UIButton!
+    var nameLabel : UILabel!
+    
+    var innerLabel : UILabel!
+    var outerLabel : UILabel!
+    var energyLabel : UILabel!
+    var avgLabel : UILabel!
+    
+    var distanceLabel : UILabel!
+    
+    var splitLine : UIView!
+    
     var RALuser:RandomAndLevelUser!{
         didSet{
             nameLabel.text = "\(RALuser.UserName)"
@@ -27,6 +32,7 @@ class RandomAndLevelUserCell: UITableViewCell {
             distanceLabel.text = "\(RALuser.distance) km"
         }
     }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -39,6 +45,7 @@ class RandomAndLevelUserCell: UITableViewCell {
         let w = SCREEN_WIDTH - 190
         let attr = [NSFontAttributeName:UIFont.systemFontOfSize(17)]
         let size = lableText.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
+        
         nameLabel = UILabel(frame: CGRectMake(namex, 10, size.width, size.height))
         nameLabel.textColor = UIColor.orangeColor()
         nameLabel.font = UIFont.systemFontOfSize(17)
@@ -48,16 +55,20 @@ class RandomAndLevelUserCell: UITableViewCell {
         let innerh:CGFloat = 20
         let afont = UIFont.systemFontOfSize(15)
         let len = (SCREEN_WIDTH - innerx - 5)/4
+        
         //inner outter avg energylabe
         innerLabel = UILabel(frame: CGRectMake(innerx, innery, len, innerh))
         self.innerLabel.textColor = UIColor.whiteColor()
         self.innerLabel.font = afont
+        
         outerLabel = UILabel(frame: CGRectMake(innerx+len, innery, len, innerh))
         self.outerLabel.textColor = UIColor.whiteColor()
         self.outerLabel.font = afont
+        
         avgLabel = UILabel(frame: CGRectMake(innerx + 2*len, innery, len, innerh))
         self.avgLabel.textColor = UIColor.orangeColor()
         self.avgLabel.font = afont
+        
         energyLabel = UILabel(frame: CGRectMake(innerx + 3*len, innery, len, innerh))
         self.energyLabel.textColor = UIColor.whiteColor()
         self.energyLabel.font = afont

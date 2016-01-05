@@ -14,12 +14,14 @@ class OtherChatCell: ChatBaseCell {
     
     @IBOutlet weak var headImage: UIButton!
     @IBOutlet weak var context: UIButton!
+    @IBOutlet weak var content: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
             
             timeLabel.text = chatFrame.chatMessage.MsgTime
+            content.text = chatFrame.chatMessage.attrMsg.string
         }
     }
     

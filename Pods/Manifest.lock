@@ -17,6 +17,7 @@ PODS:
   - Alamofire (3.1.3)
   - CryptoSwift (0.1.1)
   - PureLayout (3.0.1)
+  - SwiftyJSON (2.3.2)
   - Tweaks (2.0.0)
 
 DEPENDENCIES:
@@ -24,13 +25,24 @@ DEPENDENCIES:
   - Alamofire (~> 3.0)
   - CryptoSwift
   - PureLayout
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
   - Tweaks
+
+EXTERNAL SOURCES:
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  SwiftyJSON:
+    :commit: 5f59648a6e9356b26c5cb698ab924fa7d750b6c9
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   Alamofire: 9f93b56389e48def9220dd57d1f44b1927229a5a
   CryptoSwift: c11640d3d66107efc8333e4131a5173f072b1d61
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tweaks: 524fa47636cce3bf3a4d9156e980f10ae9480e81
 
 COCOAPODS: 0.39.0
