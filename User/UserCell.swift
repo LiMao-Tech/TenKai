@@ -18,6 +18,15 @@ class UserCell: UITableViewCell {
         didSet{
             nameLabel.text = tenUser.UserName
             message = UserChatModel.allChats().message[tenUser.UserIndex]!
+            let w = SCREEN_WIDTH - 190
+            let attr = [NSFontAttributeName:UIFont.systemFontOfSize(15)]
+            let size = tenUser.UserName.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
+            nameLabel.frame = CGRectMake(CGRectGetMaxX(headImage.frame)+5, headImage.frame.origin.y, size.width, 21)
+            nameLabel.text = tenUser.UserName
+            nameLabel.textColor = UIColor.orangeColor()
+            let x = CGRectGetMaxX(nameLabel.frame)
+            dotView.frame =  CGRectMake(x+10, nameLabel.frame.origin.y+7, 7, 7)
+            dotView.image = UIImage(named: "icon_chat_dot_l6")
         }
     }
     var message = [SingleChatMessageFrame](){
@@ -34,27 +43,17 @@ class UserCell: UITableViewCell {
         self.backgroundColor = UIColor.clearColor()
         lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
         headImage.setImage(UIImage(named: "user_pic_radar_140"), forState: UIControlState.Normal)
-        
-        let lableText:NSString = "userName"
-        let w = SCREEN_WIDTH - 190
-        let attr = [NSFontAttributeName:UIFont.systemFontOfSize(17)]
-        let size = lableText.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
-        
-        nameLabel = UILabel(frame: CGRectMake(CGRectGetMaxX(headImage.frame)+5, headImage.frame.origin.y, size.width, 21))
-        nameLabel.text = lableText as String
+        nameLabel = UILabel()
+        nameLabel.font = UIFont.systemFontOfSize(15)
         nameLabel.textColor = UIColor.orangeColor()
-        let x = CGRectGetMaxX(nameLabel.frame)
-        dotView = UIImageView(frame: CGRectMake(x+10, nameLabel.frame.origin.y+7, 7, 7))
-        dotView.image = UIImage(named: "icon_chat_dot_l6")
-        
+        dotView = UIImageView()
         splitLine = UIView(frame: CGRectMake(CGRectGetMaxX(headImage.frame), CGRectGetMaxY(headImage.frame)-1, SCREEN_WIDTH-90, 1))
         splitLine.backgroundColor = UIColor.whiteColor()
         splitLine.alpha = 0.6
-        
+
         self.addSubview(splitLine)
         self.addSubview(dotView)
         self.addSubview(nameLabel)
-        
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -65,4 +64,5 @@ class UserCell: UITableViewCell {
     class func loadFromNib() ->UserCell {
         return NSBundle.mainBundle().loadNibNamed("UserCell", owner: self, options: nil).last as! UserCell
     }
+
 }

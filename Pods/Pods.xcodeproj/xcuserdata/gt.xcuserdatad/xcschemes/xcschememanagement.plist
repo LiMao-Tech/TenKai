@@ -8,36 +8,58 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>Alamofire.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>CryptoSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>PureLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>Tweaks.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1E9F0521CFDBE6FA00E7D00D82180512</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +84,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>735B2C7302E8699E92D72EB71DD3D897</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>952FE1EB61CA49FEC151B1763B93E741</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>96BD79FF59517DD0BFBC78AFAFDAF6A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D853A0FBA6B863AE9A27595952362008</key>
 		<dict>
 			<key>primary</key>
 			<true/>

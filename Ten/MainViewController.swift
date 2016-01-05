@@ -51,13 +51,11 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barStyle = .Black
-//    self.navigationController?.navigationBar.setBackgroundImage(UIImage(named:"navBar_bg"), forBarMetrics: .Default)
+
         self.navigationController?.navigationBar.backgroundColor = NAV_BAR_COLOR
         self.view.backgroundColor = BG_COLOR
         print(SharedUser.StandardUser().UserIndex)
-//        let bg = UIImageView(frame: CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT))
-//        bg.image = UIImage(named: "bg_radar")
-//        bg.contentMode = UIViewContentMode.ScaleAspectFill
+
         
         // set circularMenu
         self.circularMenuVC.circularMenuDelegate = self

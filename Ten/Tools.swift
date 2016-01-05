@@ -28,7 +28,4 @@ class Tools : NSObject{
         Formatter.dateFormat = "yyyyMMddHHmmss"
         return Formatter.stringFromDate(date)
     }
-    
-    
-    
 }

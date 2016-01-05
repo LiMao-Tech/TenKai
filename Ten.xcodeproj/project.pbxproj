@@ -615,6 +615,7 @@
 		16988AE01B8CCC6000270DBA /* LocationManager */ = {
 			isa = PBXGroup;
 			children = (
+				D4EA5C4E1C142321009E9927 /* Settings */,
 				16988ADE1B8CCC5500270DBA /* SharedLocationManager.swift */,
 			);
 			name = LocationManager;
@@ -679,7 +680,6 @@
 				D4EA5C2F1C14037B009E9927 /* Login */,
 				D4EA5C201C13F669009E9927 /* PCoin */,
 				D4EA5C0A1C13F1F4009E9927 /* Profile */,
-				D4EA5C4E1C142321009E9927 /* Settings */,
 				C4CED3081B88FB010008BCF2 /* Ten */,
 				16988AE01B8CCC6000270DBA /* LocationManager */,
 				643F9C751BF6DCC300361C55 /* Other */,

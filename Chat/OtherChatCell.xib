@@ -36,13 +36,13 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkY-8a-WZi">
-                                <rect key="frame" x="10" y="82" width="199" height="16"/>
+                                <rect key="frame" x="20" y="82" width="194" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgC-Hp-9NF">
-                                <rect key="frame" x="10" y="10" width="199" height="67"/>
+                                <rect key="frame" x="20" y="10" width="194" height="67"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -50,15 +50,15 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="lkY-8a-WZi" secondAttribute="bottom" constant="10" id="7tF-NK-44c"/>
-                            <constraint firstAttribute="trailing" secondItem="lkY-8a-WZi" secondAttribute="trailing" constant="20" id="F6J-Sp-UA8"/>
+                            <constraint firstAttribute="trailing" secondItem="lkY-8a-WZi" secondAttribute="trailing" constant="15" id="F6J-Sp-UA8"/>
                             <constraint firstAttribute="bottom" secondItem="cIS-WJ-tiT" secondAttribute="bottom" id="GIp-H5-22e"/>
-                            <constraint firstItem="lkY-8a-WZi" firstAttribute="leading" secondItem="JUB-Er-oqU" secondAttribute="leading" constant="10" id="Lms-Zw-yK3"/>
+                            <constraint firstItem="lkY-8a-WZi" firstAttribute="leading" secondItem="JUB-Er-oqU" secondAttribute="leading" constant="20" id="Lms-Zw-yK3"/>
                             <constraint firstItem="kgC-Hp-9NF" firstAttribute="top" secondItem="JUB-Er-oqU" secondAttribute="top" constant="10" id="MwE-dW-5L5"/>
                             <constraint firstItem="cIS-WJ-tiT" firstAttribute="leading" secondItem="JUB-Er-oqU" secondAttribute="leading" id="Qni-Xz-G6b"/>
                             <constraint firstItem="lkY-8a-WZi" firstAttribute="top" secondItem="kgC-Hp-9NF" secondAttribute="bottom" constant="5" id="RAI-Rl-tKT"/>
-                            <constraint firstItem="kgC-Hp-9NF" firstAttribute="leading" secondItem="JUB-Er-oqU" secondAttribute="leading" constant="10" id="XEK-b8-uCB"/>
+                            <constraint firstItem="kgC-Hp-9NF" firstAttribute="leading" secondItem="JUB-Er-oqU" secondAttribute="leading" constant="20" id="XEK-b8-uCB"/>
                             <constraint firstAttribute="trailing" secondItem="cIS-WJ-tiT" secondAttribute="trailing" id="YbQ-1x-45H"/>
-                            <constraint firstAttribute="trailing" secondItem="kgC-Hp-9NF" secondAttribute="trailing" constant="20" id="rNP-KE-O8Y"/>
+                            <constraint firstAttribute="trailing" secondItem="kgC-Hp-9NF" secondAttribute="trailing" constant="15" id="rNP-KE-O8Y"/>
                             <constraint firstItem="cIS-WJ-tiT" firstAttribute="top" secondItem="JUB-Er-oqU" secondAttribute="top" id="sEQ-xm-fhh"/>
                         </constraints>
                     </view>

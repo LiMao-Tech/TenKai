@@ -21,6 +21,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         self.title = ChatTitle
         UserChatModel.allChats().addObserver(self, forKeyPath: "tenUser", options: NSKeyValueObservingOptions.New, context: nil)
+        UserChatModel.allChats().addObserver(self, forKeyPath: "message", options: NSKeyValueObservingOptions.New, context: nil)
         separateUser()
         setup()
         refreshControl()
@@ -49,9 +50,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             print(UserChatModel.allChats().tenUser)
             separateUser()
             self.userList.reloadData()
+        }else if(keyPath == "message"){
+            print("message Change")
+            separateUser()
+            self.userList.reloadData()
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
+    }
+    deinit{
+        UserChatModel.allChats().removeObserver(self, forKeyPath: "tenUser", context: nil)
+        UserChatModel.allChats().removeObserver(self, forKeyPath: "message", context: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,6 +80,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell?.tenUser = userChatActive[indexPath.row]
         }else{
             cell?.tenUser = userChatInActive[indexPath.row]
+            print(userChatInActive[indexPath.row].UserName)
         }
         return cell!
     }
@@ -82,11 +92,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sVC = SingleChatController()
         if(modelType == .Active){
-            let user = userChatActive[indexPath.row]
-            sVC.tenUser = user
+            sVC.tenUser = userChatActive[indexPath.row]
         }else{
-            let user = userChatInActive[indexPath.row]
-            sVC.tenUser = user
+            sVC.tenUser = userChatInActive[indexPath.row]
         }
         self.navigationController?.pushViewController(sVC, animated: true)
         self.userList.deselectRowAtIndexPath(indexPath, animated: true)

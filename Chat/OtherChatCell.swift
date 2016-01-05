@@ -19,9 +19,14 @@ class OtherChatCell: ChatBaseCell {
     
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
-            
             timeLabel.text = chatFrame.chatMessage.MsgTime
             content.text = chatFrame.chatMessage.attrMsg.string
+            let image = UIImage(named: "chat_recive_press_pic")
+            let w = image!.size.width/2
+            let h = image!.size.height/2
+            let newImage = image?.resizableImageWithCapInsets(UIEdgeInsetsMake(h, w, h, w), resizingMode: UIImageResizingMode.Tile)
+            context.setBackgroundImage(newImage, forState: UIControlState.Normal)
+
         }
     }
     
@@ -32,12 +37,7 @@ class OtherChatCell: ChatBaseCell {
         lockBtn.setImage(UIImage(named:"btn_chat_lock_25"), forState: UIControlState.Normal)
         headImage.setImage(UIImage(named: "user_pic_88"), forState: UIControlState.Normal)
         context.titleLabel?.numberOfLines = 0
-        let image = UIImage(named: "chat_recive_press_pic")
-        let w = image!.size.width/2
-        let h = image!.size.height/2
-        let newImage = image?.resizableImageWithCapInsets(UIEdgeInsetsMake(h, w, h, w), resizingMode: UIImageResizingMode.Tile)
-        context.setBackgroundImage(newImage, forState: UIControlState.Normal)
-        // Initialization code
+                // Initialization code
         self.lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
     }
 
