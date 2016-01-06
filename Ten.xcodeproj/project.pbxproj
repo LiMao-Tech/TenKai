@@ -390,7 +390,7 @@
 		D4EA5C601C142430009E9927 /* SingleChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatController.swift; sourceTree = "<group>"; };
 		D4EA5C611C142430009E9927 /* SingleChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatMessage.swift; sourceTree = "<group>"; };
 		D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatMessageFrame.swift; sourceTree = "<group>"; };
-		D4EA5C6D1C142443009E9927 /* LevelButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelButton.swift; sourceTree = "<group>"; };
+		D4EA5C6D1C142443009E9927 /* LevelButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LevelButton.swift; path = ../Level/LevelButton.swift; sourceTree = "<group>"; };
 		D4EA5C6E1C142443009E9927 /* LevelUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUserController.swift; sourceTree = "<group>"; };
 		D4EA5C721C142452009E9927 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		D4EA5C731C142452009E9927 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
@@ -708,6 +708,7 @@
 		C4CED3081B88FB010008BCF2 /* Ten */ = {
 			isa = PBXGroup;
 			children = (
+				D4EA5C6D1C142443009E9927 /* LevelButton.swift */,
 				D4EA5C7A1C142471009E9927 /* Helpers.swift */,
 				D4EA5C7B1C142471009E9927 /* Tools.swift */,
 				D4EA5BE71C13E8D1009E9927 /* Ten-Bridging-Header.h */,
@@ -911,7 +912,6 @@
 		D4EA5C6C1C142443009E9927 /* Level */ = {
 			isa = PBXGroup;
 			children = (
-				D4EA5C6D1C142443009E9927 /* LevelButton.swift */,
 				D4EA5C6E1C142443009E9927 /* LevelUserController.swift */,
 			);
 			path = Level;

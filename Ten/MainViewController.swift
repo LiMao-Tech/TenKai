@@ -24,16 +24,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     var distanceLabel:UILabel!
     
-    var lvoneBtn : LevelButton!
-    var lvtwoBtn : LevelButton!
-    var lvthreeBtn : LevelButton!
-    var lvfourBtn : LevelButton!
-    var lvfiveBtn : LevelButton!
-    var lvsixBtn : LevelButton!
-    var lvsevenBtn : LevelButton!
-    var lveightBtn : LevelButton!
-    var lvnineBtn : LevelButton!
-    var lvtenBtn : LevelButton!
+    var btnArray = [LevelButton]()
     var distance : GTSlider!
     var tenUser:TenUser!
     var gap : Int!
@@ -69,6 +60,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
         //setupButtons
         setupButtons()
+        refreshLevelButton()
+        SharedUser.StandardUser().addObserver(self, forKeyPath: "Average", options: .New, context: nil)
         
         // add location observer
         NSNotificationCenter.defaultCenter().addObserver(
@@ -143,9 +136,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     
     func setupButtons(){
-        
-        var btnArray = [lvoneBtn,lvtwoBtn,lvthreeBtn,lvfourBtn,lvfiveBtn,lvsixBtn,lvsevenBtn,lveightBtn,lvnineBtn,lvtenBtn]
-        
         let marginw:CGFloat = 30
         let marginh:CGFloat = 20
         let iconw:CGFloat = 58
@@ -153,34 +143,66 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         let x = (SCREEN_WIDTH - iconw*3 - marginw*2)/2
         let y:CGFloat = 90
         
-        for i in 0...btnArray.count-2{
+        for i in 1...9{
             let row = i/3
             let col = i%3
-            btnArray[i] = LevelButton(frame: CGRectMake(x + CGFloat(col)*(marginw+iconw), y + CGFloat(row)*(marginh+iconh), iconw, iconh))
-            btnArray[i].level = "\(i+1)"
-            btnArray[i].setImage(UIImage(named: "btn_l\(i+1)_unlock"), forState: UIControlState.Normal)
-            btnArray[i].addTarget(self, action: "levelSelect:", forControlEvents: UIControlEvents.TouchUpInside)
-            self.circularMenuVC.view.addSubview(btnArray[i])
-//            btnArray[i].hidden = true
-            btns.append(btnArray[i])
+            
+            let levelBtn = LevelButton(frame: CGRectMake(x + CGFloat(col)*(marginw+iconw), y + CGFloat(row)*(marginh+iconh), iconw, iconh))
+            levelBtn.level = i
+            levelBtn.addTarget(self, action: "levelSelect:", forControlEvents: UIControlEvents.TouchUpInside)
+            self.circularMenuVC.view.addSubview(levelBtn)
+            btnArray.append(levelBtn)
         }
         
-        lvtenBtn = LevelButton(frame: CGRectMake(x+marginw+iconw, y + 3*(marginh+iconh), iconw, iconh))
-        lvtenBtn.setImage(UIImage(named: "btn_l10_lock"), forState: UIControlState.Normal)
-        lvtenBtn.level = "10"
+      let lvtenBtn = LevelButton(frame: CGRectMake(x+marginw+iconw, y + 3*(marginh+iconh), iconw, iconh))
+        lvtenBtn.level = 10
         lvtenBtn.addTarget(self, action: "levelSelect:", forControlEvents: UIControlEvents.TouchUpInside)
         self.circularMenuVC.view.addSubview(lvtenBtn)
-//        lvtenBtn.hidden = true
         btns.append(lvtenBtn)
         
+    }
+    
+    func refreshLevelButton(){
+        let index = SharedUser.StandardUser().Average
+        for btn in btnArray{
+            if(btn.level <= index){
+                btn.lockState = .UnLock
+            }else{
+                btn.lockState = .Lock
+            }
+        }
     }
     
     // button actions
     func levelSelect(sender:LevelButton){
         self.navigationController?.navigationBar.hidden = false
-        let lVC = LevelUserController()
-        lVC.level = sender.level
-        self.navigationController?.pushViewController(lVC, animated: true)
+        if(sender.lockState == .Lock){
+            let unlockAlert = UIAlertController(title: "等级解锁", message: "您需要花费 \(sender.level) P币来解锁该等级", preferredStyle: UIAlertControllerStyle.Alert)
+            let ok = UIAlertAction(title: "解锁", style: UIAlertActionStyle.Destructive, handler: { (ac) -> Void in
+                print("解锁")
+                //解锁的步骤
+            })
+            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
+            unlockAlert.addAction(cancel)
+            unlockAlert.addAction(ok)
+            self.presentViewController(unlockAlert, animated: true, completion: nil)
+        }else{
+            let lVC = LevelUserController()
+            lVC.level = "\(sender.level)"
+            self.navigationController?.pushViewController(lVC, animated: true)
+        }
+    }
+    
+    deinit{
+        SharedUser.StandardUser().removeObserver(self, forKeyPath: "Average", context: nil)
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if(keyPath == "Average"){
+            refreshLevelButton()
+        }else{
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        }
     }
     
     func menuButtonAction() {
