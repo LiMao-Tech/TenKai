@@ -37,6 +37,8 @@
 		D44623FE1C3B2D2D0098AE53 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44623FD1C3B2D2D0098AE53 /* ProfileViewController.swift */; };
 		D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44623FF1C3B2D720098AE53 /* MyProfileViewController.swift */; };
 		D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44624011C3B2D9E0098AE53 /* OtherProfileViewController.swift */; };
+		D44624041C3DF9090098AE53 /* MyProfilePicsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44624031C3DF9090098AE53 /* MyProfilePicsCollectionViewController.swift */; };
+		D44624061C3DF9320098AE53 /* OtherProfilePicsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44624051C3DF9320098AE53 /* OtherProfilePicsCollectionViewController.swift */; };
 		D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46894561C36D7CA004922EF /* LoginCacheTool.swift */; };
 		D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348D1BE9E26500F49D63 /* TenLogin.swift */; };
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
@@ -341,6 +343,8 @@
 		D44623FD1C3B2D2D0098AE53 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D44623FF1C3B2D720098AE53 /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		D44624011C3B2D9E0098AE53 /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
+		D44624031C3DF9090098AE53 /* MyProfilePicsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfilePicsCollectionViewController.swift; sourceTree = "<group>"; };
+		D44624051C3DF9320098AE53 /* OtherProfilePicsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfilePicsCollectionViewController.swift; sourceTree = "<group>"; };
 		D46894561C36D7CA004922EF /* LoginCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCacheTool.swift; sourceTree = "<group>"; };
 		D481348D1BE9E26500F49D63 /* TenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLogin.swift; sourceTree = "<group>"; };
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
@@ -876,6 +880,8 @@
 				D4EA5C491C140BFB009E9927 /* ProfilePicsCollectionViewCell.h */,
 				D4EA5C4A1C140BFB009E9927 /* ProfilePicsCollectionViewCell.m */,
 				D4EA5C4B1C140BFB009E9927 /* ProfilePicsCollectionViewCell.xib */,
+				D44624031C3DF9090098AE53 /* MyProfilePicsCollectionViewController.swift */,
+				D44624051C3DF9320098AE53 /* OtherProfilePicsCollectionViewController.swift */,
 			);
 			path = ProfilePics;
 			sourceTree = "<group>";
@@ -1556,6 +1562,7 @@
 				D4EA5C051C13EAE3009E9927 /* LMCollectionViewLayout.m in Sources */,
 				6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
+				D44624061C3DF9320098AE53 /* OtherProfilePicsCollectionViewController.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
 				D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */,
 				D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */,
@@ -1564,6 +1571,7 @@
 				D4EA5C641C142430009E9927 /* ChatViewController.swift in Sources */,
 				D4EA5C961C1424C6009E9927 /* RandomUserController.swift in Sources */,
 				D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */,
+				D44624041C3DF9090098AE53 /* MyProfilePicsCollectionViewController.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
 				D4EA5C8C1C1424AF009E9927 /* Notification.swift in Sources */,
 				C4CED30C1B88FB010008BCF2 /* AppDelegate.swift in Sources */,

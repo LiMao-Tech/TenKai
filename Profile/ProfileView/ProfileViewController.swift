@@ -17,13 +17,15 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = ProfileTitle
+        
         // profile picture
         self.view.backgroundColor = UIColor.blackColor()
         self.profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
         
         // gradient mask
         let gradientMask = CAGradientLayer()
-        gradientMask.frame = self.view.bounds;
+        gradientMask.frame = self.view.bounds
         gradientMask.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
         self.profileImageView.layer.mask = gradientMask;
         
@@ -39,6 +41,7 @@ class ProfileViewController: UIViewController {
         let inner = 7
         let outter = 8
         let energy = 9
+        
         let scoreLabel = UILabel(frame: CGRectMake(0, SCREEN_HEIGHT-40, SCREEN_WIDTH-70, 50))
         scoreLabel.textColor = UIColor.whiteColor()
         scoreLabel.text = "内在 \(inner)   外在 \(outter)   能量 \(energy)"
@@ -97,17 +100,11 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         // update profile picture everytime
-        self.profileImageView.image = UIImage(named: "meiting")
         
     }
     
     func pushPictureCollectionView() {
-        
-        
-        let pPCVC = ProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT)
-        let backBtn = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem = backBtn
-        self.navigationController?.pushViewController(pPCVC, animated: true)
+        // virtual
     }
     
     
@@ -116,16 +113,5 @@ class ProfileViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

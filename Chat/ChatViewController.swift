@@ -10,6 +10,7 @@
 import UIKit
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     var userChatActive = [TenUser]()
     var userChatInActive = [TenUser]()
     var tabView : UIView!

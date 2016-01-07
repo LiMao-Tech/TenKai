@@ -9,13 +9,12 @@
 import UIKit
 
 // Debug printing
+
 /*
 print("request: \(response.request)")  // original URL request
 print("response: \(response.response)") // URL response
 print("data: \(response.data)")     // server data
 print("result: \(response.result)")   // result of response serialization
-
-
 */
 
 // urls
@@ -33,8 +32,13 @@ let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage"
 
 let DeviceTokenUrl = ""
 
+//
 
-//screenFrame
+let MinBarValue : Float = 0
+let MaxBarValue : Float = 10
+
+
+// screenFrame
 let SCREEN = UIScreen.mainScreen().bounds
 let SCREEN_HEIGHT = SCREEN.height
 let SCREEN_WIDTH = SCREEN.width

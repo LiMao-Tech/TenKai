@@ -137,6 +137,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         
         feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 62, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  女", action: "sexBtnClicked:")
         maleBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*5/12+40, 50, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  男", action: "sexBtnClicked:")
+        
         let marriageLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*6/12, labelWidth: 200, labelHeight: 100, labelText: "婚姻＊")
         singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身", action: "marriageBtnClicked:")
         marriedBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*6/12+40, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚", action: "marriageBtnClicked:")

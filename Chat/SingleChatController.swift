@@ -1,4 +1,3 @@
-                        //
 //  SingleChatController.swift
 //  swiftChat
 //
@@ -17,20 +16,24 @@ class SingleChatController : UIViewController,
                             UIImagePickerControllerDelegate,
                             UINavigationControllerDelegate
 {
+    
     var tenUser = TenUser(){
         didSet{
             messages = UserChatModel.allChats().message[tenUser.UserIndex]!
             
         }
     }
-    var messages: [SingleChatMessageFrame]!{
-        didSet{
-            if(messages.count > 0){
-            for message in messages{
+    
+    var messages: [SingleChatMessageFrame]! {
+        didSet {
+            if messages.count > 0 {
+            
+            for message in messages {
                 let stringToAtt = self.stringToAttributeString(message.chatMessage.MsgContent)
                 message.chatMessage.attrMsg = stringToAtt.text
                 message.chatMessage.isString = stringToAtt.isString
                 message.chatMessage.messageType = ChatMessageType(rawValue: message.chatMessage.MsgType)!
+                
                 if(message.chatMessage.Sender != SharedUser.StandardUser().UserIndex){
                     message.chatMessage.belongType = ChatBelongType.Other
                     }
@@ -38,6 +41,7 @@ class SingleChatController : UIViewController,
             }
         }
     }
+    
     var bottom : UIView!
     var addBtn : UIButton!
     var faceBtn : UIButton!
@@ -45,12 +49,12 @@ class SingleChatController : UIViewController,
     var contentText : UITextView!
     var messageList : UITableView!
     var bottomImage : UIImageView!
-    var faceView:GTFaceView!
+    var faceView : GTFaceView!
     var member = NSDictionary()
-    let margin:CGFloat = 5
-    let iconSize: CGFloat = 30
-    var contentHeight: CGFloat = 32
-    var assets: [DKAsset]?
+    let margin : CGFloat = 5
+    let iconSize : CGFloat = 30
+    var contentHeight : CGFloat = 32
+    var assets : [DKAsset]?
     
     //keyboard properties
     var duration = 0.25

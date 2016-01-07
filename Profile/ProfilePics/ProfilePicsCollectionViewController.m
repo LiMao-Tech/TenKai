@@ -41,6 +41,7 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"相簿";
     
     // afnetoworking
     
@@ -66,15 +67,6 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     self.lmCollectionView.alwaysBounceVertical = YES;
     self.lmCollectionView.delegate = self;
     self.lmCollectionView.dataSource = (id)self;
-    
-    // add Image Button
-    UIBarButtonItem *addImageBtn = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"新增"
-                                   style:UIBarButtonItemStylePlain
-                                   target:self
-                                   action:@selector(addImage)];
-    
-    self.navigationItem.rightBarButtonItem = addImageBtn;
     
     // create toolbar
     UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0,SCREEN_HEIGHT-TOOL_BAR_HEIGHT, SCREEN_WIDTH, TOOL_BAR_HEIGHT)];

@@ -220,47 +220,39 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     func circularMenuClickedButtonAtIndex(buttonIndex: Int32) {
         
         //TODO: add more pos to different pages
+        self.navigationController?.navigationBar.hidden = false
         self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
         
         switch buttonIndex {
         case 0:
-            self.navigationController?.navigationBar.hidden = false
             let rpVC = RegistProfileViewController()
             self.navigationController?.pushViewController(rpVC, animated: true)
 
         case 1:
-            self.navigationController?.navigationBar.hidden = false
             let wVC = WelcomeController()
             self.navigationController?.pushViewController(wVC, animated: true)
         
         case 2:
-            self.navigationController?.navigationBar.hidden = false
             let eVC = EditProfileController()
             self.navigationController?.pushViewController(eVC, animated: true)
 
         case 3:
-            self.navigationController?.navigationBar.hidden = false
-            let pVC = ProfileViewController()
+            let pVC = MyProfileViewController()
             self.navigationController?.pushViewController(pVC, animated: true)
         
         case 4:
             self.circularMenuVC.resignFirstResponder()
             
         case 5:
-            self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
             self.navigationController?.navigationBar.hidden = false
             let cVC = ChatViewController()
             self.navigationController?.pushViewController(cVC, animated: true)
             
         case 6:
-            self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
-            self.navigationController?.navigationBar.hidden = false
             let nVC = NotificationViewController()
             self.navigationController?.pushViewController(nVC, animated: true)
             
         case 7:
-            self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
-            self.navigationController?.navigationBar.hidden = false
             let sVC = SettingsViewController()
             self.navigationController?.pushViewController(sVC, animated: true)
             
