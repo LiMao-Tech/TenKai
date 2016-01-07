@@ -26,6 +26,7 @@ let ApiUrl = HomeUrl + "Ten/api/"
 let LoginUrl = ApiUrl + "TenLogins"
 let UserUrl = ApiUrl + "TenUsers"
 let MsgUrl = ApiUrl + "TenMsgs"
+let PCoinUrl = ApiUrl + "PCoinTrans"
 
 let UpdateLocationByIdURL = HomeUrl + "Ten/TenUsers/UpdateLocationByID"
 let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage"

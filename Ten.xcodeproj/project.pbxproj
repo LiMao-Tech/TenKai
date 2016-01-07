@@ -16,6 +16,10 @@
 		640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDE1C0C898700B31DA0 /* FMDatabaseQueue.m */; };
 		640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BE11C0C898700B31DA0 /* FMResultSet.m */; };
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
+		643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCD1C3E309E00349187 /* MeChatCell.swift */; };
+		643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CCE1C3E309E00349187 /* MeChatCell.xib */; };
+		643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCF1C3E309E00349187 /* OtherChatCell.swift */; };
+		643E8CD41C3E309E00349187 /* OtherChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CD01C3E309E00349187 /* OtherChatCell.xib */; };
 		643F9C741BF6D95A00361C55 /* Radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643F9C731BF6D95A00361C55 /* Radar.gif */; };
 		6444C7DA1C3A5EC200A3540D /* BaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6444C7D91C3A5EC200A3540D /* BaseUser.swift */; };
 		6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */; };
@@ -75,10 +79,6 @@
 		D4EA5C581C142321009E9927 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C531C142321009E9927 /* SettingsViewController.swift */; };
 		D4EA5C631C142430009E9927 /* ChatBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */; };
 		D4EA5C641C142430009E9927 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C5B1C142430009E9927 /* ChatViewController.swift */; };
-		D4EA5C651C142430009E9927 /* MeChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C5C1C142430009E9927 /* MeChatCell.swift */; };
-		D4EA5C661C142430009E9927 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C5D1C142430009E9927 /* MeChatCell.xib */; };
-		D4EA5C671C142430009E9927 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C5E1C142430009E9927 /* OtherChatCell.swift */; };
-		D4EA5C681C142430009E9927 /* OtherChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C5F1C142430009E9927 /* OtherChatCell.xib */; };
 		D4EA5C691C142430009E9927 /* SingleChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C601C142430009E9927 /* SingleChatController.swift */; };
 		D4EA5C6A1C142430009E9927 /* SingleChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C611C142430009E9927 /* SingleChatMessage.swift */; };
 		D4EA5C6B1C142430009E9927 /* SingleChatMessageFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */; };
@@ -317,6 +317,10 @@
 		640F3BE01C0C898700B31DA0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		640F3BE11C0C898700B31DA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		643E8CCD1C3E309E00349187 /* MeChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeChatCell.swift; sourceTree = "<group>"; };
+		643E8CCE1C3E309E00349187 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
+		643E8CCF1C3E309E00349187 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
+		643E8CD01C3E309E00349187 /* OtherChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherChatCell.xib; sourceTree = "<group>"; };
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
 		6444C7D91C3A5EC200A3540D /* BaseUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUser.swift; sourceTree = "<group>"; };
 		6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCacheTool.swift; sourceTree = "<group>"; };
@@ -385,15 +389,11 @@
 		D4EA5C511C142321009E9927 /* settingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = settingCell.swift; sourceTree = "<group>"; };
 		D4EA5C521C142321009E9927 /* SettingDoubleLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDoubleLabelCell.swift; sourceTree = "<group>"; };
 		D4EA5C531C142321009E9927 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBaseCell.swift; sourceTree = "<group>"; };
+		D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatBaseCell.swift; path = ../ChatBaseCell.swift; sourceTree = "<group>"; };
 		D4EA5C5B1C142430009E9927 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		D4EA5C5C1C142430009E9927 /* MeChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeChatCell.swift; sourceTree = "<group>"; };
-		D4EA5C5D1C142430009E9927 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
-		D4EA5C5E1C142430009E9927 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
-		D4EA5C5F1C142430009E9927 /* OtherChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherChatCell.xib; sourceTree = "<group>"; };
 		D4EA5C601C142430009E9927 /* SingleChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatController.swift; sourceTree = "<group>"; };
-		D4EA5C611C142430009E9927 /* SingleChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatMessage.swift; sourceTree = "<group>"; };
-		D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatMessageFrame.swift; sourceTree = "<group>"; };
+		D4EA5C611C142430009E9927 /* SingleChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleChatMessage.swift; path = ../SingleChatMessage.swift; sourceTree = "<group>"; };
+		D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleChatMessageFrame.swift; path = ../SingleChatMessageFrame.swift; sourceTree = "<group>"; };
 		D4EA5C6D1C142443009E9927 /* LevelButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LevelButton.swift; path = ../Level/LevelButton.swift; sourceTree = "<group>"; };
 		D4EA5C6E1C142443009E9927 /* LevelUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUserController.swift; sourceTree = "<group>"; };
 		D4EA5C721C142452009E9927 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
@@ -643,6 +643,27 @@
 			path = fmdb;
 			sourceTree = "<group>";
 		};
+		643E8CCC1C3E309E00349187 /* ChatCell */ = {
+			isa = PBXGroup;
+			children = (
+				D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */,
+				643E8CCD1C3E309E00349187 /* MeChatCell.swift */,
+				643E8CCE1C3E309E00349187 /* MeChatCell.xib */,
+				643E8CCF1C3E309E00349187 /* OtherChatCell.swift */,
+				643E8CD01C3E309E00349187 /* OtherChatCell.xib */,
+			);
+			path = ChatCell;
+			sourceTree = "<group>";
+		};
+		643E8CD51C3E492800349187 /* ChatModel */ = {
+			isa = PBXGroup;
+			children = (
+				D4EA5C611C142430009E9927 /* SingleChatMessage.swift */,
+				D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */,
+			);
+			path = ChatModel;
+			sourceTree = "<group>";
+		};
 		643F9C751BF6DCC300361C55 /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -773,9 +794,9 @@
 			isa = PBXGroup;
 			children = (
 				D481348D1BE9E26500F49D63 /* TenLogin.swift */,
+				6444C7D91C3A5EC200A3540D /* BaseUser.swift */,
 				D481348E1BE9E26500F49D63 /* TenUser.swift */,
 				644F1D0D1C286210002E65CE /* SharedUser.swift */,
-				6444C7D91C3A5EC200A3540D /* BaseUser.swift */,
 			);
 			path = dbmodels;
 			sourceTree = "<group>";
@@ -901,15 +922,10 @@
 		D4EA5C591C142430009E9927 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */,
+				643E8CD51C3E492800349187 /* ChatModel */,
+				643E8CCC1C3E309E00349187 /* ChatCell */,
 				D4EA5C5B1C142430009E9927 /* ChatViewController.swift */,
-				D4EA5C5C1C142430009E9927 /* MeChatCell.swift */,
-				D4EA5C5D1C142430009E9927 /* MeChatCell.xib */,
-				D4EA5C5E1C142430009E9927 /* OtherChatCell.swift */,
-				D4EA5C5F1C142430009E9927 /* OtherChatCell.xib */,
 				D4EA5C601C142430009E9927 /* SingleChatController.swift */,
-				D4EA5C611C142430009E9927 /* SingleChatMessage.swift */,
-				D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */,
 				64BE65AF1C380BAC00DA599A /* UserChatModel.swift */,
 			);
 			path = Chat;
@@ -1268,10 +1284,10 @@
 				D4EA5DDD1C14252B009E9927 /* 077@2x.png in Resources */,
 				D4EA5D861C14252B009E9927 /* 034.png in Resources */,
 				D4EA5DB21C14252B009E9927 /* 056.png in Resources */,
-				D4EA5C681C142430009E9927 /* OtherChatCell.xib in Resources */,
 				D4EA5D981C14252B009E9927 /* 043.png in Resources */,
 				D4EA5D6E1C14252B009E9927 /* 022.png in Resources */,
 				D4EA5DB51C14252B009E9927 /* 057@2x.png in Resources */,
+				643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */,
 				D4EA5DDF1C14252B009E9927 /* 078@2x.png in Resources */,
 				D4EA5DE71C14252B009E9927 /* 082@2x.png in Resources */,
 				D4EA5D651C14252B009E9927 /* 017@2x.png in Resources */,
@@ -1354,6 +1370,7 @@
 				D4EA5DC31C14252B009E9927 /* 064@2x.png in Resources */,
 				D4EA5BF81C13EA12009E9927 /* DKCameraResource.bundle in Resources */,
 				D4EA5DC41C14252B009E9927 /* 065.png in Resources */,
+				643E8CD41C3E309E00349187 /* OtherChatCell.xib in Resources */,
 				D4EA5DBF1C14252B009E9927 /* 062@2x.png in Resources */,
 				D4EA5D8B1C14252B009E9927 /* 036@2x.png in Resources */,
 				D4EA5D621C14252B009E9927 /* 016.png in Resources */,
@@ -1431,7 +1448,6 @@
 				D4EA5D731C14252B009E9927 /* 024@2x.png in Resources */,
 				D4EA5D971C14252B009E9927 /* 042@2x.png in Resources */,
 				D4EA5DB61C14252B009E9927 /* 058.png in Resources */,
-				D4EA5C661C142430009E9927 /* MeChatCell.xib in Resources */,
 				D4EA5DCF1C14252B009E9927 /* 070@2x.png in Resources */,
 				D4EA5D581C14252B009E9927 /* 011.png in Resources */,
 				D4EA5DDC1C14252B009E9927 /* 077.png in Resources */,
@@ -1500,6 +1516,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */,
 				64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */,
 				D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */,
 				644F1D111C2863C1002E65CE /* UserCacheTool.swift in Sources */,
@@ -1536,12 +1553,10 @@
 				649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */,
 				D4EA5C631C142430009E9927 /* ChatBaseCell.swift in Sources */,
 				D4EA5C2A1C13F669009E9927 /* PCoinTransferCell.swift in Sources */,
-				D4EA5C671C142430009E9927 /* OtherChatCell.swift in Sources */,
 				D4EA5C4C1C140BFB009E9927 /* ProfilePicsCollectionViewCell.m in Sources */,
 				640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */,
 				D4EA5C171C13F1F4009E9927 /* ProfileEditController.swift in Sources */,
 				D4EA5C841C1424A1009E9927 /* GTFaceView.swift in Sources */,
-				D4EA5C651C142430009E9927 /* MeChatCell.swift in Sources */,
 				640F3BE31C0C898700B31DA0 /* FMDatabaseAdditions.m in Sources */,
 				D4EA5C2C1C13F669009E9927 /* PCoinUnlockedCell.swift in Sources */,
 				6444C7DA1C3A5EC200A3540D /* BaseUser.swift in Sources */,
@@ -1549,6 +1564,7 @@
 				D4EA5BF51C13EA12009E9927 /* DKAssetGroupDetailVC.swift in Sources */,
 				D4EA5C761C142452009E9927 /* UserCell.swift in Sources */,
 				D4EA5C941C1424C6009E9927 /* RandomAndLevelUser.swift in Sources */,
+				643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */,
 				D4EA5C7C1C142471009E9927 /* Helpers.swift in Sources */,
 				D4EA5C851C1424A1009E9927 /* GTSlider.swift in Sources */,
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,

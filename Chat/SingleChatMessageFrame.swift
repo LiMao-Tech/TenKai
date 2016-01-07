@@ -16,7 +16,6 @@ class SingleChatMessageFrame: NSObject {
     var chatMessage = SingleChatMessage() {
         didSet{
             if chatMessage.messageType == ChatMessageType.Message {
-                
                 let width = SCREEN_WIDTH - 130
                 let font = UIFont.systemFontOfSize(15)
                 let attr = [NSFontAttributeName : font]
@@ -29,7 +28,7 @@ class SingleChatMessageFrame: NSObject {
                 }
                 cellHeight = contentHeight + 60
             }
-            else if chatMessage.messageType == ChatMessageType.Message {
+            else if chatMessage.messageType == ChatMessageType.Image {
                 
             }
            

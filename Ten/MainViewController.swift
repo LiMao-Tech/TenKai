@@ -144,8 +144,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         let y:CGFloat = 90
         
         for i in 1...9{
-            let row = i/3
-            let col = i%3
+            let row = (i-1)/3
+            let col = (i-1)%3
             
             let levelBtn = LevelButton(frame: CGRectMake(x + CGFloat(col)*(marginw+iconw), y + CGFloat(row)*(marginh+iconh), iconw, iconh))
             levelBtn.level = i
@@ -175,18 +175,24 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     // button actions
     func levelSelect(sender:LevelButton){
-        self.navigationController?.navigationBar.hidden = false
         if(sender.lockState == .Lock){
-            let unlockAlert = UIAlertController(title: "等级解锁", message: "您需要花费 \(sender.level) P币来解锁该等级", preferredStyle: UIAlertControllerStyle.Alert)
+            let unlockAlert = UIAlertController(title: "等级解锁", message: "您需要花费 \(sender.level*10) P币来解锁该等级", preferredStyle: UIAlertControllerStyle.Alert)
+            let pcoinValue = SharedUser.StandardUser().PCoin
             let ok = UIAlertAction(title: "解锁", style: UIAlertActionStyle.Destructive, handler: { (ac) -> Void in
                 print("解锁")
-                //解锁的步骤
+                AFNetworkTools.putMethod(PCoinUrl, parameters: ["id":pcoinValue], success: { (task, response) -> Void in
+                    
+                    }, failure: { (task, error) -> Void in
+                        
+                })
+                
             })
             let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
             unlockAlert.addAction(cancel)
             unlockAlert.addAction(ok)
             self.presentViewController(unlockAlert, animated: true, completion: nil)
         }else{
+            self.navigationController?.navigationBar.hidden = false
             let lVC = LevelUserController()
             lVC.level = "\(sender.level)"
             self.navigationController?.pushViewController(lVC, animated: true)

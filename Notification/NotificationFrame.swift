@@ -19,7 +19,7 @@ class NotificationFrame: NSObject {
     var notification:Notification!{
         didSet{
             let size = CGSizeMake(SCREEN_WIDTH - 20, CGFloat(MAXFLOAT))
-            let frame = notification.detail.boundingRectWithSize(size, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
+            let frame = notification.MsgContent.boundingRectWithSize(size, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
             detailFrame = CGRectMake(10, 40,frame.width , frame.height)
             cellheight = 50 + detailFrame.height
             splitFrame = CGRectMake(0, cellheight - 1, SCREEN_WIDTH, 1)

@@ -29,8 +29,8 @@ class NotificationInfoCell: UITableViewCell {
             detailLabel.textColor = UIColor.whiteColor()
             detailLabel.numberOfLines = 0
             titleLable.text = notificationFrame.notification.title
-            timeLabel.text = notificationFrame.notification.time + " am"
-            detailLabel.text = notificationFrame.notification.detail as String
+            timeLabel.text = notificationFrame.notification.MsgTime + " am"
+            detailLabel.text = notificationFrame.notification.MsgContent as String
             self.addSubview(timeLabel)
             self.addSubview(detailLabel)
             self.addSubview(titleLable)
@@ -53,6 +53,7 @@ class NotificationInfoCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
     override func setNeedsLayout() {
         titleLable = UILabel(frame:notificationFrame.titleFrame)
         timeLabel = UILabel(frame: notificationFrame.timeFrame)
@@ -64,8 +65,8 @@ class NotificationInfoCell: UITableViewCell {
         detailLabel.font = UIFont.systemFontOfSize(15)
         detailLabel.textColor = UIColor.whiteColor()
         titleLable.text = notificationFrame.notification.title
-        timeLabel.text = notificationFrame.notification.time + " am"
-        detailLabel.text = notificationFrame.notification.detail as String
+        timeLabel.text = notificationFrame.notification.MsgTime + " am"
+        detailLabel.text = notificationFrame.notification.MsgContent as String
     }
 
 }
