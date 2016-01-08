@@ -10,8 +10,9 @@ import UIKit
 
 class OtherProfileViewController: ProfileViewController {
     
-    var outerBar:GTSlider!
-    var outerValue:UILabel!
+    var outerBar: GTSlider!
+    var outerValue: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ class OtherProfileViewController: ProfileViewController {
     
     
     override func pushPictureCollectionView() {
-        let pPCVC = MyProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT)
+        let pPCVC = OtherProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT, userId: self.userID)
 
         self.navigationController?.pushViewController(pPCVC, animated: true)
         print("Pushed")

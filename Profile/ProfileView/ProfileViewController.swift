@@ -12,6 +12,8 @@ private let InitialBlockPixelSize : Int = 75
 
 class ProfileViewController: UIViewController {
     
+    var userID : Int!
+    
     var profileImageView = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
     
     override func viewDidLoad() {

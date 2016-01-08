@@ -23,18 +23,32 @@ enum CELLSIZE {
     LSIZE = 2
 };
 
+static NSInteger Max_Download = 5;
+
 static NSString *ProfilePicsCellIdentifier = @"ppCell";
 static NSString *ProfilePicsCellXibName = @"ProfilePicsCollectionViewCell";
-static NSString *hostName = @"http://www.limao-tech.com/Ten/";
-static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImages";
+static NSString *ProfilePicUrl = @"http://www.limao-tech.com/Ten/TenImage?id=";
+static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/GetImagesByUser?id=";
 
-- (id) initWithHeight:(CGFloat) height Width: (CGFloat)width ToolbarHeight: (CGFloat) toolbarHeight {
+
+- (id) initWithHeight:(CGFloat) height Width: (CGFloat)width ToolbarHeight: (CGFloat) toolbarHeight UserId: (NSInteger) userId {
     self = [super init];
     if (self) {
+        UserID = userId;
         SCREEN_WIDTH = width;
         SCREEN_HEIGHT = height;
         TOOL_BAR_HEIGHT = toolbarHeight;
     }
+    
+    // afnetoworking
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    self.afUrlManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    self.afHttpManager = [[AFHTTPSessionManager alloc] init];
+    self.afHttpManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
+    self.afHttpManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
+    
+    self.afImageDowloader = [[AFImageDownloader alloc] initWithSessionManager:self.afHttpManager downloadPrioritization:AFImageDownloadPrioritizationFIFO maximumActiveDownloads:Max_Download imageCache: nil];
     
     return self;
 }
@@ -43,21 +57,15 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     [super viewDidLoad];
     self.title = @"相簿";
     
-    // afnetoworking
-    
-    self.afHttpManager = [[AFHTTPSessionManager alloc] init];
-    self.afHttpManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
-    self.afHttpManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
-    
     // init the layout data
-    self.numberOfPics = 10;
-    self.BLOCK_DIM = SCREEN_WIDTH / 4;
+    NumberOfPics = 10;
+    BLOCK_DIM = SCREEN_WIDTH / 4;
     [self dataInit];
     
     // init the layout
     LMCollectionViewLayout * layout = [[LMCollectionViewLayout alloc] init];
     layout.delegate = self;
-    layout.blockPixels = CGSizeMake(self.BLOCK_DIM, self.BLOCK_DIM);
+    layout.blockPixels = CGSizeMake(BLOCK_DIM, BLOCK_DIM);
     
     // init the view
     self.lmCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-TOOL_BAR_HEIGHT) collectionViewLayout:layout];
@@ -68,39 +76,6 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     self.lmCollectionView.delegate = self;
     self.lmCollectionView.dataSource = (id)self;
     
-    // create toolbar
-    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0,SCREEN_HEIGHT-TOOL_BAR_HEIGHT, SCREEN_WIDTH, TOOL_BAR_HEIGHT)];
-    toolbar.backgroundColor = [UIColor darkGrayColor];
-    
-    UIBarButtonItem * optionItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"btn_tabBarIcon_option"] style: UIBarButtonItemStylePlain target:self action: @selector(toolBarOption)];
-    UIBarButtonItem * unlockItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"btn_tabBarIcon_unlock"] style: UIBarButtonItemStylePlain target:self action: @selector(toolBarUnlock)];
-    UIBarButtonItem * lockItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"btn_tabBarIcon_lock"] style: UIBarButtonItemStylePlain target:self action: @selector(toolBarLock)];
-    UIBarButtonItem * deleteItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"btn_tabBarIcon_delete"] style: UIBarButtonItemStylePlain target:self action: @selector(toolBarDelete)];
-
-    // adjust insets
-    UIEdgeInsets insets = UIEdgeInsetsMake(3, 0, 3, 0);
-    optionItem.imageInsets = insets;
-    optionItem.width = 15;
-    unlockItem.imageInsets = insets;
-    unlockItem.width = 5;
-    lockItem.imageInsets = insets;
-    lockItem.width = 5;
-    deleteItem.imageInsets = insets;
-    deleteItem.width = 5;
-    
-    // insert paddings between items
-    UIBarButtonItem * padding = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    padding.width = (SCREEN_WIDTH - 4*optionItem.width)/3;
-
-    NSMutableArray * itemArr = [[NSMutableArray alloc] init] ;
-    [itemArr addObject:optionItem];
-    [itemArr addObject:padding];
-    [itemArr addObject:unlockItem];
-    [itemArr addObject:padding];
-    [itemArr addObject:lockItem];
-    [itemArr addObject:padding];
-    [itemArr addObject:deleteItem];
-    toolbar.items = itemArr;
     
     // Register Xib
     UINib * ppCell = [UINib nibWithNibName:ProfilePicsCellXibName bundle:nil];
@@ -108,8 +83,22 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     
     // Add to view
     [self.view addSubview: self.lmCollectionView];
-    [self.view addSubview: toolbar];
     [self.lmCollectionView reloadData];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    NSString * targetUrl = [ProfilePicsJSONUrl stringByAppendingString:[NSString stringWithFormat:@"%li", (long)UserID]];
+    NSURL *URL = [NSURL URLWithString: targetUrl];
+
+    
+    [self.afHttpManager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSLog(@"URL: %@", targetUrl);
+        NSLog(@"JSON: %@", responseObject);
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
 }
 
 
@@ -118,60 +107,14 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
 }
 
 
-- (void) toolBarOption {
-    
-}
-
-- (void) toolBarUnlock {
-    
-}
-
-- (void) toolBarLock {
-    
-}
-
-- (void) toolBarDelete {
-    
-}
-
-- (void) addImage {
-    
-}
-
-// SharedUser.StandardUser().UserIndex
-- (void) postImage:(NSData *) imageData toUrl: (NSString *) targetUrl {
-    
-    NSDictionary * params = @{@"id" : @1};
-    
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyyMMddHHmmss";
-    NSString * fileDate = [formatter stringFromDate:[[NSDate alloc] init]];
-    NSString * fileName = [fileDate stringByAppendingString:@".png"];
-
-    [self.afHttpManager POST:targetUrl parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:imageData
-                                    name:@"upload"
-                                fileName:fileName
-                                mimeType:@"image/png"];
-    } progress: ^(NSProgress * uploadProgress) {
-        
-    } success: ^(NSURLSessionDataTask * task , id responseObject) {
-         
-     } failure:^(NSURLSessionDataTask * task , NSError * error ) {
-         
-     }];
-    
-
-}
-
 - (void)dataInit {
-    self.num = 0;
+    Num = 0;
     self.numbers = [@[] mutableCopy];
     self.numberWidths = @[].mutableCopy;
     self.numberHeights = @[].mutableCopy;
     
-    for(; self.num < self.numberOfPics; self.num++) {
-        [self.numbers addObject:@(self.num)];
+    for(; Num < NumberOfPics; Num++) {
+        [self.numbers addObject:@(Num)];
         [self.numberWidths addObject:@([self randomLength])];
         [self.numberHeights addObject:@([self randomLength])];
     }
@@ -239,23 +182,23 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
     label.backgroundColor = [UIColor clearColor];
     
-    // Configure the cell
-    NSString *cellImageUrlStr = [NSString stringWithFormat:@"%@%ld.png", cloudAddrYumen,(long)indexPath.row];
-    NSURL * cellImageUrl = [NSURL URLWithString : cellImageUrlStr];
-        
-        
-    [self downloadImageWithURL:cellImageUrl completionBlock:^(BOOL succeeded, UIImage *image) {
-        if (succeeded) {
-            // change the image in the cell
-            [cell.cellImage setImage: image];
-            
-            // cache the image for use later (when scrolling up)
-        }
-        else {
-            NSLog(@"Waiting for image.");
-        }
-    }];
     
+    NSString * targetUrl = [ProfilePicUrl stringByAppendingString:[NSString stringWithFormat:@"%li", (long)UserID]];
+    
+    NSURL * url = [NSURL URLWithString:targetUrl];
+    NSURLRequest * request = [NSURLRequest requestWithURL:url];
+    
+    self.afHttpManager.responseSerializer = [[AFImageResponseSerializer alloc] init];
+    [self.afImageDowloader downloadImageForURLRequest:request
+                                              success:^(NSURLRequest *request, NSHTTPURLResponse  *response, UIImage *responseObject) {
+                                                  cell.cellImage.image = responseObject;
+                                                  [self.lmCollectionView reloadData];
+
+                                              }
+                                              failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+                                                  NSLog(@"Error: %@", error);
+                                              }];
+    cell.cellImage.contentMode = UIViewContentModeScaleAspectFill;
     return cell;
 }
 
@@ -303,7 +246,7 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     
     [self.lmCollectionView performBatchUpdates:^{
         NSInteger index = indexPath.row;
-        [self.numbers insertObject:@(++self.num) atIndex:index];
+        [self.numbers insertObject:@(++Num) atIndex:index];
         [self.numberWidths insertObject:@(STDSIZE) atIndex:index];
         [self.numberHeights insertObject:@(STDSIZE) atIndex:index];
         
@@ -340,7 +283,9 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
          [self.numberWidths replaceObjectAtIndex:index withObject:@(width*2)];
          [self.numberHeights replaceObjectAtIndex:index withObject:@(height*2)];
          */
-    } completion:^(BOOL done) {
+    }
+    completion:^(BOOL done)
+    {
         isAnimating = NO;
     }];
 }
@@ -352,20 +297,5 @@ static NSString *cloudAddrYumen = @"http://www.code-desire.com.tw/LiMao/TenImage
     return 1;
 }
 
-- (void) downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
-{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if ( !error )
-                               {
-                                   UIImage *image = [[UIImage alloc] initWithData:data];
-                                   completionBlock(YES,image);
-                               } else{
-                                   completionBlock(NO,nil);
-                               }
-                           }];
-}
 
 @end

@@ -10,7 +10,12 @@ import UIKit
 import Alamofire
 
 
-class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate{
+class RegistProfileViewController: UIViewController,
+                                    UIAlertViewDelegate,
+                                    UINavigationControllerDelegate,
+                                    UIImagePickerControllerDelegate,
+                                    UITextViewDelegate
+{
     
     //property
     var password:String!
@@ -502,9 +507,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
     // MARK: Entering the image picker
     func toImagePicker(){
         
-        print("going to do imagepicker here")
-        
-        let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert:UIAlertController = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default)
             {
@@ -578,7 +581,7 @@ class RegistProfileViewController: UIViewController,UIAlertViewDelegate,UINaviga
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         chosenImage = image
         self.buttonProfile?.setImage(image, forState: UIControlState.Normal)
-        self.buttonProfile.contentMode = UIViewContentMode.ScaleAspectFit
+        self.buttonProfile.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

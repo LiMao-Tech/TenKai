@@ -22,7 +22,7 @@ class MyProfileViewController: ProfileViewController {
     
     
     override func pushPictureCollectionView() {
-        let pPCVC = MyProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT)
+        let pPCVC = MyProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT, userId: self.userID)
         
         self.navigationController?.pushViewController(pPCVC, animated: true)
     }

@@ -244,6 +244,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
         case 3:
             let pVC = MyProfileViewController()
+            pVC.userID = SharedUser.StandardUser().UserIndex
             self.navigationController?.pushViewController(pVC, animated: true)
         
         case 4:
