@@ -18,7 +18,6 @@ class UserCacheTool: NSObject {
         let databasePath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0].stringByAppendingString("/userInfo.db")
         /*建数据库不应该放在这个代码中，不需要判断是否存在userInfo的文件，因为必须存在*/
         
-        
         //判断datapath路径下有没有feedlog.db文件
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)

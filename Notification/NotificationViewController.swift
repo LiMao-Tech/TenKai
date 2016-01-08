@@ -11,6 +11,8 @@ import UIKit
 class NotificationViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
 
     // Declarations
+    var notification = [NotificationFrame]()
+    var system = [NotificationFrame]()
     var tabView : UIView!
     var infoList : UITableView!
     var modelType : systemType = .System
@@ -55,6 +57,26 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         refreshControl()
         selectedBtn = item
         self.view.backgroundColor = BG_COLOR
+        
+        UserChatModel.allChats().addObserver(self, forKeyPath: "notifications", options: .New, context: nil)
+    }
+    
+    func seperateNotification(){
+        for noti in UserChatModel.allChats().notifications{
+            if(noti.notification.MsgType == 0){
+                notification.append(noti)
+            }else{
+                system.append(noti)
+            }
+        }
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if(keyPath == "notifications"){
+            
+        }else{
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -81,10 +103,13 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let note = Notification()
-        let noteFrame = NotificationFrame()
-        noteFrame.notification = note
-        return noteFrame.cellheight
+        var cellHeight:CGFloat = 0.0
+        if(modelType == .System){
+            cellHeight = system[indexPath.row].cellheight
+        }else{
+            cellHeight = notification[indexPath.row].cellheight
+        }
+        return cellHeight
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -92,19 +117,31 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         if(cell == nil){
             cell = NotificationInfoCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "notificationInfoCell")
         }
-        let note = Notification()
-        let noteFrame = NotificationFrame()
-        noteFrame.notification = note
-        cell?.notificationFrame = noteFrame
+        if(modelType == .System){
+            cell?.notificationFrame = system[indexPath.row]
+        }else{
+            cell?.notificationFrame = notification[indexPath.row]
+        }
+        
         return cell!
 
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        var cellCount = 0
+        
+        if(modelType == .System){
+            cellCount = system.count
+        }else{
+            cellCount = notification.count
+        }
+        
+        return cellCount
     }
 
-    
+    deinit{
+        UserChatModel.allChats().removeObserver(self, forKeyPath: "notifications")
+    }
     /*
     // MARK: - Navigation
 

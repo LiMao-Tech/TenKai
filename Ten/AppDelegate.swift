@@ -126,6 +126,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             for info in userInfoArray{
                 let senderIndex = info["Sender"] as! Int
                 if(senderIndex == 0){
+                    let noti = Notification(dict: info as! NSDictionary)
+                    let notiFrame = NotificationFrame()
+                    notiFrame.notification = noti
+                    //add notification to notifications
+                    UserChatModel.allChats().notifications.append(notiFrame)
+                    // save to db
+                    
                     break
                 }
                 
@@ -150,7 +157,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                         //add to allChats users
                         UserChatModel.allChats().tenUser.append(user)
                         
-                        // add message to the dictionary
                         },
                         failure: { (task, error) -> Void in
                             print(error.localizedDescription)

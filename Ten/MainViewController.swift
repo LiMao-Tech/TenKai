@@ -181,7 +181,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             let ok = UIAlertAction(title: "解锁", style: UIAlertActionStyle.Destructive, handler: { (ac) -> Void in
                 print("解锁")
                 AFNetworkTools.putMethod(PCoinUrl, parameters: ["id":pcoinValue], success: { (task, response) -> Void in
-                    
+                    SharedUser.StandardUser().PCoin -= Double(sender.level*10)
                     }, failure: { (task, error) -> Void in
                         
                 })
