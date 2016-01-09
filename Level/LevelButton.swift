@@ -24,10 +24,8 @@ class LevelButton: UIButton {
         didSet{
             if(lockState == .Lock){
                 self.setImage(lockImage, forState: .Normal)
-                self.userInteractionEnabled = false
             }else{
                 self.setImage(unlockImage, forState: .Normal)
-                self.userInteractionEnabled = true
             }
         }
     }

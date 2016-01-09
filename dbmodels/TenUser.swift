@@ -26,6 +26,7 @@ class TenUser: NSObject {
     var Longi : Double = -1
     var ProfileUrl = ""
     var Average = 0
+    var listType = chatType.InActive
     
     var Portrait = NSData()
     

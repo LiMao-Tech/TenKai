@@ -25,13 +25,18 @@ class SingleChatMessage: NSObject {
     var Receiver = 0
     var MsgIndex = 0
     var MsgTime = ""
-    var MsgContent = ""
+    var MsgContent = ""{
+        didSet{
+            MsgData = MsgContent.dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
     var MsgType = 0
     var PhoneType = 0
     var isString = true
     var IsLocked = false
     var attrMsg = NSMutableAttributedString()
     var timeHide = false
+    var MsgData = NSData()
     var belongType = ChatBelongType.Me
     var messageType = ChatMessageType.Message
     

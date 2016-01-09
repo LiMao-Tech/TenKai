@@ -39,13 +39,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         userChatActive.removeAll()
         userChatInActive.removeAll()
         for uc in UserChatModel.allChats().tenUser{
-            /*
             if uc.listType == .InActive {
                 userChatInActive.append(uc)
             }else{
                 userChatActive.append(uc)
             }
-*/
+
         }
     }
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {

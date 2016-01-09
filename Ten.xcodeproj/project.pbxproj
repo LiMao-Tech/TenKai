@@ -19,6 +19,7 @@
 		643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CCE1C3E309E00349187 /* MeChatCell.xib */; };
 		643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCF1C3E309E00349187 /* OtherChatCell.swift */; };
 		643E8CD41C3E309E00349187 /* OtherChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CD01C3E309E00349187 /* OtherChatCell.xib */; };
+		643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CD81C41431E00349187 /* MessageCacheTool.swift */; };
 		643F9C741BF6D95A00361C55 /* Radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643F9C731BF6D95A00361C55 /* Radar.gif */; };
 		6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */; };
 		644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D0D1C286210002E65CE /* SharedUser.swift */; };
@@ -86,8 +87,6 @@
 		D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C6E1C142443009E9927 /* LevelUserController.swift */; };
 		D4EA5C761C142452009E9927 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C721C142452009E9927 /* UserCell.swift */; };
 		D4EA5C771C142452009E9927 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C731C142452009E9927 /* UserCell.xib */; };
-		D4EA5C781C142452009E9927 /* UserChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C741C142452009E9927 /* UserChatTableViewController.swift */; };
-		D4EA5C791C142452009E9927 /* UserChatTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C751C142452009E9927 /* UserChatTableViewController.xib */; };
 		D4EA5C7C1C142471009E9927 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7A1C142471009E9927 /* Helpers.swift */; };
 		D4EA5C7D1C142471009E9927 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7B1C142471009E9927 /* Tools.swift */; };
 		D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */; };
@@ -320,6 +319,7 @@
 		643E8CCE1C3E309E00349187 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
 		643E8CCF1C3E309E00349187 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
 		643E8CD01C3E309E00349187 /* OtherChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherChatCell.xib; sourceTree = "<group>"; };
+		643E8CD81C41431E00349187 /* MessageCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCacheTool.swift; sourceTree = "<group>"; };
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
 		6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCacheTool.swift; sourceTree = "<group>"; };
 		644F1D0D1C286210002E65CE /* SharedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUser.swift; sourceTree = "<group>"; };
@@ -398,8 +398,6 @@
 		D4EA5C6E1C142443009E9927 /* LevelUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUserController.swift; sourceTree = "<group>"; };
 		D4EA5C721C142452009E9927 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		D4EA5C731C142452009E9927 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
-		D4EA5C741C142452009E9927 /* UserChatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatTableViewController.swift; sourceTree = "<group>"; };
-		D4EA5C751C142452009E9927 /* UserChatTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserChatTableViewController.xib; sourceTree = "<group>"; };
 		D4EA5C7A1C142471009E9927 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		D4EA5C7B1C142471009E9927 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTFaceButton.swift; sourceTree = "<group>"; };
@@ -671,6 +669,7 @@
 				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
 				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
 				D4A5EF991C40590700B48C48 /* ImagePickerTools.swift */,
+				643E8CD81C41431E00349187 /* MessageCacheTool.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -936,8 +935,6 @@
 			children = (
 				D4EA5C721C142452009E9927 /* UserCell.swift */,
 				D4EA5C731C142452009E9927 /* UserCell.xib */,
-				D4EA5C741C142452009E9927 /* UserChatTableViewController.swift */,
-				D4EA5C751C142452009E9927 /* UserChatTableViewController.xib */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1315,7 +1312,6 @@
 				D4EA5D451C14252B009E9927 /* 001@2x.png in Resources */,
 				D4EA5DA71C14252B009E9927 /* 050@2x.png in Resources */,
 				D4EA5D631C14252B009E9927 /* 016@2x.png in Resources */,
-				D4EA5C791C142452009E9927 /* UserChatTableViewController.xib in Resources */,
 				D4EA5D9C1C14252B009E9927 /* 045.png in Resources */,
 				D4EA5DC71C14252B009E9927 /* 066@2x.png in Resources */,
 				D4EA5D4D1C14252B009E9927 /* 005@2x.png in Resources */,
@@ -1514,7 +1510,6 @@
 				644F1D111C2863C1002E65CE /* UserCacheTool.swift in Sources */,
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
-				D4EA5C781C142452009E9927 /* UserChatTableViewController.swift in Sources */,
 				D4A5EF9C1C40765200B48C48 /* SharedInstances.swift in Sources */,
 				D44623FE1C3B2D2D0098AE53 /* ProfileViewController.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
@@ -1577,6 +1572,7 @@
 				D4EA5C6A1C142430009E9927 /* SingleChatMessage.swift in Sources */,
 				D4EA5C641C142430009E9927 /* ChatViewController.swift in Sources */,
 				D4EA5C961C1424C6009E9927 /* RandomUserController.swift in Sources */,
+				643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */,
 				D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */,
 				D4A3E1B31C3F274A00BAB190 /* MyProfilePicsCollectionViewController.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
