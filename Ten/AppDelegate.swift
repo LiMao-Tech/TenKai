@@ -11,19 +11,28 @@ import Tweaks
 import PureLayout
 import CoreLocation
 import Foundation
-import Alamofire
+
 
 var DEVICE_TOKEN : String?
-let ALAMO_MANAGER = Alamofire.Manager.sharedInstance
+
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
+class AppDelegate: UIResponder,
+                    UIApplicationDelegate,
+                    CLLocationManagerDelegate {
+    
     var window: UIWindow?
     
-    //var locationManager = SharedLocationManager()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        // TODO: Update Token if has changed
+        
+        // set Managers delegate
+        LOC_MANAGER.delegate = self
+        LOC_MANAGER.desiredAccuracy = kCLLocationAccuracyBest
+        LOC_MANAGER.distanceFilter = DISTANCE_FILTER
         
         //remember User
         let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as? Int
@@ -71,15 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         
         if CLLocationManager.authorizationStatus() == .NotDetermined {
-            sharedManager.locationManager!.requestWhenInUseAuthorization()
+            LOC_MANAGER.requestWhenInUseAuthorization()
         }
         
-
         print([SCREEN_WIDTH, SCREEN_HEIGHT])
-        
-//        sharedDatabase.createUserTable()
-//        sharedDatabase.insertUser(userIndex: 1, user_id: "exampleid_1", user_name: "Luren0", gender: 0, birth_date: NSDate(), joined_date: NSDate(), last_login_datetime: NSDate(), p_coin: "100.00", outer_score: 10, inner_score: 10, energy: 10, quote: "quote", latitude: 10.12342, longitude: 12.72518)
-//          
+    
         return true
     }
     
@@ -90,12 +95,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
         let trimEnds = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
         DEVICE_TOKEN = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
+        
         //Put DeviceToken
         if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
             //put deviceTokenByUserIndex
             let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as! Int
+            
 //            let params = ["userindex":userIndex,"devicetoken":DEVICE_TOKEN!]
 //            AFNetworkTools.postMethod(LoginUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
 //                print("success")
@@ -119,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     // Recive remote notification
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         
-        let params = ["receiver":SharedUser.StandardUser().UserIndex,"currIndex":SharedUser.StandardUser().MsgIndex]
+        let params = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
         AFNetworkTools.getMethodWithParams(MsgUrl,parameters: params, success: { (task, response) -> Void in
             let userInfoArray = response as! NSArray
             print(userInfoArray)
@@ -165,8 +173,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                     print(UserChatModel.allChats().userIndex)
                 }
             }
-            SharedUser.StandardUser().MsgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
-            UserCacheTool().upDateUserMsgInde(SharedUser.StandardUser().MsgIndex)
+            SHARED_USER.MsgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
+            UserCacheTool().upDateUserMsgInde(SHARED_USER.MsgIndex)
             
             },failure:  { (task, error) -> Void in
               print(error.localizedDescription)
@@ -190,11 +198,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        LOC_MANAGER.stopUpdatingLocation()
+        
         print("in Did Enter Background State")
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        LOC_MANAGER.startUpdatingLocation()
+        
         print("in Will Enter Foreground State")
     }
 
@@ -202,75 +215,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         print("*********** in Did Become Active *************")
         
-        // Update Token if has changed
-        
-        
-        
         // clear notification badge
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        
-        // checking for location Manager's authorization status
-        
-        if(sharedManager.FIRST_TIME == 0){
-            // do nothing
-            sharedManager.FIRST_TIME = 1
-            print("detected it was the first time the app runs before the determination")
-        }
-        else if(sharedManager.FIRST_TIME == 1){
-            
-            let status = CLLocationManager.authorizationStatus()
-            print("status is: \(status.rawValue)")
-            switch status {
-            case .AuthorizedWhenInUse:
-                //AUTHORIZATION_STATUS_FLAG = 1 // passed
-                //sharedManager.locationManager!.startUpdatingLocation()
-                break
-                
-            case .NotDetermined, .Restricted, .Denied:
-                
-                print("first time veriable is: \(sharedManager.FIRST_TIME)")
-                
-                print("<<<< --- in denied case --- >>>>")
-                let alertController = UIAlertController(
-                    title: "While In Use Location Access Disabled",
-                    message: "In order to be notified about nearby cute boys and girls, please enable this service while in use of Ten.",
-                    preferredStyle: .Alert)
-                
-                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-                alertController.addAction(cancelAction)
-                
-                let openAction = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
-                    if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
-                        UIApplication.sharedApplication().openURL(url)
-                    }
-                }
-                alertController.addAction(openAction)
-                
-                self.window!.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        SHARED_APP.applicationIconBadgeNumber = 0
 
-                // keep authorization status flag to be 0;
-                break
-                
-            default:
-                // error state
-                //AUTHORIZATION_STATUS_FLAG = -1
-                break
-            }
-        }
-        else{
-            //error 
-            print("error occured on FIRST_TIME variable")
-        }
-        
-        // end of location manager authorization
-        
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
-        print("in Will Terminate State, byebye")
+        print("application Will Terminate")
     }
+    
+    // Location Manager
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // Post Location to Server
+        if let loc = locations.last {
+        let params = [
+            "UserIndex": SHARED_USER.UserIndex,
+            "UserName" : SHARED_USER.UserName,
+            "PhoneType" : SHARED_USER.PhoneType,
+            "Gender" : SHARED_USER.Gender,
+            "Marrige" : SHARED_USER.Marriage,
+            "Birthday" : SHARED_USER.Birthday,
+            "JoinedDate" : SHARED_USER.JoinedDate,
+            "PCoin" : SHARED_USER.PCoin,
+            "OuterScore" : SHARED_USER.OuterScore,
+            "InnerScore" : SHARED_USER.InnerScore,
+            "Energy" : SHARED_USER.Energy,
+            "Hobby" : SHARED_USER.Hobby,
+            "Quote" : SHARED_USER.Quote,
+            "Lati" : loc.coordinate.latitude,
+            "Longi" : loc.coordinate.longitude
+        ]
+        
+        let targetUrl = UserUrl+String(SHARED_USER.UserIndex)
+         
+            ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON
+                {
+                    response in
+                    print(response.result.debugDescription)
+                }
+        
+        }
+
+    }
+    
 
 }
 

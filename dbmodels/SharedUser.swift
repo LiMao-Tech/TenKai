@@ -8,17 +8,13 @@
 
 import UIKit
 
-class SharedUser : BaseUser {
+class SharedUser: TenUser {
+    
     var MsgIndex = 1
     
-    private static let sharedUser = SharedUser()
-    
-    class func StandardUser() -> SharedUser{
-        sharedUser.Average = (sharedUser.InnerScore + sharedUser.OuterScore)/2
-        return sharedUser
-    }
+    static let SharedInstance = SharedUser()
     
     class func changeValue(dict:[String:AnyObject]){
-        sharedUser.setValuesForKeysWithDictionary(dict)
+        SharedInstance.setValuesForKeysWithDictionary(dict)
     }
 }

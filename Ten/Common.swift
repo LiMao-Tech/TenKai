@@ -17,23 +17,25 @@ print("data: \(response.data)")     // server data
 print("result: \(response.result)")   // result of response serialization
 */
 
+
+
+// Location Mangager
+let DISTANCE_FILTER: Double = 100 // CLLocationDistance
+
 // urls
 let LocationNotiName = "LocationNotification"
 
 let HomeUrl = "http://www.limao-tech.com/"
 
 let ApiUrl = HomeUrl + "Ten/api/"
-let LoginUrl = ApiUrl + "TenLogins"
-let UserUrl = ApiUrl + "TenUsers"
-let MsgUrl = ApiUrl + "TenMsgs"
-let PCoinUrl = ApiUrl + "PCoinTrans"
+let LoginUrl = ApiUrl + "TenLogins/"
+let UserUrl = ApiUrl + "TenUsers/"
+let MsgUrl = ApiUrl + "TenMsgs/"
+let PCoinUrl = ApiUrl + "PCoinTrans/"
 
-let UpdateLocationByIdURL = HomeUrl + "Ten/TenUsers/UpdateLocationByID"
-let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage"
+let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage/"
 
 let DeviceTokenUrl = ""
-
-//
 
 let MinBarValue : Float = 0
 let MaxBarValue : Float = 10
@@ -53,8 +55,6 @@ let TAP_BAR_HEIGHT : CGFloat = SCREEN_HEIGHT*44/568
 
 let SCREEN_HEIGHT_WO_NAV = SCREEN_HEIGHT - NAV_BAR_HEIGHT
 
-//values
-let DISTANCE_FILTER : Double = 100 // meters
 
 let PROFILE_FONT_SIZE : CGFloat = 12
 let USERNAME_FONT_SIZE : CGFloat = 26

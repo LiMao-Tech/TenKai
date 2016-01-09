@@ -150,11 +150,11 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
                 if(!getResult.inDB){
                     SharedUser.changeValue(dict as! [String : AnyObject])
-                    UserCacheTool().addUserInfoByUser(SharedUser.StandardUser())
+                    UserCacheTool().addUserInfoByUser(SHARED_USER)
                 }else{
                     UserCacheTool().updateUserInfo(dict)
                 }
-                NSUserDefaults.standardUserDefaults().setValue(SharedUser.StandardUser().UserIndex, forKey: "Logined")
+                NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController

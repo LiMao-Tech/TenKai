@@ -46,7 +46,7 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     
     self.afHttpManager = [[AFHTTPSessionManager alloc] init];
     self.afHttpManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
-    self.afHttpManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
+    
     
     self.afImageDowloader = [[AFImageDownloader alloc] initWithSessionManager:self.afHttpManager downloadPrioritization:AFImageDownloadPrioritizationFIFO maximumActiveDownloads:Max_Download imageCache: nil];
     
@@ -58,9 +58,8 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     self.title = @"相簿";
     
     // init the layout data
-    NumberOfPics = 10;
+    NumberOfPics = 0;
     BLOCK_DIM = SCREEN_WIDTH / 4;
-    [self dataInit];
     
     // init the layout
     LMCollectionViewLayout * layout = [[LMCollectionViewLayout alloc] init];
@@ -90,15 +89,19 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     NSString * targetUrl = [ProfilePicsJSONUrl stringByAppendingString:[NSString stringWithFormat:@"%li", (long)UserID]];
     NSURL *URL = [NSURL URLWithString: targetUrl];
 
-    
+    self.afHttpManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
     [self.afHttpManager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSLog(@"URL: %@", targetUrl);
-        NSLog(@"JSON: %@", responseObject);
+        
+        
+        self.picsInfoJson = responseObject;
+        NumberOfPics = self.picsInfoJson.count;
+        
+        [self dataInit];
+        [self.lmCollectionView reloadData];
+
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
-    
 }
 
 
@@ -182,8 +185,7 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
     label.backgroundColor = [UIColor clearColor];
     
-    
-    NSString * targetUrl = [ProfilePicUrl stringByAppendingString:[NSString stringWithFormat:@"%li", (long)UserID]];
+    NSString * targetUrl = [ProfilePicUrl stringByAppendingString:[NSString stringWithFormat:@"%@", self.picsInfoJson[indexPath.row][@"ID"]]];
     
     NSURL * url = [NSURL URLWithString:targetUrl];
     NSURLRequest * request = [NSURLRequest requestWithURL:url];
@@ -192,12 +194,14 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     [self.afImageDowloader downloadImageForURLRequest:request
                                               success:^(NSURLRequest *request, NSHTTPURLResponse  *response, UIImage *responseObject) {
                                                   cell.cellImage.image = responseObject;
+                                                  
                                                   [self.lmCollectionView reloadData];
 
                                               }
                                               failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
                                                   NSLog(@"Error: %@", error);
                                               }];
+    
     cell.cellImage.contentMode = UIViewContentModeScaleAspectFill;
     return cell;
 }

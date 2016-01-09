@@ -29,7 +29,7 @@ class RegistProfileViewController: UIViewController,
     var imageUrl : String?
     var counter : Int?
     
-    var picker : UIImagePickerController? = UIImagePickerController()
+    var picker : UIImagePickerController = UIImagePickerController()
     
     // scrollView Variables
     var scrollView: UIScrollView!
@@ -69,6 +69,9 @@ class RegistProfileViewController: UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.picker.delegate = self
+        
         self.view.backgroundColor = BG_COLOR
         self.title = ProfileTitle
         
@@ -454,8 +457,8 @@ class RegistProfileViewController: UIViewController,
         let image = UIImageJPEGRepresentation(chosenImage, 0.75)
 //        let image = UIImagePNGRepresentation(chosenImage!)
         if image != nil {
-            SharedUser.StandardUser().Portrait = image!
-            let params : NSDictionary = ["id": SharedUser.StandardUser().UserIndex]
+            SHARED_USER.Portrait = image!
+            let params : NSDictionary = ["id": SHARED_USER.UserIndex]
             
             AFNetworkTools.postHeadImage(HeadImageUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("post Image")
@@ -473,7 +476,7 @@ class RegistProfileViewController: UIViewController,
     func putUserIndex(){
         let params = [
             "LoginIndex": tenLogin!.LoginIndex,
-            "UserIndex": SharedUser.StandardUser().UserIndex,
+            "UserIndex": SHARED_USER.UserIndex,
             "UserID": tenLogin!.UserID,
             "UserPWD": tenLogin!.UserPWD,
             "LastLogin": tenLogin!.LastLogin,
@@ -490,8 +493,8 @@ class RegistProfileViewController: UIViewController,
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.button.enabled = true
                 self.indicator.stopAnimating()
-                NSUserDefaults.standardUserDefaults().setValue(SharedUser.StandardUser().UserIndex, forKey: "Logined")
-                UserCacheTool().addUserInfoByUser(SharedUser.StandardUser())
+                NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
+                UserCacheTool().addUserInfoByUser(SHARED_USER)
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
@@ -504,74 +507,10 @@ class RegistProfileViewController: UIViewController,
         })
     }
     
-    // MARK: Entering the image picker
-    func toImagePicker(){
-        
-        let alert:UIAlertController = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        
-        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default)
-            {
-                UIAlertAction in
-                self.openCamera()
-            }
-        let gallaryAction = UIAlertAction(title: "Gallary", style: UIAlertActionStyle.Default)
-            {
-                UIAlertAction in
-                self.openGallary()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel)
-            {
-                UIAlertAction in
-                
-            }
-        
-        picker?.delegate = self
-        
-        alert.addAction(cameraAction)
-        alert.addAction(gallaryAction)
-        alert.addAction(cancelAction)
-        
-        // Present the controller
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
-        {
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
-        else
-        {
-            print("Please use an IPhone for this action")
-        }
+    func toImagePicker() -> Void {
+        ImagePickerTools.toImagePicker(self, picker: picker)
     }
     
-    func openCamera()
-    {
-        
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
-        {
-            picker!.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(picker!, animated: true, completion: nil)
-        }
-        else
-        {
-            openGallary()
-        }
-    }
-    
-    func openGallary()
-    {
-        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
-        {
-            self.presentViewController(picker!, animated: true, completion: nil)
-            
-        }
-        else
-        {
-            print("Please use an IPhone for this action")
-        }
-    }
-    
-
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         // TODO: add image into profile
@@ -587,6 +526,5 @@ class RegistProfileViewController: UIViewController,
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
     
 } // end of the class

@@ -34,7 +34,7 @@ class SingleChatController : UIViewController,
                 message.chatMessage.isString = stringToAtt.isString
                 message.chatMessage.messageType = ChatMessageType(rawValue: message.chatMessage.MsgType)!
                 
-                if(message.chatMessage.Sender != SharedUser.StandardUser().UserIndex){
+                if(message.chatMessage.Sender != SHARED_USER.UserIndex){
                     message.chatMessage.belongType = ChatBelongType.Other
                     }
                 }
@@ -194,7 +194,7 @@ class SingleChatController : UIViewController,
             let currTime = NSDate()
             
             let params : NSDictionary = [
-                "Sender": SharedUser.StandardUser().UserIndex,
+                "Sender": SHARED_USER.UserIndex,
                 "Receiver": tenUser.UserIndex,
                 "PhoneType": 0,
                 "IsLocked": false,

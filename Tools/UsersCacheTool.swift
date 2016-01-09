@@ -43,7 +43,7 @@ class UsersCacheTool: NSObject {
         let date = UIImagePNGRepresentation(portrait)
         let sql_update = "UPDATE USERINFO SET PORTRATI = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_update, withArgumentsInArray: [date!,SharedUser.StandardUser().UserIndex])
+            db.executeUpdate(sql_update, withArgumentsInArray: [date!, SHARED_USER.UserIndex])
         }
     }
     
@@ -64,34 +64,34 @@ class UsersCacheTool: NSObject {
             if let rs = db.executeQuery(sql_select, withArgumentsInArray: [userIndex]){  //可选绑定
                 
                 while rs.next(){
-                    SharedUser.StandardUser().UserIndex = userIndex
-                    SharedUser.StandardUser().UserName = rs.stringForColumn("USERNAME")
-                    SharedUser.StandardUser().PhoneType = Int(rs.intForColumn("PHONETYPE"))
-                    SharedUser.StandardUser().Gender = Int(rs.intForColumn("GENDER"))
-                    SharedUser.StandardUser().Birthday = rs.stringForColumn("BIRTHDAY")
-                    SharedUser.StandardUser().JoinedDate = rs.stringForColumn("JOINEDDATE")
-                    SharedUser.StandardUser().PCoin = rs.doubleForColumn("PCOIN")
-                    SharedUser.StandardUser().OuterScore = Int(rs.intForColumn("OUTERSCORE"))
-                    SharedUser.StandardUser().InnerScore = Int(rs.intForColumn("INNERSCORE"))
-                    SharedUser.StandardUser().Energy = Int(rs.intForColumn("ENERGY"))
-                    SharedUser.StandardUser().Hobby = rs.stringForColumn("HOBBY")
-                    SharedUser.StandardUser().Quote = rs.stringForColumn("QUOTE")
-                    SharedUser.StandardUser().Lati = rs.doubleForColumn("LATI")
-                    SharedUser.StandardUser().Longi = rs.doubleForColumn("LONGI")
-                    SharedUser.StandardUser().ProfileUrl = rs.stringForColumn("PROFILEURL")
-                    SharedUser.StandardUser().MsgIndex = Int(rs.intForColumn("MSGINDEX"))
+                    SHARED_USER.UserIndex = userIndex
+                    SHARED_USER.UserName = rs.stringForColumn("USERNAME")
+                    SHARED_USER.PhoneType = Int(rs.intForColumn("PHONETYPE"))
+                    SHARED_USER.Gender = Int(rs.intForColumn("GENDER"))
+                    SHARED_USER.Birthday = rs.stringForColumn("BIRTHDAY")
+                    SHARED_USER.JoinedDate = rs.stringForColumn("JOINEDDATE")
+                    SHARED_USER.PCoin = rs.doubleForColumn("PCOIN")
+                    SHARED_USER.OuterScore = Int(rs.intForColumn("OUTERSCORE"))
+                    SHARED_USER.InnerScore = Int(rs.intForColumn("INNERSCORE"))
+                    SHARED_USER.Energy = Int(rs.intForColumn("ENERGY"))
+                    SHARED_USER.Hobby = rs.stringForColumn("HOBBY")
+                    SHARED_USER.Quote = rs.stringForColumn("QUOTE")
+                    SHARED_USER.Lati = rs.doubleForColumn("LATI")
+                    SHARED_USER.Longi = rs.doubleForColumn("LONGI")
+                    SHARED_USER.ProfileUrl = rs.stringForColumn("PROFILEURL")
+                    SHARED_USER.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
                     inDB = true
                     //                    user.Portrait = rs.dataForColumn("PORTRAIT")  //读取到的是插入时候已经将图片转成的NSData
                 }
             }
         }
-        return (SharedUser.StandardUser(),inDB)
+        return (SHARED_USER, inDB)
     }
     
     func deleteUserInfo(){
         let sql_delete = "DELETE FROM USERINFO WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_delete, withArgumentsInArray: [SharedUser.StandardUser().UserIndex])
+            db.executeUpdate(sql_delete, withArgumentsInArray: [SHARED_USER.UserIndex])
         }
     }
 

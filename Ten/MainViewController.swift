@@ -45,7 +45,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
         self.navigationController?.navigationBar.backgroundColor = NAV_BAR_COLOR
         self.view.backgroundColor = BG_COLOR
-        print(SharedUser.StandardUser().UserIndex)
+        print(SHARED_USER.UserIndex)
 
         
         // set circularMenu
@@ -61,7 +61,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         //setupButtons
         setupButtons()
         refreshLevelButton()
-        SharedUser.StandardUser().addObserver(self, forKeyPath: "Average", options: .New, context: nil)
+        SHARED_USER.addObserver(self, forKeyPath: "Average", options: .New, context: nil)
         
         // add location observer
         NSNotificationCenter.defaultCenter().addObserver(
@@ -163,7 +163,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     func refreshLevelButton(){
-        let index = SharedUser.StandardUser().Average
+        let index = SHARED_USER.Average
         for btn in btnArray{
             if(btn.level <= index){
                 btn.lockState = .UnLock
@@ -177,11 +177,11 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     func levelSelect(sender:LevelButton){
         if(sender.lockState == .Lock){
             let unlockAlert = UIAlertController(title: "等级解锁", message: "您需要花费 \(sender.level*10) P币来解锁该等级", preferredStyle: UIAlertControllerStyle.Alert)
-            let pcoinValue = SharedUser.StandardUser().PCoin
+            let pcoinValue = SHARED_USER.PCoin
             let ok = UIAlertAction(title: "解锁", style: UIAlertActionStyle.Destructive, handler: { (ac) -> Void in
                 print("解锁")
                 AFNetworkTools.putMethod(PCoinUrl, parameters: ["id":pcoinValue], success: { (task, response) -> Void in
-                    SharedUser.StandardUser().PCoin -= Double(sender.level*10)
+                    SHARED_USER.PCoin -= Double(sender.level*10)
                     }, failure: { (task, error) -> Void in
                         
                 })
@@ -200,7 +200,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     deinit{
-        SharedUser.StandardUser().removeObserver(self, forKeyPath: "Average", context: nil)
+        SHARED_USER.removeObserver(self, forKeyPath: "Average", context: nil)
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -244,7 +244,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
         case 3:
             let pVC = MyProfileViewController()
-            pVC.userID = SharedUser.StandardUser().UserIndex
+            pVC.userID = SHARED_USER.UserIndex
             self.navigationController?.pushViewController(pVC, animated: true)
         
         case 4:
@@ -267,57 +267,5 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.circularMenuVC.resignFirstResponder()
         }
 
-    }
-    
-    // Location Manager
-    @IBAction func updateLocation(sender: AnyObject) {
-        
-        if(sharedManager.authorization_status == 1){
-            sharedManager.startUpdatingLocation()
-            NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("sharedManagerStopUpdatingLocation"), userInfo: nil, repeats: false)
-        }
-    }
-    
-    @objc func locationChanged(notification: NSNotification){
-        if(sharedManager.is_ready == 1){
-            let lati = sharedManager.currentLocation!.coordinate.latitude
-            let longi = sharedManager.currentLocation!.coordinate.longitude
-            
-            print("New Location: \(lati) \(longi)")
-            
-            // ToDo: post location to the server
-            
-            // self.postLocationToServer(longi.description, lati: lati.description)
-        }
-        
-    }
-    
-    func sharedManagerStopUpdatingLocation(){
-        sharedManager.stopUpdatingLocation()
-    }
-    
-    
-    func postLocationToServer(longi:NSString, lati: NSString){
-        
-        // Post Location to Server
-        let parameters = ["id":"1","latitude" : lati,"longitude" : longi]
-        
-        ALAMO_MANAGER.request(.POST, UpdateLocationByIdURL, parameters: parameters, encoding: .JSON) .responseJSON {
-            response in
-            if response.result.isSuccess {
-                print(response.request)
-                print(response.response)
-                print(response.result)
-                
-                let responseStr = String(data: response.data!, encoding: NSUTF8StringEncoding)
-                print(responseStr)
-            }
-            else {
-                print("Something is Wrong.")
-                
-            }
-            
-        }
-        
     }
 }

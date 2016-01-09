@@ -35,6 +35,9 @@
 @property (strong, nonatomic) AFURLSessionManager * afUrlManager;
 @property (strong, nonatomic) AFImageDownloader * afImageDowloader;
 
+
+@property (nonatomic) NSArray * picsInfoJson;
+
 @property (nonatomic) NSMutableArray* numbers;
 @property (nonatomic) NSMutableArray* numberWidths;
 @property (nonatomic) NSMutableArray* numberHeights;
