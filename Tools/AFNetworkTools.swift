@@ -55,10 +55,10 @@ class AFNetworkTools: NSObject {
                 failure(task,error)
         })
     }
-    class func getImageMethod(url:String,params:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError)->Void){
-                sharedInstance.responseSerializer = AFImageResponseSerializer()
+    class func getImageMethod(url:String,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError)->Void){
+        sharedInstance.responseSerializer = AFImageResponseSerializer()
         //        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-                sharedInstance.responseSerializer.acceptableContentTypes = NSSet(object: "image/jpeg") as? Set<String>
+        sharedInstance.responseSerializer.acceptableContentTypes = NSSet(object: "image/jpeg") as? Set<String>
         sharedInstance.GET(url, parameters: nil, progress: nil, success: { (task, error) -> Void in
             success(task,error)
             },failure: { (task, error) -> Void in

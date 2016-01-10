@@ -17,8 +17,16 @@ class TenUser: NSObject {
     var Birthday : String = ""
     var JoinedDate : String = ""
     var PCoin : Double = 0
-    var OuterScore : Int = 0
-    var InnerScore : Int = 0
+    var OuterScore : Int = 0{
+        didSet{
+         Average = (OuterScore+InnerScore)/2
+        }
+    }
+    var InnerScore : Int = 0{
+        didSet{
+            Average = (OuterScore+InnerScore)/2
+        }
+    }
     var Energy : Int = 0
     var Hobby : String = ""
     var Quote : String = ""
@@ -32,7 +40,7 @@ class TenUser: NSObject {
     
     override init() {
         super.init()
-        self.Average = (self.InnerScore + self.OuterScore)/2
+        
     }
     
     init(dict:[String : AnyObject]) {
@@ -42,7 +50,6 @@ class TenUser: NSObject {
     
     func ValueWithDict(dict:[String : AnyObject]){
         self.setValuesForKeysWithDictionary(dict)
-        
     }
     
     func updateCoordinates(lati : Double, longi : Double) -> Bool {

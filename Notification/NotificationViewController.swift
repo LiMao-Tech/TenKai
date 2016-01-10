@@ -73,7 +73,8 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "notifications"){
-            
+            seperateNotification()
+            self.infoList.reloadData()
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }

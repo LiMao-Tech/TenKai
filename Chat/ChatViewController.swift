@@ -26,10 +26,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         separateUser()
         setup()
         refreshControl()
-//        print(userChatActive)
-//        print(userChatInActive)
-//        print(userChatInActive[0])
-//        print(UserChatModel.allChats().message[userChatInActive[0].UserIndex])
+
         
         // userList.reloadData()
         // Do any additional setup after loading the view, typically from a nib.

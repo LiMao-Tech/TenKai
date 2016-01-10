@@ -402,7 +402,7 @@
 		D4EA5C721C142452009E9927 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		D4EA5C731C142452009E9927 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		D4EA5C7A1C142471009E9927 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		D4EA5C7B1C142471009E9927 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		D4EA5C7B1C142471009E9927 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tools.swift; path = ../Ten/Tools.swift; sourceTree = "<group>"; };
 		D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTFaceButton.swift; sourceTree = "<group>"; };
 		D4EA5C801C1424A1009E9927 /* GTFaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTFaceView.swift; sourceTree = "<group>"; };
 		D4EA5C811C1424A1009E9927 /* GTSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSlider.swift; sourceTree = "<group>"; };
@@ -668,6 +668,7 @@
 		644F1D0F1C2863A9002E65CE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				D4EA5C7B1C142471009E9927 /* Tools.swift */,
 				644F1D101C2863C1002E65CE /* UserCacheTool.swift */,
 				6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */,
 				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
@@ -740,7 +741,6 @@
 			children = (
 				D4EA5C6D1C142443009E9927 /* LevelButton.swift */,
 				D4EA5C7A1C142471009E9927 /* Helpers.swift */,
-				D4EA5C7B1C142471009E9927 /* Tools.swift */,
 				D4EA5BE71C13E8D1009E9927 /* Ten-Bridging-Header.h */,
 				D4EA5BE51C13E8C5009E9927 /* Common.swift */,
 				D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */,

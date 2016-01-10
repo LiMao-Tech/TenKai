@@ -36,7 +36,7 @@ let PCoinUrl = ApiUrl + "PCoinTrans/"
 let ImagesJSONUrl = HomeUrl + "TenImage/GetImagesByUser?id="
 let ImageUrl = HomeUrl + "TenImage?id="
 
-let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage/"
+let HeadImageUrl = HomeUrl + "TenImage/UploadProfileImage/"
 
 let DeviceTokenUrl = ""
 

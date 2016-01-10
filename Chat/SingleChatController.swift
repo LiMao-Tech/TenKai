@@ -24,23 +24,7 @@ class SingleChatController : UIViewController,
         }
     }
     
-    var messages: [SingleChatMessageFrame]! {
-        didSet {
-            if messages.count > 0 {
-            
-            for message in messages {
-                let stringToAtt = self.stringToAttributeString(message.chatMessage.MsgContent)
-                message.chatMessage.attrMsg = stringToAtt.text
-                message.chatMessage.isString = stringToAtt.isString
-                message.chatMessage.messageType = ChatMessageType(rawValue: message.chatMessage.MsgType)!
-                
-                if(message.chatMessage.Sender != SHARED_USER.UserIndex){
-                    message.chatMessage.belongType = ChatBelongType.Other
-                    }
-                }
-            }
-        }
-    }
+    var messages: [SingleChatMessageFrame]! 
     
     var bottom : UIView!
     var addBtn : UIButton!
@@ -95,42 +79,6 @@ class SingleChatController : UIViewController,
         refresh.endRefreshing()
     }
 
-    func getMessages(){
-        
-//        let request : NSMutableURLRequest = NSMutableURLRequest(URL: url)
-//        request.HTTPMethod = "post"
-//        let myID = NSUserDefaults.standardUserDefaults().objectForKey("myID") as! String
-//        let memberID = member.objectForKey("MemberId") as! Int
-//        let body = NSString(string:"MemberID=\(myID)&ReceiverID=\(memberID)")
-//        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
-//        print(body)
-//        
-//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response:NSURLResponse?, responseData: NSData?, error:NSError?) -> Void in
-//            let dict: NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(responseData!, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
-//            let memberList = dict.objectForKey("Msg List") as! NSString
-//            let messagesContent = (try! NSJSONSerialization.JSONObjectWithData(memberList.dataUsingEncoding(NSUTF8StringEncoding)!, options:NSJSONReadingOptions.MutableContainers)) as! NSMutableArray
-//            
-//            if(messagesContent.count > 0){
-//                for message in messagesContent{
-//                    let chatFrame = SingleChatMessageFrame()
-////                    print(message)
-//                    let message = SingleChatMessage(dict: (message as! NSDictionary))
-//                    let stringToAtt = self.stringToAttributeString(message.Msg)
-//                    message.attrMsg = stringToAtt.text
-//                    message.isString = stringToAtt.isString
-//                    chatFrame.chatMessage = message
-//                    if(Int(myID) != chatFrame.chatMessage.SenderId){
-//                        chatFrame.chatMessage.belongType = ChatBelongType.Other
-//                    }
-//                    self.messages.addObject(chatFrame)
-//                }
-//            }
-//            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-//                self.messageList.reloadData()
-//                self.rollToLastRow()
-//            })
-//        })
-    }
     
     deinit{
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -406,6 +354,22 @@ class SingleChatController : UIViewController,
         }
     }
     
+    // attributeString转换String
+    func attributeStringToString() -> String {
+        
+        let attrString = NSMutableAttributedString()
+        attrString.appendAttributedString(contentText.attributedText)
+        attrString.enumerateAttributesInRange(NSMakeRange(0, attrString.length), options: NSAttributedStringEnumerationOptions.Reverse) { (attrs, range, stop) -> Void in
+            let attr = attrs["NSAttachment"] as? GTTextAttachment
+            if(attr != nil){
+                print(attr!.faceCode)
+                let faceCode = attr!.faceCode
+                attrString.replaceCharactersInRange(range, withString: faceCode as String)
+            }
+        }
+        return attrString.string
+    }
+    
     func setup(){
         let background = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
         background.image = UIImage(named: "bg_chat_")
@@ -463,63 +427,7 @@ class SingleChatController : UIViewController,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    // attributeString转换String
-
-    func attributeStringToString() -> String {
-        
-        let attrString = NSMutableAttributedString()
-        attrString.appendAttributedString(contentText.attributedText)
-        attrString.enumerateAttributesInRange(NSMakeRange(0, attrString.length), options: NSAttributedStringEnumerationOptions.Reverse) { (attrs, range, stop) -> Void in
-            let attr = attrs["NSAttachment"] as? GTTextAttachment
-            if(attr != nil){
-                print(attr!.faceCode)
-                let faceCode = attr!.faceCode
-                attrString.replaceCharactersInRange(range, withString: faceCode as String)
-            }
-        }
-        return attrString.string
-    }
     
-    // string转attributeString
-    func stringToAttributeString(matchString:String) -> (text:NSMutableAttributedString,isString:Bool) {
-        let Str:NSString = matchString as NSString
-        var isString = true
-        let pattern = "\\[\\d{3}\\]"
-        var text = NSMutableAttributedString(string: matchString)
-        var array = Array<NSTextCheckingResult>()
-        let expression=try! NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
-        expression.enumerateMatchesInString(matchString, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, matchString.characters.count)) { (result, flag, stop) -> Void in
-            if((result) != nil){
-                    array.append(result!)
-            }
-        }
-        
-        if(array.count > 0){
-            isString = false
-            let len = text.length - (array[array.count-1].range.location + array[array.count-1].range.length)
-            for(var i = array.count - 1; i >= 0; i--){
-                let attr = NSMutableAttributedString(attributedString: text)
-                let temp = Str.substringWithRange((array[i].range)) as NSString
-                let temp0 = attr.attributedSubstringFromRange(NSMakeRange(0, array[i].range.location))
-                let location1 = array[i].range.location + array[i].range.length
-                let len1 = attr.length - location1
-                let temp1 = attr.attributedSubstringFromRange(NSMakeRange(location1, len1))
-                if(self.faceView.faceCodes.containsObject(temp)){
-                    let attachment = GTTextAttachment()
-                    attachment.image = UIImage(named:temp.substringWithRange(NSMakeRange(1, 3)) as String)
-                    attachment.faceCode = temp
-                    let attStr = NSAttributedString(attachment: attachment)
-                    attr.setAttributedString(NSAttributedString(string: ""))
-                    attr.appendAttributedString(temp0)
-                    attr.setAttributes([NSFontAttributeName: UIFont.systemFontOfSize(15)], range: NSMakeRange(0, temp0.length))
-                    attr.appendAttributedString(attStr)
-                    attr.appendAttributedString(temp1)
-                    attr.setAttributes([NSFontAttributeName: UIFont.systemFontOfSize(15)], range: NSMakeRange(attr.length-len,len))
-                    text = attr
-                }
-            }
-        }
-        return (text,isString)
-    }
+    
 }
 

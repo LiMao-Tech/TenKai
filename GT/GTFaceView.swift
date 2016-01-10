@@ -8,10 +8,11 @@
 
 import UIKit
 
+var faceCodes = NSMutableArray()
 class GTFaceView: UIView {
     var faceMap = NSDictionary()
     var faceView : UIScrollView
-    var faceCodes = NSMutableArray()
+    
     let screen = UIScreen.mainScreen().bounds.size
     init(faceDelegateTemp:GTFaceButtonDelegate) {
         faceMap = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("_expression_en", ofType: "plist")!)!

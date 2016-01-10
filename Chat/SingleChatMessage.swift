@@ -25,18 +25,18 @@ class SingleChatMessage: NSObject {
     var Receiver = 0
     var MsgIndex = 0
     var MsgTime = ""
-    var MsgContent = ""{
-        didSet{
-            MsgData = MsgContent.dataUsingEncoding(NSUTF8StringEncoding)!
-        }
-    }
+    var MsgContent = ""
     var MsgType = 0
     var PhoneType = 0
-    var isString = true
     var IsLocked = false
+    
+    var isString = true
     var attrMsg = NSMutableAttributedString()
     var timeHide = false
-    var MsgData = NSData()
+    
+    var MsgImage:UIImage?
+    var MsgImageSize:CGSize?
+
     var belongType = ChatBelongType.Me
     var messageType = ChatMessageType.Message
     
@@ -47,5 +47,16 @@ class SingleChatMessage: NSObject {
     init(dict :NSDictionary) {
         super.init()
         self.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
+        self.completeValue()
+    }
+    
+    func completeValue(){
+        if(self.Receiver == SHARED_USER.UserIndex){
+            self.belongType = .Other
+        }
+        self.messageType = ChatMessageType(rawValue: self.MsgType)!
+        let stringToAtt = Tools.stringToAttributeString(self.MsgContent)
+        self.attrMsg = stringToAtt.text
+        self.isString = stringToAtt.isString
     }
 }

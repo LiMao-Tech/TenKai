@@ -248,6 +248,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.navigationController?.pushViewController(pVC, animated: true)
         
         case 4:
+            self.navigationController?.navigationBar.hidden = true
             self.circularMenuVC.resignFirstResponder()
             
         case 5:

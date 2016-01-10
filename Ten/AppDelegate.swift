@@ -133,6 +133,7 @@ class AppDelegate: UIResponder,
             print(userInfoArray)
             for info in userInfoArray{
                 let senderIndex = info["Sender"] as! Int
+                //notification
                 if(senderIndex == 0){
                     let noti = Notification(dict: info as! NSDictionary)
                     let notiFrame = NotificationFrame()
@@ -143,37 +144,50 @@ class AppDelegate: UIResponder,
                     
                     break
                 }
-                
-                if(UserChatModel.allChats().userIndex.contains(senderIndex)){
-                    // add message to the dictionary 
-                    let messageFrame = SingleChatMessageFrame()
+                let messageFrame = SingleChatMessageFrame()
+                if(info["MsgType"] as! Int != 1){
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
-                    UserChatModel.allChats().message[senderIndex]!.append(messageFrame)
+                }else{
+                    let tempMessage = SingleChatMessage(dict: info as! NSDictionary)
+                    AFNetworkTools.getImageMethod(messageFrame.chatMessage.MsgContent, success: { (task, response) -> Void in
+                        if(UserChatModel.allChats().message[senderIndex] != nil){
+                            tempMessage.MsgImage = response as? UIImage
+                            messageFrame.chatMessage = tempMessage
+                            UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
+                            MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
+                        }
+                        UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
+                        }, failure: { (task, error) -> Void in
+                            
+                    })
                 }
-                else {
-                    // add message to the dictionary
+
+                if(!UserChatModel.allChats().userIndex.contains(senderIndex)){
                     UserChatModel.allChats().userIndex.append(senderIndex)
-                    let messageFrame = SingleChatMessageFrame()
-                    messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
-                    UserChatModel.allChats().message[senderIndex] = [messageFrame]
+                    UserChatModel.allChats().message[senderIndex] = [SingleChatMessageFrame]()
                     
                     // get userInfo
                     AFNetworkTools.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
                         let userDict = response as! NSDictionary
                         let user = TenUser(dict: userDict as! [String : AnyObject])
-                        
                         //add to allChats users
                         UserChatModel.allChats().tenUser.append(user)
-                        
                         },
                         failure: { (task, error) -> Void in
                             print(error.localizedDescription)
+                            let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
+                            UserChatModel.allChats().userIndex.removeAtIndex(index!)
                     })
-                    
                     print("UserIndex: \(UserChatModel.allChats().userIndex)")
                 }
+                
+                if(messageFrame.chatMessage.messageType != .Image){
+                    UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
+                    MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
+                }
             }
-            SHARED_USER.MsgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
+            let msgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
+            SHARED_USER.MsgIndex = msgIndex
             UserCacheTool().upDateUserMsgInde(SHARED_USER.MsgIndex)
             
             },failure:  { (task, error) -> Void in

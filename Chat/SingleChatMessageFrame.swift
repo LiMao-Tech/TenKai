@@ -15,8 +15,8 @@ class SingleChatMessageFrame: NSObject {
     
     var chatMessage = SingleChatMessage() {
         didSet{
+            let width = SCREEN_WIDTH - 130
             if chatMessage.messageType == ChatMessageType.Message {
-                let width = SCREEN_WIDTH - 130
                 let font = UIFont.systemFontOfSize(15)
                 let attr = [NSFontAttributeName : font]
                 let maxSize:CGSize = CGSizeMake(width,CGFloat(MAXFLOAT))

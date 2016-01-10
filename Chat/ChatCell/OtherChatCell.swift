@@ -20,7 +20,7 @@ class OtherChatCell: ChatBaseCell {
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
             timeLabel.text = chatFrame.chatMessage.MsgTime
-            content.text = chatFrame.chatMessage.attrMsg.string
+            content.attributedText = chatFrame.chatMessage.attrMsg
             let image = UIImage(named: "chat_recive_press_pic")
             let w = image!.size.width/2
             let h = image!.size.height/2
