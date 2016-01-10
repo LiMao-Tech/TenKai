@@ -25,13 +25,16 @@ let DISTANCE_FILTER: Double = 100 // CLLocationDistance
 // urls
 let LocationNotiName = "LocationNotification"
 
-let HomeUrl = "http://www.limao-tech.com/"
+let HomeUrl = "http://www.limao-tech.com/Ten/"
 
-let ApiUrl = HomeUrl + "Ten/api/"
+let ApiUrl = HomeUrl + "api/"
 let LoginUrl = ApiUrl + "TenLogins/"
 let UserUrl = ApiUrl + "TenUsers/"
 let MsgUrl = ApiUrl + "TenMsgs/"
 let PCoinUrl = ApiUrl + "PCoinTrans/"
+
+let ImagesJSONUrl = HomeUrl + "TenImage/GetImagesByUser?id="
+let ImageUrl = HomeUrl + "TenImage?id="
 
 let HeadImageUrl = HomeUrl + "Ten/TenImage/UploadProfileImage/"
 

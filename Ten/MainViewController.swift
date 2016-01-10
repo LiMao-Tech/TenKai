@@ -122,7 +122,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         }
     }
     
-    func distanceChange(){
+    func distanceChange() {
         index = Int(distance.value+0.5)
         distance.setValue(Float(index), animated: true)
         distanceLabel.text = "\(distances[index]) km"
@@ -243,7 +243,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.navigationController?.pushViewController(eVC, animated: true)
 
         case 3:
-            let pVC = MyProfileViewController()
+            let pVC = MyProfileViewController(nibName: "ProfileViewController", bundle: nil)
             pVC.userID = SHARED_USER.UserIndex
             self.navigationController?.pushViewController(pVC, animated: true)
         
@@ -251,7 +251,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.circularMenuVC.resignFirstResponder()
             
         case 5:
-            self.navigationController?.navigationBar.hidden = false
             let cVC = ChatViewController()
             self.navigationController?.pushViewController(cVC, animated: true)
             

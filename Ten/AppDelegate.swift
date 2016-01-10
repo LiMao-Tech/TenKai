@@ -170,7 +170,7 @@ class AppDelegate: UIResponder,
                             print(error.localizedDescription)
                     })
                     
-                    print(UserChatModel.allChats().userIndex)
+                    print("UserIndex: \(UserChatModel.allChats().userIndex)")
                 }
             }
             SHARED_USER.MsgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int

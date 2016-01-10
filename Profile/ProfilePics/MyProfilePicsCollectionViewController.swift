@@ -22,7 +22,6 @@ self
 
         // add Image Button
         let addImageBtn = UIBarButtonItem(title: "新增", style: .Plain, target: self, action: "addImage")
-        
         self.navigationItem.rightBarButtonItem = addImageBtn;
     }
 

@@ -71,9 +71,7 @@ class RandomUserController: UIViewController,
     
     // Table view delegates
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        // TODO: 这个值要按屏幕比例来进行调整。
-        return 75
+        return SCREEN_HEIGHT/6
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.userList.count
