@@ -27,6 +27,7 @@ class UserCell: UITableViewCell {
             let x = CGRectGetMaxX(nameLabel.frame)
             dotView.frame =  CGRectMake(x+10, nameLabel.frame.origin.y+7, 7, 7)
             dotView.image = UIImage(named: "icon_chat_dot_l6")
+            headImage.setImage(tenUser.PortraitImage, forState: .Normal)
         }
     }
     var message = [SingleChatMessageFrame](){

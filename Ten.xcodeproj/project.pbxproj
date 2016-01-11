@@ -15,6 +15,7 @@
 		640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDE1C0C898700B31DA0 /* FMDatabaseQueue.m */; };
 		640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BE11C0C898700B31DA0 /* FMResultSet.m */; };
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
+		642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */; };
 		643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCD1C3E309E00349187 /* MeChatCell.swift */; };
 		643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CCE1C3E309E00349187 /* MeChatCell.xib */; };
 		643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCF1C3E309E00349187 /* OtherChatCell.swift */; };
@@ -315,6 +316,7 @@
 		640F3BE01C0C898700B31DA0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		640F3BE11C0C898700B31DA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInitializerTool.swift; sourceTree = "<group>"; };
 		643E8CCD1C3E309E00349187 /* MeChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeChatCell.swift; sourceTree = "<group>"; };
 		643E8CCE1C3E309E00349187 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
 		643E8CCF1C3E309E00349187 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
@@ -675,6 +677,7 @@
 				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
 				D4A5EF991C40590700B48C48 /* LMImagePicker.swift */,
 				643E8CD81C41431E00349187 /* MessageCacheTool.swift */,
+				642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1567,6 +1570,7 @@
 				640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */,
 				D4EA5C051C13EAE3009E9927 /* LMCollectionViewLayout.m in Sources */,
 				6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */,
+				642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4A3E1B41C3F274A00BAB190 /* OtherProfilePicsCollectionViewController.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,

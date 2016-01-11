@@ -36,7 +36,12 @@ class TenUser: NSObject {
     var Average = 0
     var listType = chatType.InActive
     
-    var Portrait = NSData()
+    var Portrait:NSData?{
+        didSet{
+            PortraitImage = UIImage(data: Portrait!)
+        }
+    }
+    var PortraitImage:UIImage?
     
     override init() {
         super.init()

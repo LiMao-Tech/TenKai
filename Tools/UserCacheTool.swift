@@ -58,7 +58,7 @@ class UserCacheTool: NSObject {
     func addUserInfoByUser(user:SharedUser){
         dbq.inDatabase { (db) -> Void in
             let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.UserIndex,user.UserName,user.PhoneType,user.Gender,user.Birthday,user.JoinedDate,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.Portrait,user.ProfileUrl,user.MsgIndex]){
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.UserIndex,user.UserName,user.PhoneType,user.Gender,user.Birthday,user.JoinedDate,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.Portrait!,user.ProfileUrl,user.MsgIndex]){
                 print("插入失败")
             }
         }

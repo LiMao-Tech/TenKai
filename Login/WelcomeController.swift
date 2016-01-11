@@ -138,11 +138,11 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 print(response)
                 let dict = response as! NSDictionary
                 let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
-                if(!getResult.inDB){
+                if(getResult.inDB){
+                    UserCacheTool().updateUserInfo(dict)
+                }else{
                     SharedUser.changeValue(dict as! [String : AnyObject])
                     UserCacheTool().addUserInfoByUser(SHARED_USER)
-                }else{
-                    UserCacheTool().updateUserInfo(dict)
                 }
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in

@@ -133,7 +133,6 @@ class SingleChatController : UIViewController,
     }
     
     func sendBtnClicked() {
-        
         if((contentText.attributedText.length > 0) && !contentText.text.isEmpty){
             let text = self.attributeStringToString()
             
@@ -150,12 +149,14 @@ class SingleChatController : UIViewController,
                 "MsgTime": formatter.stringFromDate(currTime),
                 "MsgContent": text
             ]
+            
             let chatFrame = SingleChatMessageFrame()
             chatFrame.chatMessage = SingleChatMessage(dict: params)
             UserChatModel.allChats().message[tenUser.UserIndex]?.append(chatFrame)
             AFNetworkTools.postMethod(MsgUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
+                MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: chatFrame.chatMessage)
                 },
                 failure: { (task, error) -> Void in
                     print("Post User Failed")
@@ -201,7 +202,6 @@ class SingleChatController : UIViewController,
             self.assets = assets
             print("did select assets")
             print(assets.map({ $0.url}))
-            
         }
         
         self.presentViewController(pickerController, animated: true) {}

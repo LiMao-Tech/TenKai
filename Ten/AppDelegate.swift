@@ -27,6 +27,8 @@ class AppDelegate: UIResponder,
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        
+        
         // TODO: Update Token if has changed
         
         // set Managers delegate
@@ -37,9 +39,15 @@ class AppDelegate: UIResponder,
         //remember User
         let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as? Int
         if userIndex != nil {
+            
             let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
             UserCacheTool().getUserInfo(userIndex!)
+            //datainitialise
+            DataInitializerTool.initialiseInfo()
+            for user in UserChatModel.allChats().tenUser{
+                print(user.UserName)
+            }
             self.window?.rootViewController = nVC
         }
         
@@ -130,6 +138,9 @@ class AppDelegate: UIResponder,
         let params = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
         AFNetworkTools.getMethodWithParams(MsgUrl,parameters: params, success: { (task, response) -> Void in
             let userInfoArray = response as! NSArray
+            if userInfoArray.count == 0{
+                return
+            }
             print(userInfoArray)
             for info in userInfoArray{
                 let senderIndex = info["Sender"] as! Int
@@ -170,13 +181,23 @@ class AppDelegate: UIResponder,
                     AFNetworkTools.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
                         let userDict = response as! NSDictionary
                         let user = TenUser(dict: userDict as! [String : AnyObject])
-                        //add to allChats users
-                        UserChatModel.allChats().tenUser.append(user)
+                        //get tenUser portrait
+                        AFNetworkTools.getImageMethod(user.ProfileUrl, success: { (task, response) -> Void in
+                            //add to allChats users
+                            print("PorTrait")
+                            print(response)
+                            let portrait = response as! UIImage
+                            user.Portrait = UIImagePNGRepresentation(portrait)
+                            UsersCacheTool().addUserInfoByUser(user)
+                            UserChatModel.allChats().tenUser.append(user)
+                            }, failure: { (task, error) -> Void in
+                                let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
+                                UserChatModel.allChats().userIndex.removeAtIndex(index!)
+                        })
                         },
                         failure: { (task, error) -> Void in
                             print(error.localizedDescription)
-                            let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
-                            UserChatModel.allChats().userIndex.removeAtIndex(index!)
+                            
                     })
                     print("UserIndex: \(UserChatModel.allChats().userIndex)")
                 }
@@ -262,7 +283,7 @@ class AppDelegate: UIResponder,
             "Lati" : loc.coordinate.latitude,
             "Longi" : loc.coordinate.longitude
         ]
-        
+            
         let targetUrl = UserUrl+String(SHARED_USER.UserIndex)
          
             ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON
@@ -270,9 +291,7 @@ class AppDelegate: UIResponder,
                     response in
                     print(response.result.debugDescription)
                 }
-        
         }
-
     }
     
 

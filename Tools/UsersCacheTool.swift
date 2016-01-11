@@ -21,7 +21,7 @@ class UsersCacheTool: NSObject {
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERSINFO (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY TEXT,JOINEDDATE TEXT,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERSINFO_\(SHARED_USER.UserIndex) (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY TEXT,JOINEDDATE TEXT,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,LISTTYPE INTEGER)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
                 print("创表失败！")
@@ -32,66 +32,69 @@ class UsersCacheTool: NSObject {
     
     func updateUserInfo(dict:NSDictionary) {
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE INTO USERSINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PROFILEURL) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            let sql_insert = "UPDATE INTO USERSINFO_\(SHARED_USER.UserIndex)(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PROFILEURL) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             
             if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["UserIndex"]!,dict["UserName"]!,dict["PhoneType"]!,dict["Gender"]!,dict["Birthday"]!,dict["JoinedDate"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["ProfileUrl"]!]){                  print("修改失败")
             }
         }
     }
     
-    func upDateUserPortrait(portrait:UIImage){
+    func upDateUsersPortrait(portrait:UIImage){
         let date = UIImagePNGRepresentation(portrait)
-        let sql_update = "UPDATE USERINFO SET PORTRATI = ? WHERE USERINDEX = ?"
+        let sql_update = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PORTRATI = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
             db.executeUpdate(sql_update, withArgumentsInArray: [date!, SHARED_USER.UserIndex])
         }
     }
     
-    func addUserInfoByUser(user:SharedUser){
+    func addUserInfoByUser(user:TenUser){
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.UserIndex,user.UserName,user.PhoneType,user.Gender,user.Birthday,user.JoinedDate,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.Portrait,user.ProfileUrl]){
+            let sql_insert = "INSERT INTO USERSINFO_\(SHARED_USER.UserIndex)(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,LISTTYPE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.UserIndex,user.UserName,user.PhoneType,user.Gender,user.Birthday,user.JoinedDate,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.Portrait!,user.ProfileUrl,user.listType.rawValue]){
                 print("插入失败")
             }
         }
         
     }
     
-    func getUserInfo(userIndex:Int) ->(user:SharedUser,inDB:Bool){
-        var inDB = false
+    func getUserInfo() ->(users:[TenUser],isEmpty:Bool){
+        var isEmpty = true
+        var users = [TenUser]()
         dbq.inDatabase { (db) -> Void in
-            let sql_select = "SELECT * FROM USERINFO WHERE USERINDEX = ?"
-            if let rs = db.executeQuery(sql_select, withArgumentsInArray: [userIndex]){  //可选绑定
+            let sql_select = "SELECT * FROM USERSINFO_\(SHARED_USER.UserIndex)"
+            if let rs = db.executeQuery(sql_select, withArgumentsInArray:nil){  //可选绑定
                 
                 while rs.next(){
-                    SHARED_USER.UserIndex = userIndex
-                    SHARED_USER.UserName = rs.stringForColumn("USERNAME")
-                    SHARED_USER.PhoneType = Int(rs.intForColumn("PHONETYPE"))
-                    SHARED_USER.Gender = Int(rs.intForColumn("GENDER"))
-                    SHARED_USER.Birthday = rs.stringForColumn("BIRTHDAY")
-                    SHARED_USER.JoinedDate = rs.stringForColumn("JOINEDDATE")
-                    SHARED_USER.PCoin = rs.doubleForColumn("PCOIN")
-                    SHARED_USER.OuterScore = Int(rs.intForColumn("OUTERSCORE"))
-                    SHARED_USER.InnerScore = Int(rs.intForColumn("INNERSCORE"))
-                    SHARED_USER.Energy = Int(rs.intForColumn("ENERGY"))
-                    SHARED_USER.Hobby = rs.stringForColumn("HOBBY")
-                    SHARED_USER.Quote = rs.stringForColumn("QUOTE")
-                    SHARED_USER.Lati = rs.doubleForColumn("LATI")
-                    SHARED_USER.Longi = rs.doubleForColumn("LONGI")
-                    SHARED_USER.ProfileUrl = rs.stringForColumn("PROFILEURL")
-                    SHARED_USER.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
-                    inDB = true
-                    //                    user.Portrait = rs.dataForColumn("PORTRAIT")  //读取到的是插入时候已经将图片转成的NSData
+                    let user = TenUser()
+                    user.UserIndex = Int(rs.intForColumn("USERINDEX"))
+                    user.UserName = rs.stringForColumn("USERNAME")
+                    user.PhoneType = Int(rs.intForColumn("PHONETYPE"))
+                    user.Gender = Int(rs.intForColumn("GENDER"))
+                    user.Birthday = rs.stringForColumn("BIRTHDAY")
+                    user.JoinedDate = rs.stringForColumn("JOINEDDATE")
+                    user.PCoin = rs.doubleForColumn("PCOIN")
+                    user.OuterScore = Int(rs.intForColumn("OUTERSCORE"))
+                    user.InnerScore = Int(rs.intForColumn("INNERSCORE"))
+                    user.Energy = Int(rs.intForColumn("ENERGY"))
+                    user.Hobby = rs.stringForColumn("HOBBY")
+                    user.Quote = rs.stringForColumn("QUOTE")
+                    user.Lati = rs.doubleForColumn("LATI")
+                    user.Longi = rs.doubleForColumn("LONGI")
+                    user.ProfileUrl = rs.stringForColumn("PROFILEURL")
+                    user.Portrait = rs.dataForColumn("PORTRATI") //读取到的是插入时候已经将图片转成的NSData
+                    user.listType = chatType(rawValue: Int(rs.intForColumn("LISTTYPE")))!
+                    isEmpty = false
+                    users.append(user)
                 }
             }
         }
-        return (SHARED_USER, inDB)
+        return (users, isEmpty)
     }
     
-    func deleteUserInfo(){
+    func deleteUserInfo(userIndex:Int){
         let sql_delete = "DELETE FROM USERINFO WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_delete, withArgumentsInArray: [SHARED_USER.UserIndex])
+            db.executeUpdate(sql_delete, withArgumentsInArray: [userIndex])
         }
     }
 

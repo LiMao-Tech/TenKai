@@ -8,12 +8,12 @@
 
 import UIKit
 
-enum systemType{
-    case System, Notification
+enum systemType:Int{
+    case System=0, Notification
 }
 
-enum chatType{
-    case Active, InActive
+enum chatType:Int{
+    case Active=0, InActive
 }
 
 class SettingButton: UIButton {

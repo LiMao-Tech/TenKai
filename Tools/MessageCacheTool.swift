@@ -55,13 +55,16 @@ class MessageCacheTool: NSObject {
         }
     }
     
-    func loadMessage (userIndex:Int) ->SingleChatMessage{
-        let msgg = SingleChatMessage()
+    func loadMessage (userIndex:Int) ->[SingleChatMessageFrame]{
+        var messageFrames = [SingleChatMessageFrame]()
+        
         let sql_select = "SELECT * FROM MESSAGEINFO_\(userIndex)"
         dbq.inDatabase { (db) -> Void in
             if let rs = db.executeQuery(sql_select, withArgumentsInArray: nil){
                 
                 while rs.next(){
+                    let msgFrame = SingleChatMessageFrame()
+                    let msgg = SingleChatMessage()
                     msgg.belongType = (rs.intForColumn("BELONGTYPE") == 0) ? ChatBelongType.Me : ChatBelongType.Other
                     msgg.IsLocked = Int(rs.intForColumn("ISLOCKED")) == 0
                     msgg.messageType = ChatMessageType(rawValue: Int(rs.intForColumn("MSGTYPE")))!
@@ -69,10 +72,12 @@ class MessageCacheTool: NSObject {
                     
                     msgg.MsgTime = rs.stringForColumn("MSGTIME")
                     msgg.MsgContent = rs.stringForColumn("MSGCONTENT")
+                    msgFrame.chatMessage = msgg
+                    messageFrames.append(msgFrame)
                 }
             }
         }
-        return msgg
+        return messageFrames
     }
     
     private func addMessageImage(userIndex:Int,msg:SingleChatMessage){
