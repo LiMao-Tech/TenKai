@@ -12,6 +12,9 @@ class OtherProfilePicsCollectionViewController: ProfilePicsCollectionViewControl
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let chatBtn = UIBarButtonItem(image: UIImage(named: "btn_navBarIcon_chat_normal"), style: .Plain, target: self, action: "pushChatView")
+        self.navigationItem.rightBarButtonItem = chatBtn;
 
         // Do any additional setup after loading the view.
     }
@@ -19,6 +22,11 @@ class OtherProfilePicsCollectionViewController: ProfilePicsCollectionViewControl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // TODO: tuantuan 
+    func pushChatView() -> Void {
+    
     }
     
 

@@ -45,7 +45,7 @@
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
 		D4A3E1B31C3F274A00BAB190 /* MyProfilePicsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A3E1B11C3F274A00BAB190 /* MyProfilePicsCollectionViewController.swift */; };
 		D4A3E1B41C3F274A00BAB190 /* OtherProfilePicsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A3E1B21C3F274A00BAB190 /* OtherProfilePicsCollectionViewController.swift */; };
-		D4A5EF9A1C40590700B48C48 /* ImagePickerTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF991C40590700B48C48 /* ImagePickerTools.swift */; };
+		D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF991C40590700B48C48 /* LMImagePicker.swift */; };
 		D4A5EF9C1C40765200B48C48 /* SharedInstances.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */; };
 		D4C236C31C42097400740FA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C236C11C42097400740FA7 /* ProfileViewController.swift */; };
 		D4C236C41C42097400740FA7 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C236C21C42097400740FA7 /* ProfileViewController.xib */; };
@@ -351,7 +351,7 @@
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
 		D4A3E1B11C3F274A00BAB190 /* MyProfilePicsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfilePicsCollectionViewController.swift; sourceTree = "<group>"; };
 		D4A3E1B21C3F274A00BAB190 /* OtherProfilePicsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfilePicsCollectionViewController.swift; sourceTree = "<group>"; };
-		D4A5EF991C40590700B48C48 /* ImagePickerTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerTools.swift; sourceTree = "<group>"; };
+		D4A5EF991C40590700B48C48 /* LMImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMImagePicker.swift; sourceTree = "<group>"; };
 		D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedInstances.swift; sourceTree = "<group>"; };
 		D4C236C11C42097400740FA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D4C236C21C42097400740FA7 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -673,7 +673,7 @@
 				6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */,
 				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
 				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
-				D4A5EF991C40590700B48C48 /* ImagePickerTools.swift */,
+				D4A5EF991C40590700B48C48 /* LMImagePicker.swift */,
 				643E8CD81C41431E00349187 /* MessageCacheTool.swift */,
 			);
 			path = Tools;
@@ -1581,7 +1581,7 @@
 				D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */,
 				D4A3E1B31C3F274A00BAB190 /* MyProfilePicsCollectionViewController.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
-				D4A5EF9A1C40590700B48C48 /* ImagePickerTools.swift in Sources */,
+				D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */,
 				D4EA5C8C1C1424AF009E9927 /* Notification.swift in Sources */,
 				C4CED30C1B88FB010008BCF2 /* AppDelegate.swift in Sources */,
 				D4EA5BEB1C13E98E009E9927 /* LockView.m in Sources */,

@@ -35,10 +35,41 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.getProfileImage()
+        
+        self.navigationController!.navigationBar.translucent = false;
+        self.title = ProfileTitle
+        self.view.backgroundColor = BG_COLOR
+
         // add Image Button
         let addImageBtn = UIBarButtonItem(title: "相簿", style: .Plain, target: self, action: "pushPictureCollectionView")
-        self.navigationItem.rightBarButtonItem = addImageBtn;
+        self.navigationItem.rightBarButtonItem = addImageBtn
         
+        // gradient mask
+        gradientMask.colors = [WHITEGRAY_COLOR .CGColor, WHITEGRAY_COLOR .CGColor, UIColor.clearColor().CGColor,]
+        gradientMask.frame = profileImageView.bounds
+        profileImageView.layer.mask = gradientMask;
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        // update profile picture
+        
+        
+        
+    }
+    
+    func pushPictureCollectionView() {
+        // virtual
+    }
+    
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    private func getProfileImage() -> Void {
         // Get Image JSON
         let targetUrl = ImagesJSONUrl + String(self.userID)
         ALAMO_MANAGER.request(.GET, targetUrl, encoding: .JSON) .responseJSON { response in
@@ -66,33 +97,5 @@ class ProfileViewController: UIViewController {
                 }
             }
         }
-        
-        self.title = ProfileTitle
-        
-        self.view.backgroundColor = UIColor.blackColor()
-        
-        // gradient mask
-        gradientMask.frame = self.view.bounds
-        gradientMask.colors = [UIColor.blackColor().CGColor, UIColor.clearColor().CGColor]
-        profileImageView.layer.mask = gradientMask;
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        // update profile picture everytime
-        
-        
-        
-    }
-    
-    func pushPictureCollectionView() {
-        // virtual
-    }
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 }

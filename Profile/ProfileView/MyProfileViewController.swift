@@ -20,7 +20,7 @@ class MyProfileViewController: ProfileViewController {
         pcoindistanceLabel.text = String(SHARED_USER.PCoin)
         
         
-        self.scoreLabel.text = "内在: \(SHARED_USER.InnerScore)   外在: \(SHARED_USER.OuterScore)   能量 \(SHARED_USER.Energy)"
+        self.scoreLabel.text = "内在: \(SHARED_USER.InnerScore)   外在: \(SHARED_USER.OuterScore)   能量： \(SHARED_USER.Energy)"
         quoteLabel.text = SHARED_USER.Quote
         
         if let loc = LOC_MANAGER.location {
@@ -46,6 +46,7 @@ class MyProfileViewController: ProfileViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
     

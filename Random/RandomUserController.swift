@@ -63,7 +63,7 @@ class RandomUserController: UIViewController,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let user = JSON(userList[indexPath.row] as! [String: AnyObject])
-        let otherProfileVC = OtherProfileViewController()
+        let otherProfileVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
         otherProfileVC.userID = user["UserIndex"].intValue
         self.navigationController?.pushViewController(otherProfileVC, animated: true)
     }

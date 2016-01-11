@@ -8,17 +8,16 @@
 
 import UIKit
 
-class MyProfilePicsCollectionViewController: ProfilePicsCollectionViewController {
-
-    
-    let picker = UIImagePickerController()
-    
-    
+class MyProfilePicsCollectionViewController: ProfilePicsCollectionViewController,
+                                            UINavigationControllerDelegate,
+                                            UIImagePickerControllerDelegate
+{
     override func viewDidLoad() {
         super.viewDidLoad()
-self
-
-        addToolBar()
+        
+        SHARED_PICKER.picker.delegate = self
+        
+        self.addToolBar()
 
         // add Image Button
         let addImageBtn = UIBarButtonItem(title: "新增", style: .Plain, target: self, action: "addImage")
@@ -31,7 +30,15 @@ self
     }
 
 
-    func addImage() ->Void {
+    func addImage() -> Void {
+        
+        let path = NSIndexPath(forItem: 0, inSection: 0)
+        self.numbers.addObject(0)
+        self.numberWidths.addObject(1)
+        self.numberHeights.addObject(1)
+        self.lmCollectionView.insertItemsAtIndexPaths([path])
+        
+        // SHARED_PICKER.toImagePicker(self)
         /*
         NSDictionary * params = @{@"id" : @1};
         
@@ -73,7 +80,7 @@ self
     
     func addToolBar() -> Void {
         // create toolbar
-        let toolBar = UIToolbar(frame: CGRectMake(0,SCREEN_HEIGHT-TOOL_BAR_HEIGHT, SCREEN_WIDTH, TOOL_BAR_HEIGHT))
+        let toolBar = UIToolbar(frame: CGRectMake(0, SCREEN_HEIGHT-NAV_BAR_HEIGHT-TOOL_BAR_HEIGHT, SCREEN_WIDTH, TOOL_BAR_HEIGHT))
         toolBar.backgroundColor = UIColor.darkGrayColor()
         
         // buttons
@@ -99,36 +106,44 @@ self
         
         let itemArr = [optionItem, padding, unlockItem, padding, lockItem, padding, deleteItem]
         toolBar.items = itemArr
+        
         self.view.addSubview(toolBar)
+        print("Toolbar added")
     }
     
-    func openCamera()
-    {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
-        {
-            picker.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(picker, animated: true, completion: nil)
-        }
-        else
-        {
-            openGallary()
-        }
-    }
-    
-    func openGallary()
-    {
-        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
-        {
-            self.presentViewController(picker, animated: true, completion: nil)
-            
-        }
-        else
-        {
-            print("Please use an IPhone for this action")
-        }
-    }
 
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+
+        let path = NSIndexPath(forRow: self.NumberOfPics-1, inSection: 0)
+        
+        
+        self.lmCollectionView.performBatchUpdates({() -> Void in
+            
+            self.numberWidths.insertObject(1, atIndex: self.NumberOfPics-1)
+            self.numberHeights.insertObject(1, atIndex: self.NumberOfPics-1)
+            
+
+            self.lmCollectionView.insertItemsAtIndexPaths([path])
+            self.lmCollectionView.deleteItemsAtIndexPaths([path])
+
+            }
+            , completion: {(done) -> Void in
+                if done {
+                    let cell = self.lmCollectionView.cellForItemAtIndexPath(path) as!ProfilePicsCollectionViewCell
+                    
+                    cell.cellImage?.image = image
+                    self.NumberOfPics += 1
+                }
+                
+        })
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

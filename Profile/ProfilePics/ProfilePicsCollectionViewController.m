@@ -33,8 +33,9 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
 
 - (id) initWithHeight:(CGFloat) height Width: (CGFloat)width ToolbarHeight: (CGFloat) toolbarHeight UserId: (NSInteger) userId {
     self = [super init];
+    
     if (self) {
-        UserID = userId;
+        self.UserID = userId;
         SCREEN_WIDTH = width;
         SCREEN_HEIGHT = height;
         TOOL_BAR_HEIGHT = toolbarHeight;
@@ -58,7 +59,7 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     self.title = @"相簿";
     
     // init the layout data
-    NumberOfPics = 0;
+    self.NumberOfPics = 0;
     BLOCK_DIM = SCREEN_WIDTH / 4;
     
     // init the layout
@@ -86,7 +87,7 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    NSString * targetUrl = [ProfilePicsJSONUrl stringByAppendingString:[NSString stringWithFormat:@"%li", (long)UserID]];
+    NSString * targetUrl = [ProfilePicsJSONUrl stringByAppendingString:[NSString stringWithFormat:@"%li", self.UserID]];
     NSURL *URL = [NSURL URLWithString: targetUrl];
 
     self.afHttpManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
@@ -94,7 +95,7 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
         
         
         self.picsInfoJson = responseObject;
-        NumberOfPics = self.picsInfoJson.count;
+        self.NumberOfPics = self.picsInfoJson.count;
         
         [self dataInit];
         [self.lmCollectionView reloadData];
@@ -110,13 +111,13 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
 }
 
 
-- (void)dataInit {
+- (void) dataInit {
     Num = 0;
     self.numbers = [@[] mutableCopy];
     self.numberWidths = @[].mutableCopy;
     self.numberHeights = @[].mutableCopy;
     
-    for(; Num < NumberOfPics; Num++) {
+    for(; Num < self.NumberOfPics; Num++) {
         [self.numbers addObject:@(Num)];
         [self.numberWidths addObject:@([self randomLength])];
         [self.numberHeights addObject:@([self randomLength])];
@@ -151,7 +152,8 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
         return;
     }
     NSUInteger middle = (NSUInteger)floor(visibleIndexPaths.count / 2);
-    NSIndexPath *toAdd = [visibleIndexPaths firstObject];[visibleIndexPaths objectAtIndex:middle];
+    NSIndexPath *toAdd = [visibleIndexPaths firstObject];
+    [visibleIndexPaths objectAtIndex:middle];
     [self addIndexPath:toAdd];
 }
  */
@@ -185,22 +187,25 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
     label.backgroundColor = [UIColor clearColor];
     
-    NSString * targetUrl = [ProfilePicUrl stringByAppendingString:[NSString stringWithFormat:@"%@", self.picsInfoJson[indexPath.row][@"ID"]]];
+    if (indexPath.row < self.picsInfoJson.count) {
+        NSString * targetUrl = [ProfilePicUrl stringByAppendingString:[NSString stringWithFormat:@"%@", self.picsInfoJson[indexPath.row][@"ID"]]];
+        
+        NSURL * url = [NSURL URLWithString:targetUrl];
+        NSURLRequest * request = [NSURLRequest requestWithURL:url];
+        
+        self.afHttpManager.responseSerializer = [[AFImageResponseSerializer alloc] init];
+        [self.afImageDowloader downloadImageForURLRequest:request
+                                                  success:^(NSURLRequest *request, NSHTTPURLResponse  *response, UIImage *responseObject) {
+                                                      cell.cellImage.image = responseObject;
+                                                      
+                                                      [self.lmCollectionView reloadData];
+                                                      
+                                                  }
+                                                  failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+                                                      NSLog(@"Error: %@", error);
+                                                  }];
+    }
     
-    NSURL * url = [NSURL URLWithString:targetUrl];
-    NSURLRequest * request = [NSURLRequest requestWithURL:url];
-    
-    self.afHttpManager.responseSerializer = [[AFImageResponseSerializer alloc] init];
-    [self.afImageDowloader downloadImageForURLRequest:request
-                                              success:^(NSURLRequest *request, NSHTTPURLResponse  *response, UIImage *responseObject) {
-                                                  cell.cellImage.image = responseObject;
-                                                  
-                                                  [self.lmCollectionView reloadData];
-
-                                              }
-                                              failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
-                                                  NSLog(@"Error: %@", error);
-                                              }];
     
     cell.cellImage.contentMode = UIViewContentModeScaleAspectFill;
     return cell;
@@ -242,12 +247,14 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
 
 - (void)addIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row > self.numbers.count) {
+        
         return;
     }
     
     if(isAnimating) return;
     isAnimating = YES;
     
+    NSLog(@"Returned");
     [self.lmCollectionView performBatchUpdates:^{
         NSInteger index = indexPath.row;
         [self.numbers insertObject:@(++Num) atIndex:index];
@@ -269,13 +276,12 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     [self.lmCollectionView performBatchUpdates:^{
         NSInteger index = indexPath.row;
         
-        // [self.numbers removeObjectAtIndex:index];
+
         [self.numberWidths removeObjectAtIndex:index];
         [self.numberHeights removeObjectAtIndex:index];
         
         [self.lmCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]];
-        
-        //  [self.numbers insertObject:@(++num) atIndex:index];
+
         [self.numberWidths insertObject:@(LSIZE) atIndex:index];
         [self.numberHeights insertObject:@(LSIZE) atIndex:index];
         

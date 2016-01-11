@@ -15,12 +15,10 @@
 #import "AFNetworking/AFImageDownloader.h"
 
 @interface ProfilePicsCollectionViewController : UIViewController <LMCollectionViewLayoutDelegate> {
+    
     BOOL isAnimating;
     
-    NSInteger UserID;
-    NSInteger NumberOfPics;
     NSInteger Num;
-    
     CGFloat SCREEN_WIDTH;
     CGFloat SCREEN_HEIGHT;
     CGFloat TOOL_BAR_HEIGHT;
@@ -38,9 +36,14 @@
 
 @property (nonatomic) NSArray * picsInfoJson;
 
+@property (nonatomic) NSInteger UserID;
+@property (nonatomic) NSInteger NumberOfPics;
+
 @property (nonatomic) NSMutableArray* numbers;
 @property (nonatomic) NSMutableArray* numberWidths;
 @property (nonatomic) NSMutableArray* numberHeights;
+
+- (void) dataInit;
 
 - (id) initWithHeight:(CGFloat) height Width: (CGFloat)width ToolbarHeight: (CGFloat) toolbarHeight UserId: (NSInteger) userId;
 

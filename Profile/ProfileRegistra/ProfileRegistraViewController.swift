@@ -29,7 +29,7 @@ class RegistProfileViewController: UIViewController,
     var imageUrl : String?
     var counter : Int?
     
-    var picker : UIImagePickerController = UIImagePickerController()
+    
     
     // scrollView Variables
     var scrollView: UIScrollView!
@@ -70,7 +70,7 @@ class RegistProfileViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.picker.delegate = self
+        SHARED_PICKER.picker.delegate = self
         
         self.view.backgroundColor = BG_COLOR
         self.title = ProfileTitle
@@ -508,7 +508,7 @@ class RegistProfileViewController: UIViewController,
     }
     
     func toImagePicker() -> Void {
-        ImagePickerTools.toImagePicker(self, picker: picker)
+        SHARED_PICKER.toImagePicker(self)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {

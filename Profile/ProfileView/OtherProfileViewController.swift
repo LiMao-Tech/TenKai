@@ -27,9 +27,6 @@ class OtherProfileViewController: ProfileViewController {
         outerValue = UILabel(frame: CGRectMake(SCREEN_WIDTH*4/5, SCREEN_HEIGHT*11/12, SCREEN_WIDTH/2, SCREEN_HEIGHT/12))
         outerValue.text = "0"
         outerValue.textColor = UIColor.whiteColor()
-        
-        let chatBtn = UIBarButtonItem(image: UIImage(named: "btn_navBarIcon_chat_normal"), style: .Plain, target: self, action: "pushChatView")
-        self.navigationItem.rightBarButtonItem = chatBtn;
 
         self.view.addSubview(outerBar)
         self.view.addSubview(outerValue)
@@ -40,21 +37,17 @@ class OtherProfileViewController: ProfileViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    func pushChatView() -> Void {
-        let singleChatVC = SingleChatController()
-        self.navigationController?.presentViewController(singleChatVC, animated: true, completion: nil)
+    override func pushPictureCollectionView() {
+        let pPCVC = MyProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: 0, userId: self.userID)
+        
+        self.navigationController?.pushViewController(pPCVC, animated: true)
     }
+
     
     func outerBarChanged(){
         outerValue.text = "\(Int(outerBar.value))"
     }
     
     
-    override func pushPictureCollectionView() {
-        let pPCVC = OtherProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT, userId: self.userID)
-
-        self.navigationController?.pushViewController(pPCVC, animated: true)
-        print("Pushed")
-    }
+    
 }

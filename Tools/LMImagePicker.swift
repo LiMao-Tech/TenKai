@@ -8,28 +8,26 @@
 
 import Foundation
 
-class ImagePickerTools {
+class LMImagePicker: NSObject {
+    
+    let picker = UIImagePickerController()
     
     // MARK: Entering the image picker
-    class func toImagePicker(viewController: UIViewController, picker: UIImagePickerController) {
+    func toImagePicker(viewController: UIViewController) {
         
         let alert:UIAlertController = UIAlertController(title: "选择图片来源", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let cameraAction = UIAlertAction(title: "相机", style: UIAlertActionStyle.Default)
             {
                 UIAlertAction in
-                openCamera(viewController, picker: picker)
+                self.openCamera(viewController)
         }
         let gallaryAction = UIAlertAction(title: "相册", style: UIAlertActionStyle.Default)
             {
                 UIAlertAction in
-                openGallary(viewController, picker: picker)
+                self.openGallary(viewController)
         }
-        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel)
-            {
-                UIAlertAction in
-                
-        }
+        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
         
         alert.addAction(cameraAction)
         alert.addAction(gallaryAction)
@@ -46,26 +44,25 @@ class ImagePickerTools {
         }
     }
     
-    class func openCamera(viewController: UIViewController, picker: UIImagePickerController) {
+    private func openCamera(viewController: UIViewController) {
         
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
         {
-            picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
             viewController.presentViewController(picker, animated: true, completion: nil)
         }
         else
         {
-            openGallary(viewController, picker: picker)
+            self.openGallary(viewController)
         }
     }
     
-    class func openGallary(viewController: UIViewController, picker: UIImagePickerController) {
-        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+    private func openGallary(viewController: UIViewController) {
+        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
             viewController.presentViewController(picker, animated: true, completion: nil)
-            
         }
         else
         {
