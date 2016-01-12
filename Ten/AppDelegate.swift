@@ -209,7 +209,7 @@ class AppDelegate: UIResponder,
             }
             let msgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
             SHARED_USER.MsgIndex = msgIndex
-            UserCacheTool().upDateUserMsgInde(SHARED_USER.MsgIndex)
+            UserCacheTool().upDateUserMsgIndex(SHARED_USER.MsgIndex)
             
             },failure:  { (task, error) -> Void in
               print(error.localizedDescription)

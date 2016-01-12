@@ -40,32 +40,31 @@ class UserCacheTool: NSObject {
         }
     }
     
-    func upDateUserPortrait(portrait:UIImage){
-        let date = UIImagePNGRepresentation(portrait)
-        let sql_update = "UPDATE USERINFO SET PORTRATI = ? WHERE USERINDEX = ?"
+    func upDateUserPortrait(){
+        let sql_update = "UPDATE USERINFO SET PORTRAIT = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_update, withArgumentsInArray: [date!, SHARED_USER.UserIndex])
+            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.Portrait!, SHARED_USER.UserIndex])
         }
     }
     
-    func upDateUserMsgInde(msgIndex:Int){
+    func upDateUserMsgIndex(msgIndex:Int){
         let sql_update = "UPDATE USERINFO SET MSGINDEX = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
             db.executeUpdate(sql_update, withArgumentsInArray: [msgIndex, SHARED_USER.UserIndex])
         }
     }
     
-    func addUserInfoByUser(user:SharedUser){
+    func addUserInfoByUser(){
         dbq.inDatabase { (db) -> Void in
             let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.UserIndex,user.UserName,user.PhoneType,user.Gender,user.Birthday,user.JoinedDate,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.Portrait!,user.ProfileUrl,user.MsgIndex]){
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [SHARED_USER.UserIndex,SHARED_USER.UserName,SHARED_USER.PhoneType,SHARED_USER.Gender,SHARED_USER.Birthday,SHARED_USER.JoinedDate,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.Portrait!,SHARED_USER.ProfileUrl,SHARED_USER.MsgIndex]){
                 print("插入失败")
             }
         }
 
     }
     
-    func getUserInfo(userIndex:Int) ->(user:SharedUser,inDB:Bool){
+    func getUserInfo(userIndex:Int) -> Bool{
         var inDB = false
         dbq.inDatabase { (db) -> Void in
             let sql_select = "SELECT * FROM USERINFO WHERE USERINDEX = ?"
@@ -88,12 +87,12 @@ class UserCacheTool: NSObject {
                     SHARED_USER.Longi = rs.doubleForColumn("LONGI")
                     SHARED_USER.ProfileUrl = rs.stringForColumn("PROFILEURL")
                     SHARED_USER.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
+                    SHARED_USER.Portrait = rs.dataForColumn("PORTRAIT")  //读取到的是插入时候已经将图片转成的NSData
                     inDB = true
-//                    user.Portrait = rs.dataForColumn("PORTRAIT")  //读取到的是插入时候已经将图片转成的NSData
                 }
             }
         }
-        return (SHARED_USER,inDB)
+        return (inDB)
     }
     
     func deleteUserInfo(){

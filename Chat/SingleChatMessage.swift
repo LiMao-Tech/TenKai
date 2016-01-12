@@ -22,11 +22,27 @@ enum ChatMessageType: Int {
 class SingleChatMessage: NSObject {
     
     var Sender = 0
-    var Receiver = 0
+    var Receiver = 0{
+        didSet{
+            if(self.Receiver == SHARED_USER.UserIndex){
+                self.belongType = .Other
+            }
+        }
+    }
     var MsgIndex = 0
     var MsgTime = ""
-    var MsgContent = ""
-    var MsgType = 0
+    var MsgContent = ""{
+        didSet{
+            let stringToAtt = Tools.stringToAttributeString(self.MsgContent)
+            self.attrMsg = stringToAtt.text
+            self.isString = stringToAtt.isString
+        }
+    }
+    var MsgType = 0{
+        didSet{
+            self.messageType = ChatMessageType(rawValue: self.MsgType)!
+        }
+    }
     var PhoneType = 0
     var IsLocked = false
     
@@ -47,16 +63,5 @@ class SingleChatMessage: NSObject {
     init(dict :NSDictionary) {
         super.init()
         self.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
-        self.completeValue()
-    }
-    
-    func completeValue(){
-        if(self.Receiver == SHARED_USER.UserIndex){
-            self.belongType = .Other
-        }
-        self.messageType = ChatMessageType(rawValue: self.MsgType)!
-        let stringToAtt = Tools.stringToAttributeString(self.MsgContent)
-        self.attrMsg = stringToAtt.text
-        self.isString = stringToAtt.isString
     }
 }

@@ -16,8 +16,16 @@ class MeChatCell: ChatBaseCell {
     @IBOutlet weak var textView: UIView!
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
-            conText.attributedText = chatFrame.chatMessage.attrMsg
-            time.text = chatFrame.chatMessage.MsgTime
+            if(chatFrame.chatMessage.messageType == .Image){
+                conText.text = ""
+                time.text = ""
+                content.imageEdgeInsets = UIEdgeInsets.init(top: 8, left: 0, bottom: 18, right: 3)
+                content.setImage(chatFrame.chatMessage.MsgImage!, forState: .Normal)
+            }else{
+                conText.attributedText = chatFrame.chatMessage.attrMsg
+                time.text = chatFrame.chatMessage.MsgTime
+                
+            }
             let image = UIImage(named: "chat_send_nor")
             let w = image!.size.width/2
             let h = image!.size.height/2

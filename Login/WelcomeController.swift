@@ -138,11 +138,20 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 print(response)
                 let dict = response as! NSDictionary
                 let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
-                if(getResult.inDB){
+                if(getResult){
                     UserCacheTool().updateUserInfo(dict)
                 }else{
                     SharedUser.changeValue(dict as! [String : AnyObject])
-                    UserCacheTool().addUserInfoByUser(SHARED_USER)
+                    UserCacheTool().addUserInfoByUser()
+                    AFNetworkTools.getImageMethod(SHARED_USER.ProfileUrl, success: { (task, response) -> Void in
+                        let image = response as! UIImage
+                        SHARED_USER.Portrait = UIImagePNGRepresentation(image)
+                        print("get Portrait")
+                        UserCacheTool().upDateUserPortrait()
+                        }, failure: { (task, error) -> Void in
+                           print("portrait")
+                    })
+                    
                 }
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
@@ -151,6 +160,8 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                     self.presentViewController(nVC, animated: true, completion: { () -> Void in
                     })
                 })
+                
+                
             })
             },failure: { (task, error) -> Void in
                 let opera = task?.response as! NSHTTPURLResponse

@@ -81,7 +81,7 @@ class UsersCacheTool: NSObject {
                     user.Lati = rs.doubleForColumn("LATI")
                     user.Longi = rs.doubleForColumn("LONGI")
                     user.ProfileUrl = rs.stringForColumn("PROFILEURL")
-                    user.Portrait = rs.dataForColumn("PORTRATI") //读取到的是插入时候已经将图片转成的NSData
+                    user.Portrait = rs.dataForColumn("PORTRAIT") //读取到的是插入时候已经将图片转成的NSData
                     user.listType = chatType(rawValue: Int(rs.intForColumn("LISTTYPE")))!
                     isEmpty = false
                     users.append(user)

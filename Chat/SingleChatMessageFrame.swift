@@ -29,7 +29,10 @@ class SingleChatMessageFrame: NSObject {
                 cellHeight = contentHeight + 60
             }
             else if chatMessage.messageType == ChatMessageType.Image {
-                
+                let size = chatMessage.MsgImage!.size
+                let ratio = size.height/size.width
+                let height = width*ratio
+                cellHeight = height + 46
             }
            
         }

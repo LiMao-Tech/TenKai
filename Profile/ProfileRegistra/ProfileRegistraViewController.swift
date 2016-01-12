@@ -494,7 +494,7 @@ class RegistProfileViewController: UIViewController,
                 self.button.enabled = true
                 self.indicator.stopAnimating()
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
-                UserCacheTool().addUserInfoByUser(SHARED_USER)
+                UserCacheTool().addUserInfoByUser()
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController

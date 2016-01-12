@@ -202,6 +202,18 @@ class SingleChatController : UIViewController,
             self.assets = assets
             print("did select assets")
             print(assets.map({ $0.url}))
+            for asset in assets{
+                let msgFrame = SingleChatMessageFrame()
+                let message = SingleChatMessage()
+                message.MsgType = 1
+                message.Sender = SHARED_USER.UserIndex
+                message.Receiver = self.tenUser.UserIndex
+                message.MsgTime = Tools.getNormalTime(NSDate())
+                message.MsgContent = ""
+                message.MsgImage = asset.fullResolutionImage
+                msgFrame.chatMessage = message
+                UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
+            }
         }
         
         self.presentViewController(pickerController, animated: true) {}

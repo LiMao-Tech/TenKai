@@ -44,6 +44,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         }
     }
+    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "tenUser"){
             print(UserChatModel.allChats().tenUser)

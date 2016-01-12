@@ -16,6 +16,7 @@ class DataInitializerTool: NSObject {
             UserChatModel.allChats().tenUser = usersInfo.users
             for user in usersInfo.users{
                 print(user.UserName)
+                UserChatModel.allChats().userIndex.append(user.UserIndex)
                 UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex)
             }
         }
