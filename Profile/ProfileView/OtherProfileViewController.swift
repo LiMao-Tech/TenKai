@@ -13,9 +13,11 @@ class OtherProfileViewController: ProfileViewController {
     var outerBar: GTSlider!
     var outerValue: UILabel!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.pcoindistanceImageView.image = UIImage(named: "icon_profile_distance")
+        self.pcoindistanceLabel.text = "1, 999 kM"
         
         outerBar = GTSlider(frame: CGRectMake(SCREEN_WIDTH/5, SCREEN_HEIGHT*11/12, SCREEN_WIDTH/2, SCREEN_HEIGHT/12))
         

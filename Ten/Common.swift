@@ -37,6 +37,7 @@ let ImagesJSONUrl = HomeUrl + "TenImage/GetImagesByUser?id="
 let ImageUrl = HomeUrl + "TenImage?id="
 
 let HeadImageUrl = HomeUrl + "TenImage/UploadProfileImage/"
+let PhotosUrl = HomeUrl + "TenImage/UploadPhotos/"
 
 let DeviceTokenUrl = ""
 

@@ -55,6 +55,7 @@ class AFNetworkTools: NSObject {
                 failure(task,error)
         })
     }
+    
     class func getImageMethod(url:String,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError)->Void){
         sharedInstance.responseSerializer = AFImageResponseSerializer()
         //        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -65,6 +66,7 @@ class AFNetworkTools: NSObject {
                 failure(task,error)
         })
     }
+    
     class func postHeadImage(url:String,image:NSData,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
 
         sharedInstance.requestSerializer = AFHTTPRequestSerializer()
@@ -79,6 +81,22 @@ class AFNetworkTools: NSObject {
                 failure(task,error)
         })
     }
+    
+    class func postUserImage(image:NSData,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
+        
+        sharedInstance.requestSerializer = AFHTTPRequestSerializer()
+        sharedInstance.responseSerializer = AFHTTPResponseSerializer()
+        
+        let picName = Tools.getFileNameTime(NSDate())+".png"
+        sharedInstance.POST(PhotosUrl, parameters: parameters, constructingBodyWithBlock: { (data) -> Void in
+            data.appendPartWithFileData(image, name: "uploads", fileName: picName, mimeType: "image/png")
+            }, progress: nil, success: { (task, response) -> Void in
+                success(task,response)
+            },failure:  { (task, error) -> Void in
+                failure(task,error)
+        })
+    }
+
     
     class func putMethod(url:String,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
 

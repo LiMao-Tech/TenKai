@@ -15,6 +15,8 @@ class OtherProfilePicsCollectionViewController: ProfilePicsCollectionViewControl
         
         let chatBtn = UIBarButtonItem(image: UIImage(named: "btn_navBarIcon_chat_normal"), style: .Plain, target: self, action: "pushChatView")
         self.navigationItem.rightBarButtonItem = chatBtn;
+        
+
 
         // Do any additional setup after loading the view.
     }

@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController {
         
         self.getProfileImage()
         
-        self.navigationController!.navigationBar.translucent = false;
+
         self.title = ProfileTitle
         self.view.backgroundColor = BG_COLOR
 
@@ -53,9 +53,13 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         // update profile picture
+        self.navigationController!.navigationBar.translucent = false
         
         
-        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController!.navigationBar.translucent = true
     }
     
     func pushPictureCollectionView() {

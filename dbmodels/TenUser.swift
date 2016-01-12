@@ -36,9 +36,11 @@ class TenUser: NSObject {
     var Average = 0
     var listType = chatType.InActive
     
-    var Portrait:NSData?{
+    var Portrait:NSData? {
         didSet{
-            PortraitImage = UIImage(data: Portrait!)
+            if let fakePortrait = Portrait {
+                PortraitImage = UIImage(data: fakePortrait)
+            }
         }
     }
     var PortraitImage:UIImage?

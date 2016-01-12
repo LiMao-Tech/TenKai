@@ -32,34 +32,8 @@ class MyProfilePicsCollectionViewController: ProfilePicsCollectionViewController
 
     func addImage() -> Void {
         
-        let path = NSIndexPath(forItem: 0, inSection: 0)
-        self.numbers.addObject(0)
-        self.numberWidths.addObject(1)
-        self.numberHeights.addObject(1)
-        self.lmCollectionView.insertItemsAtIndexPaths([path])
-        
-        // SHARED_PICKER.toImagePicker(self)
-        /*
-        NSDictionary * params = @{@"id" : @1};
-        
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyyMMddHHmmss";
-        NSString * fileDate = [formatter stringFromDate:[[NSDate alloc] init]];
-        NSString * fileName = [fileDate stringByAppendingString:@".png"];
-        
-        [self.afHttpManager POST:targetUrl parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:imageData
-        name:@"upload"
-        fileName:fileName
-        mimeType:@"image/png"];
-        } progress: ^(NSProgress * uploadProgress) {
-        
-        } success: ^(NSURLSessionDataTask * task , id responseObject) {
-        
-        } failure:^(NSURLSessionDataTask * task , NSError * error ) {
-        
-        }];
-*/
+        SHARED_PICKER.toImagePicker(self)
+    
     }
     
     func toolBarOption() -> Void {
@@ -119,18 +93,26 @@ class MyProfilePicsCollectionViewController: ProfilePicsCollectionViewController
         
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
 
-        let path = NSIndexPath(forRow: self.NumberOfPics-1, inSection: 0)
+        let path = NSIndexPath(forItem: self.NumberOfPics-1, inSection: 0)
         
         
         self.lmCollectionView.performBatchUpdates({() -> Void in
             
-            self.numberWidths.insertObject(1, atIndex: self.NumberOfPics-1)
-            self.numberHeights.insertObject(1, atIndex: self.NumberOfPics-1)
+            let imageRepre = UIImageJPEGRepresentation(image, 0.75)
+                let params : NSDictionary = ["id": self.UserID]
             
-
-            self.lmCollectionView.insertItemsAtIndexPaths([path])
-            self.lmCollectionView.deleteItemsAtIndexPaths([path])
-
+            if let imageData = imageRepre {
+                
+                AFNetworkTools.postUserImage(imageData, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                    self.numbers.addObject(0)
+                    self.numberWidths.addObject(1)
+                    self.numberHeights.addObject(1)
+                    
+                    self.lmCollectionView.insertItemsAtIndexPaths([path])
+                    },failure: { (task, error) -> Void in
+                        print(error.localizedDescription)
+                })
+            }
             }
             , completion: {(done) -> Void in
                 if done {
