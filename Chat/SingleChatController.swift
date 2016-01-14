@@ -94,17 +94,25 @@ class SingleChatController : UIViewController,
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let oID = "otherchat"
         let mID = "mechat"
+        let pID = "pcoin"
         var cell: ChatBaseCell?
         let message:SingleChatMessageFrame = messages[indexPath.row]
-        if(message.chatMessage.belongType == ChatBelongType.Other){
-            cell = messageList.dequeueReusableCellWithIdentifier(oID) as? ChatBaseCell
+        if(message.chatMessage.messageType == .Pcoin){
+            cell = messageList.dequeueReusableCellWithIdentifier(pID) as? ChatBaseCell
             if(cell == nil){
-                cell = OtherChatCell.loadFromNib()
+                cell = PCoinCell(style: .Default, reuseIdentifier: pID)
             }
         }else{
-            cell = messageList.dequeueReusableCellWithIdentifier(mID) as? ChatBaseCell
-            if(cell == nil){
-                cell = MeChatCell.loadFromNib()
+            if(message.chatMessage.belongType == ChatBelongType.Other){
+                cell = messageList.dequeueReusableCellWithIdentifier(oID) as? ChatBaseCell
+                if(cell == nil){
+                    cell = OtherChatCell.loadFromNib()
+                }
+            }else{
+                cell = messageList.dequeueReusableCellWithIdentifier(mID) as? ChatBaseCell
+                if(cell == nil){
+                    cell = MeChatCell.loadFromNib()
+                }
             }
         }
         cell?.chatFrame = message

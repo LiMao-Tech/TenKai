@@ -177,14 +177,28 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     func levelSelect(sender:LevelButton){
         if(sender.lockState == .Lock){
             let unlockAlert = UIAlertController(title: "等级解锁", message: "您需要花费 \(sender.level*10) P币来解锁该等级", preferredStyle: UIAlertControllerStyle.Alert)
-            let pcoinValue = SHARED_USER.PCoin
             let ok = UIAlertAction(title: "解锁", style: UIAlertActionStyle.Destructive, handler: { (ac) -> Void in
                 print("解锁")
-                AFNetworkTools.putMethod(PCoinUrl, parameters: ["id":pcoinValue], success: { (task, response) -> Void in
-                    SHARED_USER.PCoin -= Double(sender.level*10)
-                    }, failure: { (task, error) -> Void in
-                        
-                })
+                if(SHARED_USER.PCoin < Double(sender.level*10)){
+                    //P币不足
+                    let insufficientAlert = UIAlertController(title: "解锁失败", message: "P币数量不足，请充值后解锁", preferredStyle: .Alert)
+                    let pay = UIAlertAction(title: "充值", style: .Destructive, handler: { (ac) -> Void in
+                        let pVC = PCoinViewController()
+                        self.navigationController?.navigationBar.hidden = false
+                        self.navigationController?.pushViewController(pVC, animated: true)
+                    })
+                    let cancel = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                    insufficientAlert.addAction(pay)
+                    insufficientAlert.addAction(cancel)
+                    self.presentViewController(insufficientAlert, animated: true, completion: nil)
+                }else{
+                    //同步服务器数据，获得相应的等级
+                    SHARED_USER.Average = sender.level
+//                    AFNetworkTools.putMethod(PCoinUrl, parameters: , success: { (task, response) -> Void in
+//                        SHARED_USER.PCoin -= Double(sender.level*10)
+//                        }, failure: { (task, error) -> Void in
+//                    })
+                }
                 
             })
             let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)

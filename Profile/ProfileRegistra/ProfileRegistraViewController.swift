@@ -63,7 +63,7 @@ class RegistProfileViewController: UIViewController,
     
     var button:UIButton!
     
-    let lineLength:CGFloat = SCREEN_WIDTH*0.5
+    let lineLength:CGFloat = SCREEN_WIDTH*0.6
     
     var indicator: UIActivityIndicatorView!
     
@@ -110,11 +110,11 @@ class RegistProfileViewController: UIViewController,
         buttonProfile.layer.cornerRadius = buttonProfile.bounds.width*0.5
         
         
-        let marginX:CGFloat = 35
+        let marginX:CGFloat = 15
         
+        let labelLen:CGFloat = 70
         // init labels
-        let basicInfoLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*2/12, labelWidth: 100, labelHeight: 100, labelText: "基本信息")
-        let userNameLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*3/12, labelWidth: 100, labelHeight: 100, labelText: "用户名＊")
+        let userNameLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*3/12, labelWidth: labelLen, labelHeight: 100, labelText: "用户名＊")
         let textX = CGRectGetMaxX(userNameLabel.frame) + 20
         
         username = UITextField(frame: CGRectMake(textX,SCREEN_HEIGHT*3/12+40, lineLength, 20))
@@ -124,7 +124,7 @@ class RegistProfileViewController: UIViewController,
         let userLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(username.frame)+2, lineLength, 1))
         userLine.backgroundColor = UIColor.whiteColor()
         
-        let dateOfBirthLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*4/12, labelWidth: 100, labelHeight: 100, labelText: "生日＊")
+        let dateOfBirthLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*4/12, labelWidth: labelLen, labelHeight: 100, labelText: "生日＊")
         birthDate = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*4/12+40, lineLength, 20))
         birthDate.textColor = UIColor.whiteColor()
         birthDate.font = UIFont(name: FONTNAME_NORMAL, size: 15)
@@ -141,24 +141,24 @@ class RegistProfileViewController: UIViewController,
         birthDate.inputAccessoryView = accessoryView
         let birthLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(birthDate.frame)+2, lineLength, 1))
         birthLine.backgroundColor = UIColor.whiteColor()
-        let sexLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*5/12, labelWidth: 200, labelHeight: 100, labelText: "性别＊")
+        let sexLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*5/12, labelWidth: labelLen, labelHeight: 100, labelText: "性别＊")
         
-        feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 62, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  女", action: "sexBtnClicked:")
-        maleBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*5/12+40, 50, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  男", action: "sexBtnClicked:")
+        feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "    女    ", action: "sexBtnClicked:")
+        maleBtn = initChooseBtn(CGRectMake(textX+100, SCREEN_HEIGHT*5/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "    男    ", action: "sexBtnClicked:")
         
-        let marriageLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*6/12, labelWidth: 200, labelHeight: 100, labelText: "婚姻＊")
-        singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身", action: "marriageBtnClicked:")
-        marriedBtn = initChooseBtn(CGRectMake(textX+80, SCREEN_HEIGHT*6/12+40, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚", action: "marriageBtnClicked:")
+        let marriageLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*6/12, labelWidth: labelLen, labelHeight: 100, labelText: "婚姻＊")
+        singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身  ", action: "marriageBtnClicked:")
+        marriedBtn = initChooseBtn(CGRectMake(textX+100, SCREEN_HEIGHT*6/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚  ", action: "marriageBtnClicked:")
         
         // Email Label
-        let emailLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*7/12, labelWidth: 200, labelHeight: 100, labelText: "邮箱")
+        let emailLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*7/12, labelWidth: labelLen, labelHeight: 100, labelText: "邮箱")
         emailAddr = UILabel(frame: CGRectMake(textX, SCREEN_HEIGHT*7/12+40, lineLength, 20))
         emailAddr.textColor = UIColor(red: 137.0/255.0, green: 142.0/255.0, blue: 153.0/255.0, alpha: 1.0)
         emailAddr.font = UIFont(name: FONTNAME_NORMAL, size: 15)
         emailAddr.text = email
         
         // Hobby Label
-        let hobbyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*8/12, labelWidth: 200, labelHeight: 100, labelText: "兴趣")
+        let hobbyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*8/12, labelWidth: labelLen, labelHeight: 100, labelText: "兴趣")
         hobby = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*8/12+40, lineLength, 20))
         hobby.textColor = UIColor.whiteColor()
         hobby.font = UIFont(name: FONTNAME_NORMAL, size: 15)
@@ -167,11 +167,10 @@ class RegistProfileViewController: UIViewController,
 
         let hobbyLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(hobby.frame)+2, lineLength, 1))
         hobbyLine.backgroundColor = UIColor.whiteColor()
-        let moreDetailLabel = initLabel(posX: 15, posY: SCREEN_HEIGHT*9/12, labelWidth: 200, labelHeight: 100, labelText: "更多细节")
         
         // Status Label
-        let statusLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*10/12, labelWidth: 200, labelHeight: 100, labelText: "状态")
-        statusDetail = UITextView(frame: CGRectMake(textX, SCREEN_HEIGHT*10/12+40, lineLength, SCREEN_HEIGHT*2/12-10))
+        let statusLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*9/12, labelWidth: labelLen, labelHeight: 100, labelText: "状态")
+        statusDetail = UITextView(frame: CGRectMake(textX, SCREEN_HEIGHT*9/12+40, lineLength, SCREEN_HEIGHT*2/12-10))
         statusDetail.backgroundColor = UIColor.blackColor()
         statusDetail.textColor = UIColor.whiteColor()
         statusDetail.bounces = false
@@ -184,7 +183,7 @@ class RegistProfileViewController: UIViewController,
         self.statusDetail.addSubview(placeHolder)
         
         // Inner Label
-        let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: 200, labelHeight: 100, labelText: "内在")
+        let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: labelLen, labelHeight: 100, labelText: "内在")
         innerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
         innerBar.minimumValue = 0
         innerBar.maximumValue = 10
@@ -193,7 +192,7 @@ class RegistProfileViewController: UIViewController,
         innerValue.text = "0"
         innerValue.textColor = UIColor.whiteColor()
         
-        let OuterLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*13/12, labelWidth: 200, labelHeight: 100, labelText: "外在")
+        let OuterLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*13/12, labelWidth: labelLen, labelHeight: 100, labelText: "外在")
         outerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*13/12+40, lineLength-30, 20))
         outerBar.minimumValue = 0
         outerBar.maximumValue = 10
@@ -219,7 +218,6 @@ class RegistProfileViewController: UIViewController,
         
 
         self.scrollView!.addSubview(buttonProfile!)
-        self.scrollView!.addSubview(basicInfoLabel)
         self.scrollView!.addSubview(userNameLabel)
         self.scrollView!.addSubview(dateOfBirthLabel)
         self.scrollView!.addSubview(sexLabel)
@@ -227,7 +225,7 @@ class RegistProfileViewController: UIViewController,
         self.scrollView!.addSubview(emailLabel)
         self.scrollView!.addSubview(hobbyLabel)
         self.scrollView!.addSubview(hobbyLabel)
-        self.scrollView!.addSubview(moreDetailLabel)
+
         self.scrollView!.addSubview(statusLabel)
         self.scrollView!.addSubview(InnerLabel)
         self.scrollView!.addSubview(OuterLabel)
@@ -270,13 +268,13 @@ class RegistProfileViewController: UIViewController,
     
     func sexBtnClicked(sender:SettingButton){
         sender.enabled = false
-        if(sender.currentTitle == "  Female"){
+        if(sender.currentTitle == "    女    "){
             feMaleBtn.setImage(feMaleBtn.seletedImage, forState: .Normal)
             feMaleBtn.titleLabel?.alpha = 0.4
             maleBtn.setImage(maleBtn.normalImage, forState: .Normal)
             maleBtn.enabled = true
             maleBtn.titleLabel?.alpha = 1
-            gender = 0
+            gender = 1
         }
         else{
             feMaleBtn.setImage(feMaleBtn.normalImage, forState: .Normal)
@@ -284,14 +282,14 @@ class RegistProfileViewController: UIViewController,
             maleBtn.setImage(maleBtn.seletedImage, forState: .Normal)
             maleBtn.titleLabel?.alpha = 0.4
             feMaleBtn.enabled = true
-            gender = 1
+            gender = 0
         }
         
     }
     
     func marriageBtnClicked(sender:SettingButton){
         sender.enabled = false
-        if(sender.currentTitle == "  Single"){
+        if(sender.currentTitle == "  单身  "){
             singleBtn.setImage(singleBtn.seletedImage, forState: .Normal)
             singleBtn.titleLabel?.alpha = 0.4
             marriedBtn.setImage(marriedBtn.normalImage, forState: .Normal)
@@ -353,7 +351,8 @@ class RegistProfileViewController: UIViewController,
         resultLabel.text = labelText
         resultLabel.font = UIFont(name: FONTNAME_BOLD, size: 16)
         resultLabel.textColor = ORANGE_COLOR
-        resultLabel.numberOfLines = 1;
+        resultLabel.numberOfLines = 1
+
         return resultLabel
     }
     
