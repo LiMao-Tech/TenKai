@@ -22,7 +22,14 @@ class DataInitializerTool: NSObject {
         }
     }
     
-    func initialiseUserAndMessages(){
+    func deinitialiseInfo(){
+       let infos = UserChatModel.allChats()
+        infos.tenUser.removeAll()
+        infos.notifications.removeAll()
+        for index in infos.userIndex{
+            infos.message[index]?.removeAll()
+        }
+        infos.userIndex.removeAll()
         
     }
     

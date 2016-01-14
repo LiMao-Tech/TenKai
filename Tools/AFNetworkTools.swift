@@ -58,7 +58,6 @@ class AFNetworkTools: NSObject {
     
     class func getImageMethod(url:String,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError)->Void){
         sharedInstance.responseSerializer = AFImageResponseSerializer()
-        //        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         sharedInstance.responseSerializer.acceptableContentTypes = NSSet(object: "image/jpeg") as? Set<String>
         sharedInstance.GET(url, parameters: nil, progress: nil, success: { (task, error) -> Void in
             success(task,error)
@@ -88,8 +87,8 @@ class AFNetworkTools: NSObject {
         sharedInstance.responseSerializer = AFHTTPResponseSerializer()
         
         let picName = Tools.getFileNameTime(NSDate())+".png"
-        sharedInstance.POST(PhotosUrl, parameters: parameters, constructingBodyWithBlock: { (data) -> Void in
-            data.appendPartWithFileData(image, name: "uploads", fileName: picName, mimeType: "image/png")
+        sharedInstance.POST(PictureUrl, parameters: parameters, constructingBodyWithBlock: { (data) -> Void in
+            data.appendPartWithFileData(image, name: "upload", fileName: picName, mimeType: "image/png")
             }, progress: nil, success: { (task, response) -> Void in
                 success(task,response)
             },failure:  { (task, error) -> Void in

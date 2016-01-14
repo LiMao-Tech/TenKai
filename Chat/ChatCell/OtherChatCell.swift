@@ -19,13 +19,23 @@ class OtherChatCell: ChatBaseCell {
     
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
-            timeLabel.text = chatFrame.chatMessage.MsgTime
-            content.attributedText = chatFrame.chatMessage.attrMsg
+            context.setImage(nil, forState: .Normal)
+            if(chatFrame.chatMessage.messageType == .Image){
+                content.text = ""
+                timeLabel.text = ""
+                context.imageEdgeInsets = UIEdgeInsets.init(top: 8, left: 3, bottom: 18, right: 0)
+                context.setImage(chatFrame.chatMessage.MsgImage!, forState: .Normal)
+            }else{
+                content.attributedText = chatFrame.chatMessage.attrMsg
+                timeLabel.text = chatFrame.chatMessage.MsgTime
+                
+            }
             let image = UIImage(named: "chat_recive_press_pic")
             let w = image!.size.width/2
             let h = image!.size.height/2
             let newImage = image?.resizableImageWithCapInsets(UIEdgeInsetsMake(h, w, h, w), resizingMode: UIImageResizingMode.Tile)
             context.setBackgroundImage(newImage, forState: UIControlState.Normal)
+            
 
         }
     }

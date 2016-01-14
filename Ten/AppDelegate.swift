@@ -135,8 +135,17 @@ class AppDelegate: UIResponder,
     // Recive remote notification
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         
-        let params = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
-        AFNetworkTools.getMethodWithParams(MsgUrl,parameters: params, success: { (task, response) -> Void in
+        print(userInfo["aps"])
+        
+        let notiParams = ["receiver":0,"currIndex":SHARED_USER.MsgIndex]
+        AFNetworkTools.getMethodWithParams(MsgUrl, parameters: notiParams, success: { (task, response) -> Void in
+            
+            }) { (task, response) -> Void in
+                
+        }
+        
+        let msgParams = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
+        AFNetworkTools.getMethodWithParams(MsgUrl,parameters: msgParams, success: { (task, response) -> Void in
             let userInfoArray = response as! NSArray
             if userInfoArray.count == 0{
                 return
@@ -156,11 +165,13 @@ class AppDelegate: UIResponder,
                     break
                 }
                 let messageFrame = SingleChatMessageFrame()
-                if(info["MsgType"] as! Int != 1){
+                let msgType = info["MsgType"] as! Int
+                if( msgType != 1){
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
                 }else{
                     let tempMessage = SingleChatMessage(dict: info as! NSDictionary)
-                    AFNetworkTools.getImageMethod(messageFrame.chatMessage.MsgContent, success: { (task, response) -> Void in
+                    AFNetworkTools.getImageMethod(tempMessage.MsgContent, success: { (task, response) -> Void in
+                        print("message Image download Success")
                         if(UserChatModel.allChats().message[senderIndex] != nil){
                             tempMessage.MsgImage = response as? UIImage
                             messageFrame.chatMessage = tempMessage
@@ -169,10 +180,11 @@ class AppDelegate: UIResponder,
                         }
                         UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
                         }, failure: { (task, error) -> Void in
-                            
+                            print("message Image download Failed")
+                             print(error.localizedDescription)
                     })
                 }
-
+                
                 if(!UserChatModel.allChats().userIndex.contains(senderIndex)){
                     UserChatModel.allChats().userIndex.append(senderIndex)
                     UserChatModel.allChats().message[senderIndex] = [SingleChatMessageFrame]()
@@ -193,10 +205,14 @@ class AppDelegate: UIResponder,
                             }, failure: { (task, error) -> Void in
                                 let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
                                 UserChatModel.allChats().userIndex.removeAtIndex(index!)
+                                print(UserChatModel.allChats().userIndex)
                         })
                         },
                         failure: { (task, error) -> Void in
+                            print("tenUser portraitfailed")
                             print(error.localizedDescription)
+                            let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
+                            UserChatModel.allChats().userIndex.removeAtIndex(index!)
                             
                     })
                     print("UserIndex: \(UserChatModel.allChats().userIndex)")
@@ -218,7 +234,7 @@ class AppDelegate: UIResponder,
             nofiticationtype : notification? message(message,image,pcoin)? pcoin? or?
             message:need UserIndex, messagetype, and Content
         */
-        print(userInfo["aps"])
+        
         
     }
     

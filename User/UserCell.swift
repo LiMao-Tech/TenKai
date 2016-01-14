@@ -32,7 +32,12 @@ class UserCell: UITableViewCell {
     }
     var message = [SingleChatMessageFrame](){
         didSet{
-            lastMessage.text = message.last?.chatMessage.MsgContent
+            let msg = message.last
+            if(msg!.chatMessage.messageType.rawValue == 1){
+                lastMessage.text = "[图片]"
+            }else{
+                lastMessage.text = message.last?.chatMessage.MsgContent
+            }
             timeLabel.text = message.last?.chatMessage.MsgTime
         }
     }

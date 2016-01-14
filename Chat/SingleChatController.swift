@@ -57,9 +57,7 @@ class SingleChatController : UIViewController,
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "message"){
-            print("messageChange")
             self.messages = UserChatModel.allChats().message[tenUser.UserIndex]
-            
             self.messageList.reloadData()
             self.rollToLastRow()
         }else{
@@ -211,8 +209,24 @@ class SingleChatController : UIViewController,
                 message.MsgTime = Tools.getNormalTime(NSDate())
                 message.MsgContent = ""
                 message.MsgImage = asset.fullResolutionImage
+                if(self.messages.count > 0){
+                    message.MsgIndex = (self.messages.last?.chatMessage.MsgIndex)!+1
+                }else{
+                    message.MsgIndex = SHARED_USER.MsgIndex+1
+                }
                 msgFrame.chatMessage = message
                 UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
+                let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
+                let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0,"time":message.MsgTime]
+//                let params = ["sender":7,"receiver":14,"phoneType":0,"time":message.MsgTime]
+                AFNetworkTools.postUserImage(data, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                        print("postImage success")
+                        print("response")
+                        MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
+                    }, failure: { (task, error) -> Void in
+                        print("post Image failed")
+                        print(error.localizedDescription)
+                })
             }
         }
         

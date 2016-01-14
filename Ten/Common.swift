@@ -38,6 +38,7 @@ let ImageUrl = HomeUrl + "TenImage?id="
 
 let HeadImageUrl = HomeUrl + "TenImage/UploadProfileImage/"
 let PhotosUrl = HomeUrl + "TenImage/UploadPhotos/"
+let PictureUrl = HomeUrl + "TenImage/SendImage/"
 
 let DeviceTokenUrl = ""
 

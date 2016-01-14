@@ -19,5 +19,13 @@ class UserChatModel: NSObject {
     class func allChats() -> UserChatModel{
         return Chats
     }
+    
+    class func removeAll(){
+        Chats.message = [Int :[SingleChatMessageFrame]]()
+        Chats.userIndex = [Int]() //check if user exist
+        Chats.notifications = [NotificationFrame]()
+        Chats.tenUser = [TenUser]()
+        
+    }
    
 }

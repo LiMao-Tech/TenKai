@@ -51,7 +51,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             separateUser()
             self.userList.reloadData()
         }else if(keyPath == "message"){
-            print("message Change")
             separateUser()
             self.userList.reloadData()
         }else{

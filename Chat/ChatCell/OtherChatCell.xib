@@ -28,7 +28,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUB-Er-oqU">
                         <rect key="frame" x="73" y="8" width="229" height="108.5"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIS-WJ-tiT">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIS-WJ-tiT">
                                 <rect key="frame" x="0.0" y="0.0" width="229" height="108.5"/>
                                 <inset key="contentEdgeInsets" minX="15" minY="10" maxX="20" maxY="0.0"/>
                                 <state key="normal">

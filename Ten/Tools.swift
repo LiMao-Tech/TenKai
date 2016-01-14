@@ -70,4 +70,22 @@ class Tools : NSObject{
         }
         return (text,isString)
     }
+    
+    //circlur image
+    class func toCirclurImage(image:UIImage,inset:CGFloat) -> UIImage{
+        UIGraphicsBeginImageContext(image.size)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetLineWidth(context, 2)
+        CGContextSetStrokeColorWithColor(context, BG_COLOR.CGColor)
+        let rect = CGRectMake(inset, inset, image.size.height-inset*2.0, image.size.height-inset*2.0)
+        CGContextAddEllipseInRect(context, rect)
+        CGContextClip(context)
+        
+        image.drawInRect(rect)
+        CGContextAddEllipseInRect(context, rect)
+        CGContextStrokePath(context)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 }
