@@ -23,50 +23,21 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         
         super.viewDidLoad()
         self.title = NotificationTitle
-        
-        //tabview
-        tabView = UIView(frame: CGRectMake(0, 64, SCREEN_WIDTH, TAP_BAR_HEIGHT))
-        
-        let item = SettingButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
-        let item0 = SettingButton(frame: CGRectMake(CGRectGetMaxX(item.frame), 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
-        
-        item.normalImage = UIImage(named: "tab_notification_system_normal")
-        item.seletedImage = UIImage(named: "tab_notification_system_highlight")
-        item0.normalImage = UIImage(named: "tab_notification_notification_normal")
-        item0.seletedImage = UIImage(named: "tab_notification_notification_highlight")
-        item.setImage(item.seletedImage, forState: UIControlState.Normal)
-        item0.setImage(item0.normalImage, forState: UIControlState.Normal)
-        item.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
-        item0.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
-        
-        tabView.addSubview(item0)
-        tabView.addSubview(item)
-        
-        // list
-        infoList = UITableView(frame: CGRectMake(0, CGRectGetMaxY(tabView.frame), SCREEN_WIDTH, SCREEN_HEIGHT - CGRectGetMaxY(tabView.frame)))
-        
-        infoList.backgroundColor = UIColor.clearColor()
-        infoList.delegate = self
-        infoList.dataSource = self
-        infoList.separatorStyle = .None
-        
-        //addsubview
-        self.view.addSubview(tabView)
-        self.view.addSubview(infoList)
-        
+        seperateNotification()
+        setUp()
         refreshControl()
-        selectedBtn = item
-        self.view.backgroundColor = BG_COLOR
-        
+        print("system number : \(system.count)")
         UserChatModel.allChats().addObserver(self, forKeyPath: "notifications", options: .New, context: nil)
     }
     
     func seperateNotification(){
+        system.removeAll()
+        notification.removeAll()
         for noti in UserChatModel.allChats().notifications{
             if(noti.notification.MsgType == 0){
-                notification.append(noti)
+                system .append(noti)
             }else{
-                system.append(noti)
+                notification.append(noti)
             }
         }
     }
@@ -78,10 +49,6 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-
     }
     
     func refreshControl(){
@@ -100,17 +67,11 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         selectedBtn = sender
         sender.setImage(sender.seletedImage, forState: .Normal)
         modelType = sender.systemModel
-        infoList.reloadData()
+        self.infoList.reloadData()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        var cellHeight:CGFloat = 0.0
-        if(modelType == .System){
-            cellHeight = system[indexPath.row].cellheight
-        }else{
-            cellHeight = notification[indexPath.row].cellheight
-        }
-        return cellHeight
+        return (modelType == .System) ? system[indexPath.row].cellheight : notification[indexPath.row].cellheight
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -129,19 +90,47 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var cellCount = 0
-        
-        if(modelType == .System){
-            cellCount = system.count
-        }else{
-            cellCount = notification.count
-        }
-        
-        return cellCount
+        return (modelType == .System) ? system.count : notification.count
     }
 
     deinit{
         UserChatModel.allChats().removeObserver(self, forKeyPath: "notifications")
+    }
+    
+    func setUp(){
+        //tabview
+        tabView = UIView(frame: CGRectMake(0, 64, SCREEN_WIDTH, TAP_BAR_HEIGHT))
+        
+        let itemSystem = SettingButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
+        let itemNotification = SettingButton(frame: CGRectMake(CGRectGetMaxX(itemSystem.frame), 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
+        
+        itemSystem.normalImage = UIImage(named: "tab_notification_system_normal")
+        itemSystem.seletedImage = UIImage(named: "tab_notification_system_highlight")
+        itemNotification.normalImage = UIImage(named: "tab_notification_notification_normal")
+        itemNotification.seletedImage = UIImage(named: "tab_notification_notification_highlight")
+        itemSystem.setImage(itemSystem.seletedImage, forState: UIControlState.Normal)
+        itemNotification.setImage(itemNotification.normalImage, forState: UIControlState.Normal)
+        itemSystem.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
+        itemNotification.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
+        
+        tabView.addSubview(itemNotification)
+        tabView.addSubview(itemSystem)
+        
+        // list
+        infoList = UITableView(frame: CGRectMake(0, CGRectGetMaxY(tabView.frame), SCREEN_WIDTH, SCREEN_HEIGHT - CGRectGetMaxY(tabView.frame)))
+        
+        infoList.backgroundColor = UIColor.clearColor()
+        infoList.delegate = self
+        infoList.dataSource = self
+        infoList.separatorStyle = .None
+        
+        //addsubview
+        self.view.addSubview(tabView)
+        self.view.addSubview(infoList)
+        
+        selectedBtn = itemSystem
+        self.view.backgroundColor = BG_COLOR
+
     }
     /*
     // MARK: - Navigation

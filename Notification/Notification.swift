@@ -9,20 +9,33 @@
 import UIKit
 
 class Notification: NSObject {
+    
     var title = "TEN Team"
-    var IsLocked = 0;
+    
     var MsgContent = ""
-    var MsgIndex = 0;
-    var MsgTime = "2015-12-21T22:11:22.757";
-    var MsgType = 0;
-    var PhoneType = 0;
-    var Receiver = 0;
-    var Sender = 0;
+    var MsgIndex = 0
+    var MsgTime = "2015-12-21T22:11:22.757"
+    var MsgType = 0{
+        didSet{
+            if(MsgType == 1){
+                title = "您获得了新的评分"
+            }
+        }
+    }
+    var PhoneType = 0
+    var Receiver = 0
+    var Sender = 0
+    var IsLocked = 0
+    
+    override init() {
+        super.init()
+    }
     
     init(dict:NSDictionary){
         super.init()
         self.changValue(dict)
     }
+    
     func changValue(dict:NSDictionary){
         self.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
     }

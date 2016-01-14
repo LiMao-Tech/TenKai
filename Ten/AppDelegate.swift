@@ -45,9 +45,7 @@ class AppDelegate: UIResponder,
             UserCacheTool().getUserInfo(userIndex!)
             //datainitialise
             DataInitializerTool.initialiseInfo()
-            for user in UserChatModel.allChats().tenUser{
-                print(user.UserName)
-            }
+            
             self.window?.rootViewController = nVC
         }
         
@@ -107,19 +105,6 @@ class AppDelegate: UIResponder,
         let trimEnds = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
         DEVICE_TOKEN = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
         
-        //Put DeviceToken
-        if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
-            //put deviceTokenByUserIndex
-            let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as! Int
-            
-//            let params = ["userindex":userIndex,"devicetoken":DEVICE_TOKEN!]
-//            AFNetworkTools.postMethod(LoginUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
-//                print("success")
-//                }, failure: { (task, error) -> Void in
-//                    print("DeviceToken put failed")
-//                    print(error.localizedDescription)
-//            })
-        }
         print("Token: \(DEVICE_TOKEN!)")
         
         // TODO: save this cleanToken into server and to default user data
@@ -139,10 +124,25 @@ class AppDelegate: UIResponder,
         
         let notiParams = ["receiver":0,"currIndex":SHARED_USER.MsgIndex]
         AFNetworkTools.getMethodWithParams(MsgUrl, parameters: notiParams, success: { (task, response) -> Void in
-            
-            }) { (task, response) -> Void in
-                
-        }
+            print(response)
+            let userInfoArray = response as! NSArray
+            if userInfoArray.count == 0{
+                return
+            }
+            for info in userInfoArray{
+                let noti = Notification(dict: info as! NSDictionary)
+                let notiFrame = NotificationFrame()
+                notiFrame.notification = noti
+                //add notification to notifications
+                UserChatModel.allChats().notifications.append(notiFrame)
+                SHARED_USER.MsgIndex = noti.MsgIndex
+                // save to db
+                UserCacheTool().upDateUserMsgIndex(noti.MsgIndex)
+                NotificationCacheTool().addNotificationInfo(noti)
+                                }
+            },failure: { (task, response) -> Void in
+                print(response)
+        })
         
         let msgParams = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
         AFNetworkTools.getMethodWithParams(MsgUrl,parameters: msgParams, success: { (task, response) -> Void in

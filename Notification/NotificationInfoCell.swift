@@ -15,10 +15,10 @@ class NotificationInfoCell: UITableViewCell {
     var splitLine:UIView!
     var notificationFrame:NotificationFrame!{
         didSet{
-            titleLable = UILabel(frame:notificationFrame.titleFrame)
-            timeLabel = UILabel(frame: notificationFrame.timeFrame)
-            detailLabel = UILabel(frame: notificationFrame.detailFrame)
-            splitLine = UILabel (frame: notificationFrame.splitFrame)
+            titleLable.frame = notificationFrame.titleFrame
+            timeLabel.frame = notificationFrame.timeFrame
+            detailLabel.frame = notificationFrame.detailFrame
+            splitLine.frame = notificationFrame.splitFrame
             splitLine.backgroundColor = UIColor.whiteColor()
             titleLable.font = UIFont(name: "PTSans", size: 17)
             titleLable.textColor = UIColor.orangeColor()
@@ -42,6 +42,10 @@ class NotificationInfoCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor  = UIColor.blackColor()
+        titleLable = UILabel()
+        timeLabel = UILabel()
+        detailLabel = UILabel()
+        splitLine = UILabel ()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,20 +57,4 @@ class NotificationInfoCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    override func setNeedsLayout() {
-        titleLable = UILabel(frame:notificationFrame.titleFrame)
-        timeLabel = UILabel(frame: notificationFrame.timeFrame)
-        detailLabel = UILabel(frame: notificationFrame.detailFrame)
-        titleLable.font = UIFont.systemFontOfSize(17)
-        titleLable.textColor = UIColor.orangeColor()
-        timeLabel.font = UIFont.systemFontOfSize(13)
-        timeLabel.textColor = UIColor.whiteColor()
-        detailLabel.font = UIFont.systemFontOfSize(15)
-        detailLabel.textColor = UIColor.whiteColor()
-        titleLable.text = notificationFrame.notification.title
-        timeLabel.text = notificationFrame.notification.MsgTime + " am"
-        detailLabel.text = notificationFrame.notification.MsgContent as String
-    }
-
 }

@@ -16,6 +16,7 @@
 		640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BE11C0C898700B31DA0 /* FMResultSet.m */; };
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
 		642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */; };
+		643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */; };
 		643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCD1C3E309E00349187 /* MeChatCell.swift */; };
 		643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CCE1C3E309E00349187 /* MeChatCell.xib */; };
 		643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCF1C3E309E00349187 /* OtherChatCell.swift */; };
@@ -317,6 +318,7 @@
 		640F3BE11C0C898700B31DA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInitializerTool.swift; sourceTree = "<group>"; };
+		643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCacheTool.swift; sourceTree = "<group>"; };
 		643E8CCD1C3E309E00349187 /* MeChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeChatCell.swift; sourceTree = "<group>"; };
 		643E8CCE1C3E309E00349187 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
 		643E8CCF1C3E309E00349187 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
@@ -670,6 +672,7 @@
 		644F1D0F1C2863A9002E65CE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */,
 				D4EA5C7B1C142471009E9927 /* Tools.swift */,
 				644F1D101C2863C1002E65CE /* UserCacheTool.swift */,
 				6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */,
@@ -1519,6 +1522,7 @@
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
 				D4A5EF9C1C40765200B48C48 /* SharedInstances.swift in Sources */,
+				643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
 				D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */,
 				D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */,

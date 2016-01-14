@@ -20,6 +20,12 @@ class DataInitializerTool: NSObject {
                 UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex)
             }
         }
+        //initialise Notification
+        let notiInfo = NotificationCacheTool().loadNotification()
+        if(!notiInfo.isEmpty){
+            UserChatModel.allChats().notifications = notiInfo.notis
+        }
+        
     }
     
     func deinitialiseInfo(){
