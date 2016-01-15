@@ -17,7 +17,8 @@
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
 		642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */; };
 		643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */; };
-		643C8BBD1C47D81100682A60 /* PCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBC1C47D81100682A60 /* PCoinCell.swift */; };
+		643C8BC01C48DF5400682A60 /* PCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBE1C48DF5400682A60 /* PCoinCell.swift */; };
+		643C8BC11C48DF5400682A60 /* PCoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643C8BBF1C48DF5400682A60 /* PCoinCell.xib */; };
 		643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCD1C3E309E00349187 /* MeChatCell.swift */; };
 		643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CCE1C3E309E00349187 /* MeChatCell.xib */; };
 		643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCF1C3E309E00349187 /* OtherChatCell.swift */; };
@@ -320,7 +321,8 @@
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInitializerTool.swift; sourceTree = "<group>"; };
 		643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCacheTool.swift; sourceTree = "<group>"; };
-		643C8BBC1C47D81100682A60 /* PCoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinCell.swift; sourceTree = "<group>"; };
+		643C8BBE1C48DF5400682A60 /* PCoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinCell.swift; sourceTree = "<group>"; };
+		643C8BBF1C48DF5400682A60 /* PCoinCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCoinCell.xib; sourceTree = "<group>"; };
 		643E8CCD1C3E309E00349187 /* MeChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeChatCell.swift; sourceTree = "<group>"; };
 		643E8CCE1C3E309E00349187 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
 		643E8CCF1C3E309E00349187 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
@@ -646,11 +648,12 @@
 			isa = PBXGroup;
 			children = (
 				D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */,
-				643C8BBC1C47D81100682A60 /* PCoinCell.swift */,
 				643E8CCD1C3E309E00349187 /* MeChatCell.swift */,
 				643E8CCE1C3E309E00349187 /* MeChatCell.xib */,
 				643E8CCF1C3E309E00349187 /* OtherChatCell.swift */,
 				643E8CD01C3E309E00349187 /* OtherChatCell.xib */,
+				643C8BBE1C48DF5400682A60 /* PCoinCell.swift */,
+				643C8BBF1C48DF5400682A60 /* PCoinCell.xib */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -1325,6 +1328,7 @@
 				D4EA5D451C14252B009E9927 /* 001@2x.png in Resources */,
 				D4EA5DA71C14252B009E9927 /* 050@2x.png in Resources */,
 				D4EA5D631C14252B009E9927 /* 016@2x.png in Resources */,
+				643C8BC11C48DF5400682A60 /* PCoinCell.xib in Resources */,
 				D4EA5D9C1C14252B009E9927 /* 045.png in Resources */,
 				D4EA5DC71C14252B009E9927 /* 066@2x.png in Resources */,
 				D4EA5D4D1C14252B009E9927 /* 005@2x.png in Resources */,
@@ -1572,7 +1576,7 @@
 				D4EA5C1D1C13F1F4009E9927 /* ProfileRegistraViewController.swift in Sources */,
 				640F3BE41C0C898700B31DA0 /* FMDatabasePool.m in Sources */,
 				D4EA5C8E1C1424AF009E9927 /* NotificationInfoCell.swift in Sources */,
-				643C8BBD1C47D81100682A60 /* PCoinCell.swift in Sources */,
+				643C8BC01C48DF5400682A60 /* PCoinCell.swift in Sources */,
 				D4EA5C3A1C14037B009E9927 /* WelcomeController.swift in Sources */,
 				D4EA5BD51C13E787009E9927 /* ADCircularMenuViewController.m in Sources */,
 				640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */,

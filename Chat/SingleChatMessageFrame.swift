@@ -33,6 +33,8 @@ class SingleChatMessageFrame: NSObject {
                 let ratio = size.height/size.width
                 let height = width*ratio
                 cellHeight = height + 46
+            }else{
+                cellHeight = 40
             }
            
         }

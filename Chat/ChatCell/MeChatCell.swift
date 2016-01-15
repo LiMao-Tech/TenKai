@@ -16,6 +16,7 @@ class MeChatCell: ChatBaseCell {
     @IBOutlet weak var textView: UIView!
     override var chatFrame:SingleChatMessageFrame!{
         didSet{
+            
             if(chatFrame.chatMessage.messageType == .Image){
                 conText.text = ""
                 time.text = ""

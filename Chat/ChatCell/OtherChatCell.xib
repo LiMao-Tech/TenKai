@@ -16,10 +16,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aaz-mU-Ede" userLabel="headImage">
-                        <rect key="frame" x="28" y="8" width="45" height="50"/>
+                        <rect key="frame" x="28" y="13" width="45" height="45"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="45" id="MCN-dy-Ny8"/>
-                            <constraint firstAttribute="height" constant="50" id="wqd-Yr-TXO"/>
+                            <constraint firstAttribute="height" constant="45" id="wqd-Yr-TXO"/>
                         </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -79,7 +79,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="JUB-Er-oqU" secondAttribute="trailing" constant="10" id="Sbb-r4-ni4"/>
                     <constraint firstItem="kEe-xF-CRI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="eg6-7k-S4X"/>
                     <constraint firstItem="JUB-Er-oqU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fKw-hl-KXX"/>
-                    <constraint firstItem="Aaz-mU-Ede" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="ile-Ug-Fmp"/>
+                    <constraint firstItem="Aaz-mU-Ede" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="ile-Ug-Fmp"/>
                     <constraint firstItem="Aaz-mU-Ede" firstAttribute="leading" secondItem="kEe-xF-CRI" secondAttribute="trailing" constant="5" id="vZp-R2-0LF"/>
                     <constraint firstAttribute="bottomMargin" secondItem="JUB-Er-oqU" secondAttribute="bottom" id="ylA-FD-gc9"/>
                 </constraints>

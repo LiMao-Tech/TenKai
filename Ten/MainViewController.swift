@@ -26,9 +26,10 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     var btnArray = [LevelButton]()
     var distance : GTSlider!
-    var tenUser:TenUser!
     var gap : Int!
     var btns = Array<UIButton!>()
+    
+    var portraitBtn:UIButton!
     
     let distances = [50,100,500,1000]
     var index = 0
@@ -46,7 +47,13 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.navigationController?.navigationBar.backgroundColor = NAV_BAR_COLOR
         self.view.backgroundColor = BG_COLOR
         print(SHARED_USER.UserIndex)
-
+        
+        SHARED_USER.addObserver(self, forKeyPath: "PortraitImage", options: .New, context: nil)
+        
+        //protraitBtn
+        portraitBtn = UIButton(frame: CGRectMake(0,0,70,70))
+        portraitBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         
         // set circularMenu
         self.circularMenuVC.circularMenuDelegate = self
@@ -95,6 +102,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         refreshBtn.setImage(UIImage(named: "btn_radar_refresh"), forState: .Normal)
         refreshBtn.addTarget(self, action: "refreshBtnClicked", forControlEvents: .TouchUpInside)
         
+        self.view.addSubview(portraitBtn)
         self.view.addSubview(menuButton)
         self.view.addSubview(randomButton)
         self.view.addSubview(distance)
@@ -104,6 +112,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(distanceLabel)
         distanceChange()
     }
+    
+    
     
     func minusClicked(){
         if(index > 0){
@@ -220,6 +230,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "Average"){
             refreshLevelButton()
+        }else if(keyPath == "PortraitImage"){
+            self.portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }

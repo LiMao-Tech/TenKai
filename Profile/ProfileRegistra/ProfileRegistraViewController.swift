@@ -71,7 +71,7 @@ class RegistProfileViewController: UIViewController,
         super.viewDidLoad()
         
         SHARED_PICKER.picker.delegate = self
-        
+        SHARED_PICKER.picker.allowsEditing = true
         self.view.backgroundColor = BG_COLOR
         self.title = ProfileTitle
         
@@ -511,14 +511,13 @@ class RegistProfileViewController: UIViewController,
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
         // TODO: add image into profile
         // chosenImages
         picker.dismissViewControllerAnimated(true, completion: nil)
         
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
         chosenImage = image
-        self.buttonProfile?.setImage(image, forState: UIControlState.Normal)
+        self.buttonProfile?.setImage(Tools.toCirclurImage(image), forState: UIControlState.Normal)
         self.buttonProfile.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
     }
     

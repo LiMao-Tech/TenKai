@@ -2,38 +2,36 @@
 //  PCoinCell.swift
 //  Ten
 //
-//  Created by gt on 16/1/14.
+//  Created by gt on 16/1/15.
 //  Copyright © 2016年 LiMao Tech. All rights reserved.
 //
 
 import UIKit
 
 class PCoinCell: ChatBaseCell {
-    var pcoinLabel:UILabel!
-    var message = SingleChatMessageFrame(){
+    @IBOutlet weak var content: UILabel!
+    override var chatFrame:SingleChatMessageFrame!{
         didSet{
-            if(message.chatMessage.belongType == .Me){
-                pcoinLabel.text = "送出 "+message.chatMessage.MsgContent+" P币"
+            let msg = chatFrame.chatMessage
+            if(msg.belongType == .Me){
+                content.text = "送出 "+msg.MsgContent+" P币"
             }else{
-                pcoinLabel.text = "收到 "+message.chatMessage.MsgContent+" P币"
+                content.text = "收到 "+msg.MsgContent+" P币"
             }
         }
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        pcoinLabel = UILabel(frame: CGRectMake(30,10,SCREEN_WIDTH-60,20))
-        pcoinLabel.backgroundColor = UIColor.whiteColor()
-        pcoinLabel.textColor = BG_COLOR
-        self.addSubview(pcoinLabel)
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        content.layer.cornerRadius = 5
+        content.layer.masksToBounds = true
+        self.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
+        
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
-
+    
 }

@@ -152,6 +152,9 @@ class AppDelegate: UIResponder,
             }
             print(userInfoArray)
             for info in userInfoArray{
+                if(info["MsgType"] as! Int == 3){
+                    break
+                }
                 let senderIndex = info["Sender"] as! Int
                 //notification
                 if(senderIndex == 0){
@@ -191,6 +194,8 @@ class AppDelegate: UIResponder,
                     
                     // get userInfo
                     AFNetworkTools.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
+                        print("appdelegate get User")
+                        print(response)
                         let userDict = response as! NSDictionary
                         let user = TenUser(dict: userDict as! [String : AnyObject])
                         //get tenUser portrait
@@ -203,13 +208,15 @@ class AppDelegate: UIResponder,
                             UsersCacheTool().addUserInfoByUser(user)
                             UserChatModel.allChats().tenUser.append(user)
                             }, failure: { (task, error) -> Void in
+                                print("tenUser portraitfailed")
+                                print(error.localizedDescription)
                                 let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
                                 UserChatModel.allChats().userIndex.removeAtIndex(index!)
                                 print(UserChatModel.allChats().userIndex)
                         })
                         },
                         failure: { (task, error) -> Void in
-                            print("tenUser portraitfailed")
+                            print("appdelegate tenUser failed")
                             print(error.localizedDescription)
                             let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
                             UserChatModel.allChats().userIndex.removeAtIndex(index!)
@@ -291,6 +298,7 @@ class AppDelegate: UIResponder,
             "Birthday" : SHARED_USER.Birthday,
             "JoinedDate" : SHARED_USER.JoinedDate,
             "PCoin" : SHARED_USER.PCoin,
+            "ProfileUrl":SHARED_USER.ProfileUrl,
             "OuterScore" : SHARED_USER.OuterScore,
             "InnerScore" : SHARED_USER.InnerScore,
             "Energy" : SHARED_USER.Energy,

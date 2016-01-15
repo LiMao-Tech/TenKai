@@ -100,7 +100,7 @@ class SingleChatController : UIViewController,
         if(message.chatMessage.messageType == .Pcoin){
             cell = messageList.dequeueReusableCellWithIdentifier(pID) as? ChatBaseCell
             if(cell == nil){
-                cell = PCoinCell(style: .Default, reuseIdentifier: pID)
+                cell = PCoinCell.loadFromNib()
             }
         }else{
             if(message.chatMessage.belongType == ChatBelongType.Other){
@@ -116,6 +116,7 @@ class SingleChatController : UIViewController,
             }
         }
         cell?.chatFrame = message
+        cell?.tenUser = self.tenUser
         return cell!
     }
     

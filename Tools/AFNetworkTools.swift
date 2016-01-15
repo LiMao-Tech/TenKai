@@ -57,6 +57,7 @@ class AFNetworkTools: NSObject {
     }
     
     class func getImageMethod(url:String,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError)->Void){
+        sharedInstance.requestSerializer = AFJSONRequestSerializer()
         sharedInstance.responseSerializer = AFImageResponseSerializer()
         sharedInstance.responseSerializer.acceptableContentTypes = NSSet(object: "image/jpeg") as? Set<String>
         sharedInstance.GET(url, parameters: nil, progress: nil, success: { (task, error) -> Void in

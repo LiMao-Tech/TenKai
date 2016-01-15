@@ -28,9 +28,9 @@ let LocationNotiName = "LocationNotification"
 let HomeUrl = "http://www.limao-tech.com/Ten/"
 
 let ApiUrl = HomeUrl + "api/"
-let LoginUrl = ApiUrl + "TenLogins/"
-let UserUrl = ApiUrl + "TenUsers/"
-let MsgUrl = ApiUrl + "TenMsgs/"
+let LoginUrl = ApiUrl + "TenLogins"
+let UserUrl = ApiUrl + "TenUsers"
+let MsgUrl = ApiUrl + "TenMsgs"
 let PCoinUrl = ApiUrl + "PCoinTrans/"
 
 let ImagesJSONUrl = HomeUrl + "TenImage/GetImagesByUser?id="
@@ -39,6 +39,7 @@ let ImageUrl = HomeUrl + "TenImage?id="
 let HeadImageUrl = HomeUrl + "TenImage/UploadProfileImage/"
 let PhotosUrl = HomeUrl + "TenImage/UploadPhotos/"
 let PictureUrl = HomeUrl + "TenImage/SendImage/"
+let getPortraitUrl = HomeUrl + "TenImage?id="
 
 let DeviceTokenUrl = ""
 

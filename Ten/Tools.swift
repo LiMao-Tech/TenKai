@@ -72,20 +72,37 @@ class Tools : NSObject{
     }
     
     //circlur image
-    class func toCirclurImage(image:UIImage,inset:CGFloat) -> UIImage{
+    class func toCirclurImage(aImage:UIImage) -> UIImage{
+        let image = Tools().toFixSize(aImage)
+//        let image = aImage
         UIGraphicsBeginImageContext(image.size)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(context, 2)
-        CGContextSetStrokeColorWithColor(context, BG_COLOR.CGColor)
-        let rect = CGRectMake(inset, inset, image.size.height-inset*2.0, image.size.height-inset*2.0)
-        CGContextAddEllipseInRect(context, rect)
+        CGContextAddArc(context, image.size.width/2, image.size.height/2, image.size.width/2, 0, CGFloat(M_PI*2), 0)
         CGContextClip(context)
-        
+        let rect = CGRectMake(0, 0, image.size.width, image.size.height)
         image.drawInRect(rect)
         CGContextAddEllipseInRect(context, rect)
-        CGContextStrokePath(context)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
     }
+    private func toFixSize(image:UIImage) -> UIImage{
+        let l:CGFloat = 140
+        UIGraphicsBeginImageContext(CGSizeMake(l, l))
+        image.drawInRect(CGRectMake(0, 0, l, l))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    /*
+    + (NSData *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize
+    {
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return UIImageJPEGRepresentation(newImage, 0.8);
+    }
+    */
+    
 }

@@ -27,7 +27,8 @@ class UserCell: UITableViewCell {
             let x = CGRectGetMaxX(nameLabel.frame)
             dotView.frame =  CGRectMake(x+10, nameLabel.frame.origin.y+7, 7, 7)
             dotView.image = UIImage(named: "icon_chat_dot_l6")
-            headImage.setImage(tenUser.PortraitImage, forState: .Normal)
+            let image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            headImage.setImage(image, forState: .Normal)
         }
     }
     var message = [SingleChatMessageFrame](){
@@ -35,8 +36,10 @@ class UserCell: UITableViewCell {
             let msg = message.last
             if(msg!.chatMessage.messageType.rawValue == 1){
                 lastMessage.text = "[图片]"
+            }else if(msg!.chatMessage.messageType.rawValue == 0){
+                lastMessage.text = msg!.chatMessage.MsgContent
             }else{
-                lastMessage.text = message.last?.chatMessage.MsgContent
+                lastMessage.text = "[P币]"
             }
             timeLabel.text = message.last?.chatMessage.MsgTime
         }

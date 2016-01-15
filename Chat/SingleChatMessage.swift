@@ -9,14 +9,11 @@
 import UIKit
 
 enum ChatBelongType:Int {
-    case Me
-    case Other
+    case Me = 0,Other
 }
 
 enum ChatMessageType: Int {
-    case Message
-    case Image
-    case Pcoin
+    case Message = 0,Image,Pcoin
 }
 
 class SingleChatMessage: NSObject {
