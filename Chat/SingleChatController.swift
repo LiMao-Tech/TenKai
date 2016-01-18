@@ -14,7 +14,9 @@ class SingleChatController : UIViewController,
                             UITextViewDelegate,
                             UIActionSheetDelegate,
                             UIImagePickerControllerDelegate,
-                            UINavigationControllerDelegate
+                            UINavigationControllerDelegate,
+                            ScoreViewDelegate,
+                            PCoinTransDelegate
 {
     
     var tenUser = TenUser(){
@@ -24,7 +26,10 @@ class SingleChatController : UIViewController,
         }
     }
     
-    var messages: [SingleChatMessageFrame]! 
+    var messages: [SingleChatMessageFrame]!
+    
+    var scoreView:ScoreView?
+    var pcoinView:PCoinTransView?
     
     var bottom : UIView!
     var addBtn : UIButton!
@@ -49,10 +54,16 @@ class SingleChatController : UIViewController,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let leftItem = UIBarButtonItem(title: "返回", style: .Done, target: self, action: "backClicked")
+        self.navigationItem.setLeftBarButtonItem(leftItem, animated: true)
         setup()
         refreshControl()
         UserChatModel.allChats().addObserver(self, forKeyPath: "message", options: .New, context: nil)
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.title = tenUser.UserName
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -227,7 +238,6 @@ class SingleChatController : UIViewController,
                 UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0,"time":message.MsgTime]
-//                let params = ["sender":7,"receiver":14,"phoneType":0,"time":message.MsgTime]
                 AFNetworkTools.postUserImage(data, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                         print("postImage success")
                         print("response")
@@ -241,8 +251,15 @@ class SingleChatController : UIViewController,
         
         self.presentViewController(pickerController, animated: true) {}
     }
+    //赠送PCoin
     func transformCoin(){
-        print("coin")
+        if(pcoinView == nil){
+            pcoinView = PCoinTransView()
+        }
+        pcoinView?.tenUser = tenUser
+        pcoinView?.delegate = self
+        pcoinView?.isShow = true
+        self.view.addSubview(pcoinView!)
     }
     
     // 点击表情按钮
@@ -271,7 +288,10 @@ class SingleChatController : UIViewController,
         let aValue = userInfo.objectForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
         let value = aValue.CGRectValue()
         let h = value.height
-        
+        if(pcoinView != nil && pcoinView!.isShow){
+            self.pcoinView?.transform = CGAffineTransformMakeTranslation(0,-SCREEN_HEIGHT*0.2)
+            return
+        }
         if(needTransfrom){
             UIView.animateWithDuration(0, animations: { () -> Void in
                 self.bottom.transform = CGAffineTransformMakeTranslation(0, -h)
@@ -279,7 +299,6 @@ class SingleChatController : UIViewController,
                 temp.size.height -= h-self.keyBoardHeight
                 self.messageList.frame = temp
                 self.keyboardIsShow = true
-                print("out")
             })
              self.rollToLastRow()
         }else{
@@ -297,14 +316,17 @@ class SingleChatController : UIViewController,
         let aValue = userInfo.objectForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
         let value = aValue.CGRectValue()
         let h = value.height
-        if(needTransfrom){
+        if(pcoinView != nil && pcoinView!.isShow){
+            self.pcoinView?.transform = CGAffineTransformMakeTranslation(0,0)
+            return
+        }
+        if(needTransfrom ){
             UIView.animateWithDuration(0, animations: {() -> Void in
                 self.bottom.transform = CGAffineTransformMakeTranslation(0, 0)
                 var temp = self.messageList.frame
                 temp.size.height += h
                 self.messageList.frame = temp
                 self.keyboardIsShow = false
-                print("in")
             })
             self.rollToLastRow()
         }
@@ -461,7 +483,43 @@ class SingleChatController : UIViewController,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
+    //delegete funcs for scoreView
+    func scoreViewOkBtnClicked() {
+        scoreView!.removeFromSuperview()
+        //post new score of the other person
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
+    func scoreViewCancelBtnClicked() {
+        scoreView!.removeFromSuperview()
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func scoreViewScoreChange() {
+        scoreView!.scoreLabel.text = "\(Int(scoreView!.scoreSlider.value))"
+    }
+    //delegete funcs for PCoinTransView
+    func PCoinTransViewOkBtnClicked() {
+        pcoinView!.removeFromSuperview()
+        pcoinView!.isShow = false
+    }
+    
+    func PCoinTransViewCancelBtnClicked() {
+        pcoinView!.removeFromSuperview()
+        pcoinView!.isShow = false
+    }
+    func backClicked(){
+        if(tenUser.listType == .InActive){
+            if(scoreView == nil){
+                scoreView = ScoreView()
+            }
+            scoreView!.tenUser = tenUser
+            scoreView!.delegate = self
+            self.view.addSubview(scoreView!)
+        }else{
+            self.navigationController?.popToViewController(self, animated: true)
+        }
+    }
     
     
 }

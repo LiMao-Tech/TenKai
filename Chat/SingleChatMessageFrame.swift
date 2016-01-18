@@ -10,7 +10,7 @@ import UIKit
 
 class SingleChatMessageFrame: NSObject {
     
-    var cellHeight: CGFloat = 0.0
+    var cellHeight: CGFloat = 40
     var contentHeight: CGFloat = 0.0
     
     var chatMessage = SingleChatMessage() {
@@ -33,10 +33,7 @@ class SingleChatMessageFrame: NSObject {
                 let ratio = size.height/size.width
                 let height = width*ratio
                 cellHeight = height + 46
-            }else{
-                cellHeight = 40
             }
-           
         }
     }
     

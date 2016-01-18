@@ -33,9 +33,9 @@ class UserCacheTool: NSObject {
     
     func updateUserInfo(dict:NSDictionary) {
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PROFILEURL) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            let sql_insert = "UPDATE USERINFO SET GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ? WHERE USERINDEX = ?"
             
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["UserIndex"]!,dict["UserName"]!,dict["PhoneType"]!,dict["Gender"]!,dict["Birthday"]!,dict["JoinedDate"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["ProfileUrl"]!]){                  print("修改失败")
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["Gender"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["UserIndex"]!]){                  print("修改失败")
             }
         }
     }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		164EA74D1BB799E700446691 /* MobileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164EA74C1BB799E700446691 /* MobileInfo.swift */; };
 		16988ADD1B8A57A500270DBA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16988ADC1B8A57A500270DBA /* Images.xcassets */; };
+		640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640467801C4BC8910062A8A4 /* PCoinTransView.swift */; };
 		640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BD81C0C898700B31DA0 /* FMDatabase.m */; };
 		640F3BE31C0C898700B31DA0 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDA1C0C898700B31DA0 /* FMDatabaseAdditions.m */; };
 		640F3BE41C0C898700B31DA0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDC1C0C898700B31DA0 /* FMDatabasePool.m */; };
@@ -19,6 +20,7 @@
 		643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */; };
 		643C8BC01C48DF5400682A60 /* PCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBE1C48DF5400682A60 /* PCoinCell.swift */; };
 		643C8BC11C48DF5400682A60 /* PCoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643C8BBF1C48DF5400682A60 /* PCoinCell.xib */; };
+		643C8BCC1C4B6B8A00682A60 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BCB1C4B6B8A00682A60 /* ScoreView.swift */; };
 		643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCD1C3E309E00349187 /* MeChatCell.swift */; };
 		643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CCE1C3E309E00349187 /* MeChatCell.xib */; };
 		643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCF1C3E309E00349187 /* OtherChatCell.swift */; };
@@ -307,6 +309,7 @@
 		164EA74C1BB799E700446691 /* MobileInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileInfo.swift; sourceTree = "<group>"; };
 		16988ADC1B8A57A500270DBA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5A16C3FAA0BEA40461ACD34F /* Pods-Ten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.debug.xcconfig"; sourceTree = "<group>"; };
+		640467801C4BC8910062A8A4 /* PCoinTransView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinTransView.swift; sourceTree = "<group>"; };
 		640F3BD71C0C898700B31DA0 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		640F3BD81C0C898700B31DA0 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		640F3BD91C0C898700B31DA0 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -323,6 +326,7 @@
 		643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCacheTool.swift; sourceTree = "<group>"; };
 		643C8BBE1C48DF5400682A60 /* PCoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinCell.swift; sourceTree = "<group>"; };
 		643C8BBF1C48DF5400682A60 /* PCoinCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCoinCell.xib; sourceTree = "<group>"; };
+		643C8BCB1C4B6B8A00682A60 /* ScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		643E8CCD1C3E309E00349187 /* MeChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeChatCell.swift; sourceTree = "<group>"; };
 		643E8CCE1C3E309E00349187 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
 		643E8CCF1C3E309E00349187 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
@@ -644,6 +648,15 @@
 			path = fmdb;
 			sourceTree = "<group>";
 		};
+		643C8BC61C4B4CB300682A60 /* ChatPopVIew */ = {
+			isa = PBXGroup;
+			children = (
+				643C8BCB1C4B6B8A00682A60 /* ScoreView.swift */,
+				640467801C4BC8910062A8A4 /* PCoinTransView.swift */,
+			);
+			path = ChatPopVIew;
+			sourceTree = "<group>";
+		};
 		643E8CCC1C3E309E00349187 /* ChatCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -939,6 +952,7 @@
 		D4EA5C591C142430009E9927 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				643C8BC61C4B4CB300682A60 /* ChatPopVIew */,
 				643E8CD51C3E492800349187 /* ChatModel */,
 				643E8CCC1C3E309E00349187 /* ChatCell */,
 				D4EA5C5B1C142430009E9927 /* ChatViewController.swift */,
@@ -1571,6 +1585,7 @@
 				643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */,
 				D4EA5C7C1C142471009E9927 /* Helpers.swift in Sources */,
 				D4EA5C851C1424A1009E9927 /* GTSlider.swift in Sources */,
+				643C8BCC1C4B6B8A00682A60 /* ScoreView.swift in Sources */,
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,
 				D4EA5BFC1C13EA12009E9927 /* DKPopoverViewController.swift in Sources */,
 				D4EA5C1D1C13F1F4009E9927 /* ProfileRegistraViewController.swift in Sources */,
@@ -1595,6 +1610,7 @@
 				D4EA5C961C1424C6009E9927 /* RandomUserController.swift in Sources */,
 				643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */,
 				D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */,
+				640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */,
 				D4A3E1B31C3F274A00BAB190 /* MyProfilePicsCollectionViewController.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
 				D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */,
