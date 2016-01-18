@@ -16,6 +16,7 @@
 		640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDE1C0C898700B31DA0 /* FMDatabaseQueue.m */; };
 		640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BE11C0C898700B31DA0 /* FMResultSet.m */; };
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
+		642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642452971C4CDBD1003A43C8 /* PCoinModel.swift */; };
 		642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */; };
 		643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */; };
 		643C8BC01C48DF5400682A60 /* PCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBE1C48DF5400682A60 /* PCoinCell.swift */; };
@@ -322,6 +323,7 @@
 		640F3BE01C0C898700B31DA0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		640F3BE11C0C898700B31DA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		642452971C4CDBD1003A43C8 /* PCoinModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinModel.swift; sourceTree = "<group>"; };
 		642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInitializerTool.swift; sourceTree = "<group>"; };
 		643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCacheTool.swift; sourceTree = "<group>"; };
 		643C8BBE1C48DF5400682A60 /* PCoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinCell.swift; sourceTree = "<group>"; };
@@ -385,12 +387,12 @@
 		D4EA5C041C13EAE3009E9927 /* LMCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMCollectionViewLayout.m; sourceTree = "<group>"; };
 		D4EA5C0C1C13F1F4009E9927 /* ProfileEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditController.swift; sourceTree = "<group>"; };
 		D4EA5C141C13F1F4009E9927 /* ProfileRegistraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRegistraViewController.swift; sourceTree = "<group>"; };
-		D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinHistoryCell.swift; sourceTree = "<group>"; };
-		D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinPurchaseCell.swift; sourceTree = "<group>"; };
-		D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinTransferCell.swift; sourceTree = "<group>"; };
-		D4EA5C241C13F669009E9927 /* PCoinTransferModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinTransferModel.swift; sourceTree = "<group>"; };
-		D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinUnlockedCell.swift; sourceTree = "<group>"; };
-		D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinUnlockedModel.swift; sourceTree = "<group>"; };
+		D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinHistoryCell.swift; path = ../PCoinHistoryCell.swift; sourceTree = "<group>"; };
+		D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinPurchaseCell.swift; path = ../PCoinPurchaseCell.swift; sourceTree = "<group>"; };
+		D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinTransferCell.swift; path = ../PCoinTransferCell.swift; sourceTree = "<group>"; };
+		D4EA5C241C13F669009E9927 /* PCoinTransferModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinTransferModel.swift; path = ../PCoinTransferModel.swift; sourceTree = "<group>"; };
+		D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinUnlockedCell.swift; path = ../PCoinUnlockedCell.swift; sourceTree = "<group>"; };
+		D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinUnlockedModel.swift; path = ../PCoinUnlockedModel.swift; sourceTree = "<group>"; };
 		D4EA5C271C13F669009E9927 /* PCoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinViewController.swift; sourceTree = "<group>"; };
 		D4EA5C341C14037B009E9927 /* WelcomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeController.swift; sourceTree = "<group>"; };
 		D4EA5C351C14037B009E9927 /* WelcomeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeController.xib; sourceTree = "<group>"; };
@@ -648,6 +650,27 @@
 			path = fmdb;
 			sourceTree = "<group>";
 		};
+		642452951C4CDAD2003A43C8 /* PCoinCell */ = {
+			isa = PBXGroup;
+			children = (
+				D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */,
+				D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */,
+				D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */,
+				D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */,
+			);
+			path = PCoinCell;
+			sourceTree = "<group>";
+		};
+		642452961C4CDAD2003A43C8 /* PCoinModel */ = {
+			isa = PBXGroup;
+			children = (
+				D4EA5C241C13F669009E9927 /* PCoinTransferModel.swift */,
+				D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */,
+				642452971C4CDBD1003A43C8 /* PCoinModel.swift */,
+			);
+			path = PCoinModel;
+			sourceTree = "<group>";
+		};
 		643C8BC61C4B4CB300682A60 /* ChatPopVIew */ = {
 			isa = PBXGroup;
 			children = (
@@ -903,12 +926,8 @@
 		D4EA5C201C13F669009E9927 /* PCoin */ = {
 			isa = PBXGroup;
 			children = (
-				D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */,
-				D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */,
-				D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */,
-				D4EA5C241C13F669009E9927 /* PCoinTransferModel.swift */,
-				D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */,
-				D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */,
+				642452951C4CDAD2003A43C8 /* PCoinCell */,
+				642452961C4CDAD2003A43C8 /* PCoinModel */,
 				D4EA5C271C13F669009E9927 /* PCoinViewController.swift */,
 			);
 			path = PCoin;
@@ -1611,6 +1630,7 @@
 				643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */,
 				D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */,
 				640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */,
+				642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */,
 				D4A3E1B31C3F274A00BAB190 /* MyProfilePicsCollectionViewController.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
 				D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */,

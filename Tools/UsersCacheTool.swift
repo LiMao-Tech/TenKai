@@ -10,7 +10,6 @@ import UIKit
 
 class UsersCacheTool: NSObject {
     var dbq:FMDatabaseQueue!
-    
     override init() {
         
         let databasePath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0].stringByAppendingString("/userInfo.db")
@@ -30,20 +29,27 @@ class UsersCacheTool: NSObject {
         }
     }
     
-    func updateUserInfo(dict:NSDictionary) {
+    func updateUserInfo(user:TenUser) {
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE INTO USERSINFO_\(SHARED_USER.UserIndex)(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PROFILEURL) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            let sql_insert = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PHONETYPE = ?,GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,PROFILEURL = ?,PORTRATI = ?"
             
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["UserIndex"]!,dict["UserName"]!,dict["PhoneType"]!,dict["Gender"]!,dict["Birthday"]!,dict["JoinedDate"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["ProfileUrl"]!]){                  print("修改失败")
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.PhoneType,user.Gender,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.ProfileUrl,user.Portrait!]){
+                print("修改失败")
             }
         }
     }
     
-    func upDateUsersPortrait(portrait:UIImage){
+    func upDateUsersPortrait(userIndex:Int,portrait:UIImage){
         let date = UIImagePNGRepresentation(portrait)
         let sql_update = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PORTRATI = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_update, withArgumentsInArray: [date!, SHARED_USER.UserIndex])
+            db.executeUpdate(sql_update, withArgumentsInArray: [date!, userIndex])
+        }
+    }
+    func updateUsersListType(userIndex:Int,listType:chatType){
+        let sql_update = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET LISTTYPE = ? WHERE USERINDEX = ?"
+        dbq.inDatabase { (db) -> Void in
+            db.executeUpdate(sql_update, withArgumentsInArray: [listType.rawValue, userIndex])
         }
     }
     

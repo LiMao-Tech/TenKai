@@ -9,6 +9,8 @@
 
 import UIKit
 
+var chatLock = false
+
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var userChatActive = [TenUser]()
@@ -31,6 +33,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // userList.reloadData()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    override func viewWillAppear(animated: Bool) {
+        separateUser()
+        self.userList.reloadData()
+    }
     
     func separateUser(){
         userChatActive.removeAll()
@@ -41,7 +47,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }else{
                 userChatActive.append(uc)
             }
-
         }
     }
     
@@ -89,14 +94,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let sVC = SingleChatController()
-        if(modelType == .Active){
-            sVC.tenUser = userChatActive[indexPath.row]
+        if(!chatLock){
+            let sVC = SingleChatController()
+            if(modelType == .Active){
+                sVC.tenUser = userChatActive[indexPath.row]
+            }else{
+                sVC.tenUser = userChatInActive[indexPath.row]
+                chatLock = true
+            }
+            self.navigationController?.pushViewController(sVC, animated: true)
+            self.userList.deselectRowAtIndexPath(indexPath, animated: true)
         }else{
-            sVC.tenUser = userChatInActive[indexPath.row]
+            
         }
-        self.navigationController?.pushViewController(sVC, animated: true)
-        self.userList.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     

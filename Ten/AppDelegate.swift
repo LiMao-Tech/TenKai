@@ -169,9 +169,9 @@ class AppDelegate: UIResponder,
                 }
                 let messageFrame = SingleChatMessageFrame()
                 let msgType = info["MsgType"] as! Int
-                if( msgType != 1){
+                if( msgType == 0){
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
-                }else{
+                }else if(msgType == 1){
                     let tempMessage = SingleChatMessage(dict: info as! NSDictionary)
                     AFNetworkTools.getImageMethod(tempMessage.MsgContent, success: { (task, response) -> Void in
                         print("message Image download Success")
@@ -186,6 +186,10 @@ class AppDelegate: UIResponder,
                             print("message Image download Failed")
                              print(error.localizedDescription)
                     })
+                }else{
+                    messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
+                    SHARED_USER.PCoin += Double(messageFrame.chatMessage.MsgContent)!
+                    UserCacheTool().upDateUserPCoin()
                 }
                 
                 if(!UserChatModel.allChats().userIndex.contains(senderIndex)){

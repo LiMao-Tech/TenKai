@@ -14,7 +14,10 @@ import AFNetworking
 class WelcomeController: UIViewController,UITextFieldDelegate {
     
     var cancelAction: UIAlertAction?
-
+    //忘记密码
+    @IBAction func forgetPassword(sender: AnyObject) {
+        print("forgotPassword")
+    }
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     
@@ -91,6 +94,10 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         passwordTF.returnKeyType = .Done
         passwordTF.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
         
+        splitView = UIView(frame: CGRectMake(0,63,SCREEN_WIDTH,1))
+        splitView.backgroundColor = UIColor.whiteColor()
+        splitView.alpha = 0.6
+        self.view.addSubview(splitView)
     }
     
     func doneClicked(){

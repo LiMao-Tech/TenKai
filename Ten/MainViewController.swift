@@ -203,11 +203,18 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                     self.presentViewController(insufficientAlert, animated: true, completion: nil)
                 }else{
                     //同步服务器数据，获得相应的等级
-                    SHARED_USER.Average = sender.level
-//                    AFNetworkTools.putMethod(PCoinUrl, parameters: , success: { (task, response) -> Void in
-//                        SHARED_USER.PCoin -= Double(sender.level*10)
-//                        }, failure: { (task, error) -> Void in
-//                    })
+                    AFNetworkTools.putMethod(UserUrl, parameters:["id":SHARED_USER] , success: { (task, response) -> Void in
+                        SHARED_USER.Average = sender.level
+                        SHARED_USER.PCoin -= Double(sender.level*10)
+                        UserCacheTool().upDateUserPCoin()
+                        }, failure: { (task, error) -> Void in
+                            print("put pcoin error:")
+                            print(error.localizedDescription)
+                            let insufficientAlert = UIAlertController(title: "解锁失败", message: "请检查网络连接是否通畅", preferredStyle: .Alert)
+                            let cancel = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                            insufficientAlert.addAction(cancel)
+                            self.presentViewController(insufficientAlert, animated: true, completion: nil)
+                    })
                 }
                 
             })

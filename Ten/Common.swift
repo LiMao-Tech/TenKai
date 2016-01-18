@@ -41,7 +41,7 @@ let PhotosUrl = HomeUrl + "TenImage/UploadPhotos/"
 let PictureUrl = HomeUrl + "TenImage/SendImage/"
 let getPortraitUrl = HomeUrl + "TenImage?id="
 
-let DeviceTokenUrl = ""
+let raterUrl = ApiUrl + "Rater/"
 
 let MinBarValue : Float = 0
 let MaxBarValue : Float = 10

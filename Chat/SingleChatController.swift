@@ -186,7 +186,7 @@ class SingleChatController : UIViewController,
     
     // 点击加号按钮
     func addBtnClicked(){
-       let actionsheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Attach Photo", "Transfer P Coin")
+       let actionsheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "相   册", "赠送P币")
         actionsheet.showInView(self.view)
     }
     
@@ -428,9 +428,6 @@ class SingleChatController : UIViewController,
     }
     
     func setup(){
-        let background = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
-        background.image = UIImage(named: "bg_chat_")
-        self.view.backgroundColor = UIColor.clearColor()
         faceView = GTFaceView(faceDelegateTemp:self)
         
         bottom = UIView(frame: CGRectMake(0, SCREEN_HEIGHT-44, SCREEN_WIDTH, 44))
@@ -485,9 +482,27 @@ class SingleChatController : UIViewController,
     }
     //delegete funcs for scoreView
     func scoreViewOkBtnClicked() {
-        scoreView!.removeFromSuperview()
+        let score = Int((scoreView?.scoreSlider.value)!)
         //post new score of the other person
-        self.navigationController?.popViewControllerAnimated(true)
+        let params = ["RaterIndex": SHARED_USER.UserIndex,
+            "UserIndex": tenUser.UserIndex,
+            "OuterScore": -1,
+            "InnerScore": score,
+            "Energy": -1,
+            "Active": true]
+        AFNetworkTools.postMethod(raterUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                self.tenUser.listType = .Active
+                UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
+                self.navigationController?.popViewControllerAnimated(true)
+                self.scoreView!.removeFromSuperview()
+            },failure: { (task, error) -> Void in
+                print("post rater error:")
+                print(error.localizedDescription)
+                let scoreFailed = UIAlertController(title: "评分失败", message: "请重评分，以解锁锁定状态", preferredStyle: .Alert)
+                let failAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Destructive, handler: nil)
+                scoreFailed.addAction(failAction)
+                self.presentViewController(scoreFailed, animated: true, completion: nil)
+        })
     }
     
     func scoreViewCancelBtnClicked() {
@@ -500,8 +515,68 @@ class SingleChatController : UIViewController,
     }
     //delegete funcs for PCoinTransView
     func PCoinTransViewOkBtnClicked() {
-        pcoinView!.removeFromSuperview()
-        pcoinView!.isShow = false
+        if(!pcoinView!.pcoinTF.text!.isEmpty){
+            //赠送pcoin
+                let pcoinAmount = Double(pcoinView!.pcoinTF.text!)
+                if(pcoinAmount == 0){
+                    print("pcoin = 0")
+                    return
+                }
+                print("transpcoin start")
+                if(pcoinAmount > SHARED_USER.PCoin){
+                    print("pcoin less")
+                    let pcoinTransFail = UIAlertController(title: "赠送失败", message: "没有足够的P币，请购买", preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "购买", style: UIAlertActionStyle.Destructive, handler:{ (ac) -> Void in
+                        let pVC = PCoinViewController()
+                        self.navigationController?.pushViewController(pVC, animated: true)
+                    })
+                    let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
+                    pcoinTransFail.addAction(okAction)
+                    pcoinTransFail.addAction(cancelAction)
+                    self.presentViewController(pcoinTransFail, animated: true, completion: nil)
+                    return
+                }
+                let params:[String:AnyObject] = ["Sender": SHARED_USER.UserIndex,
+                    "Receiver": tenUser.UserIndex,
+                    "PhoneType": SHARED_USER.PhoneType,
+                    "Amount": pcoinAmount!,
+                    "TransTime": NSDate().description]
+                AFNetworkTools.postMethod(PCoinUrl, parameters: params, success: { (task, response) -> Void in
+                    let chatFrame = SingleChatMessageFrame()
+                    let message = SingleChatMessage()
+                    message.Sender = SHARED_USER.UserIndex
+                    message.Receiver = self.tenUser.UserIndex
+                    message.MsgType = 2
+                    var msgs = UserChatModel.allChats().message[self.tenUser.UserIndex]
+                    if(msgs!.count > 0){
+                        message.MsgIndex = (msgs?.last?.chatMessage.MsgIndex)! + 1
+                    }
+                    message.MsgContent = String(pcoinAmount!)
+                    chatFrame.chatMessage = message
+                    msgs?.append(chatFrame)
+                    MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
+                    SHARED_USER.PCoin -= pcoinAmount!
+                    UserCacheTool().upDateUserPCoin()
+                    self.pcoinView!.removeFromSuperview()
+                    self.pcoinView!.isShow = false
+                }, failure: { (task, error) -> Void in
+                    print("pcoin trans error:")
+                    print(error.localizedDescription)
+                    let pcoinTransFail = UIAlertController(title: "赠送失败", message: "请重新尝新赠送P币", preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Destructive, handler: nil)
+                    pcoinTransFail.addAction(okAction)
+                    self.presentViewController(pcoinTransFail, animated: true, completion: nil)
+
+            })
+            
+        }else{
+            let emptyPcoin = UIAlertController(title: "赠送P币", message: "请输入P币数量", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Destructive, handler: nil)
+            emptyPcoin.addAction(okAction)
+            self.presentViewController(emptyPcoin, animated: true, completion: nil)
+            
+        }
+        
     }
     
     func PCoinTransViewCancelBtnClicked() {
@@ -517,7 +592,7 @@ class SingleChatController : UIViewController,
             scoreView!.delegate = self
             self.view.addSubview(scoreView!)
         }else{
-            self.navigationController?.popToViewController(self, animated: true)
+            self.navigationController?.popViewControllerAnimated(true)
         }
     }
     

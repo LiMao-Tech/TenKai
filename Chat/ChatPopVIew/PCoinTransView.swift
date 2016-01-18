@@ -80,6 +80,7 @@ class PCoinTransView: UIView {
         pcoinTF.backgroundColor = UIColor.whiteColor()
         pcoinTF.leftViewMode = .Always
         pcoinTF.leftView = UIView(frame: CGRectMake(0,0,3,30))
+        pcoinTF.keyboardType = .NumberPad
         contentView.addSubview(pcoinTF)
         y = CGRectGetMaxY(pcoinImage.frame) + 10
         let splitLine = UIView(frame: CGRectMake(0,y,contentL,1))
