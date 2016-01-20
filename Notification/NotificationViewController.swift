@@ -129,7 +129,7 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         self.view.addSubview(infoList)
         
         selectedBtn = itemSystem
-        self.view.backgroundColor = BG_COLOR
+        self.view.backgroundColor = COLOR_BG
 
     }
     /*

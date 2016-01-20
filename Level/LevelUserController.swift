@@ -23,7 +23,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
         userList.dataSource = self
         userList.delegate = self
         userList.separatorStyle = .None
-        userList.backgroundColor = BG_COLOR
+        userList.backgroundColor = COLOR_BG
         self.view.addSubview(userList)
 
     }

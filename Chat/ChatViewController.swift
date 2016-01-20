@@ -161,7 +161,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.view.addSubview(tabView)
         self.view.addSubview(userList)
-        self.view.backgroundColor = BG_COLOR
+        self.view.backgroundColor = COLOR_BG
         
         selectedBtn = itemActive
     }

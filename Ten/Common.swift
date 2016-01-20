@@ -32,16 +32,16 @@ let LoginUrl = ApiUrl + "TenLogins"
 let UserUrl = ApiUrl + "TenUsers"
 let MsgUrl = ApiUrl + "TenMsgs"
 let PCoinUrl = ApiUrl + "PCoinTrans/"
+let RaterUrl = ApiUrl + "Rater/"
 
 let ImagesJSONUrl = HomeUrl + "TenImage/GetImagesByUser?id="
 let ImageUrl = HomeUrl + "TenImage?id="
 
 let HeadImageUrl = HomeUrl + "TenImage/UploadProfileImage/"
 let PhotosUrl = HomeUrl + "TenImage/UploadPhotos/"
-let PictureUrl = HomeUrl + "TenImage/SendImage/"
 let getPortraitUrl = HomeUrl + "TenImage?id="
 
-let raterUrl = ApiUrl + "Rater/"
+let DeviceTokenUrl = ""
 
 let MinBarValue : Float = 0
 let MaxBarValue : Float = 10
@@ -82,7 +82,12 @@ let NotificationTitle = "通知"
 let RandomTitle = "随机用户"
 
 //Colors
-let BG_COLOR = UIColor(red: 29.0/255.0, green: 29.0/255.0, blue: 29.0/255.0, alpha: 1.0)
-let NAV_BAR_COLOR = UIColor(red: 25.0/255.0, green: 25.0/255.0, blue: 25.0/255.0, alpha: 1.0)
-let ORANGE_COLOR = UIColor(red: 255.0/255.0, green: 90.0/255.0, blue: 85.0/255.0, alpha: 1.0) //ff5a55
-let WHITEGRAY_COLOR = UIColor(red: 95.0/255.0, green: 95.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+let COLOR_BG = UIColor(red: 29.0/255.0, green: 29.0/255.0, blue: 29.0/255.0, alpha: 1.0)
+let COLOR_NAV_BAR = UIColor(red: 25.0/255.0, green: 25.0/255.0, blue: 25.0/255.0, alpha: 1.0)
+let COLOR_ORANGE = UIColor(red: 255.0/255.0, green: 90.0/255.0, blue: 85.0/255.0, alpha: 1.0) //ff5a55
+let COLOR_WHITEGRAY = UIColor(red: 95.0/255.0, green: 95.0/255.0, blue: 95.0/255.0, alpha: 1.0)
+
+// Profile Pics
+
+let BLOCK_DIM = SCREEN_WIDTH/4
+

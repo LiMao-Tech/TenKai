@@ -10,13 +10,16 @@ import UIKit
 import AlamofireImage
 import SwiftyJSON
 
-private let InitialBlockPixelSize : Int = 75
-
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var nameAgeLabel: UILabel!
+    @IBOutlet weak var maskImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
     
+    @IBOutlet weak var levelBarImageView: UIImageView!
+    @IBOutlet weak var levelCircleImageView: UIImageView!
+    @IBOutlet weak var separatorImageView: UIImageView!
     @IBOutlet weak var pcoindistanceImageView: UIImageView!
     @IBOutlet weak var pcoindistanceLabel: UILabel!
     
@@ -24,7 +27,6 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     
     @IBOutlet weak var quoteLabel: UILabel!
-    
     @IBOutlet weak var scoreLabel: UILabel!
     
     var userID: Int!
@@ -35,27 +37,28 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.getProfileImage()
+        getProfileImage()
         
-
+        
         self.title = ProfileTitle
-        self.view.backgroundColor = BG_COLOR
-
+        self.view.backgroundColor = COLOR_BG
+        
         // add Image Button
         let addImageBtn = UIBarButtonItem(title: "相簿", style: .Plain, target: self, action: "pushPictureCollectionView")
         self.navigationItem.rightBarButtonItem = addImageBtn
         
+        // get level images
+        self.separatorImageView.backgroundColor = UIColor.whiteColor()
+        
         // gradient mask
-        gradientMask.colors = [WHITEGRAY_COLOR .CGColor, WHITEGRAY_COLOR .CGColor, UIColor.clearColor().CGColor,]
-        gradientMask.frame = profileImageView.bounds
-        profileImageView.layer.mask = gradientMask;
+        gradientMask.colors = [COLOR_BG.CGColor, UIColor.clearColor().CGColor]
+        gradientMask.frame = maskImageView.bounds
+        maskImageView.layer.mask = gradientMask;
     }
     
     override func viewWillAppear(animated: Bool) {
         // update profile picture
         self.navigationController!.navigationBar.translucent = false
-        
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -65,8 +68,6 @@ class ProfileViewController: UIViewController {
     func pushPictureCollectionView() {
         // virtual
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -82,7 +83,6 @@ class ProfileViewController: UIViewController {
                 
                 self.imagesJSON = (values as? [AnyObject])!
                 
-                
                 for obj in self.imagesJSON! {
                     let imageJSON = JSON(obj as! [String: AnyObject])
                     let imageType = imageJSON["ImageType"].intValue
@@ -91,8 +91,6 @@ class ProfileViewController: UIViewController {
                         let targetUrl = ImageUrl + imageIndex
                         ALAMO_MANAGER.request(.GET, targetUrl)
                             .responseImage { response in
-                                debugPrint(response)
-                                
                                 if let image = response.result.value {
                                     self.profileImageView.image = image
                                 }

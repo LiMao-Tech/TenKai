@@ -26,7 +26,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         super.viewDidLoad()
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named:"navBar_pcoin"), forBarMetrics: .Default)
         self.title = PcoinTitle
-        self.view.backgroundColor = BG_COLOR
+        self.view.backgroundColor = COLOR_BG
         //topview
         topView = UIView(frame: CGRectMake(0, 64, SCREEN_WIDTH, TAP_BAR_HEIGHT))
         let len = SCREEN_WIDTH/4

@@ -72,7 +72,7 @@ class RegistProfileViewController: UIViewController,
         
         SHARED_PICKER.picker.delegate = self
         SHARED_PICKER.picker.allowsEditing = true
-        self.view.backgroundColor = BG_COLOR
+        self.view.backgroundColor = COLOR_BG
         self.title = ProfileTitle
         
         let titleView = UIView(frame: CGRectMake(0,0,SCREEN_WIDTH,63))
@@ -163,7 +163,7 @@ class RegistProfileViewController: UIViewController,
         hobby.textColor = UIColor.whiteColor()
         hobby.font = UIFont(name: FONTNAME_NORMAL, size: 15)
         hobby.placeholder = "e.g. Music"
-        hobby.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
+        hobby.setValue(COLOR_WHITEGRAY, forKeyPath: "_placeholderLabel.textColor")
 
         let hobbyLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(hobby.frame)+2, lineLength, 1))
         hobbyLine.backgroundColor = UIColor.whiteColor()
@@ -178,7 +178,7 @@ class RegistProfileViewController: UIViewController,
         statusDetail.delegate = self
         placeHolder = UILabel(frame: CGRectMake(5, 5, lineLength-5, 20))
         placeHolder.text = "有很多要说。。。"
-        placeHolder.textColor = WHITEGRAY_COLOR
+        placeHolder.textColor = COLOR_WHITEGRAY
         placeHolder.font = UIFont.systemFontOfSize(15)
         self.statusDetail.addSubview(placeHolder)
         
@@ -350,7 +350,7 @@ class RegistProfileViewController: UIViewController,
         let resultLabel = UILabel(frame: CGRectMake(posX, posY, labelWidth, labelHeight))
         resultLabel.text = labelText
         resultLabel.font = UIFont(name: FONTNAME_BOLD, size: 16)
-        resultLabel.textColor = ORANGE_COLOR
+        resultLabel.textColor = COLOR_ORANGE
         resultLabel.numberOfLines = 1
 
         return resultLabel
@@ -407,13 +407,10 @@ class RegistProfileViewController: UIViewController,
             "HashValue":hashResult
         ]
         AFNetworkTools.postMethod(LoginUrl, parameters: params, success: { (task, response) -> Void in
-            print("To radar Page")
-            print(response)
             let dict = response as! [String : AnyObject]
             self.tenLogin = TenLogin(loginDict: dict)
             self.postUser()
             },failure: { (task, error) -> Void in
-                print("Registration Failed.")
                 print(error.localizedDescription)
         })
     }

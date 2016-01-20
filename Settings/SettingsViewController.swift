@@ -17,7 +17,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
         super.viewDidLoad()
 
         self.title = SettingTitle
-        self.view.backgroundColor = BG_COLOR
+        self.view.backgroundColor = COLOR_BG
         settingList = UITableView(frame: CGRectMake(30, 0, SCREEN_WIDTH - 60, 324))
         settingList.dataSource = self
         settingList.delegate = self

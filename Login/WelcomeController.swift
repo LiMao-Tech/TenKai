@@ -80,19 +80,19 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             self.unmatchedLB.hidden = true
         }
         
-        self.view.backgroundColor = BG_COLOR
+        self.view.backgroundColor = COLOR_BG
         
         emailTF.textColor = UIColor.whiteColor()
         emailTF.backgroundColor = UIColor.blackColor()
         emailTF.delegate = self
         emailTF.returnKeyType = .Done
-        emailTF.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
+        emailTF.setValue(COLOR_WHITEGRAY, forKeyPath: "_placeholderLabel.textColor")
         
         passwordTF.textColor = UIColor.whiteColor()
         passwordTF.backgroundColor = UIColor.blackColor()
         passwordTF.delegate = self
         passwordTF.returnKeyType = .Done
-        passwordTF.setValue(WHITEGRAY_COLOR, forKeyPath: "_placeholderLabel.textColor")
+        passwordTF.setValue(COLOR_WHITEGRAY, forKeyPath: "_placeholderLabel.textColor")
         
         splitView = UIView(frame: CGRectMake(0,63,SCREEN_WIDTH,1))
         splitView.backgroundColor = UIColor.whiteColor()

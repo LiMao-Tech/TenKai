@@ -18,6 +18,7 @@ class RandomUserController: UIViewController,
     // Declarations
     var userListView : UITableView!
     var userList = [AnyObject]()
+    var usersImagesList = [AnyObject]()
     
     // View Controls
     override func viewDidLoad() {
@@ -30,7 +31,7 @@ class RandomUserController: UIViewController,
         userListView = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
         userListView.dataSource = self
         userListView.delegate = self
-        userListView.backgroundColor = BG_COLOR
+        userListView.backgroundColor = COLOR_BG
         userListView.separatorStyle = .None
         
         self.view.addSubview(userListView)
@@ -96,6 +97,8 @@ class RandomUserController: UIViewController,
         cell.avgLabel.text = "平均 \(avg)"
         
         cell.distanceLabel.text = "距离 0"
+        
+        
         
         return cell
     }

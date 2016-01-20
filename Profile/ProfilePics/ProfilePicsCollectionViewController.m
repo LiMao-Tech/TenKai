@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "ProfilePicsCollectionViewController.h"
-#import "ProfilePicsCollectionViewCell.h"
+
 
 
 @interface ProfilePicsCollectionViewController()
@@ -254,7 +254,6 @@ static NSString *ProfilePicsJSONUrl = @"http://www.limao-tech.com/Ten/TenImage/G
     if(isAnimating) return;
     isAnimating = YES;
     
-    NSLog(@"Returned");
     [self.lmCollectionView performBatchUpdates:^{
         NSInteger index = indexPath.row;
         [self.numbers insertObject:@(++Num) atIndex:index];

@@ -490,7 +490,7 @@ class SingleChatController : UIViewController,
             "InnerScore": score,
             "Energy": -1,
             "Active": true]
-        AFNetworkTools.postMethod(raterUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFNetworkTools.postMethod(RaterUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 self.tenUser.listType = .Active
                 UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
                 self.navigationController?.popViewControllerAnimated(true)

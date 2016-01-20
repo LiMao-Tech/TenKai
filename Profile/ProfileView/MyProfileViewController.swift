@@ -15,10 +15,12 @@ class MyProfileViewController: ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        nameAgeLabel.text = SHARED_USER.UserName
+        nameLabel.text = SHARED_USER.UserName
+        ageLabel.text = SHARED_USER.Birthday
         pcoindistanceLabel.text = String(SHARED_USER.PCoin)
         
+        self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l1")
+        self.levelBarImageView.backgroundColor = UIColor.whiteColor()
         
         self.scoreLabel.text = "内在: \(SHARED_USER.InnerScore)   外在: \(SHARED_USER.OuterScore)   能量： \(SHARED_USER.Energy)"
         quoteLabel.text = SHARED_USER.Quote
@@ -38,10 +40,6 @@ class MyProfileViewController: ProfileViewController {
         else {
             self.locationLabel.text = "未知"
         }
-        
-        
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,8 +50,11 @@ class MyProfileViewController: ProfileViewController {
     
     
     override func pushPictureCollectionView() {
-        let pPCVC = MyProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: TOOL_BAR_HEIGHT, userId: self.userID)
+        let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
+        if self.imagesJSON != nil {
+            pPCVC.imagesJSON = self.imagesJSON
+            self.navigationController?.pushViewController(pPCVC, animated: true)
+        }
         
-        self.navigationController?.pushViewController(pPCVC, animated: true)
     }
 }

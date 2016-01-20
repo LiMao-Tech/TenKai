@@ -40,8 +40,7 @@ class OtherProfileViewController: ProfileViewController {
     }
     
     override func pushPictureCollectionView() {
-        let pPCVC = MyProfilePicsCollectionViewController(height: SCREEN_HEIGHT, width: SCREEN_WIDTH, toolbarHeight: 0, userId: self.userID)
-        
+        let pPCVC = OtherProfilePicsViewController()
         self.navigationController?.pushViewController(pPCVC, animated: true)
     }
 

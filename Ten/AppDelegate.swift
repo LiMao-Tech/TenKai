@@ -49,7 +49,7 @@ class AppDelegate: UIResponder,
             self.window?.rootViewController = nVC
         }
         
-        UITextField.appearance().tintColor = ORANGE_COLOR
+        UITextField.appearance().tintColor = COLOR_ORANGE
         print(UUID)
         
         //----------------- remote notification started ----------------------//

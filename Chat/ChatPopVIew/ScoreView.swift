@@ -50,7 +50,7 @@ class ScoreView: UIView {
         contentView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
         contentView.layer.cornerRadius = 7.0
         contentView.layer.masksToBounds = true
-        contentView.backgroundColor = BG_COLOR
+        contentView.backgroundColor = COLOR_BG
         self.addSubview(contentView)
         nameLabel = UILabel(frame: CGRectMake(0,10,contentL,20))
         nameLabel.textAlignment = .Center

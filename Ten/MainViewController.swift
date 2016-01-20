@@ -44,8 +44,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         
         self.navigationController?.navigationBar.barStyle = .Black
 
-        self.navigationController?.navigationBar.backgroundColor = NAV_BAR_COLOR
-        self.view.backgroundColor = BG_COLOR
+        self.navigationController?.navigationBar.backgroundColor = COLOR_NAV_BAR
+        self.view.backgroundColor = COLOR_BG
         print(SHARED_USER.UserIndex)
         
         SHARED_USER.addObserver(self, forKeyPath: "PortraitImage", options: .New, context: nil)
@@ -246,7 +246,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func menuButtonAction() {
         self.view.addSubview(self.circularMenuVC.view)
-        self.circularMenuVC.view.backgroundColor = BG_COLOR
+        self.circularMenuVC.view.backgroundColor = COLOR_BG
         circularMenuVC.show()
     }
     func randomButtonAction() {
