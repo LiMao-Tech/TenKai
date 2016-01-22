@@ -37,7 +37,8 @@ let RaterUrl = ApiUrl + "Rater/"
 let ImagesJSONUrl = HomeUrl + "TenImage/GetImagesByUser?id="
 let ImageUrl = HomeUrl + "TenImage?id="
 
-let HeadImageUrl = HomeUrl + "TenImage/UploadProfileImage/"
+let HeadImageGetUrl = HomeUrl + "TenImage/GetProfileByUser?userIndex="
+let HeadImageUploadUrl = HomeUrl + "TenImage/UploadProfileImage/"
 let PhotosUrl = HomeUrl + "TenImage/UploadPhotos/"
 let getPortraitUrl = HomeUrl + "TenImage?id="
 

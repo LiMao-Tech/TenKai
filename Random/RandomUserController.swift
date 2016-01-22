@@ -84,6 +84,15 @@ class RandomUserController: UIViewController,
         let cell = RandomAndLevelUserCell()
         let user = JSON(userList[indexPath.row] as! [String: AnyObject])
         
+        let imageIndex = user["UserIndex"].stringValue
+        let targetUrl = HeadImageGetUrl + imageIndex
+        ALAMO_MANAGER.request(.GET, targetUrl)
+            .responseImage { response in
+                if let image = response.result.value {
+                    cell.headImage.setImage(image, forState: .Normal)
+                }
+        }
+        
         cell.nameLabel.text = user["UserName"].stringValue
         
         let inner = user["InnerScore"].intValue

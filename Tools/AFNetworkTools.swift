@@ -73,7 +73,7 @@ class AFNetworkTools: NSObject {
         sharedInstance.responseSerializer = AFHTTPResponseSerializer()
         
         let picName = Tools.getFileNameTime(NSDate())+".png"
-        sharedInstance.POST(HeadImageUrl, parameters: parameters, constructingBodyWithBlock: { (data) -> Void in
+        sharedInstance.POST(HeadImageUploadUrl, parameters: parameters, constructingBodyWithBlock: { (data) -> Void in
             data.appendPartWithFileData(image, name: "upload", fileName: picName, mimeType: "image/png")
             }, progress: nil, success: { (task, response) -> Void in
                 success(task,response)

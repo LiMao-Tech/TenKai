@@ -67,13 +67,13 @@
                     <rect key="frame" x="177" y="390" width="17" height="17"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宫本武藏 佐佐木小次郎  99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2c6-ww-zZJ">
-                    <rect key="frame" x="8" y="341" width="511" height="28"/>
+                    <rect key="frame" x="8" y="342" width="511" height="28"/>
                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tm8-lY-h9P">
-                    <rect key="frame" x="521" y="341" width="71" height="28"/>
+                    <rect key="frame" x="521" y="342" width="71" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="71" id="TPp-c6-tUr"/>
                     </constraints>
@@ -82,23 +82,23 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EPi-vc-5gw">
-                    <rect key="frame" x="512" y="332" width="1" height="45"/>
+                    <rect key="frame" x="512" y="333" width="1" height="45"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="JXe-JH-ePp"/>
                         <constraint firstAttribute="height" constant="45" id="V9i-Be-lOL"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gW1-dY-guE">
-                    <rect key="frame" x="0.0" y="377" width="600" height="5"/>
+                    <rect key="frame" x="0.0" y="378" width="600" height="4"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="5" id="P4M-hj-M88"/>
+                        <constraint firstAttribute="height" constant="4" id="P4M-hj-M88"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_profile_circle_l1" translatesAutoresizingMaskIntoConstraints="NO" id="C46-1E-HyY">
-                    <rect key="frame" x="485" y="345" width="19" height="19"/>
+                    <rect key="frame" x="485" y="346" width="19" height="19"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9n7-l3-HXi">
-                    <rect key="frame" x="0.0" y="332" width="600" height="174"/>
+                    <rect key="frame" x="0.0" y="333" width="600" height="173"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

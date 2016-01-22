@@ -51,10 +51,6 @@ class MyProfileViewController: ProfileViewController {
     
     override func pushPictureCollectionView() {
         let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
-        if self.imagesJSON != nil {
-            pPCVC.imagesJSON = self.imagesJSON
             self.navigationController?.pushViewController(pPCVC, animated: true)
-        }
-        
     }
 }

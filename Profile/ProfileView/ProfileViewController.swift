@@ -30,7 +30,6 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     
     var userID: Int!
-    var imagesJSON : [AnyObject]?
     
     let gradientMask = CAGradientLayer()
     
@@ -54,6 +53,10 @@ class ProfileViewController: UIViewController {
         gradientMask.colors = [COLOR_BG.CGColor, UIColor.clearColor().CGColor]
         gradientMask.frame = maskImageView.bounds
         maskImageView.layer.mask = gradientMask;
+        
+        // level colors
+        let avg = round((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2)
+        self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -75,29 +78,13 @@ class ProfileViewController: UIViewController {
     }
     
     private func getProfileImage() -> Void {
-        // Get Image JSON
-        let targetUrl = ImagesJSONUrl + String(self.userID)
-        ALAMO_MANAGER.request(.GET, targetUrl, encoding: .JSON) .responseJSON { response in
-            
-            if let values = response.result.value {
-                
-                self.imagesJSON = (values as? [AnyObject])!
-                
-                for obj in self.imagesJSON! {
-                    let imageJSON = JSON(obj as! [String: AnyObject])
-                    let imageType = imageJSON["ImageType"].intValue
-                    if imageType == 0 {
-                        let imageIndex = imageJSON["ID"].stringValue
-                        let targetUrl = ImageUrl + imageIndex
-                        ALAMO_MANAGER.request(.GET, targetUrl)
-                            .responseImage { response in
-                                if let image = response.result.value {
-                                    self.profileImageView.image = image
-                                }
-                        }
-                    }
+        let imageIndex = String(userID)
+        let targetUrl = HeadImageGetUrl + imageIndex
+        ALAMO_MANAGER.request(.GET, targetUrl)
+            .responseImage { response in
+                if let image = response.result.value {
+                    self.profileImageView.image = image
                 }
-            }
         }
     }
 }

@@ -456,7 +456,7 @@ class RegistProfileViewController: UIViewController,
             SHARED_USER.Portrait = image!
             let params : NSDictionary = ["id": SHARED_USER.UserIndex]
             
-            AFNetworkTools.postHeadImage(HeadImageUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            AFNetworkTools.postHeadImage(HeadImageUploadUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("post Image")
                 print(response)
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
