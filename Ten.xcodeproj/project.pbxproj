@@ -51,9 +51,6 @@
 		D45D81E01C4F75160035A213 /* MyProfilePicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45D81D81C4F75160035A213 /* MyProfilePicsViewController.xib */; };
 		D45D81E11C4F75160035A213 /* OtherProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D81D91C4F75160035A213 /* OtherProfilePicsViewController.swift */; };
 		D45D81E21C4F75160035A213 /* OtherProfilePicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45D81DA1C4F75160035A213 /* OtherProfilePicsViewController.xib */; };
-		D45D81E41C4F75160035A213 /* ProfilePicsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D81DC1C4F75160035A213 /* ProfilePicsViewCell.swift */; };
-		D45D81E51C4F75160035A213 /* ProfilePicsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45D81DD1C4F75160035A213 /* ProfilePicsViewCell.xib */; };
-		D45D81E61C4F75160035A213 /* ProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D81DE1C4F75160035A213 /* ProfilePicsViewController.swift */; };
 		D45D81EA1C4F8B2B0035A213 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45D81E91C4F8B2B0035A213 /* ProfileViewController.xib */; };
 		D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46894561C36D7CA004922EF /* LoginCacheTool.swift */; };
 		D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348D1BE9E26500F49D63 /* TenLogin.swift */; };
@@ -61,6 +58,9 @@
 		D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF991C40590700B48C48 /* LMImagePicker.swift */; };
 		D4A5EF9C1C40765200B48C48 /* SharedInstances.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */; };
 		D4C236C31C42097400740FA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C236C11C42097400740FA7 /* ProfileViewController.swift */; };
+		D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA2B331C53D03E00A52829 /* ProfilePicsViewController.swift */; };
+		D4EA2B371C53D05E00A52829 /* ProfilePicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */; };
+		D4EA2B381C53D05E00A52829 /* ProfilePicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */; };
 		D4EA5BD51C13E787009E9927 /* ADCircularMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BD41C13E787009E9927 /* ADCircularMenuViewController.m */; };
 		D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BE51C13E8C5009E9927 /* Common.swift */; };
 		D4EA5BEB1C13E98E009E9927 /* LockView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BEA1C13E98E009E9927 /* LockView.m */; };
@@ -366,9 +366,6 @@
 		D45D81D81C4F75160035A213 /* MyProfilePicsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyProfilePicsViewController.xib; sourceTree = "<group>"; };
 		D45D81D91C4F75160035A213 /* OtherProfilePicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfilePicsViewController.swift; sourceTree = "<group>"; };
 		D45D81DA1C4F75160035A213 /* OtherProfilePicsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfilePicsViewController.xib; sourceTree = "<group>"; };
-		D45D81DC1C4F75160035A213 /* ProfilePicsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicsViewCell.swift; sourceTree = "<group>"; };
-		D45D81DD1C4F75160035A213 /* ProfilePicsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePicsViewCell.xib; sourceTree = "<group>"; };
-		D45D81DE1C4F75160035A213 /* ProfilePicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicsViewController.swift; sourceTree = "<group>"; };
 		D45D81E91C4F8B2B0035A213 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		D46894561C36D7CA004922EF /* LoginCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCacheTool.swift; sourceTree = "<group>"; };
 		D481348D1BE9E26500F49D63 /* TenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLogin.swift; sourceTree = "<group>"; };
@@ -376,6 +373,9 @@
 		D4A5EF991C40590700B48C48 /* LMImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMImagePicker.swift; sourceTree = "<group>"; };
 		D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedInstances.swift; sourceTree = "<group>"; };
 		D4C236C11C42097400740FA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D4EA2B331C53D03E00A52829 /* ProfilePicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicsViewController.swift; sourceTree = "<group>"; };
+		D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicCollectionViewCell.swift; sourceTree = "<group>"; };
+		D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePicCollectionViewCell.xib; sourceTree = "<group>"; };
 		D4EA5BD31C13E787009E9927 /* ADCircularMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADCircularMenuViewController.h; sourceTree = "<group>"; };
 		D4EA5BD41C13E787009E9927 /* ADCircularMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADCircularMenuViewController.m; sourceTree = "<group>"; };
 		D4EA5BE51C13E8C5009E9927 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
@@ -947,13 +947,13 @@
 		D4EA5C451C140BD8009E9927 /* ProfilePics */ = {
 			isa = PBXGroup;
 			children = (
-				D45D81DE1C4F75160035A213 /* ProfilePicsViewController.swift */,
+				D4EA2B331C53D03E00A52829 /* ProfilePicsViewController.swift */,
 				D45D81D71C4F75160035A213 /* MyProfilePicsViewController.swift */,
 				D45D81D81C4F75160035A213 /* MyProfilePicsViewController.xib */,
 				D45D81D91C4F75160035A213 /* OtherProfilePicsViewController.swift */,
 				D45D81DA1C4F75160035A213 /* OtherProfilePicsViewController.xib */,
-				D45D81DC1C4F75160035A213 /* ProfilePicsViewCell.swift */,
-				D45D81DD1C4F75160035A213 /* ProfilePicsViewCell.xib */,
+				D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */,
+				D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */,
 			);
 			path = ProfilePics;
 			sourceTree = "<group>";
@@ -1448,7 +1448,6 @@
 				D4EA5D6D1C14252B009E9927 /* 021@2x.png in Resources */,
 				D4EA5DEC1C14252B009E9927 /* 085.png in Resources */,
 				D4EA5DAC1C14252B009E9927 /* 053.png in Resources */,
-				D45D81E51C4F75160035A213 /* ProfilePicsViewCell.xib in Resources */,
 				C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */,
 				D4EA5D811C14252B009E9927 /* 031@2x.png in Resources */,
 				C4CED3161B88FB010008BCF2 /* LaunchScreen.xib in Resources */,
@@ -1456,6 +1455,7 @@
 				D4EA5D741C14252B009E9927 /* 025.png in Resources */,
 				D4EA5DA91C14252B009E9927 /* 051@2x.png in Resources */,
 				D4EA5D681C14252B009E9927 /* 019.png in Resources */,
+				D4EA2B381C53D05E00A52829 /* ProfilePicCollectionViewCell.xib in Resources */,
 				D4EA5D841C14252B009E9927 /* 033.png in Resources */,
 				D4EA5D921C14252B009E9927 /* 040.png in Resources */,
 				D4EA5D751C14252B009E9927 /* 025@2x.png in Resources */,
@@ -1580,7 +1580,6 @@
 				D4EA5BFA1C13EA12009E9927 /* DKImagePickerController.swift in Sources */,
 				D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */,
 				D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */,
-				D45D81E41C4F75160035A213 /* ProfilePicsViewCell.swift in Sources */,
 				D4EA5C551C142321009E9927 /* SettingButton.swift in Sources */,
 				164EA74D1BB799E700446691 /* MobileInfo.swift in Sources */,
 				D4EA5BFB1C13EA12009E9927 /* DKImageResource.swift in Sources */,
@@ -1622,8 +1621,8 @@
 				6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */,
 				642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
+				D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
-				D45D81E61C4F75160035A213 /* ProfilePicsViewController.swift in Sources */,
 				D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */,
 				D45D81E11C4F75160035A213 /* OtherProfilePicsViewController.swift in Sources */,
 				D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */,
@@ -1637,6 +1636,7 @@
 				640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */,
 				642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
+				D4EA2B371C53D05E00A52829 /* ProfilePicCollectionViewCell.swift in Sources */,
 				D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */,
 				D4EA5C8C1C1424AF009E9927 /* Notification.swift in Sources */,
 				C4CED30C1B88FB010008BCF2 /* AppDelegate.swift in Sources */,

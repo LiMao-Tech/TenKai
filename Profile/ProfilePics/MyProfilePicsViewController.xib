@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyProfilePicsViewController" customModule="Ten" customModuleProvider="target">
+            <connections>
+                <outlet property="ageLabel" destination="f4D-oz-TSe" id="tYL-4m-Snd"/>
+                <outlet property="levelBarImageView" destination="DpT-yK-9bp" id="S6s-el-byJ"/>
+                <outlet property="levelCircleImageVIew" destination="0C2-2C-yaR" id="045-Kb-odc"/>
+                <outlet property="lmCollectionView" destination="L6N-g4-OIW" id="3E4-lf-2a6"/>
+                <outlet property="nameLabel" destination="9A9-MR-jzt" id="Zef-Aw-7B9"/>
+                <outlet property="topSeparator" destination="yqy-hQ-pYL" id="EqZ-BR-jt2"/>
+                <outlet property="verticalSeparator" destination="sd2-hD-ZW4" id="Cqd-97-m8q"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="94" width="600" height="506"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="flB-b6-bCV">
+                    <rect key="frame" x="0.0" y="462" width="600" height="44"/>
+                    <items>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="INb-8u-1pp"/>
+                        <barButtonItem image="btn_tabBarIcon_option" id="oce-gK-aHE">
+                            <connections>
+                                <action selector="optionBarBtn:" destination="-1" id="mqw-G6-DF0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="kgB-Bc-ANg"/>
+                        <barButtonItem image="btn_tabBarIcon_unlock" id="Tn5-w5-dbl">
+                            <connections>
+                                <action selector="unlockBarBtn:" destination="-1" id="NdQ-8g-3ox"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="e5t-RU-LhM"/>
+                        <barButtonItem image="btn_tabBarIcon_lock" id="V9E-0f-CKz">
+                            <connections>
+                                <action selector="lockBarBtn:" destination="-1" id="nFg-NX-tfB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Xn0-8j-1QE"/>
+                        <barButtonItem image="btn_tabBarIcon_delete" id="q9A-rt-0SY">
+                            <connections>
+                                <action selector="deleteBarBtn:" destination="-1" id="L0j-tX-fC0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Kcb-aA-FS1"/>
+                    </items>
+                </toolbar>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_profile_circle_l1" translatesAutoresizingMaskIntoConstraints="NO" id="0C2-2C-yaR">
+                    <rect key="frame" x="503" y="7" width="19" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="19" id="bJY-Qj-6lV"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9A9-MR-jzt">
+                    <rect key="frame" x="8" y="6" width="487" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="L6N-g4-OIW">
+                    <rect key="frame" x="0.0" y="34" width="600" height="428"/>
+                    <collectionViewLayout key="collectionViewLayout" id="fwF-n5-NRs" customClass="LMCollectionViewLayout"/>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4D-oz-TSe">
+                    <rect key="frame" x="539" y="7" width="53" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="53" id="BHC-aw-fZY"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yqy-hQ-pYL">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sd2-hD-ZW4">
+                    <rect key="frame" x="530" y="2" width="1" height="31"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="jjU-uF-auV"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DpT-yK-9bp">
+                    <rect key="frame" x="0.0" y="29" width="600" height="4"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="DpT-yK-9bp" firstAttribute="trailing" secondItem="L6N-g4-OIW" secondAttribute="trailing" id="44B-q8-YhJ"/>
+                <constraint firstItem="yqy-hQ-pYL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6qI-D6-V6s"/>
+                <constraint firstItem="DpT-yK-9bp" firstAttribute="trailing" secondItem="yqy-hQ-pYL" secondAttribute="trailing" id="7Bp-4c-pCD"/>
+                <constraint firstItem="DpT-yK-9bp" firstAttribute="leading" secondItem="L6N-g4-OIW" secondAttribute="leading" id="7gi-eM-OgQ"/>
+                <constraint firstItem="9A9-MR-jzt" firstAttribute="top" secondItem="yqy-hQ-pYL" secondAttribute="bottom" constant="4" id="93C-JO-F5h"/>
+                <constraint firstItem="L6N-g4-OIW" firstAttribute="top" secondItem="DpT-yK-9bp" secondAttribute="bottom" constant="1" id="AUS-ls-huA"/>
+                <constraint firstItem="9A9-MR-jzt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="GNf-7a-24n"/>
+                <constraint firstItem="sd2-hD-ZW4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="2" id="Gmt-3M-aLS"/>
+                <constraint firstItem="sd2-hD-ZW4" firstAttribute="leading" secondItem="0C2-2C-yaR" secondAttribute="trailing" constant="8" symbolic="YES" id="Gtt-df-Vhz"/>
+                <constraint firstItem="sd2-hD-ZW4" firstAttribute="centerY" secondItem="f4D-oz-TSe" secondAttribute="centerY" id="JO9-ez-xPT"/>
+                <constraint firstItem="DpT-yK-9bp" firstAttribute="top" secondItem="9A9-MR-jzt" secondAttribute="bottom" constant="2" id="Q30-XZ-m9N"/>
+                <constraint firstItem="DpT-yK-9bp" firstAttribute="top" secondItem="0C2-2C-yaR" secondAttribute="bottom" constant="3" id="RZh-27-dEh"/>
+                <constraint firstItem="L6N-g4-OIW" firstAttribute="trailing" secondItem="flB-b6-bCV" secondAttribute="trailing" id="SB1-bt-rXg"/>
+                <constraint firstItem="0C2-2C-yaR" firstAttribute="top" secondItem="f4D-oz-TSe" secondAttribute="top" id="SBz-DX-6Sd"/>
+                <constraint firstItem="sd2-hD-ZW4" firstAttribute="bottom" secondItem="DpT-yK-9bp" secondAttribute="bottom" id="U34-nA-50L"/>
+                <constraint firstAttribute="bottom" secondItem="flB-b6-bCV" secondAttribute="bottom" id="UT9-Yo-87I"/>
+                <constraint firstItem="flB-b6-bCV" firstAttribute="leading" secondItem="L6N-g4-OIW" secondAttribute="leading" id="WeC-2n-pwf"/>
+                <constraint firstItem="f4D-oz-TSe" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="ZHu-45-8Fx"/>
+                <constraint firstItem="f4D-oz-TSe" firstAttribute="leading" secondItem="sd2-hD-ZW4" secondAttribute="trailing" constant="8" symbolic="YES" id="aDa-pO-ylH"/>
+                <constraint firstItem="9A9-MR-jzt" firstAttribute="centerY" secondItem="0C2-2C-yaR" secondAttribute="centerY" id="cxv-WY-OTo"/>
+                <constraint firstItem="flB-b6-bCV" firstAttribute="top" secondItem="L6N-g4-OIW" secondAttribute="bottom" id="d6y-j4-Ab2"/>
+                <constraint firstItem="yqy-hQ-pYL" firstAttribute="leading" secondItem="DpT-yK-9bp" secondAttribute="leading" id="fkU-g7-ONb"/>
+                <constraint firstItem="DpT-yK-9bp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kaf-Tv-WYm"/>
+                <constraint firstAttribute="trailing" secondItem="flB-b6-bCV" secondAttribute="trailing" id="nOf-ot-TvS"/>
+                <constraint firstItem="L6N-g4-OIW" firstAttribute="top" secondItem="0C2-2C-yaR" secondAttribute="bottom" constant="8" symbolic="YES" id="o2y-x0-uff"/>
+                <constraint firstItem="0C2-2C-yaR" firstAttribute="leading" secondItem="9A9-MR-jzt" secondAttribute="trailing" constant="8" symbolic="YES" id="qzF-h7-j2o"/>
+                <constraint firstItem="DpT-yK-9bp" firstAttribute="top" secondItem="f4D-oz-TSe" secondAttribute="bottom" constant="1" id="x0c-OQ-eeL"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO"/>
+            <point key="canvasLocation" x="264" y="317"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_tabBarIcon_delete" width="22" height="22"/>
+        <image name="btn_tabBarIcon_lock" width="22" height="22"/>
+        <image name="btn_tabBarIcon_option" width="22" height="22"/>
+        <image name="btn_tabBarIcon_unlock" width="22" height="22"/>
+        <image name="icon_profile_circle_l1" width="19" height="19"/>
+    </resources>
+</document>
