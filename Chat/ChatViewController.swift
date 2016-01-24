@@ -106,10 +106,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 NSUserDefaults.setValue(sVC.tenUser.UserIndex, forKey: "ChatFocusState")
             }
         }
-        
         if(ChatLockState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){
             let focusAlert = UIAlertController(title: "注意！", message: "还没有为你的小伙伴的内在评分", preferredStyle: .Alert)
-            let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
+                let index = NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int
+                for user in self.userChatInActive{
+                    if(user.UserIndex == index){
+                        sVC.tenUser = user
+                        self.navigationController?.pushViewController(sVC, animated: true)
+                        self.userList.deselectRowAtIndexPath(indexPath, animated: true)
+                        return
+                    }
+                }
+            })
             focusAlert.addAction(focusAction)
             self.presentViewController(focusAlert, animated: true, completion: nil)
         }else{
