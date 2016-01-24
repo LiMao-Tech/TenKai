@@ -25,6 +25,8 @@ class ProfilePicsViewController: UIViewController {
     
     var imagesJSON = [AnyObject]()
     
+    var lockMode: Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

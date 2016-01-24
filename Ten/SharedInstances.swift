@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import AlamofireImage
 import CoreLocation
 
 
@@ -20,3 +21,5 @@ let SHARED_APP = UIApplication.sharedApplication()
 let SHARED_USER = SharedUser.SharedInstance
 
 let SHARED_PICKER = LMImagePicker()
+
+let SHARED_IMAGE_CACHE = AutoPurgingImageCache()

@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+
 class MyProfilePicsViewController: ProfilePicsViewController,
                                     LMCollectionViewLayoutDelegate,
                                     UICollectionViewDataSource,
@@ -35,6 +36,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     }
 
     @IBAction func unlockBarBtn(sender: AnyObject) {
+        self.lockMode = true
         self.lmCollectionView.alpha = 0.5
     }
     
@@ -96,7 +98,16 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
     // collection view
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        magnifyCellAtIndexPath(indexPath)
+        if self.lockMode {
+            let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
+            selectedCell?.imageView.alpha = 0.5
+            lockMode = false
+            self.lmCollectionView.alpha = 1
+        }
+        else {
+            magnifyCellAtIndexPath(indexPath)
+        }
+        
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -108,16 +119,29 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         
         let obj = self.imagesJSON[indexPath.row]
         let imageJSON = JSON(obj as! [String: AnyObject])
-        let imageIndex = imageJSON["ID"].stringValue
-        let targetUrl = ImageUrl + imageIndex
-        ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
-            if let image = response.result.value {
-                cell.imageView.image = image
-            }
-            else {
-                cell.backgroundColor = COLOR_BG
+        
+        let imageName = imageJSON["FileName"].stringValue
+        let cachedImage = SHARED_IMAGE_CACHE.imageWithIdentifier(imageName)
+        
+        if let retrivedImage = cachedImage {
+            cell.imageView.image = retrivedImage
+        }
+        else {
+            let imageIndex = imageJSON["ID"].stringValue
+            let targetUrl = ImageUrl + imageIndex
+            
+            
+            ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
+                if let image = response.result.value {
+                    cell.imageView.image = image
+                    SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
+                }
+                else {
+                    cell.backgroundColor = COLOR_BG
+                }
             }
         }
+        
         return cell
     }
     
