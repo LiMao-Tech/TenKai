@@ -16,7 +16,8 @@ class SingleChatController : UIViewController,
                             UIImagePickerControllerDelegate,
                             UINavigationControllerDelegate,
                             ScoreViewDelegate,
-                            PCoinTransDelegate
+                            PCoinTransDelegate,
+                            ChatBaseCellDelegate
 {
     
     var tenUser = TenUser(){
@@ -128,9 +129,14 @@ class SingleChatController : UIViewController,
         }
         cell?.chatFrame = message
         cell?.tenUser = self.tenUser
+        cell?.delegate = self
         return cell!
     }
-    
+    //chatbasecelldelegate
+    func unlockBtnClicked(cell: ChatBaseCell) {
+        let msg = cell.chatFrame.chatMessage
+        MessageCacheTool(userIndex: tenUser.UserIndex).upDateLockState(tenUser.UserIndex, MsgIndex: msg.MsgIndex, isLock: msg.IsLocked)
+    }
     /**
     GTFaceButton代理函数
     */
@@ -493,6 +499,8 @@ class SingleChatController : UIViewController,
         AFNetworkTools.postMethod(RaterUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 self.tenUser.listType = .Active
                 UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
+                ChatFocusState = false
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("ChatFocusState")
                 self.navigationController?.popViewControllerAnimated(true)
                 self.scoreView!.removeFromSuperview()
             },failure: { (task, error) -> Void in

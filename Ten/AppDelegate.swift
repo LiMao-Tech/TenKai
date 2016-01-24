@@ -187,6 +187,7 @@ class AppDelegate: UIResponder,
                              print(error.localizedDescription)
                     })
                 }else{
+                    print("pcoin message get")
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
                     SHARED_USER.PCoin += Double(messageFrame.chatMessage.MsgContent)!
                     UserCacheTool().upDateUserPCoin()

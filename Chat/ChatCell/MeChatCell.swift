@@ -27,6 +27,9 @@ class MeChatCell: ChatBaseCell {
                 time.text = chatFrame.chatMessage.MsgTime
                 
             }
+            if(MsgIsLock){
+                lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
+            }
             let image = UIImage(named: "chat_send_nor")
             let w = image!.size.width/2
             let h = image!.size.height/2
@@ -44,6 +47,7 @@ class MeChatCell: ChatBaseCell {
         self.textView.backgroundColor = UIColor.clearColor()
         content.titleLabel?.numberOfLines = 0
         self.lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
+        lockBtn.addTarget(self, action: "lockBtnClicked", forControlEvents: .TouchUpInside)
         // Initialization code
     }
 
@@ -51,6 +55,16 @@ class MeChatCell: ChatBaseCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func lockBtnClicked(){
+        if(MsgIsLock){
+            lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
+        }else{
+            lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
+        }
+        MsgIsLock = !MsgIsLock
+        self.delegate?.unlockBtnClicked(self)
     }
     
 }

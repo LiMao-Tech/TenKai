@@ -47,6 +47,14 @@ class MessageCacheTool: NSObject {
         }
     }
     }
+    
+    func upDateLockState(userIndex:Int,MsgIndex:Int,isLock:Bool){
+        let sql_update = "UPDATE MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) SET ISLOCKED = ? WHERE MSGINDEX = ?"
+        dbq.inDatabase { (db) -> Void in
+            db.executeUpdate(sql_update, withArgumentsInArray: [isLock ? 1:0, MsgIndex])
+        }
+    }
+    
     func deleteMessageInfo(userIndex:Int,msg:SingleChatMessage){
         dbq.inTransaction({ (db, rollBack) -> Void in
             let sql_insert = "DELETE FROM MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"

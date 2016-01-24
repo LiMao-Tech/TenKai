@@ -9,7 +9,9 @@
 
 import UIKit
 
-var chatLock = false
+var ChatFocusState = false
+
+var ChatLockState = false
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -94,18 +96,25 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(!chatLock){
-            let sVC = SingleChatController()
-            if(modelType == .Active){
-                sVC.tenUser = userChatActive[indexPath.row]
-            }else{
-                sVC.tenUser = userChatInActive[indexPath.row]
-                chatLock = true
+        let sVC = SingleChatController()
+        if(modelType == .Active){
+            sVC.tenUser = userChatActive[indexPath.row]
+        }else{
+            sVC.tenUser = userChatInActive[indexPath.row]
+            if(!ChatLockState){
+                ChatFocusState = true
+                NSUserDefaults.setValue(sVC.tenUser.UserIndex, forKey: "ChatFocusState")
             }
+        }
+        
+        if(ChatLockState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){
+            let focusAlert = UIAlertController(title: "注意！", message: "还没有为你的小伙伴的内在评分", preferredStyle: .Alert)
+            let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            focusAlert.addAction(focusAction)
+            self.presentViewController(focusAlert, animated: true, completion: nil)
+        }else{
             self.navigationController?.pushViewController(sVC, animated: true)
             self.userList.deselectRowAtIndexPath(indexPath, animated: true)
-        }else{
-            
         }
     }
     

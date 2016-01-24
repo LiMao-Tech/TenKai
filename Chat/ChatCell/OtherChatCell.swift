@@ -35,13 +35,16 @@ class OtherChatCell: ChatBaseCell {
                 timeLabel.text = chatFrame.chatMessage.MsgTime
                 
             }
+            MsgIsLock = chatFrame.chatMessage.IsLocked
+            if(MsgIsLock){
+                lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
+            }
             let image = UIImage(named: "chat_recive_press_pic")
             let w = image!.size.width/2
             let h = image!.size.height/2
             let newImage = image?.resizableImageWithCapInsets(UIEdgeInsetsMake(h, w, h, w), resizingMode: UIImageResizingMode.Tile)
             context.setBackgroundImage(newImage, forState: UIControlState.Normal)
             
-
         }
     }
     
@@ -54,6 +57,7 @@ class OtherChatCell: ChatBaseCell {
         context.titleLabel?.numberOfLines = 0
                 // Initialization code
         self.lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
+        lockBtn.addTarget(self, action: "lockBtnClicked", forControlEvents: .TouchUpInside)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -62,4 +66,13 @@ class OtherChatCell: ChatBaseCell {
         // Configure the view for the selected state
     }
     
+    func lockBtnClicked(){
+        if(MsgIsLock){
+            lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
+        }else{
+            lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
+        }
+        MsgIsLock = !MsgIsLock
+        self.delegate?.unlockBtnClicked(self)
+    }
 }

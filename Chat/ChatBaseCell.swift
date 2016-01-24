@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol ChatBaseCellDelegate:class{
+    func unlockBtnClicked(cell:ChatBaseCell)
+}
+
 class ChatBaseCell: UITableViewCell {
     var chatFrame :SingleChatMessageFrame!
     var tenUser:TenUser!
+    var delegate:ChatBaseCellDelegate?
+    var MsgIsLock = false
     class func loadFromNib() -> ChatBaseCell {
         var path : NSString = NSStringFromClass(self.classForCoder())
         path = path.substringFromIndex(4)
