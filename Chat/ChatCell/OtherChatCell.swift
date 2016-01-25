@@ -38,6 +38,8 @@ class OtherChatCell: ChatBaseCell {
             MsgIsLock = chatFrame.chatMessage.IsLocked
             if(MsgIsLock){
                 lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
+            }else{
+                lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
             }
             let image = UIImage(named: "chat_recive_press_pic")
             let w = image!.size.width/2
@@ -52,7 +54,6 @@ class OtherChatCell: ChatBaseCell {
         super.awakeFromNib()
         self.selectionStyle = .None
         self.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
-        lockBtn.setImage(UIImage(named:"btn_chat_lock_25"), forState: UIControlState.Normal)
         headImage.setImage(UIImage(named: "user_pic_88"), forState: UIControlState.Normal)
         context.titleLabel?.numberOfLines = 0
                 // Initialization code
@@ -73,6 +74,7 @@ class OtherChatCell: ChatBaseCell {
             lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
         }
         MsgIsLock = !MsgIsLock
+        chatFrame.chatMessage.IsLocked = MsgIsLock
         self.delegate?.unlockBtnClicked(self)
     }
 }

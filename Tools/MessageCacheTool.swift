@@ -49,7 +49,7 @@ class MessageCacheTool: NSObject {
     }
     
     func upDateLockState(userIndex:Int,MsgIndex:Int,isLock:Bool){
-        let sql_update = "UPDATE MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) SET ISLOCKED = ? WHERE MSGINDEX = ?"
+        let sql_update = "UPDATE MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) SET ISLOCKED = ? WHERE MSGINDEX = ?"
         dbq.inDatabase { (db) -> Void in
             db.executeUpdate(sql_update, withArgumentsInArray: [isLock ? 1:0, MsgIndex])
         }
@@ -81,7 +81,7 @@ class MessageCacheTool: NSObject {
                     let msgFrame = SingleChatMessageFrame()
                     message.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
                     message.belongType = (rs.intForColumn("BELONGTYPE") == 0) ? ChatBelongType.Me : ChatBelongType.Other
-                    message.IsLocked = Int(rs.intForColumn("ISLOCKED")) == 0
+                    message.IsLocked = Int(rs.intForColumn("ISLOCKED")) == 1
                     message.messageType = ChatMessageType(rawValue: Int(rs.intForColumn("MSGTYPE")))!
                     message.MsgTime = rs.stringForColumn("MSGTIME")
                     message.MsgContent = rs.stringForColumn("MSGCONTENT")

@@ -13,7 +13,7 @@ var ChatFocusState = false
 
 var ChatLockState = false
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UserCellDelegate {
     
     var userChatActive = [TenUser]()
     var userChatInActive = [TenUser]()
@@ -38,6 +38,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(animated: Bool) {
         separateUser()
         self.userList.reloadData()
+    }
+    
+    //UserCellDelegate func
+    func menuDeleteBtnDidClicked(cell: UserCell) {
+        
+    }
+    
+    func menuInfoBtnDidClicked(cell: UserCell) {
+        
+    }
+    
+    func menuMidLockBtnDidClicked(cell: UserCell) {
+        
     }
     
     func separateUser(){
@@ -84,9 +97,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         if(modelType == .Active){
             cell?.tenUser = userChatActive[indexPath.row]
+            cell?.delegate = self
         }else{
             cell?.tenUser = userChatInActive[indexPath.row]
-            print(userChatInActive[indexPath.row].UserName)
+            cell?.delegate = self
         }
         return cell!
     }
@@ -183,4 +197,5 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         selectedBtn = itemActive
     }
+
 }
