@@ -13,7 +13,6 @@ import SwiftyJSON
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var maskImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     
@@ -51,8 +50,8 @@ class ProfileViewController: UIViewController {
         
         // gradient mask
         gradientMask.colors = [COLOR_BG.CGColor, UIColor.clearColor().CGColor]
-        gradientMask.frame = maskImageView.bounds
-        maskImageView.layer.mask = gradientMask;
+//        gradientMask.frame =
+//        maskImageView.layer.mask = gradientMask;
         
         // level colors
         let avg = round((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2)

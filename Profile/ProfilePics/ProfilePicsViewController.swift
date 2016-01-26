@@ -20,14 +20,16 @@ class ProfilePicsViewController: UIViewController {
     let layout = LMCollectionViewLayout()
     
     var isProcessing: Bool = false
+    
+    var lockMode: Bool = false
+    var unlockMode: Bool = false
+    var deleteMode: Bool = false
+    
     var numOfPics: Int = 0
     var dims: [BlockDim] = [BlockDim]()
     
     var imagesJSON = [AnyObject]()
-    
-    var lockMode: Bool = false
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "相簿"

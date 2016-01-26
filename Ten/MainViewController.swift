@@ -34,10 +34,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     let distances = [50,100,500,1000]
     var index = 0
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.hidden = true
-    }
-    
     // view loading
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,7 +107,44 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(refreshBtn)
         self.view.addSubview(distanceLabel)
         distanceChange()
+        
+        generateNodes()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = true
+        
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+    }
+    
+    func generateNodes() -> Void {
+        
+        for _ in 0 ..< 15 {
+            let x = CGFloat(drand48()) * SCREEN_WIDTH * 0.9
+            let y = (CGFloat(drand48()) * SCREEN_HEIGHT)/2 + SCREEN_HEIGHT/4
+            
+            
+            
+            
+            let node = UIButton(frame: CGRectMake(x, y, 15, 15))
+            node.setBackgroundImage(UIImage(named: "icon_chat_dot_l9"), forState: .Normal)
+            
+            node.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001)
+            self.view.addSubview(node)
+            UIView.animateWithDuration(0.5, animations: {()->Void in
+                node.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
+            },
+                
+            completion: {(finished) -> Void in
+                NSThread.sleepForTimeInterval(0.2)
+            })
+        }
+    }
+
     
     
     

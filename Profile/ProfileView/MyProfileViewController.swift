@@ -19,9 +19,6 @@ class MyProfileViewController: ProfileViewController {
         ageLabel.text = SHARED_USER.Birthday
         pcoindistanceLabel.text = String(SHARED_USER.PCoin)
         
-        self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l1")
-        self.levelBarImageView.backgroundColor = UIColor.whiteColor()
-        
         self.scoreLabel.text = "内在: \(SHARED_USER.InnerScore)   外在: \(SHARED_USER.OuterScore)   能量： \(SHARED_USER.Energy)"
         quoteLabel.text = SHARED_USER.Quote
         

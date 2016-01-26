@@ -16,20 +16,29 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JCn-wQ-t76">
                         <rect key="frame" x="0.0" y="0.0" width="272" height="177"/>
                     </imageView>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_chat_lock_19" translatesAutoresizingMaskIntoConstraints="NO" id="sVH-T1-0hJ">
+                        <rect key="frame" x="131" y="82" width="10" height="14"/>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="JCn-wQ-t76" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="4tV-kg-wGI"/>
-                <constraint firstItem="JCn-wQ-t76" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="5S9-xJ-2UH"/>
-                <constraint firstAttribute="trailing" secondItem="JCn-wQ-t76" secondAttribute="trailing" id="73o-Xo-frI"/>
-                <constraint firstAttribute="bottom" secondItem="JCn-wQ-t76" secondAttribute="bottom" id="tb3-ZQ-yrX"/>
+                <constraint firstItem="JCn-wQ-t76" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="McB-YB-RTU"/>
+                <constraint firstItem="sVH-T1-0hJ" firstAttribute="centerY" secondItem="JCn-wQ-t76" secondAttribute="centerY" id="NtV-q8-6sM"/>
+                <constraint firstItem="JCn-wQ-t76" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="SAX-8Z-q4H"/>
+                <constraint firstAttribute="bottom" secondItem="JCn-wQ-t76" secondAttribute="bottom" id="V2V-UD-mRY"/>
+                <constraint firstAttribute="trailing" secondItem="JCn-wQ-t76" secondAttribute="trailing" id="abe-Td-0Wz"/>
+                <constraint firstItem="sVH-T1-0hJ" firstAttribute="centerX" secondItem="JCn-wQ-t76" secondAttribute="centerX" id="s27-pt-Rwy"/>
             </constraints>
             <size key="customSize" width="272" height="177"/>
             <connections>
                 <outlet property="imageView" destination="JCn-wQ-t76" id="dnp-c7-PgB"/>
+                <outlet property="lockImageView" destination="sVH-T1-0hJ" id="tbL-nG-u9f"/>
             </connections>
             <point key="canvasLocation" x="464" y="279.5"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="icon_chat_lock_19" width="10" height="14"/>
+    </resources>
 </document>

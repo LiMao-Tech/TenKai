@@ -20,32 +20,51 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     @IBOutlet weak var verticalSeparator: UIImageView!
     
     @IBOutlet weak var levelBarImageView: UIImageView!
-    @IBOutlet weak var levelCircleImageVIew: UIImageView!
+    @IBOutlet weak var levelCircleImageView: UIImageView!
     
     @IBOutlet weak var lmCollectionView: UICollectionView!
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     
+    @IBOutlet weak var optionBarBtn: UIBarButtonItem!
+    @IBOutlet weak var unlockBarBtn: UIBarButtonItem!
+    @IBOutlet weak var lockBarBtn: UIBarButtonItem!
+    @IBOutlet weak var deleteBarBtn: UIBarButtonItem!
     
     
     
     @IBAction func optionBarBtn(sender: AnyObject) {
-        
+        self.unlockBarBtn.enabled = false
+        self.lockBarBtn.enabled = false
+        self.deleteBarBtn.enabled = false
         
     }
 
     @IBAction func unlockBarBtn(sender: AnyObject) {
-        self.lockMode = true
-        self.lmCollectionView.alpha = 0.5
+        self.unlockMode = true
+        
+        self.optionBarBtn.enabled = false
+        self.lockBarBtn.enabled = false
+        self.deleteBarBtn.enabled = false
+        
     }
     
     @IBAction func lockBarBtn(sender: AnyObject) {
+        self.lockMode = true
         
+        self.optionBarBtn.enabled = false
+        self.unlockBarBtn.enabled = false
+        self.deleteBarBtn.enabled = false
+        
+        self.lmCollectionView.alpha = 0.5
     }
     
     @IBAction func deleteBarBtn(sender: AnyObject) {
-        
+        self.optionBarBtn.enabled = false
+        self.unlockBarBtn.enabled = false
+        self.lockBarBtn.enabled = false
+
         
     }
     
@@ -74,11 +93,17 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         lmLayout?.delegate = self
         SHARED_PICKER.picker.delegate = self
         
-        
-
         // add buttons
         let addImageBtn = UIBarButtonItem(title: "新增", style: .Plain, target: self, action: "addImage")
-        self.navigationItem.rightBarButtonItem = addImageBtn;
+        self.navigationItem.rightBarButtonItem = addImageBtn
+        
+        // labels
+        nameLabel.text = SHARED_USER.UserName
+        ageLabel.text = SHARED_USER.Birthday
+        
+        // level colors
+        let avg = round((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2)
+        self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,9 +125,16 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if self.lockMode {
             let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
-            selectedCell?.imageView.alpha = 0.5
-            lockMode = false
+            
+            selectedCell?.imageView.alpha = 0.3
+            selectedCell?.lockImageView.hidden = false
+            
+            self.optionBarBtn.enabled = true
+            self.unlockBarBtn.enabled = true
+            self.deleteBarBtn.enabled = true
             self.lmCollectionView.alpha = 1
+            
+            lockMode = false
         }
         else {
             magnifyCellAtIndexPath(indexPath)

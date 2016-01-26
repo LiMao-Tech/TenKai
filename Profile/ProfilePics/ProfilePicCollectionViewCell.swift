@@ -11,6 +11,7 @@ import UIKit
 class ProfilePicCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var lockImageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
