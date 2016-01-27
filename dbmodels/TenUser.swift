@@ -14,10 +14,12 @@ class TenUser: NSObject {
     var PhoneType : Int = 0
     var Gender : Int = -1
     var Marriage: Int = -1
+    
     var Birthday : String = ""
     var JoinedDate : String = ""
+    
     var PCoin : Double = 0
-    var OuterScore : Int = 0{
+    var OuterScore : Int = 0 {
         didSet{
          Average = (OuterScore+InnerScore)/2
         }
@@ -33,6 +35,7 @@ class TenUser: NSObject {
     var Lati : Double = -1
     var Longi : Double = -1
     var ProfileUrl = ""
+    
     var Average = 0
     var listType = chatType.InActive
     
@@ -53,6 +56,7 @@ class TenUser: NSObject {
         self.ValueWithDict(dict)
     }
     
+    // this needs to be explicit
     func ValueWithDict(dict:[String : AnyObject]){
         self.setValuesForKeysWithDictionary(dict)
     }
