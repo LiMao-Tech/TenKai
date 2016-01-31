@@ -22,6 +22,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     var item2:SettingButton!
     var item3:SettingButton!
     var selectedBtn:SettingButton!
+    let pcoinNum = [10,20,50,100]
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named:"navBar_pcoin"), forBarMetrics: .Default)
@@ -82,7 +83,24 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     }
 
     func buyButtonDidClickeds(cell: PCoinPurchaseCell) {
-        print(cell.index)
+        cell.buyButton.enabled = false
+        let amount = pcoinNum[cell.index]
+        let params = ["pcoin":amount,"note":"花费了\(amount/10)元"]
+        AFNetworkTools.putMethod(UserUrl+"\(SHARED_USER.UserIndex)", parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            let successAlert = UIAlertController(title: "购买成功", message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            self.presentViewController(successAlert, animated: true, completion: nil)
+            SHARED_USER.PCoin += Double(amount)
+            UserCacheTool().upDateUserPCoin()
+            cell.buyButton.enabled = true
+            successAlert.addAction(okAction)
+            },failure: { (task, error) -> Void in
+                let successAlert = UIAlertController(title: "购买失败", message: nil, preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                successAlert.addAction(okAction)
+                self.presentViewController(successAlert, animated: true, completion: nil)
+                cell.buyButton.enabled = true
+        })
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

@@ -151,15 +151,6 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 }else{
                     SharedUser.changeValue(dict as! [String : AnyObject])
                     UserCacheTool().addUserInfoByUser()
-                    AFNetworkTools.getImageMethod(SHARED_USER.ProfileUrl, success: { (task, response) -> Void in
-                        let image = response as! UIImage
-                        SHARED_USER.Portrait = UIImagePNGRepresentation(image)
-                        print("get Portrait")
-                        UserCacheTool().upDateUserPortrait()
-                        }, failure: { (task, error) -> Void in
-                           print("portrait")
-                    })
-                    
                 }
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in

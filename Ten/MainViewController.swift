@@ -109,6 +109,16 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         distanceChange()
         
         generateNodes()
+        
+        AFNetworkTools.getImageMethod(SHARED_USER.ProfileUrl, success: { (task, response) -> Void in
+            let image = response as! UIImage
+            SHARED_USER.Portrait = UIImagePNGRepresentation(image)
+            print("get Portrait")
+            UserCacheTool().upDateUserPortrait()
+            self.portraitBtn.setImage(image, forState: .Normal)
+            }, failure: { (task, error) -> Void in
+                print("portrait")
+        })
     }
     
     override func viewWillAppear(animated: Bool) {
