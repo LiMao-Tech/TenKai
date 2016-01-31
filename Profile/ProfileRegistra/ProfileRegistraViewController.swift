@@ -418,7 +418,7 @@ class RegistProfileViewController: UIViewController,
     func postUser() {
         
         let birthday = birthDate.text!
-        let joinTime = Tools.getNormalTime(NSDate())
+        let joinTime = Tools.getSinceTime(NSDate())
         
         let params = [
             "UserName" : username.text!,

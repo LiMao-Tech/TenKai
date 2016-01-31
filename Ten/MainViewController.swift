@@ -237,7 +237,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                 }else{
                     //同步服务器数据，获得相应的等级
                     AFNetworkTools.putMethod(UserUrl, parameters:["id":SHARED_USER] , success: { (task, response) -> Void in
-                        SHARED_USER.Average = sender.level
+                        SHARED_USER.AVG = sender.level
                         SHARED_USER.PCoin -= Double(sender.level*10)
                         UserCacheTool().upDateUserPCoin()
                         }, failure: { (task, error) -> Void in

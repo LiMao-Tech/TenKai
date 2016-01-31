@@ -77,7 +77,7 @@ class UsersCacheTool: NSObject {
                     user.PhoneType = Int(rs.intForColumn("PHONETYPE"))
                     user.Gender = Int(rs.intForColumn("GENDER"))
                     user.Birthday = rs.stringForColumn("BIRTHDAY")
-                    user.JoinedDate = rs.stringForColumn("JOINEDDATE")
+                    user.JoinedDate = Int(rs.intForColumn("JOINEDDATE"))
                     user.PCoin = rs.doubleForColumn("PCOIN")
                     user.OuterScore = Int(rs.intForColumn("OUTERSCORE"))
                     user.InnerScore = Int(rs.intForColumn("INNERSCORE"))

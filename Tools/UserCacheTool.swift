@@ -22,7 +22,7 @@ class UserCacheTool: NSObject {
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERINFO (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY TEXT,JOINEDDATE TEXT,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,MSGINDEX INTEGER)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERINFO (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY TEXT,JOINEDDATE INTEGER,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,MSGINDEX INTEGER,EXPIRE INTEGER,AVG INTEGER)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
                 print("创表失败！")
@@ -33,9 +33,9 @@ class UserCacheTool: NSObject {
     
     func updateUserInfo(dict:NSDictionary) {
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE USERINFO SET GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ? WHERE USERINDEX = ?"
+            let sql_insert = "UPDATE USERINFO SET GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
             
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["Gender"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["UserIndex"]!]){                  print("修改失败")
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["Gender"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["UserIndex"]!,dict["AVG"]!,dict["Expire"]!]){                  print("修改失败")
             }
         }
     }
@@ -62,8 +62,8 @@ class UserCacheTool: NSObject {
     
     func addUserInfoByUser(){
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [SHARED_USER.UserIndex,SHARED_USER.UserName,SHARED_USER.PhoneType,SHARED_USER.Gender,SHARED_USER.Birthday,SHARED_USER.JoinedDate,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.Portrait!,SHARED_USER.ProfileUrl,SHARED_USER.MsgIndex]){
+            let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX,AVG,EXPIRE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [SHARED_USER.UserIndex,SHARED_USER.UserName,SHARED_USER.PhoneType,SHARED_USER.Gender,SHARED_USER.Birthday,SHARED_USER.JoinedDate,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.Portrait!,SHARED_USER.ProfileUrl,SHARED_USER.MsgIndex,SHARED_USER.AVG,SHARED_USER.Expire]){
                 print("插入失败")
             }
         }
@@ -82,7 +82,7 @@ class UserCacheTool: NSObject {
                     SHARED_USER.PhoneType = Int(rs.intForColumn("PHONETYPE"))
                     SHARED_USER.Gender = Int(rs.intForColumn("GENDER"))
                     SHARED_USER.Birthday = rs.stringForColumn("BIRTHDAY")
-                    SHARED_USER.JoinedDate = rs.stringForColumn("JOINEDDATE")
+                    SHARED_USER.JoinedDate = Int(rs.intForColumn("JOINEDDATE"))
                     SHARED_USER.PCoin = rs.doubleForColumn("PCOIN")
                     SHARED_USER.OuterScore = Int(rs.intForColumn("OUTERSCORE"))
                     SHARED_USER.InnerScore = Int(rs.intForColumn("INNERSCORE"))
@@ -93,7 +93,9 @@ class UserCacheTool: NSObject {
                     SHARED_USER.Longi = rs.doubleForColumn("LONGI")
                     SHARED_USER.ProfileUrl = rs.stringForColumn("PROFILEURL")
                     SHARED_USER.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
-                    SHARED_USER.Portrait = rs.dataForColumn("PORTRAIT")  //读取到的是插入时候已经将图片转成的NSData
+                    SHARED_USER.Portrait = rs.dataForColumn("PORTRAIT")//读取到的是插入时候已经将图片转成的NSData
+                    SHARED_USER.AVG = Int(rs.intForColumn("AVG"))
+                    SHARED_USER.Expire = Int(rs.intForColumn("EXPIRE"))
                     inDB = true
                 }
             }

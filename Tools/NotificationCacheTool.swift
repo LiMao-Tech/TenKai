@@ -60,4 +60,6 @@ class NotificationCacheTool: NSObject {
         return (notis,inDB)
     }
     
+    
+    
 }

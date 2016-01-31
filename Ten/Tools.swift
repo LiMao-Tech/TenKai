@@ -18,6 +18,9 @@ class Tools : NSObject{
         Formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return Formatter.stringFromDate(date)
     }
+    class func getSinceTime(date:NSDate) -> Int{
+        return Int(date.timeIntervalSince1970)
+    }
     
     class func formatStringTime(time: String) -> String{
         Formatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
@@ -27,6 +30,12 @@ class Tools : NSObject{
     class func getFileNameTime(date:NSDate) -> String{
         Formatter.dateFormat = "yyyyMMddHHmmss"
         return Formatter.stringFromDate(date)
+    }
+    
+    class func longToDate(time:Int) -> NSDate{
+        let timeInterval = Double(time)
+        let timeDate = NSDate(timeIntervalSince1970: timeInterval)
+        return timeDate
     }
     
     // string转attributeString

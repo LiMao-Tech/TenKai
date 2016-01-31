@@ -16,19 +16,11 @@ class TenUser: NSObject {
     var Marriage: Int = -1
     
     var Birthday : String = ""
-    var JoinedDate : String = ""
+    var JoinedDate : Int = 0
     
     var PCoin : Double = 0
-    var OuterScore : Int = 0 {
-        didSet{
-         Average = (OuterScore+InnerScore)/2
-        }
-    }
-    var InnerScore : Int = 0{
-        didSet{
-            Average = (OuterScore+InnerScore)/2
-        }
-    }
+    var OuterScore : Int = 0
+    var InnerScore : Int = 0
     var Energy : Int = 0
     var Hobby : String = ""
     var Quote : String = ""
@@ -36,7 +28,21 @@ class TenUser: NSObject {
     var Longi : Double = -1
     var ProfileUrl = ""
     
-    var Average = 0
+    var Average :Int{
+        get{
+            return (self.OuterScore+self.InnerScore)/2
+        }
+    }
+    
+    var Expire = 0
+    
+    var AVG:Int = 0{
+        didSet{
+            if(Tools.getSinceTime(NSDate()) > self.Expire){
+                AVG = self.Average
+            }
+        }
+    }
     var listType = chatType.InActive
     
     var Portrait = UIImagePNGRepresentation(UIImage(named: "user_pic_radar_140")!) {
