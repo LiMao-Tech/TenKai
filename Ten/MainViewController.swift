@@ -106,30 +106,19 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(plus)
         self.view.addSubview(refreshBtn)
         self.view.addSubview(distanceLabel)
+      
         distanceChange()
         
         generateNodes()
         
-        AFNetworkTools.getImageMethod(SHARED_USER.ProfileUrl, success: { (task, response) -> Void in
-            let image = response as! UIImage
-            SHARED_USER.Portrait = UIImagePNGRepresentation(image)
-            print("get Portrait")
-            UserCacheTool().upDateUserPortrait()
-            self.portraitBtn.setImage(image, forState: .Normal)
-            }, failure: { (task, error) -> Void in
-                print("portrait")
-        })
-    }
+        }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-    }
+        }
     
     func generateNodes() -> Void {
         
@@ -216,7 +205,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     func refreshLevelButton(){
-        let index = SHARED_USER.Average
+        let index = SHARED_USER.AVG
         for btn in btnArray{
             if(btn.level <= index){
                 btn.lockState = .UnLock

@@ -85,23 +85,35 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     func buyButtonDidClickeds(cell: PCoinPurchaseCell) {
         cell.buyButton.enabled = false
         let amount = pcoinNum[cell.index]
-        let params = ["pcoin":amount,"note":"花费了\(amount/10)元"]
-        AFNetworkTools.putMethod(UserUrl+"\(SHARED_USER.UserIndex)", parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
-            let successAlert = UIAlertController(title: "购买成功", message: nil, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-            self.presentViewController(successAlert, animated: true, completion: nil)
-            SHARED_USER.PCoin += Double(amount)
-            UserCacheTool().upDateUserPCoin()
-            cell.buyButton.enabled = true
-            successAlert.addAction(okAction)
-            },failure: { (task, error) -> Void in
-                let successAlert = UIAlertController(title: "购买失败", message: nil, preferredStyle: .Alert)
+        let successAlert = UIAlertController(title: "购买 \(amount) P币", message: nil, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Destructive) { (ac) -> Void in
+            cell.buyButton.enabled = false
+//            let params = ["id":SHARED_USER.UserIndex,"pcoin":amount,"note":"花费了\(amount/10)元"]
+            let url = UserUrl+"/\(SHARED_USER.UserIndex)?pcoin=\(amount)&note=花费了\(amount/10)元"
+            let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+            AFNetworkTools.putMethod(urlComplete!, success: { (task, response) -> Void in
+                let successAlert = UIAlertController(title: "购买成功", message: nil, preferredStyle: .Alert)
                 let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-                successAlert.addAction(okAction)
                 self.presentViewController(successAlert, animated: true, completion: nil)
+                SHARED_USER.PCoin += Double(amount)
+                UserCacheTool().upDateUserPCoin()
                 cell.buyButton.enabled = true
-        })
-    }
+                successAlert.addAction(okAction)
+                },failure: { (task, error) -> Void in
+                    let successAlert = UIAlertController(title: "购买失败", message: nil, preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                    successAlert.addAction(okAction)
+                    self.presentViewController(successAlert, animated: true, completion: nil)
+                    cell.buyButton.enabled = true
+                    print("pcoin purchase failed")
+                    print(error.localizedDescription)
+            })
+        }
+        successAlert.addAction(cancelAction)
+        successAlert.addAction(okAction)
+        self.presentViewController(successAlert, animated: true, completion: nil)
+            }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if(modelType == .History){
@@ -109,9 +121,9 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             if(cell == nil){
                 cell = PCoinHistoryCell.init(style: .Default, reuseIdentifier: "historyCell")
             }
-            cell?.timeLabel.text = "Yesterday"
-            cell?.pcoinLabel.text = "You bought \(pcoinValue[indexPath.row]) P Coin"
-            cell?.priceLabel.text = "Price:\(pcoinValue[indexPath.row]/10) USD"
+            cell?.timeLabel.text = "昨天"
+            cell?.pcoinLabel.text = "你购买了 \(pcoinValue[indexPath.row]) P币"
+            cell?.priceLabel.text = "价格:\(pcoinValue[indexPath.row]/10) 元"
             return cell!
         }
         if(modelType == .Transfer){

@@ -154,11 +154,19 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 }
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    AFNetworkTools.getImageMethod(SHARED_USER.ProfileUrl, success: { (task, response) -> Void in
+                        let image = response as! UIImage
+                        SHARED_USER.Portrait = UIImagePNGRepresentation(image)
+                        print("get Portrait")
+                        UserCacheTool().upDateUserPortrait()
+                        }, failure: { (task, error) -> Void in
+                            print("portrait")
+                    })
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
                     self.presentViewController(nVC, animated: true, completion: { () -> Void in
                     })
-                })
+            })
                 
                 
             })

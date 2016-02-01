@@ -109,5 +109,18 @@ class AFNetworkTools: NSObject {
                 failure(task,error)
         })
     }
+    
+    class func putMethod(url:String,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
+        
+        sharedInstance.requestSerializer = AFJSONRequestSerializer()
+        sharedInstance.responseSerializer = AFJSONResponseSerializer()
+        
+        sharedInstance.PUT(url, parameters:nil , success: { (task, response) -> Void in
+            success(task,response)
+            },failure:  { (task, error) -> Void in
+                failure(task,error)
+        })
+    }
+
 
 }

@@ -77,11 +77,13 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
             settingList.deselectRowAtIndexPath(indexPath, animated: true)
         }
         if (indexPath.row == 1){
-            
+            let pVC = PinCodeController()
+            self.navigationController?.pushViewController(pVC, animated: true)
+            settingList.deselectRowAtIndexPath(indexPath, animated: true)
         }
         if(indexPath.row == 2){
-            let pvc = PCoinViewController()
-            self.navigationController?.pushViewController(pvc, animated: true)
+            let pVC = PCoinViewController()
+            self.navigationController?.pushViewController(pVC, animated: true)
             settingList.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }

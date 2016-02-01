@@ -391,10 +391,11 @@ class RegistProfileViewController: UIViewController,
         
         button.enabled = false
         indicator.startAnimating()
-        let time = NSDate()
-        let format = NSDateFormatter()
-        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let timeStamp = format.stringFromDate(time)
+//        let time = NSDate()
+//        let format = NSDateFormatter()
+//        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//        let timeStamp = format.stringFromDate(time)
+        let timeStamp = Tools.getSinceTime(NSDate())
         let stringHash = "\(email)\(password)\(UUID)\(timeStamp)\(DEVICE_TOKEN!)\(COMPANYCODE)"
         
         let hashResult = stringHash.sha256()
@@ -406,11 +407,14 @@ class RegistProfileViewController: UIViewController,
             "DeviceToken":DEVICE_TOKEN!,
             "HashValue":hashResult
         ]
-        AFNetworkTools.postMethod(LoginUrl, parameters: params, success: { (task, response) -> Void in
+        
+        AFNetworkTools.postMethod(LoginUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             let dict = response as! [String : AnyObject]
+            print(dict)
             self.tenLogin = TenLogin(loginDict: dict)
             self.postUser()
             },failure: { (task, error) -> Void in
+                print("login Failed")
                 print(error.localizedDescription)
         })
     }
@@ -424,7 +428,7 @@ class RegistProfileViewController: UIViewController,
             "UserName" : username.text!,
             "PhoneType" : 0,
             "Gender" : gender,
-            "Marrige" : "0",
+            "Marrige" : marriage,
             "Birthday" : birthday,
             "JoinedDate" : joinTime,
             "PCoin" : "0",
@@ -445,6 +449,7 @@ class RegistProfileViewController: UIViewController,
             self.postImage()
             },failure: { (task, error) -> Void in
                 print("Post User Failed")
+                print(error.localizedDescription)
         })
     }
     
@@ -463,6 +468,7 @@ class RegistProfileViewController: UIViewController,
                     self.putUserIndex()
                 })
                 },failure: { (task, error) -> Void in
+                    print("Post Portrait Failed")
                     print(error.localizedDescription)
             })
         }

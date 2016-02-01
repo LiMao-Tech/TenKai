@@ -20,7 +20,7 @@ class TenLogin : NSObject {
     var UserIndex : Int = 0
     var UserID : String = ""
     var UserPWD : String = ""
-    var LastLogin : String = ""
+    var LastLogin : Int = 0
     var DeviceUUID : String = ""    // 16 bytes == 128 bits
     var DeviceToken : String = ""  // 64 bytes
     var HashValue : String = ""     // 64 bytes

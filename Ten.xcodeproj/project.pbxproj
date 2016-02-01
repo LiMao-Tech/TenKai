@@ -35,6 +35,7 @@
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
 		64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BE65AF1C380BAC00DA599A /* UserChatModel.swift */; };
+		64D306AB1C5F54A30007A4F1 /* PinCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D306AA1C5F54A30007A4F1 /* PinCodeController.swift */; };
 		64F5CEBF1BD8B51800512972 /* PT_Sans-Web-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951C1BD8996900F1B6CA /* PT_Sans-Web-Bold.ttf */; };
 		64F5CEC01BD8B51A00512972 /* PT_Sans-Web-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951D1BD8996900F1B6CA /* PT_Sans-Web-BoldItalic.ttf */; };
 		64F5CEC11BD8B51C00512972 /* PT_Sans-Web-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951E1BD8996900F1B6CA /* PT_Sans-Web-Italic.ttf */; };
@@ -348,6 +349,7 @@
 		649B951E1BD8996900F1B6CA /* PT_Sans-Web-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Italic.ttf"; sourceTree = "<group>"; };
 		649B951F1BD8996900F1B6CA /* PT_Sans-Web-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Regular.ttf"; sourceTree = "<group>"; };
 		64BE65AF1C380BAC00DA599A /* UserChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatModel.swift; sourceTree = "<group>"; };
+		64D306AA1C5F54A30007A4F1 /* PinCodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeController.swift; sourceTree = "<group>"; };
 		B106EF2E7AE1C61A38E735F5 /* Pods-Ten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.release.xcconfig"; sourceTree = "<group>"; };
 		B84957B6987C4D31344DF3F5 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3061B88FB010008BCF2 /* Ten.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ten.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -966,6 +968,7 @@
 				D4EA5C511C142321009E9927 /* settingCell.swift */,
 				D4EA5C521C142321009E9927 /* SettingDoubleLabelCell.swift */,
 				D4EA5C531C142321009E9927 /* SettingsViewController.swift */,
+				64D306AA1C5F54A30007A4F1 /* PinCodeController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1623,6 +1626,7 @@
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
+				64D306AB1C5F54A30007A4F1 /* PinCodeController.swift in Sources */,
 				D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */,
 				D45D81E11C4F75160035A213 /* OtherProfilePicsViewController.swift in Sources */,
 				D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */,
