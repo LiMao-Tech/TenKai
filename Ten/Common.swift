@@ -92,3 +92,19 @@ let COLOR_WHITEGRAY = UIColor(red: 95.0/255.0, green: 95.0/255.0, blue: 95.0/255
 
 let BLOCK_DIM = SCREEN_WIDTH/4
 
+
+// level colors
+let COLOR_LEVEL_1 = UIColor(red: 148, green: 149, blue: 151, alpha: 1.0)
+let COLOR_LEVEL_2 = UIColor(red: 33, green: 192, blue: 245, alpha: 1.0)
+let COLOR_LEVEL_3 = UIColor(red: 253, green: 213, blue: 92, alpha: 1.0)
+let COLOR_LEVEL_4 = UIColor(red: 244, green: 139, blue: 57, alpha: 1.0)
+let COLOR_LEVEL_5 = UIColor(red: 94, green: 126, blue: 212, alpha: 1.0)
+let COLOR_LEVEL_6 = UIColor(red: 47, green: 194, blue: 143, alpha: 1.0)
+let COLOR_LEVEL_7 = UIColor(red: 95, green: 194, blue: 181, alpha: 1.0)
+let COLOR_LEVEL_8 = UIColor(red: 144, green: 52, blue: 154, alpha: 1.0)
+let COLOR_LEVEL_9 = UIColor(red: 227, green: 84, blue: 157, alpha: 1.0)
+let COLOR_LEVEL_10 = UIColor(red: 75, green: 143, blue: 202, alpha: 1.0)
+
+let LEVEL_COLORS = [COLOR_LEVEL_1, COLOR_LEVEL_2, COLOR_LEVEL_3, COLOR_LEVEL_4, COLOR_LEVEL_5, COLOR_LEVEL_6, COLOR_LEVEL_7, COLOR_LEVEL_8, COLOR_LEVEL_9, COLOR_LEVEL_10]
+
+

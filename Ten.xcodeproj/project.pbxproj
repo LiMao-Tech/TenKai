@@ -28,9 +28,7 @@
 		643E8CD41C3E309E00349187 /* OtherChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CD01C3E309E00349187 /* OtherChatCell.xib */; };
 		643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CD81C41431E00349187 /* MessageCacheTool.swift */; };
 		643F9C741BF6D95A00361C55 /* Radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643F9C731BF6D95A00361C55 /* Radar.gif */; };
-		6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */; };
 		644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D0D1C286210002E65CE /* SharedUser.swift */; };
-		644F1D111C2863C1002E65CE /* UserCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D101C2863C1002E65CE /* UserCacheTool.swift */; };
 		644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
@@ -46,6 +44,10 @@
 		C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4CED30F1B88FB010008BCF2 /* Main.storyboard */; };
 		C4CED3161B88FB010008BCF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CED3141B88FB010008BCF2 /* LaunchScreen.xib */; };
 		C4CED3221B88FB010008BCF2 /* TenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED3211B88FB010008BCF2 /* TenTests.swift */; };
+		D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC101C6401DD0013E27D /* UserCacheTool.swift */; };
+		D434AC131C6401DD0013E27D /* UsersCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC111C6401DD0013E27D /* UsersCacheTool.swift */; };
+		D434AC161C6402090013E27D /* TenImagesJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC141C6402090013E27D /* TenImagesJSONManager.swift */; };
+		D434AC171C6402090013E27D /* TenMainGridManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC151C6402090013E27D /* TenMainGridManager.swift */; };
 		D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44623FF1C3B2D720098AE53 /* MyProfileViewController.swift */; };
 		D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44624011C3B2D9E0098AE53 /* OtherProfileViewController.swift */; };
 		D45D81DF1C4F75160035A213 /* MyProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D81D71C4F75160035A213 /* MyProfilePicsViewController.swift */; };
@@ -338,9 +340,7 @@
 		643E8CD01C3E309E00349187 /* OtherChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherChatCell.xib; sourceTree = "<group>"; };
 		643E8CD81C41431E00349187 /* MessageCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCacheTool.swift; sourceTree = "<group>"; };
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
-		6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCacheTool.swift; sourceTree = "<group>"; };
 		644F1D0D1C286210002E65CE /* SharedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUser.swift; sourceTree = "<group>"; };
-		644F1D101C2863C1002E65CE /* UserCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCacheTool.swift; sourceTree = "<group>"; };
 		644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFNetworkTools.swift; sourceTree = "<group>"; };
 		649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
@@ -362,6 +362,10 @@
 		C4CED3201B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CED3211B88FB010008BCF2 /* TenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenTests.swift; sourceTree = "<group>"; };
 		CED46F89ABA7A445C65B4B8A /* Pods_Ten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D434AC101C6401DD0013E27D /* UserCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCacheTool.swift; path = TenCaches/UserCacheTool.swift; sourceTree = "<group>"; };
+		D434AC111C6401DD0013E27D /* UsersCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsersCacheTool.swift; path = TenCaches/UsersCacheTool.swift; sourceTree = "<group>"; };
+		D434AC141C6402090013E27D /* TenImagesJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenImagesJSONManager.swift; path = TenManagers/TenImagesJSONManager.swift; sourceTree = "<group>"; };
+		D434AC151C6402090013E27D /* TenMainGridManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenMainGridManager.swift; path = TenManagers/TenMainGridManager.swift; sourceTree = "<group>"; };
 		D44623FF1C3B2D720098AE53 /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		D44624011C3B2D9E0098AE53 /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		D45D81D71C4F75160035A213 /* MyProfilePicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfilePicsViewController.swift; sourceTree = "<group>"; };
@@ -720,8 +724,6 @@
 			children = (
 				643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */,
 				D4EA5C7B1C142471009E9927 /* Tools.swift */,
-				644F1D101C2863C1002E65CE /* UserCacheTool.swift */,
-				6444C7DB1C3A897C00A3540D /* UsersCacheTool.swift */,
 				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
 				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
 				D4A5EF991C40590700B48C48 /* LMImagePicker.swift */,
@@ -752,6 +754,8 @@
 		C4CED2FD1B88FB010008BCF2 = {
 			isa = PBXGroup;
 			children = (
+				D434AC0F1C6401510013E27D /* TenManagers */,
+				D434AC0C1C63FA710013E27D /* TenCaches */,
 				644F1D0F1C2863A9002E65CE /* Tools */,
 				D4EA5C901C1424C6009E9927 /* Random */,
 				D4EA5C871C1424AF009E9927 /* Notification */,
@@ -835,6 +839,24 @@
 				C4CED3201B88FB010008BCF2 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D434AC0C1C63FA710013E27D /* TenCaches */ = {
+			isa = PBXGroup;
+			children = (
+				D434AC101C6401DD0013E27D /* UserCacheTool.swift */,
+				D434AC111C6401DD0013E27D /* UsersCacheTool.swift */,
+			);
+			name = TenCaches;
+			sourceTree = "<group>";
+		};
+		D434AC0F1C6401510013E27D /* TenManagers */ = {
+			isa = PBXGroup;
+			children = (
+				D434AC141C6402090013E27D /* TenImagesJSONManager.swift */,
+				D434AC151C6402090013E27D /* TenMainGridManager.swift */,
+			);
+			name = TenManagers;
 			sourceTree = "<group>";
 		};
 		D44623FC1C3B2D2D0098AE53 /* ProfileView */ = {
@@ -1565,7 +1587,6 @@
 				643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */,
 				64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */,
 				D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */,
-				644F1D111C2863C1002E65CE /* UserCacheTool.swift in Sources */,
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
 				D4A5EF9C1C40765200B48C48 /* SharedInstances.swift in Sources */,
@@ -1577,6 +1598,7 @@
 				D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */,
 				640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */,
 				D4EA5C2B1C13F669009E9927 /* PCoinTransferModel.swift in Sources */,
+				D434AC171C6402090013E27D /* TenMainGridManager.swift in Sources */,
 				C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */,
 				D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */,
 				644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */,
@@ -1591,6 +1613,7 @@
 				D4EA5C541C142321009E9927 /* PasscodeController.swift in Sources */,
 				D4EA5C2E1C13F669009E9927 /* PCoinViewController.swift in Sources */,
 				D4EA5C6F1C142443009E9927 /* LevelButton.swift in Sources */,
+				D434AC131C6401DD0013E27D /* UsersCacheTool.swift in Sources */,
 				D4EA5C6B1C142430009E9927 /* SingleChatMessageFrame.swift in Sources */,
 				D4EA5BF61C13EA12009E9927 /* DKAssetGroupVC.swift in Sources */,
 				D4EA5C691C142430009E9927 /* SingleChatController.swift in Sources */,
@@ -1613,6 +1636,7 @@
 				643C8BCC1C4B6B8A00682A60 /* ScoreView.swift in Sources */,
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,
 				D4EA5BFC1C13EA12009E9927 /* DKPopoverViewController.swift in Sources */,
+				D434AC161C6402090013E27D /* TenImagesJSONManager.swift in Sources */,
 				D4EA5C1D1C13F1F4009E9927 /* ProfileRegistraViewController.swift in Sources */,
 				640F3BE41C0C898700B31DA0 /* FMDatabasePool.m in Sources */,
 				D4EA5C8E1C1424AF009E9927 /* NotificationInfoCell.swift in Sources */,
@@ -1621,10 +1645,10 @@
 				D4EA5BD51C13E787009E9927 /* ADCircularMenuViewController.m in Sources */,
 				640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */,
 				D4EA5C051C13EAE3009E9927 /* LMCollectionViewLayout.m in Sources */,
-				6444C7DC1C3A897C00A3540D /* UsersCacheTool.swift in Sources */,
 				642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */,
+				D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
 				64D306AB1C5F54A30007A4F1 /* PinCodeController.swift in Sources */,
 				D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */,

@@ -72,19 +72,11 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         super.viewDidLoad()
         
         // data initialization
-        let targetUrl = ImagesJSONUrl + String(SHARED_USER.UserIndex)
-        ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON { response in
-            if let values = response.result.value {
-                self.imagesJSON = (values as? [AnyObject])!
-                self.dataInit()
-                self.lmCollectionView.reloadData()
-            }
-        }
         
         // register nib
         let cellNib = UINib(nibName: ProfilePicCellNibName, bundle: nil)
         lmCollectionView.registerNib(cellNib, forCellWithReuseIdentifier: ProfilePicCellIdentifier)
-        
+
         // set delegates
         self.setUpCollectionView(lmCollectionView)
         lmCollectionView.delegate = self
@@ -102,8 +94,12 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         ageLabel.text = SHARED_USER.Birthday
         
         // level colors
-        let avg = round((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2)
+        var avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
+        if avg == 0 {
+            avg = 1
+        }
         self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
+        self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }
     
     override func viewWillAppear(animated: Bool) {

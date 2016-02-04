@@ -9,19 +9,22 @@
 import UIKit
 import QuartzCore
 import CoreLocation
-import Foundation
+
 
 
 class MainViewController: UIViewController, ADCircularMenuDelegate {
 
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    // buttons
     let menuButton = UIButton(frame: CGRectMake(5, SCREEN_HEIGHT*(BUTTON_DENO-1)/BUTTON_DENO-5, SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
     let randomButton = UIButton(frame: CGRectMake(SCREEN_WIDTH-SCREEN_HEIGHT/BUTTON_DENO-5, SCREEN_HEIGHT*(BUTTON_DENO-1)/BUTTON_DENO-5, SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
+    let refreshBtn = UIButton(frame: CGRectMake(0,0,22.5,21))
     
     // circular menu
     let circularMenuVC = ADCircularMenuViewController(frame: UIScreen.mainScreen().bounds)
     
+        
     var distanceLabel:UILabel!
     
     var btnArray = [LevelButton]()
@@ -33,6 +36,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     let distances = [50,100,500,1000]
     var index = 0
+    
     
     // view loading
     override func viewDidLoad() {
@@ -93,7 +97,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         
         minus.addTarget(self, action: "minusClicked", forControlEvents: .TouchUpInside)
         plus.addTarget(self, action: "plusClicked", forControlEvents: .TouchUpInside)
-        let refreshBtn = UIButton(frame: CGRectMake(0,0,22.5,21))
+        
         refreshBtn.center = CGPointMake(SCREEN_WIDTH/2,menuButton.center.y)
         refreshBtn.setImage(UIImage(named: "btn_radar_refresh"), forState: .Normal)
         refreshBtn.addTarget(self, action: "refreshBtnClicked", forControlEvents: .TouchUpInside)
@@ -109,8 +113,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
       
         distanceChange()
         
-        generateNodes()
-        
         }
     
     override func viewWillAppear(animated: Bool) {
@@ -118,18 +120,19 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        }
+        
+    }
     
     func generateNodes() -> Void {
         
-        for _ in 0 ..< 15 {
-            let x = CGFloat(drand48()) * SCREEN_WIDTH * 0.9
-            let y = (CGFloat(drand48()) * SCREEN_HEIGHT)/2 + SCREEN_HEIGHT/4
-            
-            
-            
-            
-            let node = UIButton(frame: CGRectMake(x, y, 15, 15))
+        let selectedSpots = MainGridManager.SharedInstance.selectPoints()
+        
+        for spot in selectedSpots {
+            let x = spot.x
+            let y = spot.y
+
+            let node = UIButton(frame: CGRectMake(x, y, SCREEN_WIDTH/20, SCREEN_WIDTH/20))
+            MainGridManager.SharedInstance.nodes.append(node)
             node.setBackgroundImage(UIImage(named: "icon_chat_dot_l9"), forState: .Normal)
             
             node.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001)
@@ -143,10 +146,14 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             })
         }
     }
+    
+    func clearNodes() -> Void {
+        for node in MainGridManager.SharedInstance.nodes {
+            node.removeFromSuperview()
+        }
+        MainGridManager.SharedInstance.nodes.removeAll()
+    }
 
-    
-    
-    
     func minusClicked(){
         if(index > 0){
             index -= 1
@@ -171,9 +178,10 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     func refreshBtnClicked(){
-        
-        // TODO:
-        print("refresh")
+        self.refreshBtn.enabled = false
+        clearNodes()
+        generateNodes()
+        self.refreshBtn.enabled = true
     }
     
     
@@ -331,6 +339,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         default:
             self.circularMenuVC.resignFirstResponder()
         }
-
     }
+    
+
 }

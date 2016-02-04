@@ -10,9 +10,11 @@ import UIKit
 import AlamofireImage
 import SwiftyJSON
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController,
+                                UIScrollViewDelegate
+{
     
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileSV: UIScrollView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     
@@ -28,15 +30,39 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var quoteLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     
+    let gradientMask = CAGradientLayer()
+    
     var userID: Int!
     
-    let gradientMask = CAGradientLayer()
+    var profileIV1: UIImageView?
+    var profileIV2: UIImageView?
+    var profileIV3: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getProfileImage()
+        //  set scroll view
+        profileIV1 = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
         
+        profileIV1!.contentMode = .ScaleAspectFill
+        profileIV1!.clipsToBounds = true
+        
+        profileIV2 = UIImageView(frame: CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
+        profileIV2!.contentMode = .ScaleAspectFill
+        profileIV2!.clipsToBounds = true
+        
+        profileIV3 = UIImageView(frame: CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
+        profileIV3!.contentMode = .ScaleAspectFill
+        profileIV3!.clipsToBounds = true
+        
+        profileSV.contentSize = CGSizeMake(SCREEN_WIDTH*3, profileSV.frame.height)
+        profileSV.addSubview(profileIV1!)
+        profileSV.addSubview(profileIV2!)
+        profileSV.addSubview(profileIV3!)
+        
+        profileSV.delegate = self
+
+        getProfileImage()
         
         self.title = ProfileTitle
         self.view.backgroundColor = COLOR_BG
@@ -45,17 +71,18 @@ class ProfileViewController: UIViewController {
         let addImageBtn = UIBarButtonItem(title: "相簿", style: .Plain, target: self, action: "pushPictureCollectionView")
         self.navigationItem.rightBarButtonItem = addImageBtn
         
-        // get level images
+        // level
         self.separatorImageView.backgroundColor = UIColor.whiteColor()
         
-        // gradient mask
-        gradientMask.colors = [COLOR_BG.CGColor, UIColor.clearColor().CGColor]
-//        gradientMask.frame =
-//        maskImageView.layer.mask = gradientMask;
-        
-        // level colors
-        let avg = round((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2)
+        var avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
+        if avg == 0 {
+            avg = 1
+        }
         self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
+        self.levelBarImageView.backgroundColor = UIColor.redColor()
+            //LEVEL_COLORS[9]
+        
+        print("level: \(avg-1)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -82,7 +109,9 @@ class ProfileViewController: UIViewController {
         ALAMO_MANAGER.request(.GET, targetUrl)
             .responseImage { response in
                 if let image = response.result.value {
-                    self.profileImageView.image = image
+                    self.profileIV1?.image = image
+                    self.profileIV2?.image = image
+                    self.profileIV3?.image = image
                 }
         }
     }
