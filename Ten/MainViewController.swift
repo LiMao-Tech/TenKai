@@ -9,12 +9,15 @@
 import UIKit
 import QuartzCore
 import CoreLocation
-
+import SwiftyJSON
 
 
 class MainViewController: UIViewController, ADCircularMenuDelegate {
+    
+    
 
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     
     // buttons
     let menuButton = UIButton(frame: CGRectMake(5, SCREEN_HEIGHT*(BUTTON_DENO-1)/BUTTON_DENO-5, SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
@@ -24,7 +27,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     // circular menu
     let circularMenuVC = ADCircularMenuViewController(frame: UIScreen.mainScreen().bounds)
     
-        
     var distanceLabel:UILabel!
     
     var btnArray = [LevelButton]()
@@ -32,9 +34,9 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     var gap : Int!
     var btns = Array<UIButton!>()
     
-    var portraitBtn:UIButton!
+    var portraitBtn: UIButton = UIButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/5, SCREEN_WIDTH/5))
     
-    let distances = [50,100,500,1000]
+    let distances = [50, 100, 500, 1000]
     var index = 0
     
     
@@ -51,7 +53,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         SHARED_USER.addObserver(self, forKeyPath: "PortraitImage", options: .New, context: nil)
         
         //protraitBtn
-        portraitBtn = UIButton(frame: CGRectMake(0,0,70,70))
         portraitBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
         portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         
@@ -85,17 +86,17 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         randomButton.addTarget(self, action: "randomButtonAction", forControlEvents: UIControlEvents.TouchUpInside)
         
         let distanceY = CGRectGetMinY(menuButton.frame) - 80
-        distance = GTSlider(frame: CGRectMake(45,distanceY,SCREEN_WIDTH - 90,24))
+        distance = GTSlider(frame: CGRectMake(45, distanceY, SCREEN_WIDTH - 90, 24))
         distance.minimumValue = 0
         distance.maximumValue = 3
-        
         distance.addTarget(self, action: "distanceChange", forControlEvents: UIControlEvents.ValueChanged)
-        let minus = UIButton(frame: CGRectMake(10,distanceY,24,24))
-        let plus = UIButton(frame: CGRectMake(SCREEN_WIDTH - 34,distanceY,24,24))
-        minus.setImage(UIImage(named: "btn_radar_minus"), forState: .Normal)
-        plus.setImage(UIImage(named: "btn_radar_plus"), forState: .Normal)
         
+        let minus = UIButton(frame: CGRectMake(10,distanceY,24,24))
+        minus.setImage(UIImage(named: "btn_radar_minus"), forState: .Normal)
         minus.addTarget(self, action: "minusClicked", forControlEvents: .TouchUpInside)
+        
+        let plus = UIButton(frame: CGRectMake(SCREEN_WIDTH - 34,distanceY,24,24))
+        plus.setImage(UIImage(named: "btn_radar_plus"), forState: .Normal)
         plus.addTarget(self, action: "plusClicked", forControlEvents: .TouchUpInside)
         
         refreshBtn.center = CGPointMake(SCREEN_WIDTH/2,menuButton.center.y)
@@ -125,33 +126,29 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func generateNodes() -> Void {
         
-        let selectedSpots = MainGridManager.SharedInstance.selectPoints()
+        let gridButtons = TenMainGridManager.SharedInstance.createButtons()
         
-        for spot in selectedSpots {
-            let x = spot.x
-            let y = spot.y
+        for btn in gridButtons {
 
-            let node = UIButton(frame: CGRectMake(x, y, SCREEN_WIDTH/20, SCREEN_WIDTH/20))
-            MainGridManager.SharedInstance.nodes.append(node)
-            node.setBackgroundImage(UIImage(named: "icon_chat_dot_l9"), forState: .Normal)
-            
-            node.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001)
-            self.view.addSubview(node)
+            // add nodes with animation
+            self.view.addSubview(btn)
             UIView.animateWithDuration(0.5, animations: {()->Void in
-                node.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
+                btn.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
             },
                 
             completion: {(finished) -> Void in
-                NSThread.sleepForTimeInterval(0.2)
+                NSThread.sleepForTimeInterval(0.1)
             })
+            btn.addTarget(self, action: "toTargetUser:", forControlEvents: .TouchUpInside)
+
         }
     }
     
-    func clearNodes() -> Void {
-        for node in MainGridManager.SharedInstance.nodes {
-            node.removeFromSuperview()
-        }
-        MainGridManager.SharedInstance.nodes.removeAll()
+    func toTargetUser(sender: TenGridButton) {
+        let otherPVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        otherPVC.userID = sender.tenUserJSON["UserIndex"].intValue
+        otherPVC.tenUserJSON = sender.tenUserJSON
+        self.navigationController?.pushViewController(otherPVC, animated: true)
     }
 
     func minusClicked(){
@@ -177,9 +174,11 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         distanceLabel.text = "\(distances[index]) km"
     }
     
-    func refreshBtnClicked(){
+    func refreshBtnClicked() {
         self.refreshBtn.enabled = false
-        clearNodes()
+        TenMainGridManager.SharedInstance.clearNodes()
+        TenMainGridManager.SharedInstance.numToGen = 5
+        
         generateNodes()
         self.refreshBtn.enabled = true
     }
@@ -243,7 +242,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                     self.presentViewController(insufficientAlert, animated: true, completion: nil)
                 }else{
                     //同步服务器数据，获得相应的等级
-                    AFNetworkTools.putMethod(UserUrl, parameters:["id":SHARED_USER] , success: { (task, response) -> Void in
+                    AFJSONManager.SharedInstance.putMethod(UserUrl, parameters:["id":SHARED_USER] , success: { (task, response) -> Void in
                         SHARED_USER.AVG = sender.level
                         SHARED_USER.PCoin -= Double(sender.level*10)
                         UserCacheTool().upDateUserPCoin()

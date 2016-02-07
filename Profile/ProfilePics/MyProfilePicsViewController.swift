@@ -91,7 +91,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         
         // labels
         nameLabel.text = SHARED_USER.UserName
-        ageLabel.text = SHARED_USER.Birthday
+        ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970:SHARED_USER.Birthday)))
         
         // level colors
         var avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
@@ -109,7 +109,6 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -214,11 +213,11 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             
             self.dims.insert(BlockDim.L, atIndex: indexPath.row)
             self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
-            },
-            completion: {(done) in
-                let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
-                novaCell?.imageView.image = cellImage
-                self.isProcessing = false
+        },
+        completion: {(done) in
+            let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
+            novaCell?.imageView.image = cellImage
+            self.isProcessing = false
         })
         
     }
@@ -245,7 +244,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             
             if let imageData = imageRepre {
                 
-                AFNetworkTools.postUserImage(imageData, parameters: params as! [String : AnyObject], success: {(task, response) -> Void in
+                AFImageManager.SharedInstance.postUserImage(imageData, parameters: params as! [String : AnyObject], success: {(task, response) -> Void in
                     self.dims.insert(BlockDim.Std, atIndex: 0)
                     
                     self.lmCollectionView.insertItemsAtIndexPaths([path])

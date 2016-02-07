@@ -13,19 +13,15 @@ import SwiftyJSON
 
 class RandomUserController: UIViewController,
                             UITableViewDelegate,
-                            UITableViewDataSource {
-    
+                            UITableViewDataSource
+{
     // Declarations
     var userListView : UITableView!
-    var userList = [AnyObject]()
-    var usersImagesList = [AnyObject]()
+    var userList: [AnyObject] = [AnyObject]()
     
     // View Controls
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Get users from the server and update the table view
-        getUserList()
         
         self.title = RandomTitle
         userListView = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -34,24 +30,19 @@ class RandomUserController: UIViewController,
         userListView.backgroundColor = COLOR_BG
         userListView.separatorStyle = .None
         
-        self.view.addSubview(userListView)
-        refreshControl()
-    }
-    
-    func refreshControl(){
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
         
+        self.view.addSubview(userListView)
         self.userListView.addSubview(refresh)
     }
     
-    func refreshStateChange(refresh:UIRefreshControl){
-        
-        // TODO: Get Users here
-        getUserList()
-        refresh.endRefreshing()
-        print("refreshed")
+    override func viewWillAppear(animated: Bool) {
+        self.userList = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
+        self.userListView.reloadData()
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,17 +53,28 @@ class RandomUserController: UIViewController,
         return UIStatusBarStyle.LightContent
     }
     
+    func refreshStateChange(refresh:UIRefreshControl){
+        
+        // TODO: Get Users here
+        self.userList = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
+        self.userListView.reloadData()
+        
+        refresh.endRefreshing()
+        print("refreshed")
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let user = JSON(userList[indexPath.row] as! [String: AnyObject])
-        let otherProfileVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
-        otherProfileVC.userID = user["UserIndex"].intValue
-        self.navigationController?.pushViewController(otherProfileVC, animated: true)
+        let otherPVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        otherPVC.userID = user["UserIndex"].intValue
+        otherPVC.tenUserJSON = user
+        self.navigationController?.pushViewController(otherPVC, animated: true)
     }
     
     
     // Table view delegates
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return SCREEN_HEIGHT/6
+        return SCREEN_HEIGHT/8
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.userList.count
@@ -107,19 +109,6 @@ class RandomUserController: UIViewController,
         
         cell.distanceLabel.text = "距离 0"
         
-        
-        
         return cell
     }
-    
-    private func getUserList() -> Void {
-        ALAMO_MANAGER.request(.GET, UserUrl, parameters: nil)
-            .responseJSON { response in
-                if let values = response.result.value {
-                    self.userList = (values as? [AnyObject])!
-                    self.userListView.reloadData()
-                }
-        }
-    }
-
 }

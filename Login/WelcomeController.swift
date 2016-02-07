@@ -140,53 +140,49 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         let url:NSString = LoginUrl+"?userID=\(emailTF.text!)&userPWD=\(passwordTF.text!)&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
         let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         
-        AFNetworkTools.getMethod(urlComplete!, success: { (task, response) -> Void in
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                print(response)
-                let dict = response as! NSDictionary
-                let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
-                if(getResult){
-                    UserCacheTool().updateUserInfo(dict)
-                    DataInitializerTool.initialiseInfo()
-                }else{
-                    SharedUser.changeValue(dict as! [String : AnyObject])
-                    UserCacheTool().addUserInfoByUser()
+        AFJSONManager.SharedInstance.getMethod(urlComplete!, success: { (task, response) -> Void in
+            print(response)
+            let dict = response as! NSDictionary
+            let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
+            if getResult {
+                UserCacheTool().updateUserInfo(dict)
+                DataInitializerTool.initialiseInfo()
+            }
+            else {
+                SharedUser.changeValue(dict as! [String : AnyObject])
+                UserCacheTool().addUserInfoByUser()
+            }
+            
+            NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
+            
+            ALAMO_MANAGER.request(.GET, SHARED_USER.ProfileUrl) .responseImage { response in
+                if let image = response.result.value {
+                    SHARED_USER.Portrait = UIImagePNGRepresentation(image)
+                    print("get Portrait")
+                    UserCacheTool().upDateUserPortrait()
                 }
-                NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    AFNetworkTools.getImageMethod(SHARED_USER.ProfileUrl, success: { (task, response) -> Void in
-                        let image = response as! UIImage
-                        SHARED_USER.Portrait = UIImagePNGRepresentation(image)
-                        print("get Portrait")
-                        UserCacheTool().upDateUserPortrait()
-                        }, failure: { (task, error) -> Void in
-                            print("portrait")
-                    })
-                    let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
-                    self.presentViewController(nVC, animated: true, completion: { () -> Void in
-                    })
-            })
+                else {
+                    
+                }
+            }
+        
+            let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+            self.presentViewController(nVC, animated: true, completion: nil)
+        },
+        failure: { (task, error) -> Void in
+            let opera = task?.response as! NSHTTPURLResponse
                 
-                
-            })
-            },failure: { (task, error) -> Void in
-                let opera = task?.response as! NSHTTPURLResponse
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    switch opera.statusCode{
-                    case 401:
-                        self.unmatchedLB.hidden = false
-                        self.unmatchedLB.text = "用户名或密码错误"
-                    case 404:
-                        self.unmatchedLB.hidden = false
-                        self.unmatchedLB.text = "用户不存在"
-                    default:
-                        break
-                    }
-                })
-                
+            switch opera.statusCode {
+                case 401:
+                    self.unmatchedLB.hidden = false
+                    self.unmatchedLB.text = "用户名或密码错误"
+                case 404:
+                    self.unmatchedLB.hidden = false
+                    self.unmatchedLB.text = "用户不存在"
+                default:
+                    break
+            }
         })
-       
-
     }
 }

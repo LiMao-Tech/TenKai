@@ -7,42 +7,77 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 
 // boolean table
 
 class TenMainGridManager: NSObject {
     
-    private let minDistSq = 15^2
+    private let minDiff: CGFloat = 15
     
-    static let SharedInstance = MainGridManager()
+    static let SharedInstance = TenMainGridManager()
     
-    var nodes: [UIButton] = [UIButton]()
-    var spots: [CGPoint] = [CGPoint]()
+    var numToGen: Int = 0
+    var nodes: [TenGridButton] = [TenGridButton]()
+    var gridUsers: [AnyObject] = [AnyObject]()
     
-    func selectPoints() -> [CGPoint] {
+    private var spots: [CGPoint] = [CGPoint]()
+    
+    func clearNodes() {
+        for node in nodes {
+            node.removeFromSuperview()
+        }
+        spots.removeAll()
+        nodes.removeAll()
+    }
+    
+    func createButtons() -> [TenGridButton] {
+        gridUsers = TenOtherUsersJSONManager.SharedInstance.selectGridUsers()
+        numToGen = gridUsers.count
         
-        var rs = [CGPoint]()
-        
-        for _ in 1...10 {
+        for i in 0..<numToGen {
             
-            var x = drand48()
-            var y = drand48()
+            var x = CGFloat(drand48()) * SCREEN_WIDTH*4/5 + SCREEN_WIDTH/10
+            var y = CGFloat(drand48()) * SCREEN_HEIGHT*3/5 + SCREEN_HEIGHT/5
             
-            for spot in spots {
-                var diff = (x-spot.x)^2 + (y-spot.y)^2
+            var good = false
+            while !good {
                 
-                while diff < minDistSq {
-                    x = drand48()
-                    y = drand48()
+                good = true
+                for spot in spots {
+                
+                    let xDiff = abs(x-spot.x)
+                    let yDiff = abs(y-spot.y)
                     
-                    diff = (x-spot.x)^2 + (y-spot.y)^2
+                    if xDiff < minDiff || yDiff < minDiff {
+                        x = CGFloat(drand48()) * SCREEN_WIDTH*4/5 + SCREEN_WIDTH/10
+                        y = CGFloat(drand48()) * SCREEN_HEIGHT*3/5 + SCREEN_HEIGHT/5
+                        
+                        good = false
+                        break
+                    }
                 }
             }
-            rs.append(stars[i][j])
+            spots.append(CGPointMake(x, y))
+            
+            let node = TenGridButton(frame: CGRectMake(spots[i].x, spots[i].y, SCREEN_WIDTH/20, SCREEN_WIDTH/20))
+            node.layer.cornerRadius = SCREEN_WIDTH/40
+            
+            nodes.append(node)
+            node.tenUserJSON = JSON(gridUsers[i] as! [String : AnyObject])
+            
+            let userJSONDict = node.tenUserJSON
+            if userJSONDict["Gender"].intValue == 0 {
+                node.backgroundColor = COLOR_MALE
+            }
+            else {
+                node.backgroundColor = COLOR_FEMALE
+            }
+            
+            node.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001)
         }
-        
-        return rs
-    }
 
+        return nodes
+    }
 }

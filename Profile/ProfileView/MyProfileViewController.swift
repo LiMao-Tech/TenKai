@@ -16,7 +16,7 @@ class MyProfileViewController: ProfileViewController {
         super.viewDidLoad()
         
         nameLabel.text = SHARED_USER.UserName
-        ageLabel.text = SHARED_USER.Birthday
+        ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970:SHARED_USER.Birthday)))
         pcoindistanceLabel.text = String(SHARED_USER.PCoin)
         
         self.scoreLabel.text = "内在: \(SHARED_USER.InnerScore)   外在: \(SHARED_USER.OuterScore)   能量： \(SHARED_USER.Energy)"

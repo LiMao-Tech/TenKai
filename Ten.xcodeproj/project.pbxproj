@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		164EA74D1BB799E700446691 /* MobileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164EA74C1BB799E700446691 /* MobileInfo.swift */; };
 		16988ADD1B8A57A500270DBA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16988ADC1B8A57A500270DBA /* Images.xcassets */; };
+		232820F016A2D161C2D47B4C /* Pods_Ten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739546E248EBF5CE4B4D8971 /* Pods_Ten.framework */; };
 		640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640467801C4BC8910062A8A4 /* PCoinTransView.swift */; };
 		640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BD81C0C898700B31DA0 /* FMDatabase.m */; };
 		640F3BE31C0C898700B31DA0 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDA1C0C898700B31DA0 /* FMDatabaseAdditions.m */; };
@@ -29,7 +30,6 @@
 		643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CD81C41431E00349187 /* MessageCacheTool.swift */; };
 		643F9C741BF6D95A00361C55 /* Radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643F9C731BF6D95A00361C55 /* Radar.gif */; };
 		644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D0D1C286210002E65CE /* SharedUser.swift */; };
-		644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
 		64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BE65AF1C380BAC00DA599A /* UserChatModel.swift */; };
@@ -38,7 +38,6 @@
 		64F5CEC01BD8B51A00512972 /* PT_Sans-Web-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951D1BD8996900F1B6CA /* PT_Sans-Web-BoldItalic.ttf */; };
 		64F5CEC11BD8B51C00512972 /* PT_Sans-Web-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951E1BD8996900F1B6CA /* PT_Sans-Web-Italic.ttf */; };
 		64F5CEC21BD8B51F00512972 /* PT_Sans-Web-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951F1BD8996900F1B6CA /* PT_Sans-Web-Regular.ttf */; };
-		7FA72C7BEF740A313D37838E /* Pods_Ten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED46F89ABA7A445C65B4B8A /* Pods_Ten.framework */; };
 		C4CED30C1B88FB010008BCF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED30B1B88FB010008BCF2 /* AppDelegate.swift */; };
 		C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED30D1B88FB010008BCF2 /* MainViewController.swift */; };
 		C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4CED30F1B88FB010008BCF2 /* Main.storyboard */; };
@@ -59,8 +58,13 @@
 		D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348D1BE9E26500F49D63 /* TenLogin.swift */; };
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
 		D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF991C40590700B48C48 /* LMImagePicker.swift */; };
-		D4A5EF9C1C40765200B48C48 /* SharedInstances.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */; };
 		D4C236C31C42097400740FA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C236C11C42097400740FA7 /* ProfileViewController.swift */; };
+		D4D0F8861C656F9E007F3BF6 /* AFImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8841C656F9E007F3BF6 /* AFImageManager.swift */; };
+		D4D0F8871C656F9E007F3BF6 /* AFJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8851C656F9E007F3BF6 /* AFJSONManager.swift */; };
+		D4D0F8891C657834007F3BF6 /* SharedInstances.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8881C657834007F3BF6 /* SharedInstances.swift */; };
+		D4D0F88B1C66389F007F3BF6 /* TenOtherUsersJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F88A1C66389F007F3BF6 /* TenOtherUsersJSONManager.swift */; };
+		D4D0F88E1C664A11007F3BF6 /* TenGridButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F88D1C664A11007F3BF6 /* TenGridButton.swift */; };
+		D4D0F8921C66BE81007F3BF6 /* TenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8911C66BE81007F3BF6 /* TenTimeManager.swift */; };
 		D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA2B331C53D03E00A52829 /* ProfilePicsViewController.swift */; };
 		D4EA2B371C53D05E00A52829 /* ProfilePicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */; };
 		D4EA2B381C53D05E00A52829 /* ProfilePicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */; };
@@ -314,7 +318,6 @@
 /* Begin PBXFileReference section */
 		164EA74C1BB799E700446691 /* MobileInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileInfo.swift; sourceTree = "<group>"; };
 		16988ADC1B8A57A500270DBA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5A16C3FAA0BEA40461ACD34F /* Pods-Ten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.debug.xcconfig"; sourceTree = "<group>"; };
 		640467801C4BC8910062A8A4 /* PCoinTransView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinTransView.swift; sourceTree = "<group>"; };
 		640F3BD71C0C898700B31DA0 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		640F3BD81C0C898700B31DA0 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -341,7 +344,6 @@
 		643E8CD81C41431E00349187 /* MessageCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCacheTool.swift; sourceTree = "<group>"; };
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
 		644F1D0D1C286210002E65CE /* SharedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUser.swift; sourceTree = "<group>"; };
-		644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFNetworkTools.swift; sourceTree = "<group>"; };
 		649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
 		649B951C1BD8996900F1B6CA /* PT_Sans-Web-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Bold.ttf"; sourceTree = "<group>"; };
@@ -350,7 +352,9 @@
 		649B951F1BD8996900F1B6CA /* PT_Sans-Web-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Regular.ttf"; sourceTree = "<group>"; };
 		64BE65AF1C380BAC00DA599A /* UserChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatModel.swift; sourceTree = "<group>"; };
 		64D306AA1C5F54A30007A4F1 /* PinCodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeController.swift; sourceTree = "<group>"; };
-		B106EF2E7AE1C61A38E735F5 /* Pods-Ten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.release.xcconfig"; sourceTree = "<group>"; };
+		739546E248EBF5CE4B4D8971 /* Pods_Ten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		90AE70C3C142642D3AB7DC64 /* Pods-Ten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.debug.xcconfig"; sourceTree = "<group>"; };
+		9923EEB62CE163E76F2BDA14 /* Pods-Ten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.release.xcconfig"; sourceTree = "<group>"; };
 		B84957B6987C4D31344DF3F5 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3061B88FB010008BCF2 /* Ten.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ten.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED30A1B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -361,7 +365,6 @@
 		C4CED31B1B88FB010008BCF2 /* TenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3201B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CED3211B88FB010008BCF2 /* TenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenTests.swift; sourceTree = "<group>"; };
-		CED46F89ABA7A445C65B4B8A /* Pods_Ten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D434AC101C6401DD0013E27D /* UserCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCacheTool.swift; path = TenCaches/UserCacheTool.swift; sourceTree = "<group>"; };
 		D434AC111C6401DD0013E27D /* UsersCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsersCacheTool.swift; path = TenCaches/UsersCacheTool.swift; sourceTree = "<group>"; };
 		D434AC141C6402090013E27D /* TenImagesJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenImagesJSONManager.swift; path = TenManagers/TenImagesJSONManager.swift; sourceTree = "<group>"; };
@@ -377,8 +380,13 @@
 		D481348D1BE9E26500F49D63 /* TenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLogin.swift; sourceTree = "<group>"; };
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
 		D4A5EF991C40590700B48C48 /* LMImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMImagePicker.swift; sourceTree = "<group>"; };
-		D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedInstances.swift; sourceTree = "<group>"; };
 		D4C236C11C42097400740FA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D4D0F8841C656F9E007F3BF6 /* AFImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AFImageManager.swift; path = TenManagers/AFImageManager.swift; sourceTree = "<group>"; };
+		D4D0F8851C656F9E007F3BF6 /* AFJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AFJSONManager.swift; path = TenManagers/AFJSONManager.swift; sourceTree = "<group>"; };
+		D4D0F8881C657834007F3BF6 /* SharedInstances.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharedInstances.swift; path = TenManagers/SharedInstances.swift; sourceTree = "<group>"; };
+		D4D0F88A1C66389F007F3BF6 /* TenOtherUsersJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenOtherUsersJSONManager.swift; path = TenManagers/TenOtherUsersJSONManager.swift; sourceTree = "<group>"; };
+		D4D0F88D1C664A11007F3BF6 /* TenGridButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenGridButton.swift; path = SubClasses/TenGridButton.swift; sourceTree = "<group>"; };
+		D4D0F8911C66BE81007F3BF6 /* TenTimeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenTimeManager.swift; path = TenManagers/TenTimeManager.swift; sourceTree = "<group>"; };
 		D4EA2B331C53D03E00A52829 /* ProfilePicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicsViewController.swift; sourceTree = "<group>"; };
 		D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicCollectionViewCell.swift; sourceTree = "<group>"; };
 		D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePicCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -616,7 +624,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */,
-				7FA72C7BEF740A313D37838E /* Pods_Ten.framework in Frameworks */,
+				232820F016A2D161C2D47B4C /* Pods_Ten.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,9 +643,18 @@
 			children = (
 				640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */,
 				B84957B6987C4D31344DF3F5 /* Pods.framework */,
-				CED46F89ABA7A445C65B4B8A /* Pods_Ten.framework */,
+				739546E248EBF5CE4B4D8971 /* Pods_Ten.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2269D83C2479FA2F5A205291 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				90AE70C3C142642D3AB7DC64 /* Pods-Ten.debug.xcconfig */,
+				9923EEB62CE163E76F2BDA14 /* Pods-Ten.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		640F3BD61C0C898700B31DA0 /* fmdb */ = {
@@ -724,7 +741,6 @@
 			children = (
 				643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */,
 				D4EA5C7B1C142471009E9927 /* Tools.swift */,
-				644F1D121C2AE2D6002E65CE /* AFNetworkTools.swift */,
 				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
 				D4A5EF991C40590700B48C48 /* LMImagePicker.swift */,
 				643E8CD81C41431E00349187 /* MessageCacheTool.swift */,
@@ -742,21 +758,9 @@
 			path = "Swift extensions";
 			sourceTree = "<group>";
 		};
-		6C6D0DAC271610D597DD7CCF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5A16C3FAA0BEA40461ACD34F /* Pods-Ten.debug.xcconfig */,
-				B106EF2E7AE1C61A38E735F5 /* Pods-Ten.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		C4CED2FD1B88FB010008BCF2 = {
 			isa = PBXGroup;
 			children = (
-				D434AC0F1C6401510013E27D /* TenManagers */,
-				D434AC0C1C63FA710013E27D /* TenCaches */,
-				644F1D0F1C2863A9002E65CE /* Tools */,
 				D4EA5C901C1424C6009E9927 /* Random */,
 				D4EA5C871C1424AF009E9927 /* Notification */,
 				D4EA5C7E1C1424A1009E9927 /* GT */,
@@ -767,8 +771,12 @@
 				D4EA5C201C13F669009E9927 /* PCoin */,
 				D4EA5C0A1C13F1F4009E9927 /* Profile */,
 				D4EA5C4E1C142321009E9927 /* Settings */,
+				644F1D0F1C2863A9002E65CE /* Tools */,
 				C4CED3081B88FB010008BCF2 /* Ten */,
+				D434AC0F1C6401510013E27D /* TenManagers */,
+				D434AC0C1C63FA710013E27D /* TenCaches */,
 				643F9C751BF6DCC300361C55 /* Other */,
+				D4D0F88C1C6649C0007F3BF6 /* SubClasses */,
 				D4EA5C971C14252B009E9927 /* expression */,
 				D4EA5BEC1C13EA12009E9927 /* DKImage */,
 				D4EA5BE81C13E98E009E9927 /* LockView */,
@@ -779,7 +787,7 @@
 				C4CED31E1B88FB010008BCF2 /* TenTests */,
 				C4CED3071B88FB010008BCF2 /* Products */,
 				1255ABBAF454983E8551DED4 /* Frameworks */,
-				6C6D0DAC271610D597DD7CCF /* Pods */,
+				2269D83C2479FA2F5A205291 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -799,7 +807,6 @@
 				D4EA5C7A1C142471009E9927 /* Helpers.swift */,
 				D4EA5BE71C13E8D1009E9927 /* Ten-Bridging-Header.h */,
 				D4EA5BE51C13E8C5009E9927 /* Common.swift */,
-				D4A5EF9B1C40765200B48C48 /* SharedInstances.swift */,
 				16988ADC1B8A57A500270DBA /* Images.xcassets */,
 				C4CED30B1B88FB010008BCF2 /* AppDelegate.swift */,
 				C4CED30D1B88FB010008BCF2 /* MainViewController.swift */,
@@ -853,8 +860,13 @@
 		D434AC0F1C6401510013E27D /* TenManagers */ = {
 			isa = PBXGroup;
 			children = (
+				D4D0F8881C657834007F3BF6 /* SharedInstances.swift */,
+				D4D0F8841C656F9E007F3BF6 /* AFImageManager.swift */,
+				D4D0F8851C656F9E007F3BF6 /* AFJSONManager.swift */,
 				D434AC141C6402090013E27D /* TenImagesJSONManager.swift */,
+				D4D0F88A1C66389F007F3BF6 /* TenOtherUsersJSONManager.swift */,
 				D434AC151C6402090013E27D /* TenMainGridManager.swift */,
+				D4D0F8911C66BE81007F3BF6 /* TenTimeManager.swift */,
 			);
 			name = TenManagers;
 			sourceTree = "<group>";
@@ -878,6 +890,14 @@
 				644F1D0D1C286210002E65CE /* SharedUser.swift */,
 			);
 			path = dbmodels;
+			sourceTree = "<group>";
+		};
+		D4D0F88C1C6649C0007F3BF6 /* SubClasses */ = {
+			isa = PBXGroup;
+			children = (
+				D4D0F88D1C664A11007F3BF6 /* TenGridButton.swift */,
+			);
+			name = SubClasses;
 			sourceTree = "<group>";
 		};
 		D4EA5BD21C13E787009E9927 /* ADCircularMenu */ = {
@@ -1243,13 +1263,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4CED3251B88FB010008BCF2 /* Build configuration list for PBXNativeTarget "Ten" */;
 			buildPhases = (
-				5F0E329A4AC8C9E79718CEFD /* Check Pods Manifest.lock */,
+				0984A93363A43C79D676D173 /* Check Pods Manifest.lock */,
 				C4CED3021B88FB010008BCF2 /* Sources */,
 				C4CED3031B88FB010008BCF2 /* Frameworks */,
 				C4CED3041B88FB010008BCF2 /* Resources */,
 				640F3BFB1C0CAED000B31DA0 /* Embed App Extensions */,
-				D4F918119689AD65A14544DE /* Embed Pods Frameworks */,
-				BD828F58E5D32F044FA79A74 /* Copy Pods Resources */,
+				88768F59A8FD7A6AB0A57820 /* Embed Pods Frameworks */,
+				A493770ED7C33D680B076871 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1532,7 +1552,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5F0E329A4AC8C9E79718CEFD /* Check Pods Manifest.lock */ = {
+		0984A93363A43C79D676D173 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1547,22 +1567,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BD828F58E5D32F044FA79A74 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ten/Pods-Ten-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D4F918119689AD65A14544DE /* Embed Pods Frameworks */ = {
+		88768F59A8FD7A6AB0A57820 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1577,6 +1582,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ten/Pods-Ten-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A493770ED7C33D680B076871 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ten/Pods-Ten-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1589,7 +1609,7 @@
 				D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */,
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
-				D4A5EF9C1C40765200B48C48 /* SharedInstances.swift in Sources */,
+				D4D0F8891C657834007F3BF6 /* SharedInstances.swift in Sources */,
 				643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
 				D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */,
@@ -1601,11 +1621,13 @@
 				D434AC171C6402090013E27D /* TenMainGridManager.swift in Sources */,
 				C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */,
 				D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */,
-				644F1D131C2AE2D6002E65CE /* AFNetworkTools.swift in Sources */,
 				D4EA5BFA1C13EA12009E9927 /* DKImagePickerController.swift in Sources */,
 				D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */,
 				D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */,
+				D4D0F8871C656F9E007F3BF6 /* AFJSONManager.swift in Sources */,
+				D4D0F8861C656F9E007F3BF6 /* AFImageManager.swift in Sources */,
 				D4EA5C551C142321009E9927 /* SettingButton.swift in Sources */,
+				D4D0F8921C66BE81007F3BF6 /* TenTimeManager.swift in Sources */,
 				164EA74D1BB799E700446691 /* MobileInfo.swift in Sources */,
 				D4EA5BFB1C13EA12009E9927 /* DKImageResource.swift in Sources */,
 				D4EA5C8F1C1424AF009E9927 /* NotificationViewController.swift in Sources */,
@@ -1651,8 +1673,10 @@
 				D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
 				64D306AB1C5F54A30007A4F1 /* PinCodeController.swift in Sources */,
+				D4D0F88B1C66389F007F3BF6 /* TenOtherUsersJSONManager.swift in Sources */,
 				D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */,
 				D45D81E11C4F75160035A213 /* OtherProfilePicsViewController.swift in Sources */,
+				D4D0F88E1C664A11007F3BF6 /* TenGridButton.swift in Sources */,
 				D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */,
 				644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */,
 				D4EA5C6A1C142430009E9927 /* SingleChatMessage.swift in Sources */,
@@ -1800,7 +1824,7 @@
 		};
 		C4CED3261B88FB010008BCF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5A16C3FAA0BEA40461ACD34F /* Pods-Ten.debug.xcconfig */;
+			baseConfigurationReference = 90AE70C3C142642D3AB7DC64 /* Pods-Ten.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1824,7 +1848,7 @@
 		};
 		C4CED3271B88FB010008BCF2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B106EF2E7AE1C61A38E735F5 /* Pods-Ten.release.xcconfig */;
+			baseConfigurationReference = 9923EEB62CE163E76F2BDA14 /* Pods-Ten.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

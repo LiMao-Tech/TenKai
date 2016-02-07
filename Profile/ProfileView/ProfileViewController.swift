@@ -79,19 +79,17 @@ class ProfileViewController: UIViewController,
             avg = 1
         }
         self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
-        self.levelBarImageView.backgroundColor = UIColor.redColor()
-            //LEVEL_COLORS[9]
-        
-        print("level: \(avg-1)")
+        self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }
     
     override func viewWillAppear(animated: Bool) {
         // update profile picture
-        self.navigationController!.navigationBar.translucent = false
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.hidden = false
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController!.navigationBar.translucent = true
+        self.navigationController?.navigationBar.translucent = true
     }
     
     func pushPictureCollectionView() {

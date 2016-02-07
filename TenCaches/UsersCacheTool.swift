@@ -9,7 +9,9 @@
 import UIKit
 
 class UsersCacheTool: NSObject {
+    
     var dbq:FMDatabaseQueue!
+    
     override init() {
         
         let databasePath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0].stringByAppendingString("/userInfo.db")
@@ -76,8 +78,8 @@ class UsersCacheTool: NSObject {
                     user.UserName = rs.stringForColumn("USERNAME")
                     user.PhoneType = Int(rs.intForColumn("PHONETYPE"))
                     user.Gender = Int(rs.intForColumn("GENDER"))
-                    user.Birthday = rs.stringForColumn("BIRTHDAY")
-                    user.JoinedDate = Int(rs.intForColumn("JOINEDDATE"))
+                    user.Birthday = rs.doubleForColumn("BIRTHDAY")
+                    user.JoinedDate = rs.doubleForColumn("JOINEDDATE")
                     user.PCoin = rs.doubleForColumn("PCOIN")
                     user.OuterScore = Int(rs.intForColumn("OUTERSCORE"))
                     user.InnerScore = Int(rs.intForColumn("INNERSCORE"))

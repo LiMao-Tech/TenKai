@@ -92,7 +92,8 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
 //            let params = ["id":SHARED_USER.UserIndex,"pcoin":amount,"note":"花费了\(amount/10)元"]
             let url = UserUrl+"/\(SHARED_USER.UserIndex)?pcoin=\(amount)&note=花费了\(amount/10)元"
             let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-            AFNetworkTools.putMethod(urlComplete!, success: { (task, response) -> Void in
+            
+            AFJSONManager.SharedInstance.putMethod(urlComplete!, success: { (task, response) -> Void in
                 let successAlert = UIAlertController(title: "购买成功", message: nil, preferredStyle: .Alert)
                 let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
                 self.presentViewController(successAlert, animated: true, completion: nil)

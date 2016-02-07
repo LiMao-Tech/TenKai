@@ -9,14 +9,15 @@
 import UIKit
 
 class TenUser: NSObject {
+    
     var UserIndex : Int = 0
     var UserName : String = ""
     var PhoneType : Int = 0
     var Gender : Int = -1
     var Marriage: Int = -1
     
-    var Birthday : String = ""
-    var JoinedDate : Int = 0
+    var Birthday : NSTimeInterval = 0
+    var JoinedDate : NSTimeInterval = 0
     
     var PCoin : Double = 0
     var OuterScore : Int = 0
@@ -28,7 +29,7 @@ class TenUser: NSObject {
     var Longi : Double = -1
     var ProfileUrl = ""
     
-    var Average :Int{
+    var Average :Int {
         get{
             return (self.OuterScore+self.InnerScore)/2
         }
@@ -36,7 +37,7 @@ class TenUser: NSObject {
     
     var Expire = 0
     
-    var AVG:Int = 0{
+    var AVG:Int = 0 {
         didSet{
             if(Tools.getSinceTime(NSDate()) > self.Expire){
                 AVG = self.Average
@@ -54,7 +55,6 @@ class TenUser: NSObject {
     
     override init() {
         super.init()
-        
     }
     
     init(dict:[String : AnyObject]) {
@@ -63,7 +63,7 @@ class TenUser: NSObject {
     }
     
     // this needs to be explicit
-    func ValueWithDict(dict:[String : AnyObject]){
+    func ValueWithDict(dict:[String : AnyObject]) {
         self.setValuesForKeysWithDictionary(dict)
     }
     
@@ -72,5 +72,4 @@ class TenUser: NSObject {
         self.Longi = longi
         return true
     }
-    
 }

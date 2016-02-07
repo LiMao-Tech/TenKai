@@ -177,7 +177,7 @@ class SingleChatController : UIViewController,
             let chatFrame = SingleChatMessageFrame()
             chatFrame.chatMessage = SingleChatMessage(dict: params)
             UserChatModel.allChats().message[tenUser.UserIndex]?.append(chatFrame)
-            AFNetworkTools.postMethod(MsgUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            AFJSONManager.SharedInstance.postMethod(MsgUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
                 MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: chatFrame.chatMessage)
@@ -244,7 +244,7 @@ class SingleChatController : UIViewController,
                 UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0,"time":message.MsgTime]
-                AFNetworkTools.postUserImage(data, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                AFImageManager.SharedInstance.postUserImage(data, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                         print("postImage success")
                         print("response")
                         MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
@@ -496,7 +496,7 @@ class SingleChatController : UIViewController,
             "InnerScore": score,
             "Energy": -1,
             "Active": true]
-        AFNetworkTools.postMethod(RaterUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(RaterUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 self.tenUser.listType = .Active
                 UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
                 ChatFocusState = false
@@ -548,8 +548,11 @@ class SingleChatController : UIViewController,
                     "Receiver": tenUser.UserIndex,
                     "PhoneType": SHARED_USER.PhoneType,
                     "Amount": pcoinAmount!,
-                    "TransTime": NSDate().description]
-                AFNetworkTools.postMethod(PCoinUrl, parameters: params, success: { (task, response) -> Void in
+                    "TransTime": NSDate().description
+                ]
+            
+            AFJSONManager.SharedInstance.postMethod(PCoinUrl, parameters: params, success: { (task, response)
+                    -> Void in
                     let chatFrame = SingleChatMessageFrame()
                     let message = SingleChatMessage()
                     message.Sender = SHARED_USER.UserIndex

@@ -22,7 +22,7 @@ class UserCacheTool: NSObject {
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERINFO (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY TEXT,JOINEDDATE INTEGER,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,MSGINDEX INTEGER,EXPIRE INTEGER,AVG INTEGER)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERINFO (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY INTEGER,JOINEDDATE INTEGER,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,MSGINDEX INTEGER,EXPIRE INTEGER,AVG INTEGER)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
                 print("创表失败！")
@@ -79,14 +79,14 @@ class UserCacheTool: NSObject {
                 while rs.next(){
                     SHARED_USER.UserIndex = userIndex
                     SHARED_USER.UserName = rs.stringForColumn("USERNAME")
-                    SHARED_USER.PhoneType = Int(rs.intForColumn("PHONETYPE"))
-                    SHARED_USER.Gender = Int(rs.intForColumn("GENDER"))
-                    SHARED_USER.Birthday = rs.stringForColumn("BIRTHDAY")
-                    SHARED_USER.JoinedDate = Int(rs.intForColumn("JOINEDDATE"))
+                    SHARED_USER.PhoneType = rs.longForColumn("PHONETYPE")
+                    SHARED_USER.Gender = rs.longForColumn("GENDER")
+                    SHARED_USER.Birthday = NSTimeInterval(rs.longForColumn("BIRTHDAY"))
+                    SHARED_USER.JoinedDate = NSTimeInterval(rs.longForColumn("JOINEDDATE"))
                     SHARED_USER.PCoin = rs.doubleForColumn("PCOIN")
-                    SHARED_USER.OuterScore = Int(rs.intForColumn("OUTERSCORE"))
-                    SHARED_USER.InnerScore = Int(rs.intForColumn("INNERSCORE"))
-                    SHARED_USER.Energy = Int(rs.intForColumn("ENERGY"))
+                    SHARED_USER.OuterScore = rs.longForColumn("OUTERSCORE")
+                    SHARED_USER.InnerScore = rs.longForColumn("INNERSCORE")
+                    SHARED_USER.Energy = rs.longForColumn("ENERGY")
                     SHARED_USER.Hobby = rs.stringForColumn("HOBBY")
                     SHARED_USER.Quote = rs.stringForColumn("QUOTE")
                     SHARED_USER.Lati = rs.doubleForColumn("LATI")

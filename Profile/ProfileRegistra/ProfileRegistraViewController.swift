@@ -408,7 +408,7 @@ class RegistProfileViewController: UIViewController,
             "HashValue":hashResult
         ]
         
-        AFNetworkTools.postMethod(LoginUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(LoginUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             let dict = response as! [String : AnyObject]
             print(dict)
             self.tenLogin = TenLogin(loginDict: dict)
@@ -421,7 +421,11 @@ class RegistProfileViewController: UIViewController,
     
     func postUser() {
         
-        let birthday = birthDate.text!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = NSLocale.systemLocale()
+        
+        let birthday = dateFormatter.dateFromString(birthDate.text!)
         let joinTime = Tools.getSinceTime(NSDate())
         
         let params = [
@@ -429,9 +433,9 @@ class RegistProfileViewController: UIViewController,
             "PhoneType" : 0,
             "Gender" : gender,
             "Marrige" : marriage,
-            "Birthday" : birthday,
+            "Birthday" : birthday!.timeIntervalSince1970,
             "JoinedDate" : joinTime,
-            "PCoin" : "0",
+            "PCoin" : 0,
             "OuterScore" : Int(outerBar.value),
             "InnerScore" : Int(innerBar.value),
             "Energy" : Int(energyBar.value),
@@ -441,7 +445,7 @@ class RegistProfileViewController: UIViewController,
             "Longi" : 0
         ]
         
-        AFNetworkTools.postMethod(UserUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(UserUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print("postUser")
             print(response)
             let dict = response as! NSDictionary
@@ -461,7 +465,7 @@ class RegistProfileViewController: UIViewController,
             SHARED_USER.Portrait = image!
             let params : NSDictionary = ["id": SHARED_USER.UserIndex]
             
-            AFNetworkTools.postHeadImage(HeadImageUploadUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            AFImageManager.SharedInstance.postHeadImage(HeadImageUploadUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("post Image")
                 print(response)
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
@@ -488,7 +492,7 @@ class RegistProfileViewController: UIViewController,
         ]
         
         let putUrl = LoginUrl+"/\(tenLogin!.LoginIndex)"
-        AFNetworkTools.putMethod(putUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.putMethod(putUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print(response)
             let dict = response as! NSDictionary
             SharedUser.changeValue(dict as! [String : AnyObject])

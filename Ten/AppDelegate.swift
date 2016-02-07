@@ -123,7 +123,7 @@ class AppDelegate: UIResponder,
         print(userInfo["aps"])
         
         let notiParams = ["receiver":0,"currIndex":SHARED_USER.MsgIndex]
-        AFNetworkTools.getMethodWithParams(MsgUrl, parameters: notiParams, success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.getMethodWithParams(MsgUrl, parameters: notiParams, success: { (task, response) -> Void in
             print(response)
             let userInfoArray = response as! NSArray
             if userInfoArray.count == 0{
@@ -145,7 +145,7 @@ class AppDelegate: UIResponder,
         })
         
         let msgParams = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
-        AFNetworkTools.getMethodWithParams(MsgUrl,parameters: msgParams, success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.getMethodWithParams(MsgUrl,parameters: msgParams, success: { (task, response) -> Void in
             let userInfoArray = response as! NSArray
             if userInfoArray.count == 0{
                 return
@@ -167,26 +167,34 @@ class AppDelegate: UIResponder,
                     
                     break
                 }
+                
                 let messageFrame = SingleChatMessageFrame()
                 let msgType = info["MsgType"] as! Int
-                if( msgType == 0){
+                
+                if msgType == 0 {
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
-                }else if(msgType == 1){
+                }
+                else if msgType == 1 {
                     let tempMessage = SingleChatMessage(dict: info as! NSDictionary)
-                    AFNetworkTools.getImageMethod(tempMessage.MsgContent, success: { (task, response) -> Void in
-                        print("message Image download Success")
-                        if(UserChatModel.allChats().message[senderIndex] != nil){
-                            tempMessage.MsgImage = response as? UIImage
-                            messageFrame.chatMessage = tempMessage
+                    
+                    
+                    ALAMO_MANAGER.request(.GET, tempMessage.MsgContent) .responseImage { response in
+                        if let image = response.result.value {
+                            if UserChatModel.allChats().message[senderIndex] != nil {
+                                tempMessage.MsgImage = image
+                                messageFrame.chatMessage = tempMessage
+                                UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
+                                MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
+                            }
+                            
                             UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
-                            MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
                         }
-                        UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
-                        }, failure: { (task, error) -> Void in
-                            print("message Image download Failed")
-                             print(error.localizedDescription)
-                    })
-                }else{
+                        else {
+                            print(response.result.error?.localizedDescription)
+                        }
+                    }
+                }
+                else {
                     print("pcoin message get")
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
                     SHARED_USER.PCoin += Double(messageFrame.chatMessage.MsgContent)!
@@ -198,27 +206,27 @@ class AppDelegate: UIResponder,
                     UserChatModel.allChats().message[senderIndex] = [SingleChatMessageFrame]()
                     
                     // get userInfo
-                    AFNetworkTools.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
+                    AFJSONManager.SharedInstance.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
                         print("appdelegate get User")
                         print(response)
                         let userDict = response as! NSDictionary
                         let user = TenUser(dict: userDict as! [String : AnyObject])
                         //get tenUser portrait
-                        AFNetworkTools.getImageMethod(user.ProfileUrl, success: { (task, response) -> Void in
-                            //add to allChats users
-                            print("PorTrait")
-                            print(response)
-                            let portrait = response as! UIImage
-                            user.Portrait = UIImagePNGRepresentation(portrait)
-                            UsersCacheTool().addUserInfoByUser(user)
-                            UserChatModel.allChats().tenUser.append(user)
-                            }, failure: { (task, error) -> Void in
+                        
+                        ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
+                            if let image = response.result.value {
+                                user.Portrait = UIImagePNGRepresentation(image)
+                                UsersCacheTool().addUserInfoByUser(user)
+                                UserChatModel.allChats().tenUser.append(user)
+                            }
+                            else {
                                 print("tenUser portraitfailed")
-                                print(error.localizedDescription)
+                                print(response.result.error?.localizedDescription)
                                 let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
                                 UserChatModel.allChats().userIndex.removeAtIndex(index!)
                                 print(UserChatModel.allChats().userIndex)
-                        })
+                            }
+                        }
                         },
                         failure: { (task, error) -> Void in
                             print("appdelegate tenUser failed")
