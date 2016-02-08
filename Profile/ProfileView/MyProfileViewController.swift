@@ -14,6 +14,12 @@ class MyProfileViewController: ProfileViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+
+        if TenImagesJSONManager.SharedInstance.imagesJSON == nil {
+            albumBtn.enabled = false
+            TenImagesJSONManager.SharedInstance.getJSONEnabling(albumBtn)
+        }
         
         nameLabel.text = SHARED_USER.UserName
         ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970:SHARED_USER.Birthday)))
@@ -37,6 +43,13 @@ class MyProfileViewController: ProfileViewController {
         else {
             self.locationLabel.text = "未知"
         }
+
+        var avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
+        if avg == 0 {
+            avg = 1
+        }
+        self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
+        self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,6 +61,7 @@ class MyProfileViewController: ProfileViewController {
     
     override func pushPictureCollectionView() {
         let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
-            self.navigationController?.pushViewController(pPCVC, animated: true)
+        pPCVC.imagesJSON = TenImagesJSONManager.SharedInstance.imagesJSON
+        self.navigationController?.pushViewController(pPCVC, animated: true)
     }
 }

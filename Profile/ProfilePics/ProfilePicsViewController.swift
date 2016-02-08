@@ -28,12 +28,14 @@ class ProfilePicsViewController: UIViewController {
     var numOfPics: Int = 0
     var dims: [BlockDim] = [BlockDim]()
     
-    var imagesJSON = [AnyObject]()
+    var imagesJSON: [AnyObject]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "相簿"
         layout.blockPixels = CGSizeMake(BLOCK_DIM, BLOCK_DIM)
+
+        dataInit()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -50,11 +52,11 @@ class ProfilePicsViewController: UIViewController {
     }
     
     func dataInit() -> Void {
+        dims.removeAll()
         numOfPics = imagesJSON.count
         for _ in 0 ..< numOfPics {
             dims.append(BlockDim.Std)
         }
-        
     }
     
     func setUpCollectionView(lmCollectionView: UICollectionView) {

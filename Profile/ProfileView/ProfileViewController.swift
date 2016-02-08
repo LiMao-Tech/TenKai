@@ -31,6 +31,8 @@ class ProfileViewController: UIViewController,
     @IBOutlet weak var scoreLabel: UILabel!
     
     let gradientMask = CAGradientLayer()
+    let albumBtn = UIBarButtonItem()
+
     
     var userID: Int!
     
@@ -40,7 +42,7 @@ class ProfileViewController: UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //  set scroll view
         profileIV1 = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
         
@@ -68,18 +70,14 @@ class ProfileViewController: UIViewController,
         self.view.backgroundColor = COLOR_BG
         
         // add Image Button
-        let addImageBtn = UIBarButtonItem(title: "相簿", style: .Plain, target: self, action: "pushPictureCollectionView")
-        self.navigationItem.rightBarButtonItem = addImageBtn
+        albumBtn.title = "相簿"
+        albumBtn.style = .Plain
+        albumBtn.target = self
+        albumBtn.action = "pushPictureCollectionView"
+        self.navigationItem.rightBarButtonItem = albumBtn
         
         // level
         self.separatorImageView.backgroundColor = UIColor.whiteColor()
-        
-        var avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
-        if avg == 0 {
-            avg = 1
-        }
-        self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
-        self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }
     
     override func viewWillAppear(animated: Bool) {

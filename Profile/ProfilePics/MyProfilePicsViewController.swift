@@ -72,7 +72,8 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         super.viewDidLoad()
         
         // data initialization
-        
+        lmCollectionView.reloadData()
+
         // register nib
         let cellNib = UINib(nibName: ProfilePicCellNibName, bundle: nil)
         lmCollectionView.registerNib(cellNib, forCellWithReuseIdentifier: ProfilePicCellIdentifier)
@@ -233,36 +234,22 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         picker.dismissViewControllerAnimated(true, completion: nil)
         
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        
-        // insert in the beginning
-        let path = NSIndexPath(forItem: 0, inSection: 0)
-        
-        self.lmCollectionView.performBatchUpdates({() -> Void in
-            
-            let imageRepre = UIImageJPEGRepresentation(image, 0.75)
-                let params : NSDictionary = ["id": SHARED_USER.UserIndex]
-            
-            if let imageData = imageRepre {
-                
-                AFImageManager.SharedInstance.postUserImage(imageData, parameters: params as! [String : AnyObject], success: {(task, response) -> Void in
-                    self.dims.insert(BlockDim.Std, atIndex: 0)
-                    
-                    self.lmCollectionView.insertItemsAtIndexPaths([path])
-                    },failure: { (task, error) -> Void in
-                        print(error.localizedDescription)
-                })
-            }
-            }
-            , completion: {(done) -> Void in
-                if done {
-                    let cell = self.lmCollectionView.cellForItemAtIndexPath(path) as! ProfilePicCollectionViewCell
-                    
-                    cell.imageView.image = image
-                    self.numOfPics += 1
-                }
-        })
+
+        let imageRepre = UIImageJPEGRepresentation(image, 0.75)
+        let params : NSDictionary = ["id": SHARED_USER.UserIndex]
+
+        if let imageData = imageRepre {
+
+            AFImageManager.SharedInstance.postUserImage(imageData, parameters: params as! [String : AnyObject], success: {(task, response) -> Void in
+                    TenImagesJSONManager.SharedInstance.getJSONUpdating(self)
+
+                },failure: { (task, error) -> Void in
+                    print(error.localizedDescription)
+            })
+        }
     }
-    
+
+
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }

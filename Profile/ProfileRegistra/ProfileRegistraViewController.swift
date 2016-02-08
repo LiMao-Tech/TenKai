@@ -14,9 +14,11 @@ class RegistProfileViewController: UIViewController,
                                     UIAlertViewDelegate,
                                     UINavigationControllerDelegate,
                                     UIImagePickerControllerDelegate,
-                                    UITextViewDelegate
+                                    UITextViewDelegate,
+                                    UITextFieldDelegate
 {
-    
+    let lineLength:CGFloat = SCREEN_WIDTH*0.6
+
     //property
     var password:String!
     var email:String!
@@ -28,9 +30,7 @@ class RegistProfileViewController: UIViewController,
     var chosenImage : UIImage = UIImage()
     var imageUrl : String?
     var counter : Int?
-    
-    
-    
+
     // scrollView Variables
     var scrollView: UIScrollView!
     
@@ -47,7 +47,7 @@ class RegistProfileViewController: UIViewController,
     
     var emailAddr:UILabel!
     
-    var hobby:UITextField!
+    var hobby: UITextField!
     
     var statusDetail:UITextView!
     var placeHolder:UILabel!
@@ -63,9 +63,9 @@ class RegistProfileViewController: UIViewController,
     
     var button:UIButton!
     
-    let lineLength:CGFloat = SCREEN_WIDTH*0.6
-    
     var indicator: UIActivityIndicatorView!
+
+    var kbSize: CGSize?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,6 +125,7 @@ class RegistProfileViewController: UIViewController,
         userLine.backgroundColor = UIColor.whiteColor()
         
         let dateOfBirthLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*4/12, labelWidth: labelLen, labelHeight: 100, labelText: "生日＊")
+
         birthDate = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*4/12+40, lineLength, 20))
         birthDate.textColor = UIColor.whiteColor()
         birthDate.font = UIFont(name: FONTNAME_NORMAL, size: 15)
@@ -160,9 +161,10 @@ class RegistProfileViewController: UIViewController,
         // Hobby Label
         let hobbyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*8/12, labelWidth: labelLen, labelHeight: 100, labelText: "兴趣")
         hobby = UITextField(frame: CGRectMake(textX, SCREEN_HEIGHT*8/12+40, lineLength, 20))
+        hobby.delegate = self
         hobby.textColor = UIColor.whiteColor()
         hobby.font = UIFont(name: FONTNAME_NORMAL, size: 15)
-        hobby.placeholder = "e.g. Music"
+        hobby.placeholder = "例如：音乐"
         hobby.setValue(COLOR_WHITEGRAY, forKeyPath: "_placeholderLabel.textColor")
 
         let hobbyLine = UIView(frame: CGRectMake(textX, CGRectGetMaxY(hobby.frame)+2, lineLength, 1))
@@ -176,11 +178,13 @@ class RegistProfileViewController: UIViewController,
         statusDetail.bounces = false
         statusDetail.font = UIFont.systemFontOfSize(15)
         statusDetail.delegate = self
+
         placeHolder = UILabel(frame: CGRectMake(5, 5, lineLength-5, 20))
         placeHolder.text = "有很多要说。。。"
         placeHolder.textColor = COLOR_WHITEGRAY
         placeHolder.font = UIFont.systemFontOfSize(15)
-        self.statusDetail.addSubview(placeHolder)
+
+        statusDetail.addSubview(placeHolder)
         
         // Inner Label
         let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: labelLen, labelHeight: 100, labelText: "内在")
@@ -257,13 +261,24 @@ class RegistProfileViewController: UIViewController,
         
     }
     
-    //textviewdelegate
+    //textview delegate
     func textViewDidChange(textView: UITextView) {
-        if(textView.text.isEmpty){
+        if textView.text.isEmpty {
             placeHolder.hidden = false
-        }else{
+        }
+        else {
             placeHolder.hidden = true
         }
+    }
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+        return true
+    }
+
+    // text field delegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     func sexBtnClicked(sender:SettingButton){

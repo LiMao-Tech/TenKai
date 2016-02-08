@@ -31,16 +31,9 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // data init
-        let targetUrl = ImagesJSONUrl + String(SHARED_USER.UserIndex)
-        ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON { response in
-            if let values = response.result.value {
-                self.imagesJSON = (values as? [AnyObject])!
-                self.dataInit()
-                self.lmCollectionView.reloadData()
-            }
-        }
+        lmCollectionView.reloadData()
 
+        
         // register nib
         let cellNib = UINib(nibName: ProfilePicCellNibName, bundle: nil)
         lmCollectionView.registerNib(cellNib, forCellWithReuseIdentifier: ProfilePicCellIdentifier)

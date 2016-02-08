@@ -16,10 +16,23 @@ class OtherProfileViewController: ProfileViewController {
     var outerValue: UILabel!
     
     var tenUserJSON: JSON!
+    var imagesJSON: [AnyObject]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        if imagesJSON == nil {
+            self.albumBtn.enabled = false
+
+            let targetUrl = ImagesJSONUrl + String(userID)
+            ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON { response in
+                if let values = response.result.value {
+                    self.imagesJSON = (values as? [AnyObject])!
+                    self.albumBtn.enabled = true
+                }
+            }
+        }
+
         // set user info
         nameLabel.text = tenUserJSON["UserName"].stringValue
         quoteLabel.text = tenUserJSON["Quote"].stringValue
@@ -67,6 +80,14 @@ class OtherProfileViewController: ProfileViewController {
 
         self.view.addSubview(outerBar)
         self.view.addSubview(outerValue)
+
+        // level colors
+        var avg = Int(ceil(tenUserJSON["OuterScore"].doubleValue + tenUserJSON["InnerScore"].doubleValue)/2)
+        if avg == 0 {
+            avg = 1
+        }
+        self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
+        self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,6 +99,7 @@ class OtherProfileViewController: ProfileViewController {
         let pPCVC = OtherProfilePicsViewController(nibName: "OtherProfilePicsViewController", bundle: nil)
         pPCVC.userID = userID
         pPCVC.tenUserJSON = tenUserJSON
+        pPCVC.imagesJSON = imagesJSON
         self.navigationController?.pushViewController(pPCVC, animated: true)
     }
 
