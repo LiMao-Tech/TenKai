@@ -43,6 +43,8 @@
 		C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4CED30F1B88FB010008BCF2 /* Main.storyboard */; };
 		C4CED3161B88FB010008BCF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CED3141B88FB010008BCF2 /* LaunchScreen.xib */; };
 		C4CED3221B88FB010008BCF2 /* TenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED3211B88FB010008BCF2 /* TenTests.swift */; };
+		D414D0631C6E263500C6566F /* Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D414D0621C6E263500C6566F /* Urls.swift */; };
+		D414D0651C6E2AFA00C6566F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D414D0641C6E2AFA00C6566F /* Colors.swift */; };
 		D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC101C6401DD0013E27D /* UserCacheTool.swift */; };
 		D434AC131C6401DD0013E27D /* UsersCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC111C6401DD0013E27D /* UsersCacheTool.swift */; };
 		D434AC161C6402090013E27D /* TenImagesJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC141C6402090013E27D /* TenImagesJSONManager.swift */; };
@@ -105,7 +107,6 @@
 		D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C6E1C142443009E9927 /* LevelUserController.swift */; };
 		D4EA5C761C142452009E9927 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C721C142452009E9927 /* UserCell.swift */; };
 		D4EA5C771C142452009E9927 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C731C142452009E9927 /* UserCell.xib */; };
-		D4EA5C7C1C142471009E9927 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7A1C142471009E9927 /* Helpers.swift */; };
 		D4EA5C7D1C142471009E9927 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7B1C142471009E9927 /* Tools.swift */; };
 		D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */; };
 		D4EA5C841C1424A1009E9927 /* GTFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C801C1424A1009E9927 /* GTFaceView.swift */; };
@@ -365,6 +366,8 @@
 		C4CED31B1B88FB010008BCF2 /* TenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3201B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CED3211B88FB010008BCF2 /* TenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenTests.swift; sourceTree = "<group>"; };
+		D414D0621C6E263500C6566F /* Urls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Urls.swift; sourceTree = "<group>"; };
+		D414D0641C6E2AFA00C6566F /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		D434AC101C6401DD0013E27D /* UserCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCacheTool.swift; path = TenCaches/UserCacheTool.swift; sourceTree = "<group>"; };
 		D434AC111C6401DD0013E27D /* UsersCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsersCacheTool.swift; path = TenCaches/UsersCacheTool.swift; sourceTree = "<group>"; };
 		D434AC141C6402090013E27D /* TenImagesJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenImagesJSONManager.swift; path = TenManagers/TenImagesJSONManager.swift; sourceTree = "<group>"; };
@@ -431,7 +434,6 @@
 		D4EA5C6E1C142443009E9927 /* LevelUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUserController.swift; sourceTree = "<group>"; };
 		D4EA5C721C142452009E9927 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		D4EA5C731C142452009E9927 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
-		D4EA5C7A1C142471009E9927 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		D4EA5C7B1C142471009E9927 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tools.swift; path = ../Ten/Tools.swift; sourceTree = "<group>"; };
 		D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTFaceButton.swift; sourceTree = "<group>"; };
 		D4EA5C801C1424A1009E9927 /* GTFaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTFaceView.swift; sourceTree = "<group>"; };
@@ -804,9 +806,10 @@
 			isa = PBXGroup;
 			children = (
 				D4EA5C6D1C142443009E9927 /* LevelButton.swift */,
-				D4EA5C7A1C142471009E9927 /* Helpers.swift */,
 				D4EA5BE71C13E8D1009E9927 /* Ten-Bridging-Header.h */,
 				D4EA5BE51C13E8C5009E9927 /* Common.swift */,
+				D414D0621C6E263500C6566F /* Urls.swift */,
+				D414D0641C6E2AFA00C6566F /* Colors.swift */,
 				16988ADC1B8A57A500270DBA /* Images.xcassets */,
 				C4CED30B1B88FB010008BCF2 /* AppDelegate.swift */,
 				C4CED30D1B88FB010008BCF2 /* MainViewController.swift */,
@@ -1605,6 +1608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */,
+				D414D0651C6E2AFA00C6566F /* Colors.swift in Sources */,
 				64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */,
 				D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */,
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
@@ -1613,6 +1617,7 @@
 				643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
 				D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */,
+				D414D0631C6E263500C6566F /* Urls.swift in Sources */,
 				D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */,
 				D4EA5C861C1424A1009E9927 /* GTTextAttachment.swift in Sources */,
 				D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */,
@@ -1653,7 +1658,6 @@
 				D4EA5C761C142452009E9927 /* UserCell.swift in Sources */,
 				D4EA5C941C1424C6009E9927 /* RandomAndLevelUser.swift in Sources */,
 				643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */,
-				D4EA5C7C1C142471009E9927 /* Helpers.swift in Sources */,
 				D4EA5C851C1424A1009E9927 /* GTSlider.swift in Sources */,
 				643C8BCC1C4B6B8A00682A60 /* ScoreView.swift in Sources */,
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,

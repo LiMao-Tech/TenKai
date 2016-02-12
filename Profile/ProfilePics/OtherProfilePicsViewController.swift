@@ -95,7 +95,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         }
         else {
             let imageIndex = imageJSON["ID"].stringValue
-            let targetUrl = ImageUrl + imageIndex
+            let targetUrl = Url_Image + imageIndex
 
 
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in

@@ -37,6 +37,7 @@ class RandomAndLevelUserCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         headImage = UIButton(frame: CGRectMake(10, 10, 55, 55))
+        headImage.layer.cornerRadius = 55/2
         headImage.setImage(UIImage(named: "user_pic_110"), forState: UIControlState.Normal)
         
         //nameLabel

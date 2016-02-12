@@ -87,7 +87,7 @@ class RandomUserController: UIViewController,
         let user = JSON(userList[indexPath.row] as! [String: AnyObject])
         
         let imageIndex = user["UserIndex"].stringValue
-        let targetUrl = HeadImageGetUrl + imageIndex
+        let targetUrl = Url_GetHeadImage + imageIndex
         ALAMO_MANAGER.request(.GET, targetUrl)
             .responseImage { response in
                 if let image = response.result.value {

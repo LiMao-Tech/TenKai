@@ -9,6 +9,10 @@
 import UIKit
 import SwiftyJSON
 
+private enum ProfilePic: Int {
+    case First = 1, Second, Third
+}
+
 
 class MyProfilePicsViewController: ProfilePicsViewController,
                                     LMCollectionViewLayoutDelegate,
@@ -38,6 +42,8 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         self.unlockBarBtn.enabled = false
         self.lockBarBtn.enabled = false
         self.deleteBarBtn.enabled = false
+
+        presentViewController(picOptionsController, animated: true, completion: nil)
         
     }
 
@@ -47,6 +53,8 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         self.optionBarBtn.enabled = false
         self.lockBarBtn.enabled = false
         self.deleteBarBtn.enabled = false
+
+        self.lmCollectionView.alpha = 0.5
         
     }
     
@@ -67,10 +75,32 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
         
     }
+
+    let transmitController = UIAlertController(title: "设置中", message: "请稍后。", preferredStyle: .Alert)
+
+    let picOptionsController = UIAlertController(title: "相册设置", message: "", preferredStyle: .ActionSheet)
+    let setPic1  = UIAlertAction(title: "选择首封面", style: .Default, handler: { action in
+        optionMode = 1
+    })
+
+    let setPic2 = UIAlertAction(title: "选择次封面", style: .Default, handler: { action in
+        optionMode = 2
+    })
+
+    let setPic3  = UIAlertAction(title: "选择第三封面", style: .Default, handler: { action in
+        optionMode = 3
+    })
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+
+        // image options
+        picOptionsController.addAction(setPic1)
+        picOptionsController.addAction(setPic2)
+        picOptionsController.addAction(setPic3)
+
         // data initialization
         lmCollectionView.reloadData()
 
@@ -119,23 +149,31 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
     // collection view
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if self.lockMode {
-            let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
-            
-            selectedCell?.imageView.alpha = 0.3
-            selectedCell?.lockImageView.hidden = false
-            
-            self.optionBarBtn.enabled = true
-            self.unlockBarBtn.enabled = true
-            self.deleteBarBtn.enabled = true
-            self.lmCollectionView.alpha = 1
-            
-            lockMode = false
+        let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
+        let imageJSON = JSON(imagesJSON[indexPath.row] as! [String: AnyObject])
+        let id = imageJSON["ID"].intValue
+
+        if MyProfilePicsViewController.optionMode > 0 {
+            presentViewController(transmitController, animated: true, completion: nil)
+            setProfileImage(ProfilePic(rawValue: MyProfilePicsViewController.optionMode)!, id: id)
+
         }
+        else if lockMode {
+            postLockStatus(selectedCell!, id: id, status: true)
+        }
+
+        else if unlockMode {
+            postLockStatus(selectedCell!, id: id, status: false)
+        }
+        else if deleteMode {
+
+        }
+
         else {
             magnifyCellAtIndexPath(indexPath)
         }
-        
+
+        recoverOptionState()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -150,19 +188,27 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         
         let imageName = imageJSON["FileName"].stringValue
         let cachedImage = SHARED_IMAGE_CACHE.imageWithIdentifier(imageName)
-        
+
+
+
+
         if let retrivedImage = cachedImage {
             cell.imageView.image = retrivedImage
+            if imageJSON["IsLocked"].boolValue == true {
+                setLockStatus(cell, status: true)
+            }
         }
         else {
             let imageIndex = imageJSON["ID"].stringValue
-            let targetUrl = ImageUrl + imageIndex
-            
+            let targetUrl = Url_Image + imageIndex
             
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
                 if let image = response.result.value {
                     cell.imageView.image = image
                     SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
+                    if imageJSON["IsLocked"].boolValue == true {
+                        self.setLockStatus(cell, status: true)
+                    }
                 }
                 else {
                     cell.backgroundColor = COLOR_BG
@@ -236,11 +282,11 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
 
         let imageRepre = UIImageJPEGRepresentation(image, 0.75)
-        let params : NSDictionary = ["id": SHARED_USER.UserIndex]
+        let params: [String: AnyObject] = ["id": SHARED_USER.UserIndex]
 
         if let imageData = imageRepre {
 
-            AFImageManager.SharedInstance.postUserImage(imageData, parameters: params as! [String : AnyObject], success: {(task, response) -> Void in
+            AFImageManager.SharedInstance.postUserImage(imageData, parameters: params, success: {(task, response) -> Void in
                     TenImagesJSONManager.SharedInstance.getJSONUpdating(self)
 
                 },failure: { (task, error) -> Void in
@@ -252,5 +298,95 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    // private helpers
+
+    private func setProfileImage(which: ProfilePic, id: Int) {
+
+
+        switch which {
+        case .First:
+            let params = [
+                "ID": id,
+                "ImageType": 0
+            ]
+            postProfilePicChange(params)
+            break
+
+
+        case .Second:
+
+            let params = [
+                "ID": id,
+                "ImageType": 3
+            ]
+            postProfilePicChange(params)
+            break
+
+
+        case .Third:
+
+            let params = [
+                "ID": id,
+                "ImageType": 4
+            ]
+            postProfilePicChange(params)
+            break
+        }
+    }
+
+    private func postProfilePicChange(params: [String: AnyObject]) {
+        ALAMO_MANAGER.request(.POST, Url_SetImage, parameters: params, encoding: .JSON) .responseJSON {
+            response in
+            if response.result.isSuccess {
+                self.transmitController.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+    }
+
+    private func recoverOptionState() {
+        MyProfilePicsViewController.optionMode = 0
+        unlockMode = false
+        lockMode = false
+        deleteMode = false
+        lmCollectionView.alpha = 1.0
+
+
+        optionBarBtn.enabled = true
+        unlockBarBtn.enabled = true
+        lockBarBtn.enabled = true
+        deleteBarBtn.enabled = true
+
+    }
+
+    private func postLockStatus(cell: ProfilePicCollectionViewCell, id: Int, status: Bool ) {
+        let params: [String : AnyObject] = [
+            "ID": id,
+            "IsLocked": status
+        ]
+
+        presentViewController(transmitController, animated: true, completion: nil)
+
+        ALAMO_MANAGER.request(.POST, Url_Lock, parameters: params, encoding: .JSON, headers: nil) .responseJSON { response in
+            if response.result.isSuccess {
+                self.setLockStatus(cell, status: status)
+                self.transmitController.dismissViewControllerAnimated(true, completion: nil)
+            }
+            else {
+                print("Failed to lock!")
+            }
+        }
+    }
+
+    private func setLockStatus(cell: ProfilePicCollectionViewCell, status: Bool) {
+        if status {
+            cell.imageView.alpha = 0.3
+        }
+        else {
+            cell.imageView.alpha = 1.0
+        }
+
+        cell.lockImageView.hidden = !status
     }
 }

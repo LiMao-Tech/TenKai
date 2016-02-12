@@ -177,7 +177,7 @@ class SingleChatController : UIViewController,
             let chatFrame = SingleChatMessageFrame()
             chatFrame.chatMessage = SingleChatMessage(dict: params)
             UserChatModel.allChats().message[tenUser.UserIndex]?.append(chatFrame)
-            AFJSONManager.SharedInstance.postMethod(MsgUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            AFJSONManager.SharedInstance.postMethod(Url_Msg, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
                 MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: chatFrame.chatMessage)
@@ -496,7 +496,7 @@ class SingleChatController : UIViewController,
             "InnerScore": score,
             "Energy": -1,
             "Active": true]
-        AFJSONManager.SharedInstance.postMethod(RaterUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(Url_Rater, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 self.tenUser.listType = .Active
                 UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
                 ChatFocusState = false
@@ -551,7 +551,7 @@ class SingleChatController : UIViewController,
                     "TransTime": NSDate().description
                 ]
             
-            AFJSONManager.SharedInstance.postMethod(PCoinUrl, parameters: params, success: { (task, response)
+            AFJSONManager.SharedInstance.postMethod(Url_PCoin, parameters: params, success: { (task, response)
                     -> Void in
                     let chatFrame = SingleChatMessageFrame()
                     let message = SingleChatMessage()

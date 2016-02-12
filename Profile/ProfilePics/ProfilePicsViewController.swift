@@ -20,7 +20,8 @@ class ProfilePicsViewController: UIViewController {
     let layout = LMCollectionViewLayout()
     
     var isProcessing: Bool = false
-    
+
+    static var optionMode: Int = 0
     var lockMode: Bool = false
     var unlockMode: Bool = false
     var deleteMode: Bool = false

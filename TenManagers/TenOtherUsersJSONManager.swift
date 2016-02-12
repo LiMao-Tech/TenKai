@@ -50,7 +50,7 @@ class TenOtherUsersJSONManager: NSObject {
     }
     
     private func getUserList() -> Void {
-        ALAMO_MANAGER.request(.GET, UserUrl, parameters: nil) .responseJSON { response in
+        ALAMO_MANAGER.request(.GET, Url_User, parameters: nil) .responseJSON { response in
             if let values = response.result.value {
                 self.userList = (values as? [AnyObject])!
                 

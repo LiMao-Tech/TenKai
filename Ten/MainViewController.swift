@@ -242,7 +242,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                     self.presentViewController(insufficientAlert, animated: true, completion: nil)
                 }else{
                     //同步服务器数据，获得相应的等级
-                    AFJSONManager.SharedInstance.putMethod(UserUrl, parameters:["id":SHARED_USER] , success: { (task, response) -> Void in
+                    AFJSONManager.SharedInstance.putMethod(Url_User, parameters:["id":SHARED_USER] , success: { (task, response) -> Void in
                         SHARED_USER.AVG = sender.level
                         SHARED_USER.PCoin -= Double(sender.level*10)
                         UserCacheTool().upDateUserPCoin()

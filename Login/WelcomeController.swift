@@ -137,7 +137,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         let stringHash = "\(emailTF.text!)\(passwordTF.text!)\(timeStamp)\(UUID)\(DEVICE_TOKEN!)\(COMPANYCODE)"
         let hashResult = stringHash.sha256()
         
-        let url:NSString = LoginUrl+"?userID=\(emailTF.text!)&userPWD=\(passwordTF.text!)&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
+        let url:NSString = Url_Login+"?userID=\(emailTF.text!)&userPWD=\(passwordTF.text!)&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
         let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         
         AFJSONManager.SharedInstance.getMethod(urlComplete!, success: { (task, response) -> Void in

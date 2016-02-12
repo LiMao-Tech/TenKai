@@ -25,23 +25,13 @@ class TenImagesJSONManager: NSObject {
     }
 
     func getJSONUpdating(pPVC: MyProfilePicsViewController) -> Void {
-        let targetUrl = ImagesJSONUrl + String(SHARED_USER.UserIndex)
+        let targetUrl = Url_ImagesJSON + String(SHARED_USER.UserIndex)
         ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON { response in
             if let values = response.result.value {
                 self.imagesJSON = (values as? [AnyObject])!
                 pPVC.imagesJSON = self.imagesJSON!
                 pPVC.dataInit()
                 pPVC.lmCollectionView.reloadData()
-            }
-        }
-    }
-    
-    func getJSONEnabling(btnToEnable: UIBarButtonItem) -> Void {
-        let targetUrl = ImagesJSONUrl + String(SHARED_USER.UserIndex)
-        ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON { response in
-            if let values = response.result.value {
-                self.imagesJSON = (values as? [AnyObject])!
-                btnToEnable.enabled = true
             }
         }
     }

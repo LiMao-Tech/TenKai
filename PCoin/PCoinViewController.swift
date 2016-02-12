@@ -90,7 +90,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Destructive) { (ac) -> Void in
             cell.buyButton.enabled = false
 //            let params = ["id":SHARED_USER.UserIndex,"pcoin":amount,"note":"花费了\(amount/10)元"]
-            let url = UserUrl+"/\(SHARED_USER.UserIndex)?pcoin=\(amount)&note=花费了\(amount/10)元"
+            let url = Url_User + "/\(SHARED_USER.UserIndex)?pcoin=\(amount)&note=花费了\(amount/10)元"
             let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
             
             AFJSONManager.SharedInstance.putMethod(urlComplete!, success: { (task, response) -> Void in

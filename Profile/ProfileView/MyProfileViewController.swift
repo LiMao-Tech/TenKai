@@ -15,10 +15,9 @@ class MyProfileViewController: ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
-        if TenImagesJSONManager.SharedInstance.imagesJSON == nil {
-            albumBtn.enabled = false
-            TenImagesJSONManager.SharedInstance.getJSONEnabling(albumBtn)
+        let sharedJSON = TenImagesJSONManager.SharedInstance.imagesJSON
+        if sharedJSON != nil {
+            imagesJSON = sharedJSON
         }
         
         nameLabel.text = SHARED_USER.UserName
@@ -61,7 +60,8 @@ class MyProfileViewController: ProfileViewController {
     
     override func pushPictureCollectionView() {
         let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
-        pPCVC.imagesJSON = TenImagesJSONManager.SharedInstance.imagesJSON
+        pPCVC.imagesJSON = imagesJSON
+        TenImagesJSONManager.SharedInstance.imagesJSON = imagesJSON
         self.navigationController?.pushViewController(pPCVC, animated: true)
     }
 }

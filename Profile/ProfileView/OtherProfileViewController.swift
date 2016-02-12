@@ -16,22 +16,9 @@ class OtherProfileViewController: ProfileViewController {
     var outerValue: UILabel!
     
     var tenUserJSON: JSON!
-    var imagesJSON: [AnyObject]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if imagesJSON == nil {
-            self.albumBtn.enabled = false
-
-            let targetUrl = ImagesJSONUrl + String(userID)
-            ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON { response in
-                if let values = response.result.value {
-                    self.imagesJSON = (values as? [AnyObject])!
-                    self.albumBtn.enabled = true
-                }
-            }
-        }
 
         // set user info
         nameLabel.text = tenUserJSON["UserName"].stringValue

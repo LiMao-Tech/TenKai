@@ -123,7 +123,7 @@ class AppDelegate: UIResponder,
         print(userInfo["aps"])
         
         let notiParams = ["receiver":0,"currIndex":SHARED_USER.MsgIndex]
-        AFJSONManager.SharedInstance.getMethodWithParams(MsgUrl, parameters: notiParams, success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg, parameters: notiParams, success: { (task, response) -> Void in
             print(response)
             let userInfoArray = response as! NSArray
             if userInfoArray.count == 0{
@@ -145,7 +145,7 @@ class AppDelegate: UIResponder,
         })
         
         let msgParams = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
-        AFJSONManager.SharedInstance.getMethodWithParams(MsgUrl,parameters: msgParams, success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg,parameters: msgParams, success: { (task, response) -> Void in
             let userInfoArray = response as! NSArray
             if userInfoArray.count == 0{
                 return
@@ -206,7 +206,7 @@ class AppDelegate: UIResponder,
                     UserChatModel.allChats().message[senderIndex] = [SingleChatMessageFrame]()
                     
                     // get userInfo
-                    AFJSONManager.SharedInstance.getMethodWithParams(UserUrl, parameters: ["id":senderIndex], success: { (task, response) -> Void in
+                    AFJSONManager.SharedInstance.getMethodWithParams(Url_User, parameters: ["id":senderIndex], success: { (task, response) -> Void in
                         print("appdelegate get User")
                         print(response)
                         let userDict = response as! NSDictionary
@@ -321,7 +321,7 @@ class AppDelegate: UIResponder,
             "Longi" : loc.coordinate.longitude
         ]
             
-        let targetUrl = UserUrl+String(SHARED_USER.UserIndex)
+        let targetUrl = Url_User + String(SHARED_USER.UserIndex)
          
             ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON
                 {

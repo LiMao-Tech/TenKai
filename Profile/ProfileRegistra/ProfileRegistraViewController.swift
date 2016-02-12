@@ -423,7 +423,7 @@ class RegistProfileViewController: UIViewController,
             "HashValue":hashResult
         ]
         
-        AFJSONManager.SharedInstance.postMethod(LoginUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(Url_Login, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             let dict = response as! [String : AnyObject]
             print(dict)
             self.tenLogin = TenLogin(loginDict: dict)
@@ -460,7 +460,7 @@ class RegistProfileViewController: UIViewController,
             "Longi" : 0
         ]
         
-        AFJSONManager.SharedInstance.postMethod(UserUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(Url_User, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print("postUser")
             print(response)
             let dict = response as! NSDictionary
@@ -480,7 +480,7 @@ class RegistProfileViewController: UIViewController,
             SHARED_USER.Portrait = image!
             let params : NSDictionary = ["id": SHARED_USER.UserIndex]
             
-            AFImageManager.SharedInstance.postHeadImage(HeadImageUploadUrl, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            AFImageManager.SharedInstance.postHeadImage(Url_UploadHeadImage, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                 print("post Image")
                 print(response)
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
@@ -506,7 +506,7 @@ class RegistProfileViewController: UIViewController,
             "HashValue": tenLogin!.HashValue
         ]
         
-        let putUrl = LoginUrl+"/\(tenLogin!.LoginIndex)"
+        let putUrl = Url_Login+"/\(tenLogin!.LoginIndex)"
         AFJSONManager.SharedInstance.putMethod(putUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print(response)
             let dict = response as! NSDictionary
