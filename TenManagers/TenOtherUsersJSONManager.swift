@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 
 class TenOtherUsersJSONManager: NSObject {
-    
+
     
     static let SharedInstance = TenOtherUsersJSONManager()
     

@@ -11,9 +11,9 @@ import Foundation
 let Url_Home = "http://www.limao-tech.com/Ten/"
 
 let Url_Api = Url_Home + "api/"
-let Url_Login = Url_Api + "TenLogins"
-let Url_User = Url_Api + "TenUsers"
-let Url_Msg = Url_Api + "TenMsgs"
+let Url_Login = Url_Api + "TenLogins/"
+let Url_User = Url_Api + "TenUsers/"
+let Url_Msg = Url_Api + "TenMsgs/"
 let Url_PCoin = Url_Api + "PCoinTrans/"
 let Url_Rater = Url_Api + "Rater/"
 

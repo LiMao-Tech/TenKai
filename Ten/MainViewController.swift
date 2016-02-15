@@ -113,11 +113,12 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(distanceLabel)
       
         distanceChange()
-        
         }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
+
+        updateLocation()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -339,6 +340,37 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.circularMenuVC.resignFirstResponder()
         }
     }
-    
 
+
+    private func updateLocation() {
+        if let loc = LOC_MANAGER.location {
+
+            // Location Manager
+            let params = [
+                "UserIndex": SHARED_USER.UserIndex,
+                "UserName" : SHARED_USER.UserName,
+                "PhoneType" : SHARED_USER.PhoneType,
+                "Gender" : SHARED_USER.Gender,
+                "Marrige" : SHARED_USER.Marriage,
+                "Birthday" : SHARED_USER.Birthday,
+                "JoinedDate" : SHARED_USER.JoinedDate,
+                "PCoin" : SHARED_USER.PCoin,
+                "ProfileUrl":SHARED_USER.ProfileUrl,
+                "OuterScore" : SHARED_USER.OuterScore,
+                "InnerScore" : SHARED_USER.InnerScore,
+                "Energy" : SHARED_USER.Energy,
+                "Hobby" : SHARED_USER.Hobby,
+                "Quote" : SHARED_USER.Quote,
+                "Lati" : loc.coordinate.latitude,
+                "Longi" : loc.coordinate.longitude
+            ]
+
+            let targetUrl = Url_User + String(SHARED_USER.UserIndex)
+
+            ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON
+            {
+                    response in
+            }
+        }
+    }
 }

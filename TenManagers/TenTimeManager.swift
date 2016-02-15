@@ -18,4 +18,5 @@ class TenTimeManager: NSObject {
         let components = calendar!.components(.Year, fromDate: birthday, toDate: NSDate(), options: .MatchFirst)
         return components.year
     }
+
 }

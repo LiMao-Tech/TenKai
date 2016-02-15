@@ -26,7 +26,7 @@ class OtherProfileViewController: ProfileViewController {
         ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970: tenUserJSON["Birthday"].doubleValue)))
         
         self.pcoindistanceImageView.image = UIImage(named: "icon_profile_distance")
-        self.pcoindistanceLabel.text = "1, 999 kM"
+        self.pcoindistanceLabel.text = ""
         
         outerBar = GTSlider(frame: CGRectMake(SCREEN_WIDTH/5, SCREEN_HEIGHT*11/12, SCREEN_WIDTH/2, SCREEN_HEIGHT/12))
         
@@ -64,6 +64,23 @@ class OtherProfileViewController: ProfileViewController {
                 self.locationLabel.text = "未知"
             }
         }
+
+        // set distance
+        if let distDouble = LOC_MANAGER.location?.distanceFromLocation(loc) {
+            if distDouble > 1000 {
+                let dist = String(Int(distDouble/1000))
+                self.pcoindistanceLabel.text = "\(dist) kM"
+            }
+            else {
+                let dist = String(Int(distDouble))
+                self.pcoindistanceLabel.text = "\(dist) m"
+            }
+
+        }
+        else {
+            self.pcoindistanceLabel.text = "??"
+        }
+
 
         self.view.addSubview(outerBar)
         self.view.addSubview(outerValue)

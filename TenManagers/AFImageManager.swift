@@ -12,6 +12,7 @@ import AFNetworking
 class AFImageManager: NSObject {
     
     static let SharedInstance = AFImageManager()
+
     private let afHttpSessionManager = AFHTTPSessionManager()
     
     override init() {

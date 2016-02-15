@@ -69,7 +69,9 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     
     // TODO: tuantuan 
     func pushChatView() -> Void {
-    
+        let singleChatC = SingleChatController()
+        singleChatC.tenUser.UserIndex = userID
+        self.presentViewController(singleChatC, animated: true, completion: nil)
     }
 
     // lm collection view
@@ -96,7 +98,6 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         else {
             let imageIndex = imageJSON["ID"].stringValue
             let targetUrl = Url_Image + imageIndex
-
 
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
                 if let image = response.result.value {
@@ -140,6 +141,5 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
                 novaCell?.imageView.image = cellImage
                 self.isProcessing = false
         })
-        
     }
 }

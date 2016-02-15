@@ -50,11 +50,6 @@ class ProfileViewController: UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if imagesJSON == nil {
-            albumBtn.enabled = false
-            getImagesJSON()
-        }
         
         profileSV.delegate = self
 
@@ -77,6 +72,11 @@ class ProfileViewController: UIViewController,
         // update profile picture
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.hidden = false
+
+        if imagesJSON == nil {
+            albumBtn.enabled = false
+            getImagesJSON()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -93,71 +93,93 @@ class ProfileViewController: UIViewController,
     }
 
     private func getImagesJSON() {
-        let targetUrl = Url_ImagesJSON + String(userID)
 
-        ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON {
-            response in
-            if let values = response.result.value {
-                self.albumBtn.enabled = true
-                self.imagesJSON = (values as? [AnyObject])!
-
-                for obj in self.imagesJSON! {
-                    let imageJSON = JSON(obj)
-
-                    if imageJSON["ImageType"].intValue == 0 {
-                        self.image1JSON = imageJSON
-                    }
-
-                    if imageJSON["ImageType"].intValue == 3 {
-                        self.numProfilePics = 2
-                        self.image2JSON = imageJSON
-                    }
-
-                    if imageJSON["ImageType"].intValue == 4 {
-                        self.numProfilePics = 3
-                        self.image3JSON = imageJSON
-                    }
-                }
-
-                self.setScrollView()
-                self.getProfileImages()
-
+        if let json = TenImagesJSONManager.SharedInstance.imagesJSON {
+            if userID == SHARED_USER.UserIndex {
+                imagesJSON = json
             }
         }
+        else {
+            let targetUrl = Url_ImagesJSON + String(userID)
 
+            ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON {
+                response in
+                if let values = response.result.value {
+                    self.albumBtn.enabled = true
+                    self.imagesJSON = (values as? [AnyObject])!
+
+                    for obj in self.imagesJSON! {
+                        let imageJSON = JSON(obj)
+
+                        if imageJSON["ImageType"].intValue == 0 {
+                            self.image1JSON = imageJSON
+                        }
+
+                        if imageJSON["ImageType"].intValue == 3 {
+                            self.numProfilePics = 2
+                            self.image2JSON = imageJSON
+                        }
+
+                        if imageJSON["ImageType"].intValue == 4 {
+                            self.numProfilePics = 3
+                            self.image3JSON = imageJSON
+                        }
+                    }
+                    
+                    self.setScrollView()
+                    self.getProfileImages()
+                    
+                }
+            }
+        }
     }
     
     private func getProfileImages() -> Void {
         if let json = image1JSON {
-            let targetUrl = Url_Image + json["ID"].stringValue
-            ALAMO_MANAGER.request(.GET, targetUrl)
-                .responseImage { response in
+
+
+            if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
+                self.profileIV1?.image = image
+            }
+            else {
+                let targetUrl = Url_Image + json["ID"].stringValue
+                ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
                     if let image = response.result.value {
                         self.profileIV1?.image = image
                         SHARED_IMAGE_CACHE.addImage(image, withIdentifier: json["FileName"].stringValue)
                     }
+                }
             }
+
         }
 
         if let json = image2JSON {
-            let targetUrl = Url_Image + json["ID"].stringValue
-            ALAMO_MANAGER.request(.GET, targetUrl)
-                .responseImage { response in
+            if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
+                self.profileIV2?.image = image
+            }
+            else {
+                let targetUrl = Url_Image + json["ID"].stringValue
+                ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
                     if let image = response.result.value {
                         self.profileIV2?.image = image
                         SHARED_IMAGE_CACHE.addImage(image, withIdentifier: json["FileName"].stringValue)
                     }
+                }
             }
         }
 
         if let json = image3JSON {
-            let targetUrl = Url_Image + json["ID"].stringValue
-            ALAMO_MANAGER.request(.GET, targetUrl)
-                .responseImage { response in
+            if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
+                self.profileIV3?.image = image
+            }
+            else {
+                let targetUrl = Url_Image + json["ID"].stringValue
+                ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
                     if let image = response.result.value {
                         self.profileIV3?.image = image
                         SHARED_IMAGE_CACHE.addImage(image, withIdentifier: json["FileName"].stringValue)
                     }
+                }
             }
         }
     }
@@ -180,10 +202,10 @@ class ProfileViewController: UIViewController,
 
         profileSV.addSubview(profileIV1!)
 
-        if numProfilePics == 2 {
+        if numProfilePics > 1 {
             profileSV.addSubview(profileIV2!)
         }
-        if numProfilePics == 3 {
+        if numProfilePics > 2 {
             profileSV.addSubview(profileIV3!)
         }
 

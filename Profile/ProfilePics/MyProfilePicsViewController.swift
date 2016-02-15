@@ -43,8 +43,9 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         self.lockBarBtn.enabled = false
         self.deleteBarBtn.enabled = false
 
+        self.lmCollectionView.alpha = 0.5
+
         presentViewController(picOptionsController, animated: true, completion: nil)
-        
     }
 
     @IBAction func unlockBarBtn(sender: AnyObject) {
@@ -69,16 +70,19 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     }
     
     @IBAction func deleteBarBtn(sender: AnyObject) {
+        self.deleteMode = true
+
         self.optionBarBtn.enabled = false
         self.unlockBarBtn.enabled = false
         self.lockBarBtn.enabled = false
 
-        
+        self.lmCollectionView.alpha = 0.5
     }
 
     let transmitController = UIAlertController(title: "设置中", message: "请稍后。", preferredStyle: .Alert)
 
     let picOptionsController = UIAlertController(title: "相册设置", message: "", preferredStyle: .ActionSheet)
+    
     let setPic1  = UIAlertAction(title: "选择首封面", style: .Default, handler: { action in
         optionMode = 1
     })
@@ -90,6 +94,10 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     let setPic3  = UIAlertAction(title: "选择第三封面", style: .Default, handler: { action in
         optionMode = 3
     })
+
+    var image1JSON: JSON?
+    var image2JSON: JSON?
+    var image3JSON: JSON?
 
     
     override func viewDidLoad() {
@@ -166,7 +174,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             postLockStatus(selectedCell!, id: id, status: false)
         }
         else if deleteMode {
-
+            deleteImage(id)
         }
 
         else {
@@ -188,8 +196,6 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         
         let imageName = imageJSON["FileName"].stringValue
         let cachedImage = SHARED_IMAGE_CACHE.imageWithIdentifier(imageName)
-
-
 
 
         if let retrivedImage = cachedImage {
@@ -357,7 +363,6 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         unlockBarBtn.enabled = true
         lockBarBtn.enabled = true
         deleteBarBtn.enabled = true
-
     }
 
     private func postLockStatus(cell: ProfilePicCollectionViewCell, id: Int, status: Bool ) {
@@ -388,5 +393,17 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         }
 
         cell.lockImageView.hidden = !status
+    }
+
+    private func deleteImage(id: Int) {
+        let params = [
+            "id": id
+        ]
+        presentViewController(transmitController, animated: true, completion: nil)
+        ALAMO_MANAGER.request(.DELETE, Url_DeletePic, parameters: params, encoding: .JSON) .responseJSON{
+            response in
+            self.transmitController.dismissViewControllerAnimated(true, completion: nil)
+
+        }
     }
 }

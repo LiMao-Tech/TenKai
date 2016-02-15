@@ -14,11 +14,6 @@ class MyProfileViewController: ProfileViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let sharedJSON = TenImagesJSONManager.SharedInstance.imagesJSON
-        if sharedJSON != nil {
-            imagesJSON = sharedJSON
-        }
         
         nameLabel.text = SHARED_USER.UserName
         ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970:SHARED_USER.Birthday)))
@@ -56,11 +51,16 @@ class MyProfileViewController: ProfileViewController {
         
         // Dispose of any resources that can be recreated.
     }
+
     
     
     override func pushPictureCollectionView() {
         let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
         pPCVC.imagesJSON = imagesJSON
+        pPCVC.image1JSON = image1JSON
+        pPCVC.image2JSON = image2JSON
+        pPCVC.image3JSON = image3JSON
+
         TenImagesJSONManager.SharedInstance.imagesJSON = imagesJSON
         self.navigationController?.pushViewController(pPCVC, animated: true)
     }
