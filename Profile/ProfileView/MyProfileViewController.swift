@@ -56,6 +56,7 @@ class MyProfileViewController: ProfileViewController {
     
     override func pushPictureCollectionView() {
         let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
+        
         pPCVC.imagesJSON = imagesJSON
         pPCVC.image1JSON = image1JSON
         pPCVC.image2JSON = image2JSON

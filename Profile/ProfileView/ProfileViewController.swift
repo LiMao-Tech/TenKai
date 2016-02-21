@@ -36,7 +36,6 @@ class ProfileViewController: UIViewController,
     var numProfilePics = 1
     
     var userID: Int!
-
     var imagesJSON: [AnyObject]?
 
 
@@ -76,6 +75,7 @@ class ProfileViewController: UIViewController,
         if imagesJSON == nil {
             albumBtn.enabled = false
             getImagesJSON()
+
         }
     }
     
@@ -104,6 +104,7 @@ class ProfileViewController: UIViewController,
 
             ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON {
                 response in
+                print(response.debugDescription)
                 if let values = response.result.value {
                     self.albumBtn.enabled = true
                     self.imagesJSON = (values as? [AnyObject])!

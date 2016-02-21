@@ -34,7 +34,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     var gap : Int!
     var btns = Array<UIButton!>()
     
-    var portraitBtn: UIButton = UIButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/5, SCREEN_WIDTH/5))
+    let portraitBtn: UIButton = UIButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/5, SCREEN_WIDTH/5))
     
     let distances = [50, 100, 500, 1000]
     var index = 0
@@ -55,6 +55,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         //protraitBtn
         portraitBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
         portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+        portraitBtn.addTarget(self, action: "pushUserProfileVC", forControlEvents: .TouchUpInside)
         
         // set circularMenu
         self.circularMenuVC.circularMenuDelegate = self
@@ -147,8 +148,10 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func toTargetUser(sender: TenGridButton) {
         let otherPVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
-        otherPVC.userID = sender.tenUserJSON["UserIndex"].intValue
-        otherPVC.tenUserJSON = sender.tenUserJSON
+
+        let tenUser = TenUser(dict: sender.tenUserDict)
+        otherPVC.tenUser = tenUser
+        otherPVC.userID = tenUser.UserIndex
         self.navigationController?.pushViewController(otherPVC, animated: true)
     }
 
@@ -156,7 +159,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         if(index > 0){
             index -= 1
             distance.setValue(Float(index), animated: true)
-            distanceLabel.text = "\(distances[index]) km"
+            distanceLabel.text = "\(distances[index]) m"
         }
     }
     
@@ -165,23 +168,24 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         if(index < 3){
             index += 1
             distance.setValue(Float(index), animated: true)
-            distanceLabel.text = "\(distances[index]) km"
+            distanceLabel.text = "\(distances[index]) m"
         }
     }
     
     func distanceChange() {
         index = Int(distance.value+0.5)
         distance.setValue(Float(index), animated: true)
-        distanceLabel.text = "\(distances[index]) km"
+        distanceLabel.text = "\(distances[index]) m"
     }
     
     func refreshBtnClicked() {
         self.refreshBtn.enabled = false
         TenMainGridManager.SharedInstance.clearNodes()
-        TenMainGridManager.SharedInstance.numToGen = 5
+        TenMainGridManager.SharedInstance.numToGen = 10
         
         generateNodes()
-        self.refreshBtn.enabled = true
+        view.bringSubviewToFront(portraitBtn)
+        refreshBtn.enabled = true
     }
     
     
@@ -316,9 +320,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             self.navigationController?.pushViewController(eVC, animated: true)
 
         case 3:
-            let pVC = MyProfileViewController(nibName: "ProfileViewController", bundle: nil)
-            pVC.userID = SHARED_USER.UserIndex
-            self.navigationController?.pushViewController(pVC, animated: true)
+            pushUserProfileVC()
         
         case 4:
             self.navigationController?.navigationBar.hidden = true
@@ -339,6 +341,12 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         default:
             self.circularMenuVC.resignFirstResponder()
         }
+    }
+
+    func pushUserProfileVC() {
+        let pVC = MyProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        pVC.userID = SHARED_USER.UserIndex
+        self.navigationController?.pushViewController(pVC, animated: true)
     }
 
 

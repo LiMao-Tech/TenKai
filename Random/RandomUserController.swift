@@ -64,10 +64,12 @@ class RandomUserController: UIViewController,
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let user = JSON(userList[indexPath.row] as! [String: AnyObject])
+        let user = userList[indexPath.row] as! [String: AnyObject]
         let otherPVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
-        otherPVC.userID = user["UserIndex"].intValue
-        otherPVC.tenUserJSON = user
+
+        let tenUser = TenUser(dict: user)
+        otherPVC.tenUser = tenUser
+        otherPVC.userID = tenUser.UserIndex
         self.navigationController?.pushViewController(otherPVC, animated: true)
     }
     

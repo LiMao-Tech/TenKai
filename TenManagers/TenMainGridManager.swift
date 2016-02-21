@@ -65,10 +65,10 @@ class TenMainGridManager: NSObject {
             node.layer.cornerRadius = SCREEN_WIDTH/40
             
             nodes.append(node)
-            node.tenUserJSON = JSON(gridUsers[i] as! [String : AnyObject])
+            node.tenUserDict = gridUsers[i] as! [String : AnyObject]
             
-            let userJSONDict = node.tenUserJSON
-            if userJSONDict["Gender"].intValue == 0 {
+            let userJSON = JSON(node.tenUserDict)
+            if userJSON["Gender"].intValue == 0 {
                 node.backgroundColor = COLOR_MALE
             }
             else {

@@ -25,8 +25,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
 
-    var userID: Int!
-    var tenUserJSON: JSON!
+    var tenUser: TenUser!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,11 +49,11 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         self.navigationItem.rightBarButtonItem = chatBtn;
         
         // labels
-        nameLabel.text = tenUserJSON["UserName"].stringValue
-        ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970: tenUserJSON["Birthday"].doubleValue)))
+        nameLabel.text = tenUser.UserName
+        ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970: tenUser.Birthday)))
 
         // level colors
-        var avg = Int(ceil(tenUserJSON["OuterScore"].doubleValue + tenUserJSON["InnerScore"].doubleValue)/2)
+        var avg = (tenUser.OuterScore + tenUser.InnerScore)/2
         if avg == 0 {
             avg = 1
         }
@@ -70,7 +69,9 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     // TODO: tuantuan 
     func pushChatView() -> Void {
         let singleChatC = SingleChatController()
-        singleChatC.tenUser.UserIndex = userID
+        singleChatC.tenUser = tenUser
+
+
         self.presentViewController(singleChatC, animated: true, completion: nil)
     }
 

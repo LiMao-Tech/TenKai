@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 import CoreLocation
 
 class OtherProfileViewController: ProfileViewController {
@@ -15,15 +14,15 @@ class OtherProfileViewController: ProfileViewController {
     var outerBar: GTSlider!
     var outerValue: UILabel!
     
-    var tenUserJSON: JSON!
+    var tenUser: TenUser!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // set user info
-        nameLabel.text = tenUserJSON["UserName"].stringValue
-        quoteLabel.text = tenUserJSON["Quote"].stringValue
-        ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970: tenUserJSON["Birthday"].doubleValue)))
+        nameLabel.text = tenUser.UserName
+        quoteLabel.text = tenUser.Quote
+        ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970: tenUser.Birthday)))
         
         self.pcoindistanceImageView.image = UIImage(named: "icon_profile_distance")
         self.pcoindistanceLabel.text = ""
@@ -36,11 +35,11 @@ class OtherProfileViewController: ProfileViewController {
         outerBar.addTarget(self, action: "outerBarChanged", forControlEvents: UIControlEvents.ValueChanged)
         
         outerValue = UILabel(frame: CGRectMake(SCREEN_WIDTH*4/5, SCREEN_HEIGHT*11/12, SCREEN_WIDTH/2, SCREEN_HEIGHT/12))
-        outerValue.text = tenUserJSON["OuterScore"].stringValue
+        outerValue.text = String(tenUser.OuterScore)
         outerValue.textColor = UIColor.whiteColor()
 
         // get location
-        let loc = CLLocation(latitude: tenUserJSON["Lati"].doubleValue, longitude: tenUserJSON["Longi"].doubleValue)
+        let loc = CLLocation(latitude: tenUser.Lati, longitude: tenUser.Longi)
         GEO_DECODER.reverseGeocodeLocation(loc) {
             (placemarks, error) -> Void in
             if placemarks != nil {
@@ -86,7 +85,7 @@ class OtherProfileViewController: ProfileViewController {
         self.view.addSubview(outerValue)
 
         // level colors
-        var avg = Int(ceil(tenUserJSON["OuterScore"].doubleValue + tenUserJSON["InnerScore"].doubleValue)/2)
+        var avg = (tenUser.OuterScore + tenUser.InnerScore)/2
         if avg == 0 {
             avg = 1
         }
@@ -101,8 +100,7 @@ class OtherProfileViewController: ProfileViewController {
     
     override func pushPictureCollectionView() {
         let pPCVC = OtherProfilePicsViewController(nibName: "OtherProfilePicsViewController", bundle: nil)
-        pPCVC.userID = userID
-        pPCVC.tenUserJSON = tenUserJSON
+        pPCVC.tenUser = tenUser
         pPCVC.imagesJSON = imagesJSON
         self.navigationController?.pushViewController(pPCVC, animated: true)
     }

@@ -31,7 +31,7 @@ let Url_GetHeadImage = Url_ImageMaster + "GetProfileByUser?userIndex="
 let Url_UploadHeadImage = Url_ImageMaster + "UploadProfileImage/"
 let Url_UploadPhotos = Url_ImageMaster + "UploadPhotos/"
 
-let Url_SetImage = Url_ImageMaster + "Set2Profile"
+let Url_SetImage = Url_ImageMaster + "ChangeImageType"
 let Url_Lock = Url_ImageMaster + "SetIsLocked"
 let Url_PutImageJSON = Url_ImageMaster + "PutTenImage"
 

@@ -11,5 +11,5 @@ import SwiftyJSON
 
 class TenGridButton: UIButton {
     
-    var tenUserJSON: JSON!
+    var tenUserDict: [String: AnyObject]!
 }
