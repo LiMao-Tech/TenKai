@@ -15,7 +15,8 @@ class RegistProfileViewController: UIViewController,
                                     UINavigationControllerDelegate,
                                     UIImagePickerControllerDelegate,
                                     UITextViewDelegate,
-                                    UITextFieldDelegate
+                                    UITextFieldDelegate,
+                                    UIScrollViewDelegate
 {
     let lineLength:CGFloat = SCREEN_WIDTH*0.6
 
@@ -92,6 +93,7 @@ class RegistProfileViewController: UIViewController,
         scrollView = UIScrollView(frame: CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64))
         scrollView!.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT*1.3+30)
         scrollView!.bounces = false
+        scrollView.delegate = self
         
         
         button = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,43))
@@ -259,6 +261,12 @@ class RegistProfileViewController: UIViewController,
         
         /*----------- ELCImagePicker Edition -----------*/
         
+    }
+    
+    //scrollView delegate
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
     
     //textview delegate

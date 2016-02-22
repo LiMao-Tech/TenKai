@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="PT_Sans-Web-Regular.ttf">
@@ -71,15 +71,6 @@
                         <action selector="loginAct:" destination="-1" eventType="touchUpInside" id="zoQ-Gd-fu8"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两次密码不匹配" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7g8-Eb-5yg">
-                    <rect key="frame" x="258" y="223" width="84" height="15"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="15" id="hNr-X7-2Td"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NnX-OE-8WI" userLabel="signup">
                     <rect key="frame" x="100" y="417" width="400" height="28"/>
                     <constraints>
@@ -124,12 +115,21 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yet-uw-ctN">
-                    <rect key="frame" x="340" y="366.5" width="200" height="1"/>
+                    <rect key="frame" x="340" y="367" width="200" height="1"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="u79-ZI-tuf"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两次密码不匹配" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7g8-Eb-5yg">
+                    <rect key="frame" x="258" y="223" width="84" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="hNr-X7-2Td"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -158,6 +158,7 @@
                 <constraint firstItem="NnX-OE-8WI" firstAttribute="top" secondItem="UUS-hZ-K9f" secondAttribute="bottom" constant="80" id="alg-mO-Vtw"/>
                 <constraint firstItem="UUS-hZ-K9f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="100" id="eCA-tP-Pfr"/>
                 <constraint firstItem="7g8-Eb-5yg" firstAttribute="centerX" secondItem="Da3-Xl-bzy" secondAttribute="centerX" id="hha-KZ-gXB"/>
+                <constraint firstItem="7g8-Eb-5yg" firstAttribute="centerX" secondItem="Da3-Xl-bzy" secondAttribute="centerX" id="iJj-rW-MDe"/>
                 <constraint firstItem="CC6-wY-h5G" firstAttribute="top" secondItem="3v2-Oi-1aP" secondAttribute="bottom" constant="59" id="jhD-EL-Kc5"/>
                 <constraint firstAttribute="trailing" secondItem="Da3-Xl-bzy" secondAttribute="trailing" constant="30" id="kgB-kf-lT5"/>
                 <constraint firstItem="Yet-uw-ctN" firstAttribute="top" secondItem="UUS-hZ-K9f" secondAttribute="bottom" constant="49.5" id="nAU-Cg-BBy"/>
@@ -177,7 +178,9 @@
                     <exclude reference="YXa-VU-2rr"/>
                     <exclude reference="Who-wy-MLD"/>
                     <exclude reference="GS4-Yb-ehS"/>
+                    <exclude reference="T9G-pC-4zU"/>
                     <exclude reference="hha-KZ-gXB"/>
+                    <exclude reference="ul5-kg-v8B"/>
                     <exclude reference="HZq-YM-W31"/>
                     <exclude reference="V1s-PC-RdB"/>
                     <exclude reference="alg-mO-Vtw"/>

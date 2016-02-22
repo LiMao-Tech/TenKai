@@ -27,7 +27,7 @@ class AppDelegate: UIResponder,
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        
+        let dict = [["ID":4,"FileName":"5_7775ccf9-810b-495b-9879-79d61a32a6ba20160208220837.png","ContentType":"image/png","BasePath":"D:\\TenImages","IsLocked":false,"ImageType":1,"UploadTime":1454965720,"UserIndex":5,"MsgIndex":0]]
         
         // TODO: Update Token if has changed
         

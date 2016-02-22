@@ -43,7 +43,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 self.presentViewController(rpVC, animated: true, completion: nil)
             }
             else {
-                self.unmatchedLB.hidden = false
+                self.unmatchedLB.textColor = UIColor.redColor()
             }
         }
         
@@ -75,9 +75,9 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.unmatchedLB.hidden = true
+        self.unmatchedLB.textColor = COLOR_BG
         self.cancelAction = UIAlertAction(title: "取消", style: .Cancel) { action -> Void in
-            self.unmatchedLB.hidden = true
+            self.unmatchedLB.textColor = COLOR_BG
         }
         
         self.view.backgroundColor = COLOR_BG
@@ -175,10 +175,10 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 
             switch opera.statusCode {
                 case 401:
-                    self.unmatchedLB.hidden = false
+                    self.unmatchedLB.textColor = UIColor.redColor()
                     self.unmatchedLB.text = "用户名或密码错误"
                 case 404:
-                    self.unmatchedLB.hidden = false
+                    self.unmatchedLB.textColor = UIColor.redColor()
                     self.unmatchedLB.text = "用户不存在"
                 default:
                     break
