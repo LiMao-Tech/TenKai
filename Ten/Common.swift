@@ -60,7 +60,7 @@ let COMPANYCODE = "e40cb24cffee7767d8f3bd9faf882af614b9e4bd402dc53a70f4723cde991
 let ChatTitle = "聊天"
 let ProfileTitle = "首页"
 let SettingTitle = "设定"
-let PcoinTitle = "P Coin"
+let PcoinTitle = "P 币"
 let NotificationTitle = "通知"
 let RandomTitle = "随机用户"
 

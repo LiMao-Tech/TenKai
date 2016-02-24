@@ -14,6 +14,13 @@ class PCoinHistoryCell: UITableViewCell {
     var priceLabel:UILabel!
     var timeLabel:UILabel!
     var splitLine:UIView!
+    var pcoinHistoryModel:PCoinHistoryModel!{
+        didSet{
+            timeLabel.text = "\(pcoinHistoryModel.PurchaseDate)"
+            pcoinLabel.text = "\(pcoinHistoryModel.Content)"
+            priceLabel.text = "\(pcoinHistoryModel.Content/10)"
+        }
+    }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         //pcoinImage

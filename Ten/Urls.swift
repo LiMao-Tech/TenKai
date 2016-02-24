@@ -16,7 +16,7 @@ let Url_User = Url_Api + "TenUsers/"
 let Url_Msg = Url_Api + "TenMsgs/"
 let Url_PCoin = Url_Api + "PCoinTrans/"
 let Url_Rater = Url_Api + "Rater/"
-
+let Url_Purchase = Url_Api + "Purchase/"
 
 
 // Image related
@@ -34,6 +34,7 @@ let Url_UploadPhotos = Url_ImageMaster + "UploadPhotos/"
 let Url_SetImage = Url_ImageMaster + "ChangeImageType"
 let Url_Lock = Url_ImageMaster + "SetIsLocked"
 let Url_PutImageJSON = Url_ImageMaster + "PutTenImage"
+
 
 
 let Url_DeviceToken = ""

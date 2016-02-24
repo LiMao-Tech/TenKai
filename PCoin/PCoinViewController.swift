@@ -15,6 +15,8 @@ enum pcoinModelType{
 class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,GTCoinPuschaseDelegate {
     var topView : UIView!
     var pcoinItemList : UITableView!
+    var pcoinPurchaseHistory = [PCoinHistoryModel]()
+    var pcoinPurchaseLevelHistory = [PCoinHistoryModel]()
     var modelType : pcoinModelType = .Pcoin
     let pcoinValue = [10,20,50,100]
     var item0:SettingButton!
@@ -74,6 +76,38 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         // Do any additional setup after loading the view.
     }
     
+    func getPcoinHistory(){
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userId":SHARED_USER.UserIndex,"purchaseType":0], success: { (task, response) -> Void in
+            print(response)
+            let historyArray = response as! NSArray
+            if(historyArray.count > 0){
+                for info in historyArray{
+                    let history = PCoinHistoryModel(dict: info as! NSDictionary)
+                    self.pcoinPurchaseHistory.append(history)
+                    self.pcoinItemList.reloadData()
+                }
+            }
+            },failure:  { (task,error) -> Void in
+                print("getPurchaseHistory Failed")
+                print(error.localizedDescription)
+        })
+        
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userId":SHARED_USER.UserIndex,"purchaseType":1], success: { (task, response) -> Void in
+            print(response)
+            let historyArray = response as! NSArray
+            if(historyArray.count > 0){
+                for info in historyArray{
+                    let history = PCoinHistoryModel(dict: info as! NSDictionary)
+                    self.pcoinPurchaseLevelHistory.append(history)
+                    self.pcoinItemList.reloadData()
+                }
+            }
+            },failure:  { (task,error) -> Void in
+                print("getPurchaseLevelHistory Failed")
+                print(error.localizedDescription)
+        })
+    }
+    
     func changeModel(sender:SettingButton){
         selectedBtn.setImage(selectedBtn.normalImage, forState: .Normal)
         selectedBtn = sender
@@ -122,9 +156,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             if(cell == nil){
                 cell = PCoinHistoryCell.init(style: .Default, reuseIdentifier: "historyCell")
             }
-            cell?.timeLabel.text = "昨天"
-            cell?.pcoinLabel.text = "你购买了 \(pcoinValue[indexPath.row]) P币"
-            cell?.priceLabel.text = "价格:\(pcoinValue[indexPath.row]/10) 元"
+            
             return cell!
         }
         if(modelType == .Transfer){

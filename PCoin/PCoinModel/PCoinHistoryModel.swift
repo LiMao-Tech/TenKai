@@ -10,11 +10,16 @@ import UIKit
 
 class PCoinHistoryModel: NSObject {
     var Id = 1
-    var UserId = "sample string 2"
-    "PurchaseDate": 3
-    "ModifiedDate": 4
-    "Content": "sample string 5"
-    "Status": "sample string 6"
-    "PurchaseType": 64
+    var UserId = ""
+    var PurchaseDate = 3
+    var ModifiedDate = 4
+    var Content = 0
+    var Status = ""
+    var PurchaseType = 64
+    
+    init(dict :NSDictionary) {
+        super.init()
+        self.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
+    }
 
 }

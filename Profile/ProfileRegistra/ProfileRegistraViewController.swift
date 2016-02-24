@@ -191,7 +191,7 @@ class RegistProfileViewController: UIViewController,
         // Inner Label
         let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: labelLen, labelHeight: 100, labelText: "内在")
         innerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
-        innerBar.minimumValue = 0
+        innerBar.minimumValue = 1
         innerBar.maximumValue = 10
         innerBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
         innerValue = UILabel(frame: CGRectMake(CGRectGetMaxX(innerBar.frame)+10, SCREEN_HEIGHT*12/12+40, 20, 20))
@@ -200,7 +200,7 @@ class RegistProfileViewController: UIViewController,
         
         let OuterLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*13/12, labelWidth: labelLen, labelHeight: 100, labelText: "外在")
         outerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*13/12+40, lineLength-30, 20))
-        outerBar.minimumValue = 0
+        outerBar.minimumValue = 1
         outerBar.maximumValue = 10
         outerBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
         outerValue = UILabel(frame: CGRectMake(CGRectGetMaxX(outerBar.frame)+10, SCREEN_HEIGHT*13/12+40, 20, 20))
@@ -209,7 +209,7 @@ class RegistProfileViewController: UIViewController,
         
         let EnergyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*14/12, labelWidth: 200, labelHeight: 100, labelText: "能量")
         energyBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*14/12+40, lineLength-30, 20))
-        energyBar.minimumValue = 0
+        energyBar.minimumValue = 1
         energyBar.maximumValue = 10
         energyBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
         energyValue = UILabel(frame: CGRectMake(CGRectGetMaxX(energyBar.frame)+10, SCREEN_HEIGHT*14/12+40, 20, 20))
