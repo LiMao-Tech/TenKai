@@ -38,10 +38,7 @@ class MyProfileViewController: ProfileViewController {
             self.locationLabel.text = "未知"
         }
 
-        var avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
-        if avg == 0 {
-            avg = 1
-        }
+        let avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
         self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
         self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }
@@ -50,19 +47,5 @@ class MyProfileViewController: ProfileViewController {
         super.didReceiveMemoryWarning()
         
         // Dispose of any resources that can be recreated.
-    }
-
-    
-    
-    override func pushPictureCollectionView() {
-        let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
-        
-        pPCVC.imagesJSON = imagesJSON
-        pPCVC.image1JSON = image1JSON
-        pPCVC.image2JSON = image2JSON
-        pPCVC.image3JSON = image3JSON
-
-        TenImagesJSONManager.SharedInstance.imagesJSON = imagesJSON
-        self.navigationController?.pushViewController(pPCVC, animated: true)
     }
 }

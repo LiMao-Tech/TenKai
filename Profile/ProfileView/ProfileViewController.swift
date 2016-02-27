@@ -36,7 +36,6 @@ class ProfileViewController: UIViewController,
     var numProfilePics = 1
     
     var userID: Int!
-    var imagesJSON: [AnyObject]?
 
 
     var image1JSON: JSON?
@@ -69,18 +68,10 @@ class ProfileViewController: UIViewController,
     
     override func viewWillAppear(animated: Bool) {
         // update profile picture
-        self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.navigationBar.hidden = false
-
-        if imagesJSON == nil {
-            albumBtn.enabled = false
-            getImagesJSON()
-
-        }
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBar.translucent = true
+
     }
     
     func pushPictureCollectionView() {
@@ -92,52 +83,10 @@ class ProfileViewController: UIViewController,
         // Dispose of any resources that can be recreated.
     }
 
-    private func getImagesJSON() {
-
-        if let json = TenImagesJSONManager.SharedInstance.imagesJSON {
-            if userID == SHARED_USER.UserIndex {
-                imagesJSON = json
-            }
-        }
-        else {
-            let targetUrl = Url_ImagesJSON + String(userID)
-
-            ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON {
-                response in
-                print(response.debugDescription)
-                if let values = response.result.value {
-                    self.albumBtn.enabled = true
-                    self.imagesJSON = (values as? [AnyObject])!
-
-                    for obj in self.imagesJSON! {
-                        let imageJSON = JSON(obj)
-
-                        if imageJSON["ImageType"].intValue == 0 {
-                            self.image1JSON = imageJSON
-                        }
-
-                        if imageJSON["ImageType"].intValue == 3 {
-                            self.numProfilePics = 2
-                            self.image2JSON = imageJSON
-                        }
-
-                        if imageJSON["ImageType"].intValue == 4 {
-                            self.numProfilePics = 3
-                            self.image3JSON = imageJSON
-                        }
-                    }
-                    
-                    self.setScrollView()
-                    self.getProfileImages()
-                    
-                }
-            }
-        }
-    }
     
-    private func getProfileImages() -> Void {
+    
+    func getProfileImages() -> Void {
         if let json = image1JSON {
-
 
             if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
                 self.profileIV1?.image = image
@@ -151,7 +100,6 @@ class ProfileViewController: UIViewController,
                     }
                 }
             }
-
         }
 
         if let json = image2JSON {
@@ -185,30 +133,25 @@ class ProfileViewController: UIViewController,
         }
     }
 
-    private func setScrollView() {
+    func setScrollView() {
+        profileSV.contentSize = CGSizeMake(SCREEN_WIDTH*CGFloat(numProfilePics), profileSV.frame.height)
 
         profileIV1 = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
         profileIV1!.contentMode = .ScaleAspectFill
         profileIV1!.clipsToBounds = true
-
-        profileIV2 = UIImageView(frame: CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
-        profileIV2!.contentMode = .ScaleAspectFill
-        profileIV2!.clipsToBounds = true
-
-        profileIV3 = UIImageView(frame: CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
-        profileIV3!.contentMode = .ScaleAspectFill
-        profileIV3!.clipsToBounds = true
-
-        profileSV.contentSize = CGSizeMake(SCREEN_WIDTH*CGFloat(numProfilePics), profileSV.frame.height)
-
         profileSV.addSubview(profileIV1!)
 
         if numProfilePics > 1 {
+            profileIV2 = UIImageView(frame: CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
+            profileIV2!.contentMode = .ScaleAspectFill
+            profileIV2!.clipsToBounds = true
             profileSV.addSubview(profileIV2!)
         }
         if numProfilePics > 2 {
+            profileIV3 = UIImageView(frame: CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
+            profileIV3!.contentMode = .ScaleAspectFill
+            profileIV3!.clipsToBounds = true
             profileSV.addSubview(profileIV3!)
         }
-
     }
 }

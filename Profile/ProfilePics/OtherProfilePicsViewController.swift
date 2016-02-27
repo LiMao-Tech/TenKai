@@ -25,10 +25,20 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
 
+
+    let rateAlert = UIAlertView(title: "评分", message: "看过用户的首页。你帮他／她的外表评几分呢？", delegate: nil, cancelButtonTitle: "取消")
+    let slider = GTSlider(frame: CGRectMake(20,10,200,20))
+
     var tenUser: TenUser!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // rating
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        rateAlert.addSubview(slider)
+        rateAlert.show()
 
         lmCollectionView.reloadData()
 
@@ -45,8 +55,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         lmLayout?.delegate = self
 
         
-        let chatBtn = UIBarButtonItem(image: UIImage(named: "btn_navBarIcon_chat_normal"), style: .Plain, target: self, action: "pushChatView")
-        self.navigationItem.rightBarButtonItem = chatBtn;
+        
         
         // labels
         nameLabel.text = tenUser.UserName
@@ -66,14 +75,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         // Dispose of any resources that can be recreated.
     }
     
-    // TODO: tuantuan 
-    func pushChatView() -> Void {
-        let singleChatC = SingleChatController()
-        singleChatC.tenUser = tenUser
-
-
-        self.presentViewController(singleChatC, animated: true, completion: nil)
-    }
+    
 
     // lm collection view
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

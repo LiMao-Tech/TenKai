@@ -10,15 +10,13 @@ import UIKit
 import SwiftyJSON
 
 private enum ProfilePic: Int {
-    case First = 1, Second, Third
+    case First = 1, Second, Third, Fourth
 }
 
 
 class MyProfilePicsViewController: ProfilePicsViewController,
                                     LMCollectionViewLayoutDelegate,
-                                    UICollectionViewDataSource,
-                                    UINavigationControllerDelegate,
-                                    UIImagePickerControllerDelegate
+                                    UICollectionViewDataSource
 {
     @IBOutlet weak var topSeparator: UIImageView!
     @IBOutlet weak var verticalSeparator: UIImageView!
@@ -79,7 +77,17 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         self.lmCollectionView.alpha = 0.5
     }
 
+    var pVC: MyProfileViewController!
+
     let transmitController = UIAlertController(title: "设置中", message: "请稍后。", preferredStyle: .Alert)
+
+    let deleteFirstPicErrorController = UIAlertController(title: "不可删除首封面", message: "请先将首封面设为其它图片再尝试", preferredStyle: .Alert)
+    let deleteSecondPicErrorController = UIAlertController(title: "不可删除次封面", message: "请先删除第三封面再尝试", preferredStyle: .Alert)
+    let setSecondPicErrorController = UIAlertController(title: "不可设置第三封面", message: "请先设置第二封面再尝试", preferredStyle: .Alert)
+
+    let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { action in
+        optionMode = 4
+    })
 
     let picOptionsController = UIAlertController(title: "相册设置", message: "", preferredStyle: .ActionSheet)
     
@@ -95,9 +103,11 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         optionMode = 3
     })
 
-    var image1JSON: JSON?
-    var image2JSON: JSON?
-    var image3JSON: JSON?
+    static var optionMode: Int = 0
+    var lockMode: Bool = false
+    var unlockMode: Bool = false
+    var deleteMode: Bool = false
+    
 
     
     override func viewDidLoad() {
@@ -108,6 +118,11 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         picOptionsController.addAction(setPic1)
         picOptionsController.addAction(setPic2)
         picOptionsController.addAction(setPic3)
+//        picOptionsController.addAction(cancelAction)
+
+        deleteFirstPicErrorController.addAction(cancelAction)
+        deleteSecondPicErrorController.addAction(cancelAction)
+        setSecondPicErrorController.addAction(cancelAction)
 
         // data initialization
         lmCollectionView.reloadData()
@@ -122,21 +137,15 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         lmCollectionView.dataSource = self
         let lmLayout = lmCollectionView.collectionViewLayout as? LMCollectionViewLayout
         lmLayout?.delegate = self
-        SHARED_PICKER.picker.delegate = self
+
         
-        // add buttons
-        let addImageBtn = UIBarButtonItem(title: "新增", style: .Plain, target: self, action: "addImage")
-        self.navigationItem.rightBarButtonItem = addImageBtn
-        
+       
         // labels
         nameLabel.text = SHARED_USER.UserName
         ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970:SHARED_USER.Birthday)))
         
         // level colors
-        var avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
-        if avg == 0 {
-            avg = 1
-        }
+        let avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
         self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
         self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }
@@ -162,9 +171,16 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         let id = imageJSON["ID"].intValue
 
         if MyProfilePicsViewController.optionMode > 0 {
-            presentViewController(transmitController, animated: true, completion: nil)
-            setProfileImage(ProfilePic(rawValue: MyProfilePicsViewController.optionMode)!, id: id)
+            if MyProfilePicsViewController.optionMode < 4 {
 
+                if MyProfilePicsViewController.optionMode == 3 && pVC.image2JSON == nil {
+                    presentViewController(setSecondPicErrorController, animated: true, completion: nil)
+                }
+                else {
+                    presentViewController(transmitController, animated: true, completion: nil)
+                    setProfileImage(ProfilePic(rawValue: MyProfilePicsViewController.optionMode)!, id: id)
+                }
+            }
         }
         else if lockMode {
             postLockStatus(selectedCell!, id: id, status: true)
@@ -174,7 +190,16 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             postLockStatus(selectedCell!, id: id, status: false)
         }
         else if deleteMode {
-            deleteImage(id)
+            if imageJSON["ImageType"].intValue == 0 {
+                presentViewController(deleteFirstPicErrorController, animated: true, completion: nil)
+            }
+            else if imageJSON["ImageType"].intValue == 3 && self.pVC.image3JSON != nil {
+                presentViewController(deleteSecondPicErrorController, animated: true, completion: nil)
+
+            }
+            else{
+                deleteImage(id, oldJSON: imageJSON)
+            }
         }
 
         else {
@@ -203,6 +228,9 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             if imageJSON["IsLocked"].boolValue == true {
                 setLockStatus(cell, status: true)
             }
+            else {
+                setLockStatus(cell, status: false)
+            }
         }
         else {
             let imageIndex = imageJSON["ID"].stringValue
@@ -214,6 +242,9 @@ class MyProfilePicsViewController: ProfilePicsViewController,
                     SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
                     if imageJSON["IsLocked"].boolValue == true {
                         self.setLockStatus(cell, status: true)
+                    }
+                    else {
+                        self.setLockStatus(cell, status: false)
                     }
                 }
                 else {
@@ -261,12 +292,20 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         let cellImage = selectedCell?.imageView.image
         
         self.lmCollectionView.performBatchUpdates({() in
-            self.dims.removeAtIndex(indexPath.row)
-            self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
-            
-            self.dims.insert(BlockDim.L, atIndex: indexPath.row)
-            self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
-        },
+            if self.dims[indexPath.row] == BlockDim.Std {
+                self.dims.removeAtIndex(indexPath.row)
+                self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
+
+                self.dims.insert(BlockDim.L, atIndex: indexPath.row)
+                self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
+            }
+            else {
+                self.dims.removeAtIndex(indexPath.row)
+                self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
+
+                self.dims.insert(BlockDim.Std, atIndex: indexPath.row)
+                self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
+            }        },
         completion: {(done) in
             let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
             novaCell?.imageView.image = cellImage
@@ -275,36 +314,6 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         
     }
     
-    // image picker
-    
-    func addImage() -> Void {
-        SHARED_PICKER.toImagePicker(self)
-    }
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-    
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-
-        let imageRepre = UIImageJPEGRepresentation(image, 0.75)
-        let params: [String: AnyObject] = ["id": SHARED_USER.UserIndex]
-
-        if let imageData = imageRepre {
-
-            AFImageManager.SharedInstance.postUserImage(imageData, parameters: params, success: {(task, response) -> Void in
-                    TenImagesJSONManager.SharedInstance.getJSONUpdating(self)
-
-                },failure: { (task, error) -> Void in
-                    print(error.localizedDescription)
-            })
-        }
-    }
-
-
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
 
     // private helpers
 
@@ -332,12 +341,14 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
 
         case .Third:
-
             let params = [
                 "ID": id,
                 "ImageType": 4
             ]
             postProfilePicChange(params)
+            break
+
+        default:
             break
         }
     }
@@ -345,8 +356,32 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     private func postProfilePicChange(params: [String: AnyObject]) {
         ALAMO_MANAGER.request(.POST, Url_SetImage, parameters: params, encoding: .JSON) .responseJSON {
             response in
-            if response.result.isSuccess {
+            if let values = response.result.value {
                 self.transmitController.dismissViewControllerAnimated(true, completion: nil)
+                let imagesJSON = (values as? [AnyObject])!
+                self.imagesJSON = imagesJSON
+
+                for obj in self.imagesJSON! {
+                    let imageJSON = JSON(obj)
+
+                    if imageJSON["ImageType"].intValue == 0 {
+                        self.pVC.image1JSON = imageJSON
+                    }
+
+                    if imageJSON["ImageType"].intValue == 3 {
+                        self.pVC.numProfilePics = 2
+                        self.pVC.image2JSON = imageJSON
+                    }
+
+                    if imageJSON["ImageType"].intValue == 4 {
+                        self.pVC.numProfilePics = 3
+                        self.pVC.image3JSON = imageJSON
+                    }
+                }
+
+                self.pVC.setScrollView()
+                self.pVC.getProfileImages()
+
             }
         }
     }
@@ -374,9 +409,12 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         presentViewController(transmitController, animated: true, completion: nil)
 
         ALAMO_MANAGER.request(.POST, Url_Lock, parameters: params, encoding: .JSON, headers: nil) .responseJSON { response in
-            if response.result.isSuccess {
+            if let values = response.result.value {
                 self.setLockStatus(cell, status: status)
                 self.transmitController.dismissViewControllerAnimated(true, completion: nil)
+                let imagesJSON = (values as? [AnyObject])!
+                self.imagesJSON = imagesJSON
+
             }
             else {
                 print("Failed to lock!")
@@ -386,7 +424,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
     private func setLockStatus(cell: ProfilePicCollectionViewCell, status: Bool) {
         if status {
-            cell.imageView.alpha = 0.3
+            cell.imageView.alpha = 0.7
         }
         else {
             cell.imageView.alpha = 1.0
@@ -395,15 +433,51 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         cell.lockImageView.hidden = !status
     }
 
-    private func deleteImage(id: Int) {
+    private func deleteImage(id: Int, oldJSON: JSON) {
         let params = [
             "id": id
         ]
         presentViewController(transmitController, animated: true, completion: nil)
         ALAMO_MANAGER.request(.DELETE, Url_DeletePic, parameters: params, encoding: .JSON) .responseJSON{
             response in
-            self.transmitController.dismissViewControllerAnimated(true, completion: nil)
 
+            print(response.debugDescription)
+            if let values = response.result.value {
+
+                if oldJSON["ImageType"].intValue == 3 {
+                    self.pVC.image2JSON = nil
+                }
+                else if oldJSON["ImageType"].intValue == 4 {
+                    self.pVC.image3JSON = nil
+                }
+
+                let imagesJSON = (values as? [AnyObject])!
+                self.imagesJSON = imagesJSON
+                self.dataInit()
+                self.lmCollectionView.reloadData()
+
+                for obj in self.imagesJSON! {
+                    let imageJSON = JSON(obj)
+
+                    if imageJSON["ImageType"].intValue == 0 {
+                        self.pVC.image1JSON = imageJSON
+                    }
+
+                    if imageJSON["ImageType"].intValue == 3 {
+                        self.pVC.numProfilePics = 2
+                        self.pVC.image2JSON = imageJSON
+                    }
+
+                    if imageJSON["ImageType"].intValue == 4 {
+                        self.pVC.numProfilePics = 3
+                        self.pVC.image3JSON = imageJSON
+                    }
+                }
+
+                self.pVC.setScrollView()
+                self.pVC.getProfileImages()
+                self.transmitController.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
 }

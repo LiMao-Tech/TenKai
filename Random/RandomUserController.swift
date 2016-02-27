@@ -65,7 +65,8 @@ class RandomUserController: UIViewController,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let user = userList[indexPath.row] as! [String: AnyObject]
-        let otherPVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
+
+        let otherPVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
 
         let tenUser = TenUser(dict: user)
         otherPVC.tenUser = tenUser

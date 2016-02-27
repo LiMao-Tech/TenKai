@@ -433,7 +433,6 @@ class RegistProfileViewController: UIViewController,
         
         AFJSONManager.SharedInstance.postMethod(Url_Login, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             let dict = response as! [String : AnyObject]
-            print(dict)
             self.tenLogin = TenLogin(loginDict: dict)
             self.postUser()
             },failure: { (task, error) -> Void in

@@ -147,7 +147,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     func toTargetUser(sender: TenGridButton) {
-        let otherPVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        let otherPVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
 
         let tenUser = TenUser(dict: sender.tenUserDict)
         otherPVC.tenUser = tenUser
@@ -181,7 +181,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     func refreshBtnClicked() {
         self.refreshBtn.enabled = false
         TenMainGridManager.SharedInstance.clearNodes()
-        TenMainGridManager.SharedInstance.numToGen = 10
+        TenMainGridManager.SharedInstance.numToGen = 25
         
         generateNodes()
         view.bringSubviewToFront(portraitBtn)
@@ -344,7 +344,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
 
     func pushUserProfileVC() {
-        let pVC = MyProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        let pVC = MeProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
         pVC.userID = SHARED_USER.UserIndex
         self.navigationController?.pushViewController(pVC, animated: true)
     }

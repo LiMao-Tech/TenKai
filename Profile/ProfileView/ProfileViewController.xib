@@ -26,20 +26,20 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="94" width="600" height="506"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_profile_location" translatesAutoresizingMaskIntoConstraints="NO" id="RBI-Ai-H9q">
-                    <rect key="frame" x="179" y="411" width="13" height="18"/>
+                    <rect key="frame" x="179" y="505" width="13" height="18"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="外在: 10    内在: 10    能量: 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYU-sO-dnH">
-                    <rect key="frame" x="8" y="482" width="584" height="16"/>
+                    <rect key="frame" x="8" y="576" width="584" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名签名" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44c-Ux-I1b">
-                    <rect key="frame" x="8" y="429" width="584" height="52"/>
+                    <rect key="frame" x="8" y="523" width="584" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="81y-hd-PIk"/>
                     </constraints>
@@ -48,28 +48,28 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中华人民共和国 齐齐哈尔市" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Glq-0V-NIY">
-                    <rect key="frame" x="220" y="412" width="160" height="16"/>
+                    <rect key="frame" x="220" y="506" width="160" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999,999,999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mc4-vN-ML1">
-                    <rect key="frame" x="220" y="390" width="160" height="17"/>
+                    <rect key="frame" x="220" y="484" width="160" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_pcoin_35" translatesAutoresizingMaskIntoConstraints="NO" id="6sN-cc-ybk">
-                    <rect key="frame" x="177" y="390" width="17" height="17"/>
+                    <rect key="frame" x="177" y="484" width="17" height="17"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宫本武藏 佐佐木小次郎  99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2c6-ww-zZJ">
-                    <rect key="frame" x="8" y="342" width="511" height="28"/>
+                    <rect key="frame" x="8" y="436" width="511" height="28"/>
                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tm8-lY-h9P">
-                    <rect key="frame" x="521" y="342" width="71" height="28"/>
+                    <rect key="frame" x="521" y="436" width="71" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="71" id="qfB-Q4-G93"/>
                     </constraints>
@@ -78,23 +78,23 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EPi-vc-5gw">
-                    <rect key="frame" x="512" y="333" width="1" height="45"/>
+                    <rect key="frame" x="512" y="427" width="1" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="31C-8K-5gw"/>
                         <constraint firstAttribute="width" constant="1" id="Vfj-6I-b2M"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gW1-dY-guE">
-                    <rect key="frame" x="0.0" y="378" width="600" height="4"/>
+                    <rect key="frame" x="0.0" y="472" width="600" height="4"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="4" id="8eA-M1-3WE"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_profile_circle_l1" translatesAutoresizingMaskIntoConstraints="NO" id="C46-1E-HyY">
-                    <rect key="frame" x="485" y="346" width="19" height="19"/>
+                    <rect key="frame" x="485" y="440" width="19" height="19"/>
                 </imageView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tha-3W-14W">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="338"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tha-3W-14W">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="432"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </scrollView>
             </subviews>
@@ -134,7 +134,6 @@
                 <constraint firstItem="gW1-dY-guE" firstAttribute="top" secondItem="2c6-ww-zZJ" secondAttribute="bottom" constant="8" symbolic="YES" id="yVy-mw-PCR"/>
                 <constraint firstItem="Mc4-vN-ML1" firstAttribute="centerX" secondItem="gW1-dY-guE" secondAttribute="centerX" id="z4Y-Le-zSA"/>
             </constraints>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO"/>
         </view>
     </objects>
     <resources>

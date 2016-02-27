@@ -35,14 +35,12 @@ let SCREEN = UIScreen.mainScreen().bounds
 let SCREEN_HEIGHT = SCREEN.height
 let SCREEN_WIDTH = SCREEN.width
 
+let STATUSBAR_HEIGHT = UIApplication.sharedApplication().statusBarFrame.height
+
+
 // uiFrames
 let BUTTON_DENO : CGFloat = 15
-let NAV_BAR_HEIGHT : CGFloat = SCREEN_HEIGHT == 568 ? 44 : 66
-let TOOL_BAR_HEIGHT : CGFloat = SCREEN_HEIGHT == 568 ? 48 : 73
-//let TAP_BAR_HEIGHT : CGFloat = SCREEN_HEIGHT == 568 ? 44 : 52
 let TAP_BAR_HEIGHT : CGFloat = SCREEN_HEIGHT*44/568
-
-let SCREEN_HEIGHT_WO_NAV = SCREEN_HEIGHT - NAV_BAR_HEIGHT
 
 
 let PROFILE_FONT_SIZE : CGFloat = 12

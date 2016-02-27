@@ -8,6 +8,8 @@
 
 import UIKit
 
+import SwiftyJSON
+
 enum BlockDim: CGFloat {
     case Std = 1, L
 }
@@ -20,31 +22,29 @@ class ProfilePicsViewController: UIViewController {
     let layout = LMCollectionViewLayout()
     
     var isProcessing: Bool = false
-
-    static var optionMode: Int = 0
-    var lockMode: Bool = false
-    var unlockMode: Bool = false
-    var deleteMode: Bool = false
     
     var numOfPics: Int = 0
     var dims: [BlockDim] = [BlockDim]()
     
     var imagesJSON: [AnyObject]!
 
+
+    var image1JSON: JSON?
+    var image2JSON: JSON?
+    var image3JSON: JSON?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "相簿"
         layout.blockPixels = CGSizeMake(BLOCK_DIM, BLOCK_DIM)
-
-        dataInit()
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController!.navigationBar.translucent = false
+
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController!.navigationBar.translucent = true
+
     }
 
     override func didReceiveMemoryWarning() {

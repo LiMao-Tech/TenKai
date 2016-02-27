@@ -97,13 +97,6 @@ class OtherProfileViewController: ProfileViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func pushPictureCollectionView() {
-        let pPCVC = OtherProfilePicsViewController(nibName: "OtherProfilePicsViewController", bundle: nil)
-        pPCVC.tenUser = tenUser
-        pPCVC.imagesJSON = imagesJSON
-        self.navigationController?.pushViewController(pPCVC, animated: true)
-    }
 
     
     func outerBarChanged(){

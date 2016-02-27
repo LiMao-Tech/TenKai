@@ -18,7 +18,7 @@ class AFImageManager: NSObject {
     override init() {
         super.init()
         afHttpSessionManager.requestSerializer = AFHTTPRequestSerializer()
-        afHttpSessionManager.responseSerializer = AFHTTPResponseSerializer()
+        afHttpSessionManager.responseSerializer = AFJSONResponseSerializer()
     }
     
     func postHeadImage(url:String,image:NSData,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
@@ -33,7 +33,7 @@ class AFImageManager: NSObject {
         })
     }
     
-    func postUserImage(image:NSData,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
+    func postUserImage(image:NSData, parameters:[String:AnyObject], success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
         
         let picName = Tools.getFileNameTime(NSDate())+".png"
         afHttpSessionManager.POST(Url_UploadPhotos, parameters: parameters, constructingBodyWithBlock: { (data) -> Void in

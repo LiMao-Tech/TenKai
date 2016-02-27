@@ -62,6 +62,10 @@
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
 		D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF991C40590700B48C48 /* LMImagePicker.swift */; };
 		D4C236C31C42097400740FA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C236C11C42097400740FA7 /* ProfileViewController.swift */; };
+		D4C671021C81B06B00C09CFD /* ProfileMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C671001C81B06B00C09CFD /* ProfileMasterViewController.swift */; };
+		D4C671031C81B06B00C09CFD /* ProfileMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4C671011C81B06B00C09CFD /* ProfileMasterViewController.xib */; };
+		D4C671051C81B0F000C09CFD /* MeProfileMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C671041C81B0F000C09CFD /* MeProfileMasterViewController.swift */; };
+		D4C671091C81B12D00C09CFD /* OtherProfileMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C671081C81B12D00C09CFD /* OtherProfileMasterViewController.swift */; };
 		D4D0F8861C656F9E007F3BF6 /* AFImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8841C656F9E007F3BF6 /* AFImageManager.swift */; };
 		D4D0F8871C656F9E007F3BF6 /* AFJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8851C656F9E007F3BF6 /* AFJSONManager.swift */; };
 		D4D0F8891C657834007F3BF6 /* SharedInstances.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8881C657834007F3BF6 /* SharedInstances.swift */; };
@@ -386,6 +390,10 @@
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
 		D4A5EF991C40590700B48C48 /* LMImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMImagePicker.swift; sourceTree = "<group>"; };
 		D4C236C11C42097400740FA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D4C671001C81B06B00C09CFD /* ProfileMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileMasterViewController.swift; path = ProfileMaster/ProfileMasterViewController.swift; sourceTree = "<group>"; };
+		D4C671011C81B06B00C09CFD /* ProfileMasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileMasterViewController.xib; path = ProfileMaster/ProfileMasterViewController.xib; sourceTree = "<group>"; };
+		D4C671041C81B0F000C09CFD /* MeProfileMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MeProfileMasterViewController.swift; path = ProfileMaster/MeProfileMasterViewController.swift; sourceTree = "<group>"; };
+		D4C671081C81B12D00C09CFD /* OtherProfileMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OtherProfileMasterViewController.swift; path = ProfileMaster/OtherProfileMasterViewController.swift; sourceTree = "<group>"; };
 		D4D0F8841C656F9E007F3BF6 /* AFImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AFImageManager.swift; path = TenManagers/AFImageManager.swift; sourceTree = "<group>"; };
 		D4D0F8851C656F9E007F3BF6 /* AFJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AFJSONManager.swift; path = TenManagers/AFJSONManager.swift; sourceTree = "<group>"; };
 		D4D0F8881C657834007F3BF6 /* SharedInstances.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharedInstances.swift; path = TenManagers/SharedInstances.swift; sourceTree = "<group>"; };
@@ -898,6 +906,17 @@
 			path = dbmodels;
 			sourceTree = "<group>";
 		};
+		D4C670FF1C81B02A00C09CFD /* ProfileMasterView */ = {
+			isa = PBXGroup;
+			children = (
+				D4C671001C81B06B00C09CFD /* ProfileMasterViewController.swift */,
+				D4C671011C81B06B00C09CFD /* ProfileMasterViewController.xib */,
+				D4C671041C81B0F000C09CFD /* MeProfileMasterViewController.swift */,
+				D4C671081C81B12D00C09CFD /* OtherProfileMasterViewController.swift */,
+			);
+			name = ProfileMasterView;
+			sourceTree = "<group>";
+		};
 		D4D0F88C1C6649C0007F3BF6 /* SubClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -951,6 +970,7 @@
 		D4EA5C0A1C13F1F4009E9927 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				D4C670FF1C81B02A00C09CFD /* ProfileMasterView */,
 				D44623FC1C3B2D2D0098AE53 /* ProfileView */,
 				D4EA5C451C140BD8009E9927 /* ProfilePics */,
 				D4EA5C0B1C13F1F4009E9927 /* ProfileEdit */,
@@ -1366,6 +1386,7 @@
 				D4EA5DA11C14252B009E9927 /* 047@2x.png in Resources */,
 				D4EA5DBD1C14252B009E9927 /* 061@2x.png in Resources */,
 				D4EA5DC01C14252B009E9927 /* 063.png in Resources */,
+				D4C671031C81B06B00C09CFD /* ProfileMasterViewController.xib in Resources */,
 				D4EA5D791C14252B009E9927 /* 027@2x.png in Resources */,
 				D4EA5DE41C14252B009E9927 /* 081.png in Resources */,
 				D4EA5D501C14252B009E9927 /* 007.png in Resources */,
@@ -1613,6 +1634,7 @@
 				643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */,
 				D414D0651C6E2AFA00C6566F /* Colors.swift in Sources */,
 				64BE65B01C380BAC00DA599A /* UserChatModel.swift in Sources */,
+				D4C671091C81B12D00C09CFD /* OtherProfileMasterViewController.swift in Sources */,
 				D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */,
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
@@ -1630,8 +1652,10 @@
 				C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */,
 				D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */,
 				D4EA5BFA1C13EA12009E9927 /* DKImagePickerController.swift in Sources */,
+				D4C671021C81B06B00C09CFD /* ProfileMasterViewController.swift in Sources */,
 				D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */,
 				D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */,
+				D4C671051C81B0F000C09CFD /* MeProfileMasterViewController.swift in Sources */,
 				D4D0F8871C656F9E007F3BF6 /* AFJSONManager.swift in Sources */,
 				D4D0F8861C656F9E007F3BF6 /* AFImageManager.swift in Sources */,
 				D4EA5C551C142321009E9927 /* SettingButton.swift in Sources */,

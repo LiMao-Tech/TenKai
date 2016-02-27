@@ -24,7 +24,7 @@ class TenImagesJSONManager: NSObject {
         
     }
 
-    func getJSONUpdating(pPVC: MyProfilePicsViewController) -> Void {
+    func getJSONUpdating(master: MeProfileMasterViewController, alert: UIAlertController) -> Void {
 
         let targetUrl = Url_ImagesJSON + String(SHARED_USER.UserIndex)
 
@@ -32,9 +32,11 @@ class TenImagesJSONManager: NSObject {
 
             if let values = response.result.value {
                 self.imagesJSON = (values as? [AnyObject])!
-                pPVC.imagesJSON = self.imagesJSON!
-                pPVC.dataInit()
-                pPVC.lmCollectionView.reloadData()
+                master.pPCVC.imagesJSON = self.imagesJSON!
+                master.pPCVC.dataInit()
+                master.pPCVC.lmCollectionView.reloadData()
+                
+                alert.dismissViewControllerAnimated(true, completion: nil)
             }
         }
 
