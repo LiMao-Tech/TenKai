@@ -22,8 +22,13 @@ class SingleChatController : UIViewController,
     
     var tenUser = TenUser(){
         didSet{
+            if(!UserChatModel.allChats().userIndex.contains(tenUser.UserIndex)){
+                UserChatModel.allChats().userIndex.append(tenUser.UserIndex)
+                UserChatModel.allChats().message[tenUser.UserIndex] = [SingleChatMessageFrame]()
+                UsersCacheTool().addUserInfoByUser(tenUser)
+                UserChatModel.allChats().tenUser.append(tenUser)
+            }
             messages = UserChatModel.allChats().message[tenUser.UserIndex]!
-            
         }
     }
     
@@ -170,7 +175,7 @@ class SingleChatController : UIViewController,
                 "PhoneType": 0,
                 "IsLocked": false,
                 "MsgType": 0,
-                "MsgTime": formatter.stringFromDate(currTime),
+                "MsgTime": Tools.getSinceTime(currTime),
                 "MsgContent": text
             ]
             
@@ -232,7 +237,7 @@ class SingleChatController : UIViewController,
                 message.MsgType = 1
                 message.Sender = SHARED_USER.UserIndex
                 message.Receiver = self.tenUser.UserIndex
-                message.MsgTime = Tools.getNormalTime(NSDate())
+                message.MsgTime = Tools.getSinceTime(NSDate())
                 message.MsgContent = ""
                 message.MsgImage = asset.fullResolutionImage
                 if(self.messages.count > 0){
@@ -244,7 +249,7 @@ class SingleChatController : UIViewController,
                 UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0,"time":message.MsgTime]
-                AFImageManager.SharedInstance.postUserImage(data, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                AFImageManager.SharedInstance.postUserImage(data, parameters: params, success: { (task, response) -> Void in
                         print("postImage success")
                         print("response")
                         MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)

@@ -120,7 +120,7 @@ class AppDelegate: UIResponder,
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         
         print(userInfo["aps"])
-        
+        //notification
         let notiParams = ["receiver":0,"currIndex":SHARED_USER.MsgIndex]
         AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg, parameters: notiParams, success: { (task, response) -> Void in
             print(response)
@@ -143,6 +143,7 @@ class AppDelegate: UIResponder,
                 print(response)
         })
         
+        //msg
         let msgParams = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
         AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg,parameters: msgParams, success: { (task, response) -> Void in
             let userInfoArray = response as! NSArray
@@ -163,7 +164,6 @@ class AppDelegate: UIResponder,
                     //add notification to notifications
                     UserChatModel.allChats().notifications.append(notiFrame)
                     // save to db
-                    
                     break
                 }
                 

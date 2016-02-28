@@ -18,7 +18,11 @@ class ScoreView: UIView {
     var tenUser:TenUser!{
         didSet{
             nameLabel.text = tenUser.UserName
-            headImageView.image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            if(tenUser.PortraitImage == nil){
+                headImageView.image = UIImage(named: "user_pic_radar_140")!
+            }else{
+                headImageView.image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            }
         }
     }
     let contentL = SCREEN_WIDTH-80

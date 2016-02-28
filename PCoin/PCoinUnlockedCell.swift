@@ -12,10 +12,10 @@ class PCoinUnlockedCell: UITableViewCell {
     var unlockedLabel:UILabel!
     var timeLabel:UILabel!
     var splitLine:UIView!
-    var unlocked:PCoinUnlockedModel!{
+    var pcoinHistoryModel:PCoinHistoryModel!{
         didSet{
-            unlockedLabel.text = "You Spent \(unlocked.value) P Coin unlock Level4"
-            timeLabel.text = unlocked.time
+            unlockedLabel.text = "您花费了 \(pcoinHistoryModel.Content) P币解锁等级\(pcoinHistoryModel.Content/10)"
+            timeLabel.text = "\(pcoinHistoryModel.PurchaseDate)"
         }
     }
     

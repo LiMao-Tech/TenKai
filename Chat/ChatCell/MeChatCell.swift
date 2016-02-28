@@ -24,7 +24,7 @@ class MeChatCell: ChatBaseCell {
                 content.setImage(chatFrame.chatMessage.MsgImage!, forState: .Normal)
             }else{
                 conText.attributedText = chatFrame.chatMessage.attrMsg
-                time.text = chatFrame.chatMessage.MsgTime
+                time.text = "\(chatFrame.chatMessage.MsgTime)"
                 
             }
             if(MsgIsLock){

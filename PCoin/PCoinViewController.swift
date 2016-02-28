@@ -66,18 +66,31 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         pcoinItemList.delegate = self
         pcoinItemList.dataSource = self
         pcoinItemList.backgroundColor = UIColor.clearColor()
-        pcoinItemList.bounces = false
         pcoinItemList.separatorStyle = .None
         pcoinItemList.allowsSelection = false
 
         self.view.addSubview(topView)
         self.view.addSubview(pcoinItemList)
         selectedBtn = item0
+        refreshControl()
         // Do any additional setup after loading the view.
     }
     
-    func getPcoinHistory(){
-        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userId":SHARED_USER.UserIndex,"purchaseType":0], success: { (task, response) -> Void in
+    func refreshControl(){
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
+        self.pcoinItemList.addSubview(refresh)
+        refreshStateChange(refresh)
+    }
+    
+    func refreshStateChange(refresh:UIRefreshControl){
+        getPcoinHistory(refresh)
+    }
+    
+    func getPcoinHistory(refresh:UIRefreshControl){
+        print("get history")
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseType":0], success: { (task, response) -> Void in
+            print("purchase history done")
             print(response)
             let historyArray = response as! NSArray
             if(historyArray.count > 0){
@@ -87,12 +100,15 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
                     self.pcoinItemList.reloadData()
                 }
             }
+            refresh.endRefreshing()
             },failure:  { (task,error) -> Void in
                 print("getPurchaseHistory Failed")
                 print(error.localizedDescription)
+                refresh.endRefreshing()
         })
         
-        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userId":SHARED_USER.UserIndex,"purchaseType":1], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseType":1], success: { (task, response) -> Void in
+            print("purchase level history done")
             print(response)
             let historyArray = response as! NSArray
             if(historyArray.count > 0){
@@ -102,9 +118,11 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
                     self.pcoinItemList.reloadData()
                 }
             }
+            refresh.endRefreshing()
             },failure:  { (task,error) -> Void in
                 print("getPurchaseLevelHistory Failed")
                 print(error.localizedDescription)
+                refresh.endRefreshing()
         })
     }
     
@@ -156,7 +174,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             if(cell == nil){
                 cell = PCoinHistoryCell.init(style: .Default, reuseIdentifier: "historyCell")
             }
-            
+            cell?.pcoinHistoryModel = pcoinPurchaseHistory[indexPath.row]
             return cell!
         }
         if(modelType == .Transfer){
@@ -172,7 +190,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             if(cell == nil){
                 cell = PCoinUnlockedCell.init(style: .Default, reuseIdentifier: "unlockedCell")
             }
-            cell?.unlocked = PCoinUnlockedModel()
+            cell?.pcoinHistoryModel = pcoinPurchaseLevelHistory[indexPath.row]
             return cell!
         }
         
@@ -189,15 +207,14 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(modelType == .History){
-            return 4
+            return pcoinPurchaseHistory.count
         }
         if(modelType == .Transfer){
             return 4
         }
         if(modelType == .Unlocked){
-            return 4
+            return pcoinPurchaseLevelHistory.count
         }
-        
         return 4
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

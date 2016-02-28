@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var userList:UITableView!
-    var level = ""
+    var level = 0
+    var usersList: [AnyObject] = [AnyObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         refreshControl()
                 // Do any additionalsetup after loading the view.
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.usersList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        self.userList.reloadData()
     }
     func setup(){
         self.title = "等级\(level)"
@@ -35,6 +41,8 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
+        self.usersList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        self.userList.reloadData()
         refresh.endRefreshing()
         print("refreshed")
     }
@@ -48,7 +56,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return usersList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -56,7 +64,32 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
         if(cell == nil){
             cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
         }
-        cell?.RALuser = RandomAndLevelUser()
+        let user = JSON(usersList[indexPath.row] as! [String: AnyObject])
+        
+        let imageIndex = user["UserIndex"].stringValue
+        let targetUrl = Url_GetHeadImage + imageIndex
+        ALAMO_MANAGER.request(.GET, targetUrl)
+            .responseImage { response in
+                if let image = response.result.value {
+                    cell!.headImage.setImage(image, forState: .Normal)
+                }
+        }
+        
+        cell!.nameLabel.text = user["UserName"].stringValue
+        
+        let inner = user["InnerScore"].intValue
+        let outer = user["OuterScore"].intValue
+        let energy = user["Energy"].intValue
+        let avg = (inner+outer)/2
+        
+        cell!.innerLabel.text = "内在 \(inner)"
+        cell!.outerLabel.text = "外在 \(outer)"
+        cell!.energyLabel.text = "能量 \(energy)"
+        cell!.avgLabel.text = "平均 \(avg)"
+        
+        cell!.distanceLabel.text = "距离 0"
+        
         return cell!
+
     }
 }

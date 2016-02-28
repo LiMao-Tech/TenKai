@@ -74,7 +74,8 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
         singleChatC.tenUser = tenUser
 
 
-        self.presentViewController(singleChatC, animated: true, completion: nil)
+//        self.presentViewController(singleChatC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(singleChatC, animated: true)
     }
 
 }

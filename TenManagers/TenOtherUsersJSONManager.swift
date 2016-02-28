@@ -20,7 +20,7 @@ class TenOtherUsersJSONManager: NSObject {
     
     override init() {
         super.init()
-        
+    
         getUserList()
     }
     
@@ -35,6 +35,19 @@ class TenOtherUsersJSONManager: NSObject {
             gridUsers.append(userList[i])
         }
         return gridUsers
+    }
+    
+    func selectLevelUsers(level:Int) -> [AnyObject]{
+        var levelUsers = [AnyObject]()
+        
+        for user in userList{
+            let userJSON = user as! [String:AnyObject]
+            if(userJSON["AVG"] as! Int == level){
+                levelUsers.append(user)
+            }
+        }
+        
+        return levelUsers
     }
     
     func selectRandomUsers() -> [AnyObject] {

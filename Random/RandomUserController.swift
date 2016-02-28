@@ -18,7 +18,7 @@ class RandomUserController: UIViewController,
     // Declarations
     var userListView : UITableView!
     var userList: [AnyObject] = [AnyObject]()
-    
+    var users = [TenUser]()
     // View Controls
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,11 @@ class RandomUserController: UIViewController,
     
     override func viewWillAppear(animated: Bool) {
         self.userList = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
+        for user in userList{
+            let newUser = user as! [String: AnyObject]
+            let tenUser = TenUser(dict: newUser)
+            users.append(tenUser)
+        }
         self.userListView.reloadData()
     }
     
@@ -64,11 +69,10 @@ class RandomUserController: UIViewController,
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let user = userList[indexPath.row] as! [String: AnyObject]
-
+        
         let otherPVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
 
-        let tenUser = TenUser(dict: user)
+        let tenUser = users[indexPath.row]
         otherPVC.tenUser = tenUser
         otherPVC.userID = tenUser.UserIndex
         self.navigationController?.pushViewController(otherPVC, animated: true)
@@ -80,38 +84,43 @@ class RandomUserController: UIViewController,
         return SCREEN_HEIGHT/8
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.userList.count
+        return self.users.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        let cell = RandomAndLevelUserCell()
-        let user = JSON(userList[indexPath.row] as! [String: AnyObject])
+        var cell = userListView.dequeueReusableCellWithIdentifier("RALUserCell") as? RandomAndLevelUserCell
+        if(cell == nil){
+            cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
+        }
         
-        let imageIndex = user["UserIndex"].stringValue
+        let user = users[indexPath.row]
+        
+        let imageIndex = user.UserIndex.description
         let targetUrl = Url_GetHeadImage + imageIndex
         ALAMO_MANAGER.request(.GET, targetUrl)
             .responseImage { response in
                 if let image = response.result.value {
-                    cell.headImage.setImage(image, forState: .Normal)
+                    cell!.headImage.setImage(image, forState: .Normal)
+                    user.PortraitImage = image
                 }
         }
         
-        cell.nameLabel.text = user["UserName"].stringValue
+        cell!.nameLabel.text = user.UserName
         
-        let inner = user["InnerScore"].intValue
-        let outer = user["OuterScore"].intValue
-        let energy = user["Energy"].intValue
+        let inner = user.InnerScore
+        let outer = user.OuterScore
+        let energy = user.Energy
         let avg = (inner+outer)/2
 
-        cell.innerLabel.text = "内在 \(inner)"
-        cell.outerLabel.text = "外在 \(outer)"
-        cell.energyLabel.text = "能量 \(energy)"
-        cell.avgLabel.text = "平均 \(avg)"
+        cell!.innerLabel.text = "内在 \(inner)"
+        cell!.outerLabel.text = "外在 \(outer)"
+        cell!.energyLabel.text = "能量 \(energy)"
+        cell!.avgLabel.text = "平均 \(avg)"
         
-        cell.distanceLabel.text = "距离 0"
+        cell!.distanceLabel.text = "距离 0"
         
-        return cell
+        return cell!
     }
 }

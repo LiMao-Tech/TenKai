@@ -154,17 +154,6 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             }
             
             NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
-            
-            ALAMO_MANAGER.request(.GET, SHARED_USER.ProfileUrl) .responseImage { response in
-                if let image = response.result.value {
-                    SHARED_USER.Portrait = UIImagePNGRepresentation(image)
-                    print("get Portrait")
-                    UserCacheTool().upDateUserPortrait()
-                }
-                else {
-                    
-                }
-            }
         
             let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController

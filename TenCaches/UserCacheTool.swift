@@ -40,6 +40,14 @@ class UserCacheTool: NSObject {
         }
     }
     
+    func updateUserInfo(){
+        let sql_update = "UPDATE USERINFO SET GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
+        dbq.inDatabase { (db) -> Void in
+            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.Gender,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.AVG,SHARED_USER.Expire, SHARED_USER.UserIndex])
+        }
+
+    }
+    
     func upDateUserPortrait(){
         let sql_update = "UPDATE USERINFO SET PORTRAIT = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
@@ -94,8 +102,8 @@ class UserCacheTool: NSObject {
                     SHARED_USER.ProfileUrl = rs.stringForColumn("PROFILEURL")
                     SHARED_USER.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
                     SHARED_USER.Portrait = rs.dataForColumn("PORTRAIT")//读取到的是插入时候已经将图片转成的NSData
-                    SHARED_USER.AVG = Int(rs.intForColumn("AVG"))
                     SHARED_USER.Expire = Int(rs.intForColumn("EXPIRE"))
+                    SHARED_USER.AVG = Int(rs.intForColumn("AVG"))
                     inDB = true
                 }
             }

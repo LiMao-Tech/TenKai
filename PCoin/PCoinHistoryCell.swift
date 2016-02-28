@@ -17,8 +17,8 @@ class PCoinHistoryCell: UITableViewCell {
     var pcoinHistoryModel:PCoinHistoryModel!{
         didSet{
             timeLabel.text = "\(pcoinHistoryModel.PurchaseDate)"
-            pcoinLabel.text = "\(pcoinHistoryModel.Content)"
-            priceLabel.text = "\(pcoinHistoryModel.Content/10)"
+            pcoinLabel.text = "您购买了 \(pcoinHistoryModel.Content) P币"
+            priceLabel.text = "\(pcoinHistoryModel.Content/10) 元"
         }
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

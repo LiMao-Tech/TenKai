@@ -32,7 +32,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     var btnArray = [LevelButton]()
     var distance : GTSlider!
     var gap : Int!
-    var btns = Array<UIButton!>()
     
     let portraitBtn: UIButton = UIButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/5, SCREEN_WIDTH/5))
     
@@ -50,11 +49,28 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.backgroundColor = COLOR_BG
         print(SHARED_USER.UserIndex)
         
-        SHARED_USER.addObserver(self, forKeyPath: "PortraitImage", options: .New, context: nil)
+        SHARED_USER.addObserver(self, forKeyPath: "Average", options: .New, context: nil)
         
+        //获取头像信息
+        ALAMO_MANAGER.request(.GET, SHARED_USER.ProfileUrl) .responseImage { response in
+            if let image = response.result.value {
+                SHARED_USER.Portrait = UIImagePNGRepresentation(image)
+                self.portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+                print("get Portrait")
+                UserCacheTool().upDateUserPortrait()
+            }
+            else {
+                print("get Portrait failed")
+            }
+        }
+
         //protraitBtn
         portraitBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+        if(SHARED_USER.PortraitImage == nil){
+            portraitBtn.setImage(UIImage(named: "user_pic_radar_140")!, forState: .Normal)
+        }else{
+            portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+        }
         portraitBtn.addTarget(self, action: "pushUserProfileVC", forControlEvents: .TouchUpInside)
         
         // set circularMenu
@@ -70,7 +86,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         //setupButtons
         setupButtons()
         refreshLevelButton()
-        SHARED_USER.addObserver(self, forKeyPath: "Average", options: .New, context: nil)
+        
         
         // add location observer
         NSNotificationCenter.defaultCenter().addObserver(
@@ -118,7 +134,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
-
         updateLocation()
     }
     
@@ -212,7 +227,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         lvtenBtn.level = 10
         lvtenBtn.addTarget(self, action: "levelSelect:", forControlEvents: UIControlEvents.TouchUpInside)
         self.circularMenuVC.view.addSubview(lvtenBtn)
-        btns.append(lvtenBtn)
+        btnArray.append(lvtenBtn)
         
     }
     
@@ -235,6 +250,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                 print("解锁")
                 if(SHARED_USER.PCoin < Double(sender.level*10)){
                     //P币不足
+                    print("P币不足")
                     let insufficientAlert = UIAlertController(title: "解锁失败", message: "P币数量不足，请充值后解锁", preferredStyle: .Alert)
                     let pay = UIAlertAction(title: "充值", style: .Destructive, handler: { (ac) -> Void in
                         let pVC = PCoinViewController()
@@ -247,10 +263,20 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                     self.presentViewController(insufficientAlert, animated: true, completion: nil)
                 }else{
                     //同步服务器数据，获得相应的等级
-                    AFJSONManager.SharedInstance.putMethod(Url_User, parameters:["id":SHARED_USER] , success: { (task, response) -> Void in
+                    let url = Url_User + "/\(SHARED_USER.UserIndex)?pcoin=\(sender.level*10)&level=\(sender.level)"
+                    let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+                    AFJSONManager.SharedInstance.putMethod(urlComplete!, success: { (task, response) -> Void in
+                        print("解锁成功")
+                        SHARED_USER.Expire = Tools.getSinceTime(NSDate()) + 60*60*24*30
                         SHARED_USER.AVG = sender.level
                         SHARED_USER.PCoin -= Double(sender.level*10)
-                        UserCacheTool().upDateUserPCoin()
+                        print(SHARED_USER.AVG)
+                        self.refreshLevelButton()
+                        UserCacheTool().updateUserInfo()
+                        let insufficientAlert = UIAlertController(title: "解锁成功", message: nil, preferredStyle: .Alert)
+                        let cancel = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                        insufficientAlert.addAction(cancel)
+                        self.presentViewController(insufficientAlert, animated: true, completion: nil)
                         }, failure: { (task, error) -> Void in
                             print("put pcoin error:")
                             print(error.localizedDescription)
@@ -269,7 +295,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         }else{
             self.navigationController?.navigationBar.hidden = false
             let lVC = LevelUserController()
-            lVC.level = "\(sender.level)"
+            lVC.level = sender.level
             self.navigationController?.pushViewController(lVC, animated: true)
         }
     }
@@ -281,8 +307,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "Average"){
             refreshLevelButton()
-        }else if(keyPath == "PortraitImage"){
-            self.portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }

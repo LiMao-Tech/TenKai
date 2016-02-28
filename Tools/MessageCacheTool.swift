@@ -20,7 +20,7 @@ class MessageCacheTool: NSObject {
         dbq = FMDatabaseQueue(path: databasePath)
         
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (ID INTEGER PRIMARY KEY,MSGINDEX INTEGER,BELONGTYPE INTEGER,ISLOCKED INTEGER,MSGTYPE INTEGER,MSGTIME TEXT,MSGCONTENT TEXT)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (ID INTEGER PRIMARY KEY,MSGINDEX INTEGER,BELONGTYPE INTEGER,ISLOCKED INTEGER,MSGTYPE INTEGER,MSGTIME INTEGER,MSGCONTENT TEXT)"
             let sql_pic_stmt = "CREATE TABLE IF NOT EXISTS MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (ID INTEGER PRIMARY KEY,MSGINDEX INTEGER,PICTURE BLOB,WIDTH REAL,HEIGHT REAL)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
@@ -83,7 +83,7 @@ class MessageCacheTool: NSObject {
                     message.belongType = (rs.intForColumn("BELONGTYPE") == 0) ? ChatBelongType.Me : ChatBelongType.Other
                     message.IsLocked = Int(rs.intForColumn("ISLOCKED")) == 1
                     message.messageType = ChatMessageType(rawValue: Int(rs.intForColumn("MSGTYPE")))!
-                    message.MsgTime = rs.stringForColumn("MSGTIME")
+                    message.MsgTime = Int(rs.intForColumn("MSGTIME"))
                     message.MsgContent = rs.stringForColumn("MSGCONTENT")
                     if(message.messageType == .Image){
                         let sql_pic_stmt = "SELECT PICTURE FROM MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"

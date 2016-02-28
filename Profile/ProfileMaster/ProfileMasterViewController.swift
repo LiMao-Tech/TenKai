@@ -37,7 +37,7 @@ class ProfileMasterViewController: UIViewController,
     }
 
     override func viewWillDisappear(animated: Bool) {
-        
+        self.navigationController?.navigationBar.translucent = true
     }
 
     override func didReceiveMemoryWarning() {

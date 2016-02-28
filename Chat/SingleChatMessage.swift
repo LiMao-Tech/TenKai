@@ -27,7 +27,7 @@ class SingleChatMessage: NSObject {
         }
     }
     var MsgIndex = 0
-    var MsgTime = ""
+    var MsgTime = 0
     var MsgContent = ""{
         didSet{
             let stringToAtt = Tools.stringToAttributeString(self.MsgContent)

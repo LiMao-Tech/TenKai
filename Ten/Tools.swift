@@ -15,9 +15,19 @@ class Tools : NSObject{
     static let Formatter = NSDateFormatter()
     
     class func getNormalTime(date:NSDate) -> String{
-        Formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        Formatter.dateFormat = "yyyy/MM/dd"
         return Formatter.stringFromDate(date)
     }
+    
+    class func getTimeInDay(date:NSDate) -> String{
+        Formatter.dateFormat = "HH:mm"
+        return Formatter.stringFromDate(date)
+    }
+    class func getTimeInMonth(date:NSDate) -> String{
+        Formatter.dateFormat = "MM月dd日"
+        return Formatter.stringFromDate(date)
+    }
+    
     class func getSinceTime(date:NSDate) -> Int{
         return Int(date.timeIntervalSince1970)
     }
@@ -36,6 +46,35 @@ class Tools : NSObject{
         let timeInterval = Double(time)
         let timeDate = NSDate(timeIntervalSince1970: timeInterval)
         return timeDate
+    }
+    
+    class func toDisplayTime(time:Int) -> String{
+        var disPlayTime = ""
+        let calendar = NSCalendar.currentCalendar()
+        let transTime = NSDate(timeIntervalSince1970: Double(time))
+        let compsnow = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: NSDate())
+        let compsTrans = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: NSDate())
+        if(compsTrans.year == compsnow.year){
+            if(compsTrans.month == compsnow.month){
+                if(compsTrans.day == compsnow.day){
+                    disPlayTime = getTimeInDay(transTime)
+                }
+                else{
+                    if(compsTrans.day + 1 == compsnow.day){
+                        disPlayTime = "昨天"
+                    }else{
+                        disPlayTime = getTimeInMonth(transTime)
+                    }
+                }
+            }
+            else{
+                disPlayTime = getNormalTime(transTime)
+            }
+        }else{
+            disPlayTime = getNormalTime(transTime)
+        }
+        
+        return disPlayTime
     }
     
     // string转attributeString
