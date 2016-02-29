@@ -24,6 +24,27 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
         let chatBtn = UIBarButtonItem(image: UIImage(named: "btn_navBarIcon_chat_normal"), style: .Plain, target: self, action: "pushChatView")
         self.navigationItem.rightBarButtonItem = chatBtn;
 
+        let activeFrameHeight = SCREEN_HEIGHT-STATUSBAR_HEIGHT-(self.navigationController?.navigationBar.frame.height)!
+        
+        // child controller
+        pVC.tenUser = tenUser
+        pPCVC.tenUser = tenUser
+
+        pVC.view.frame = CGRectMake(0, 0, profileSV.frame.width, profileSV.frame.height)
+        pPCVC.view.frame = CGRectMake(0, activeFrameHeight, profileSV.frame.width, profileSV.frame.height)
+        
+        pPCVC.pVC = pVC
+
+        addChildViewController(pVC)
+        addChildViewController(pPCVC)
+
+        profileSV.addSubview(pVC.view)
+        profileSV.addSubview(pPCVC.view)
+
+
+        getImagesJSON()
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,10 +58,14 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
 
         ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON {
             response in
-            print(response.debugDescription)
+            
             if let values = response.result.value {
 
-                self.imagesJSON = (values as? [AnyObject])!
+                let imagesJSON = (values as? [AnyObject])!
+                self.imagesJSON = imagesJSON
+
+                self.pPCVC.imagesJSON = imagesJSON
+                self.pPCVC.lmCollectionView.reloadData()
 
                 for obj in self.imagesJSON! {
                     let imageJSON = JSON(obj)

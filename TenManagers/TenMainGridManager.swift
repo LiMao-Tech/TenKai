@@ -14,10 +14,13 @@ import SwiftyJSON
 
 class TenMainGridManager: NSObject {
     
-    private let minDiff: CGFloat = 15
+
     
     static let SharedInstance = TenMainGridManager()
-    
+
+    private let minDiff: CGFloat = 15
+    private let radiusSQ: CGFloat = (SCREEN_WIDTH*4/5)*(SCREEN_WIDTH*4/5)
+
     var numToGen: Int = 0
     var nodes: [TenGridButton] = [TenGridButton]()
     var gridUsers: [AnyObject] = [AnyObject]()
@@ -49,8 +52,13 @@ class TenMainGridManager: NSObject {
                 
                     let xDiff = abs(x-spot.x)
                     let yDiff = abs(y-spot.y)
+
+                    let xAway = x-SCREEN_WIDTH/2
+                    let yAway = y-SCREEN_HEIGHT/2
+
+                    let away = xAway*xAway+yAway*yAway
                     
-                    if xDiff < minDiff || yDiff < minDiff {
+                    if xDiff < minDiff || yDiff < minDiff || away > radiusSQ {
                         x = CGFloat(drand48()) * SCREEN_WIDTH*4/5 + SCREEN_WIDTH/10
                         y = CGFloat(drand48()) * SCREEN_HEIGHT*3/5 + SCREEN_HEIGHT/5
                         

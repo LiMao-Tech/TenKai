@@ -31,6 +31,8 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
     var tenUser: TenUser!
 
+    var pVC: OtherProfileViewController!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -133,11 +135,20 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         let cellImage = selectedCell?.imageView.image
 
         self.lmCollectionView.performBatchUpdates({() in
-            self.dims.removeAtIndex(indexPath.row)
-            self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
+            if self.dims[indexPath.row] == BlockDim.Std {
+                self.dims.removeAtIndex(indexPath.row)
+                self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
 
-            self.dims.insert(BlockDim.L, atIndex: indexPath.row)
-            self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
+                self.dims.insert(BlockDim.L, atIndex: indexPath.row)
+                self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
+            }
+            else {
+                self.dims.removeAtIndex(indexPath.row)
+                self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
+
+                self.dims.insert(BlockDim.Std, atIndex: indexPath.row)
+                self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
+            }
             },
             completion: {(done) in
                 let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell

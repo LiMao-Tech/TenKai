@@ -109,7 +109,6 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     var deleteMode: Bool = false
     
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
