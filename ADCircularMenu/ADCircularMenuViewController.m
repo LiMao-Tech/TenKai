@@ -91,7 +91,7 @@
     _buttonCorner = [UIButton buttonWithType:UIButtonTypeCustom];
     [_buttonCorner addTarget:self action:@selector(hideMenu:) forControlEvents:UIControlEventTouchUpInside];
     [_buttonCorner setFrame:CGRectMake(0, _screenFrame.size.height*(BUTTON_DENO-1)/BUTTON_DENO, BUTTON_DENO*3, BUTTON_DENO*3)];
-//    [_buttonCorner setImage:[UIImage imageNamed:@"btn_menu"] forState:UIControlStateNormal];
+    [_buttonCorner setImage:[UIImage imageNamed:@"btn_menu"] forState:UIControlStateNormal];
     //Circular menu buttons
     _arrButtons = [[NSMutableArray alloc] init];
 
@@ -139,14 +139,14 @@
     
     //1st circle initialization
     float incAngle = ( 117/3 )*M_PI/180.0 ;
-    float curAngle = -1.19; //more value more to left;
+    float curAngle = -1.4; //more value more to left;
     float circleRadius = _fInnerRadius;
     
     for (int i = 0; i < _iNumberOfButtons; i++)
     {
         if(i == 3)//2nd circle
         {
-            curAngle = -1.35;
+            curAngle = -1.4;
             incAngle = ( 100/5 )*M_PI/180.0;
             circleRadius = _fInnerRadius + 60;
         }
