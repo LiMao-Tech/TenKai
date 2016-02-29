@@ -9,12 +9,12 @@
 import UIKit
 
 var faceCodes = NSMutableArray()
-class GTFaceView: UIView {
+class TenFaceView: UIView {
     var faceMap = NSDictionary()
     var faceView : UIScrollView
     
     let screen = UIScreen.mainScreen().bounds.size
-    init(faceDelegateTemp:GTFaceButtonDelegate) {
+    init(faceDelegateTemp:TenFaceButtonDelegate) {
         faceMap = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("_expression_en", ofType: "plist")!)!
         faceView = UIScrollView(frame: CGRectMake(0, 0, screen.width, 200))
         faceView.pagingEnabled = true
@@ -31,7 +31,7 @@ class GTFaceView: UIView {
         let wAll = CGFloat(column)*w
         let margin = (screen.width - wAll)/(CGFloat(column + 1))
         for i in 1...faceMap.count{
-            let faceBtn:GTFaceButton = GTFaceButton(frame: CGRectMake(0, 0, 0, 0))
+            let faceBtn:TenFaceButton = TenFaceButton(frame: CGRectMake(0, 0, 0, 0))
             let c = CGFloat((i-1)%column)
             let r = CGFloat((i-1)/column)
             let p = (i-1)/(column*row)

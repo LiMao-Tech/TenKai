@@ -30,7 +30,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     var distanceLabel:UILabel!
     
     var btnArray = [LevelButton]()
-    var distance : GTSlider!
+    var distance : TenSlider!
     var gap : Int!
     
     let portraitBtn: UIButton = UIButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/5, SCREEN_WIDTH/5))
@@ -103,7 +103,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         randomButton.addTarget(self, action: "randomButtonAction", forControlEvents: UIControlEvents.TouchUpInside)
         
         let distanceY = CGRectGetMinY(menuButton.frame) - 80
-        distance = GTSlider(frame: CGRectMake(45, distanceY, SCREEN_WIDTH - 90, 24))
+        distance = TenSlider(frame: CGRectMake(45, distanceY, SCREEN_WIDTH - 90, 24))
         distance.minimumValue = 0
         distance.maximumValue = 3
         distance.addTarget(self, action: "distanceChange", forControlEvents: UIControlEvents.ValueChanged)

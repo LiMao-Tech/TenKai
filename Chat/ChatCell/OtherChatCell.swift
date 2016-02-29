@@ -32,7 +32,7 @@ class OtherChatCell: ChatBaseCell {
                 context.setImage(chatFrame.chatMessage.MsgImage!, forState: .Normal)
             }else{
                 content.attributedText = chatFrame.chatMessage.attrMsg
-                timeLabel.text = "\(chatFrame.chatMessage.MsgTime)"
+                timeLabel.text = "\(Tools.toDisplayTime(chatFrame.chatMessage.MsgTime))"
                 
             }
             MsgIsLock = chatFrame.chatMessage.IsLocked

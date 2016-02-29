@@ -17,6 +17,10 @@ class PCoinHistoryModel: NSObject {
     var Status = ""
     var PurchaseType = 0
     
+    override init() {
+        super.init()
+    }
+    
     init(dict :NSDictionary) {
         super.init()
         self.setValuesForKeysWithDictionary(dict as! [String : AnyObject])

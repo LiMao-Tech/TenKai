@@ -30,7 +30,7 @@ class ScoreView: UIView {
     var contentView:UIView!
     var nameLabel:UILabel!
     var headImageView:UIImageView!
-    var scoreSlider:GTSlider!
+    var scoreSlider:TenSlider!
     var scoreLabel:UILabel!
     var okBtn:UIButton!
     var cancelBtn:UIButton!
@@ -74,7 +74,7 @@ class ScoreView: UIView {
         scoreLabel.font = UIFont.systemFontOfSize(15)
         contentView.addSubview(scoreLabel)
         var w = contentL-gap*2-headImageView.frame.width-scoreLabel.frame.width-gap
-        scoreSlider = GTSlider(frame: CGRectMake(CGRectGetMaxX(headImageView.frame)+10,y,w,20))
+        scoreSlider = TenSlider(frame: CGRectMake(CGRectGetMaxX(headImageView.frame)+10,y,w,20))
         scoreSlider.addTarget(self, action: "scoreChange", forControlEvents: .ValueChanged)
         scoreSlider.maximumValue = 10
         scoreSlider.minimumValue = 0

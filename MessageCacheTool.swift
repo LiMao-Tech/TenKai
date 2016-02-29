@@ -2,7 +2,7 @@
 //  MessageCacheTool.swift
 //  Ten
 //
-//  Created by gt on 16/1/9.
+//  Created by gt on 16/2/29.
 //  Copyright © 2016年 LiMao Tech. All rights reserved.
 //
 
@@ -36,16 +36,16 @@ class MessageCacheTool: NSObject {
     func addMessageInfo(userIndex:Int,msg:SingleChatMessage){
         let sql_insert = "INSERT INTO MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,BELONGTYPE,ISLOCKED,MSGTYPE,MSGTIME,MSGCONTENT) VALUES(?,?,?,?,?,?)"
         dbq.inTransaction { (db, rollBack) -> Void in
-        if !db.executeUpdate(sql_insert, withArgumentsInArray: [msg.MsgIndex,msg.belongType.rawValue,msg.IsLocked,msg.messageType.rawValue,msg.MsgTime,msg.MsgContent]){                  print("插入失败")
-        }
-        if(msg.messageType == .Image){
-            let sql_pic_stmt = "INSERT INTO MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,PICTURE,WIDTH,HEIGHT) VALUES(?,?,?,?)"
-            if !db.executeUpdate(sql_pic_stmt, withArgumentsInArray: [msg.MsgIndex,UIImagePNGRepresentation(msg.MsgImage!)!,(msg.MsgImage?.size.width)!,(msg.MsgImage?.size.height)!]){
-                print("图片插入失败")
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [msg.MsgIndex,msg.belongType.rawValue,msg.IsLocked,msg.messageType.rawValue,msg.MsgTime,msg.MsgContent]){                  print("插入失败")
             }
-            print("插入图片！！！")
+            if(msg.messageType == .Image){
+                let sql_pic_stmt = "INSERT INTO MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,PICTURE,WIDTH,HEIGHT) VALUES(?,?,?,?)"
+                if !db.executeUpdate(sql_pic_stmt, withArgumentsInArray: [msg.MsgIndex,UIImagePNGRepresentation(msg.MsgImage!)!,(msg.MsgImage?.size.width)!,(msg.MsgImage?.size.height)!]){
+                    print("图片插入失败")
+                }
+                print("插入图片！！！")
+            }
         }
-    }
     }
     
     func upDateLockState(userIndex:Int,MsgIndex:Int,isLock:Bool){
@@ -60,7 +60,7 @@ class MessageCacheTool: NSObject {
             let sql_insert = "DELETE FROM MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"
             if !db.executeUpdate(sql_insert, withArgumentsInArray: [msg.MsgIndex]){
                 print("删除失败")
-                }
+            }
             if(msg.messageType == .Image){
                 let sql_pic_stmt = "DELETE FROM MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"
                 if !db.executeUpdate(sql_pic_stmt, withArgumentsInArray: [msg.MsgIndex]){
@@ -100,4 +100,5 @@ class MessageCacheTool: NSObject {
         }
         return messageFrames
     }
+
 }

@@ -24,8 +24,7 @@ class MeChatCell: ChatBaseCell {
                 content.setImage(chatFrame.chatMessage.MsgImage!, forState: .Normal)
             }else{
                 conText.attributedText = chatFrame.chatMessage.attrMsg
-                time.text = "\(chatFrame.chatMessage.MsgTime)"
-                
+                time.text = "\(Tools.toDisplayTime(chatFrame.chatMessage.MsgTime))"
             }
             if(MsgIsLock){
                 lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)

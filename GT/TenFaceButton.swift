@@ -7,18 +7,18 @@
 //
 
 import UIKit
-protocol GTFaceButtonDelegate : class{
-    func faceButtonDidClicked(faceBtn :GTFaceButton)
+protocol TenFaceButtonDelegate : class{
+    func faceButtonDidClicked(faceBtn :TenFaceButton)
 }
 
-class GTFaceButton: UIButton {
+class TenFaceButton: UIButton {
     var faceCode : NSString = ""
     var faceImage : UIImage?{
         willSet{
             self.setImage(newValue, forState: UIControlState.Normal)
         }
     }
-    weak var delegate : GTFaceButtonDelegate?
+    weak var delegate : TenFaceButtonDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

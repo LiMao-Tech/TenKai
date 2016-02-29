@@ -28,7 +28,7 @@ class EditProfileController : UIViewController,
     var statusDetail:UITextView!
     var InnerValue:UILabel!
     var OuterValue:UILabel!
-    var energyBar:GTSlider!
+    var energyBar:TenSlider!
     var energyValue:UILabel!
     
     let lineLength:CGFloat = SCREEN_HEIGHT == 568 ? 150 : 200
@@ -85,7 +85,7 @@ class EditProfileController : UIViewController,
         OuterValue = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: "7")
         y = CGRectGetMaxY(OuterLabel.frame)+margin
         let energyLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Energy")
-        energyBar = GTSlider(frame: CGRectMake(textX, y, lineLength-30, 20))
+        energyBar = TenSlider(frame: CGRectMake(textX, y, lineLength-30, 20))
         energyBar.minimumValue = 0
         energyBar.maximumValue = 10
         energyBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)

@@ -17,6 +17,8 @@
 		640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDE1C0C898700B31DA0 /* FMDatabaseQueue.m */; };
 		640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BE11C0C898700B31DA0 /* FMResultSet.m */; };
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
+		641CDAB41C841E940036655F /* PcoinPurchaseHistoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */; };
+		641CDAB61C8481FE0036655F /* MessageCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641CDAB51C8481FE0036655F /* MessageCacheTool.swift */; };
 		642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642452971C4CDBD1003A43C8 /* PCoinModel.swift */; };
 		642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */; };
 		643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */; };
@@ -27,7 +29,6 @@
 		643E8CD21C3E309E00349187 /* MeChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CCE1C3E309E00349187 /* MeChatCell.xib */; };
 		643E8CD31C3E309E00349187 /* OtherChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCF1C3E309E00349187 /* OtherChatCell.swift */; };
 		643E8CD41C3E309E00349187 /* OtherChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643E8CD01C3E309E00349187 /* OtherChatCell.xib */; };
-		643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CD81C41431E00349187 /* MessageCacheTool.swift */; };
 		643F9C741BF6D95A00361C55 /* Radar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 643F9C731BF6D95A00361C55 /* Radar.gif */; };
 		644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F1D0D1C286210002E65CE /* SharedUser.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
@@ -57,7 +58,6 @@
 		D45D81E11C4F75160035A213 /* OtherProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D81D91C4F75160035A213 /* OtherProfilePicsViewController.swift */; };
 		D45D81E21C4F75160035A213 /* OtherProfilePicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45D81DA1C4F75160035A213 /* OtherProfilePicsViewController.xib */; };
 		D45D81EA1C4F8B2B0035A213 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45D81E91C4F8B2B0035A213 /* ProfileViewController.xib */; };
-		D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46894561C36D7CA004922EF /* LoginCacheTool.swift */; };
 		D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348D1BE9E26500F49D63 /* TenLogin.swift */; };
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
 		D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF991C40590700B48C48 /* LMImagePicker.swift */; };
@@ -113,10 +113,10 @@
 		D4EA5C761C142452009E9927 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C721C142452009E9927 /* UserCell.swift */; };
 		D4EA5C771C142452009E9927 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C731C142452009E9927 /* UserCell.xib */; };
 		D4EA5C7D1C142471009E9927 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7B1C142471009E9927 /* Tools.swift */; };
-		D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */; };
-		D4EA5C841C1424A1009E9927 /* GTFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C801C1424A1009E9927 /* GTFaceView.swift */; };
-		D4EA5C851C1424A1009E9927 /* GTSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C811C1424A1009E9927 /* GTSlider.swift */; };
-		D4EA5C861C1424A1009E9927 /* GTTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C821C1424A1009E9927 /* GTTextAttachment.swift */; };
+		D4EA5C831C1424A1009E9927 /* TenFaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C7F1C1424A1009E9927 /* TenFaceButton.swift */; };
+		D4EA5C841C1424A1009E9927 /* TenFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C801C1424A1009E9927 /* TenFaceView.swift */; };
+		D4EA5C851C1424A1009E9927 /* TenSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C811C1424A1009E9927 /* TenSlider.swift */; };
+		D4EA5C861C1424A1009E9927 /* TenTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C821C1424A1009E9927 /* TenTextAttachment.swift */; };
 		D4EA5C8C1C1424AF009E9927 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C881C1424AF009E9927 /* Notification.swift */; };
 		D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C891C1424AF009E9927 /* NotificationFrame.swift */; };
 		D4EA5C8E1C1424AF009E9927 /* NotificationInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C8A1C1424AF009E9927 /* NotificationInfoCell.swift */; };
@@ -337,9 +337,11 @@
 		640F3BE01C0C898700B31DA0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		640F3BE11C0C898700B31DA0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PcoinPurchaseHistoryCache.swift; sourceTree = "<group>"; };
+		641CDAB51C8481FE0036655F /* MessageCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCacheTool.swift; sourceTree = "<group>"; };
 		642452971C4CDBD1003A43C8 /* PCoinModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinModel.swift; sourceTree = "<group>"; };
 		642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInitializerTool.swift; sourceTree = "<group>"; };
-		643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCacheTool.swift; sourceTree = "<group>"; };
+		643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCacheTool.swift; path = Tools/NotificationCacheTool.swift; sourceTree = "<group>"; };
 		643C8BBE1C48DF5400682A60 /* PCoinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinCell.swift; sourceTree = "<group>"; };
 		643C8BBF1C48DF5400682A60 /* PCoinCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PCoinCell.xib; sourceTree = "<group>"; };
 		643C8BCB1C4B6B8A00682A60 /* ScoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
@@ -347,7 +349,6 @@
 		643E8CCE1C3E309E00349187 /* MeChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeChatCell.xib; sourceTree = "<group>"; };
 		643E8CCF1C3E309E00349187 /* OtherChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherChatCell.swift; sourceTree = "<group>"; };
 		643E8CD01C3E309E00349187 /* OtherChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherChatCell.xib; sourceTree = "<group>"; };
-		643E8CD81C41431E00349187 /* MessageCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCacheTool.swift; sourceTree = "<group>"; };
 		643F9C731BF6D95A00361C55 /* Radar.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Radar.gif; sourceTree = "<group>"; };
 		644F1D0D1C286210002E65CE /* SharedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUser.swift; sourceTree = "<group>"; };
 		649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
@@ -385,7 +386,6 @@
 		D45D81D91C4F75160035A213 /* OtherProfilePicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfilePicsViewController.swift; sourceTree = "<group>"; };
 		D45D81DA1C4F75160035A213 /* OtherProfilePicsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfilePicsViewController.xib; sourceTree = "<group>"; };
 		D45D81E91C4F8B2B0035A213 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
-		D46894561C36D7CA004922EF /* LoginCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCacheTool.swift; sourceTree = "<group>"; };
 		D481348D1BE9E26500F49D63 /* TenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLogin.swift; sourceTree = "<group>"; };
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
 		D4A5EF991C40590700B48C48 /* LMImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMImagePicker.swift; sourceTree = "<group>"; };
@@ -445,10 +445,10 @@
 		D4EA5C721C142452009E9927 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		D4EA5C731C142452009E9927 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		D4EA5C7B1C142471009E9927 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tools.swift; path = ../Ten/Tools.swift; sourceTree = "<group>"; };
-		D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTFaceButton.swift; sourceTree = "<group>"; };
-		D4EA5C801C1424A1009E9927 /* GTFaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTFaceView.swift; sourceTree = "<group>"; };
-		D4EA5C811C1424A1009E9927 /* GTSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSlider.swift; sourceTree = "<group>"; };
-		D4EA5C821C1424A1009E9927 /* GTTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTTextAttachment.swift; sourceTree = "<group>"; };
+		D4EA5C7F1C1424A1009E9927 /* TenFaceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenFaceButton.swift; sourceTree = "<group>"; };
+		D4EA5C801C1424A1009E9927 /* TenFaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenFaceView.swift; sourceTree = "<group>"; };
+		D4EA5C811C1424A1009E9927 /* TenSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenSlider.swift; sourceTree = "<group>"; };
+		D4EA5C821C1424A1009E9927 /* TenTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenTextAttachment.swift; sourceTree = "<group>"; };
 		D4EA5C881C1424AF009E9927 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		D4EA5C891C1424AF009E9927 /* NotificationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationFrame.swift; sourceTree = "<group>"; };
 		D4EA5C8A1C1424AF009E9927 /* NotificationInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationInfoCell.swift; sourceTree = "<group>"; };
@@ -752,11 +752,8 @@
 		644F1D0F1C2863A9002E65CE /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */,
 				D4EA5C7B1C142471009E9927 /* Tools.swift */,
-				D46894561C36D7CA004922EF /* LoginCacheTool.swift */,
 				D4A5EF991C40590700B48C48 /* LMImagePicker.swift */,
-				643E8CD81C41431E00349187 /* MessageCacheTool.swift */,
 				642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */,
 			);
 			path = Tools;
@@ -776,7 +773,7 @@
 			children = (
 				D4EA5C901C1424C6009E9927 /* Random */,
 				D4EA5C871C1424AF009E9927 /* Notification */,
-				D4EA5C7E1C1424A1009E9927 /* GT */,
+				D4EA5C7E1C1424A1009E9927 /* TenUIs */,
 				D4EA5C6C1C142443009E9927 /* Level */,
 				D4EA5C711C142452009E9927 /* User */,
 				D4EA5C591C142430009E9927 /* Chat */,
@@ -865,8 +862,11 @@
 		D434AC0C1C63FA710013E27D /* TenCaches */ = {
 			isa = PBXGroup;
 			children = (
+				643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */,
+				641CDAB51C8481FE0036655F /* MessageCacheTool.swift */,
 				D434AC101C6401DD0013E27D /* UserCacheTool.swift */,
 				D434AC111C6401DD0013E27D /* UsersCacheTool.swift */,
+				641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */,
 			);
 			name = TenCaches;
 			sourceTree = "<group>";
@@ -1071,14 +1071,15 @@
 			path = User;
 			sourceTree = "<group>";
 		};
-		D4EA5C7E1C1424A1009E9927 /* GT */ = {
+		D4EA5C7E1C1424A1009E9927 /* TenUIs */ = {
 			isa = PBXGroup;
 			children = (
-				D4EA5C7F1C1424A1009E9927 /* GTFaceButton.swift */,
-				D4EA5C801C1424A1009E9927 /* GTFaceView.swift */,
-				D4EA5C811C1424A1009E9927 /* GTSlider.swift */,
-				D4EA5C821C1424A1009E9927 /* GTTextAttachment.swift */,
+				D4EA5C7F1C1424A1009E9927 /* TenFaceButton.swift */,
+				D4EA5C801C1424A1009E9927 /* TenFaceView.swift */,
+				D4EA5C811C1424A1009E9927 /* TenSlider.swift */,
+				D4EA5C821C1424A1009E9927 /* TenTextAttachment.swift */,
 			);
+			name = TenUIs;
 			path = GT;
 			sourceTree = "<group>";
 		};
@@ -1641,10 +1642,9 @@
 				D4D0F8891C657834007F3BF6 /* SharedInstances.swift in Sources */,
 				643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
-				D46894571C36D7CA004922EF /* LoginCacheTool.swift in Sources */,
 				D414D0631C6E263500C6566F /* Urls.swift in Sources */,
 				D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */,
-				D4EA5C861C1424A1009E9927 /* GTTextAttachment.swift in Sources */,
+				D4EA5C861C1424A1009E9927 /* TenTextAttachment.swift in Sources */,
 				D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */,
 				640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */,
 				D4EA5C2B1C13F669009E9927 /* PCoinTransferModel.swift in Sources */,
@@ -1654,7 +1654,7 @@
 				D4EA5BFA1C13EA12009E9927 /* DKImagePickerController.swift in Sources */,
 				D4C671021C81B06B00C09CFD /* ProfileMasterViewController.swift in Sources */,
 				D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */,
-				D4EA5C831C1424A1009E9927 /* GTFaceButton.swift in Sources */,
+				D4EA5C831C1424A1009E9927 /* TenFaceButton.swift in Sources */,
 				D4C671051C81B0F000C09CFD /* MeProfileMasterViewController.swift in Sources */,
 				D4D0F8871C656F9E007F3BF6 /* AFJSONManager.swift in Sources */,
 				D4D0F8861C656F9E007F3BF6 /* AFImageManager.swift in Sources */,
@@ -1676,7 +1676,7 @@
 				D4EA5C2A1C13F669009E9927 /* PCoinTransferCell.swift in Sources */,
 				640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */,
 				D4EA5C171C13F1F4009E9927 /* ProfileEditController.swift in Sources */,
-				D4EA5C841C1424A1009E9927 /* GTFaceView.swift in Sources */,
+				D4EA5C841C1424A1009E9927 /* TenFaceView.swift in Sources */,
 				640F3BE31C0C898700B31DA0 /* FMDatabaseAdditions.m in Sources */,
 				D4EA5C2C1C13F669009E9927 /* PCoinUnlockedCell.swift in Sources */,
 				D4EA5C581C142321009E9927 /* SettingsViewController.swift in Sources */,
@@ -1684,8 +1684,9 @@
 				D4EA5BF51C13EA12009E9927 /* DKAssetGroupDetailVC.swift in Sources */,
 				D4EA5C761C142452009E9927 /* UserCell.swift in Sources */,
 				D4EA5C941C1424C6009E9927 /* RandomAndLevelUser.swift in Sources */,
+				641CDAB41C841E940036655F /* PcoinPurchaseHistoryCache.swift in Sources */,
 				643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */,
-				D4EA5C851C1424A1009E9927 /* GTSlider.swift in Sources */,
+				D4EA5C851C1424A1009E9927 /* TenSlider.swift in Sources */,
 				643C8BCC1C4B6B8A00682A60 /* ScoreView.swift in Sources */,
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,
 				D4EA5BFC1C13EA12009E9927 /* DKPopoverViewController.swift in Sources */,
@@ -1699,6 +1700,7 @@
 				640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */,
 				D4EA5C051C13EAE3009E9927 /* LMCollectionViewLayout.m in Sources */,
 				642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */,
+				641CDAB61C8481FE0036655F /* MessageCacheTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */,
 				D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */,
@@ -1714,7 +1716,6 @@
 				D4EA5C641C142430009E9927 /* ChatViewController.swift in Sources */,
 				D4C236C31C42097400740FA7 /* ProfileViewController.swift in Sources */,
 				D4EA5C961C1424C6009E9927 /* RandomUserController.swift in Sources */,
-				643E8CD91C41431E00349187 /* MessageCacheTool.swift in Sources */,
 				D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */,
 				640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */,
 				642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */,

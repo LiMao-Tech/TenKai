@@ -16,7 +16,7 @@ class PCoinHistoryCell: UITableViewCell {
     var splitLine:UIView!
     var pcoinHistoryModel:PCoinHistoryModel!{
         didSet{
-            timeLabel.text = "\(pcoinHistoryModel.PurchaseDate)"
+            timeLabel.text = "\(Tools.toDisplayTime(pcoinHistoryModel.PurchaseDate))"
             pcoinLabel.text = "您购买了 \(pcoinHistoryModel.Content) P币"
             priceLabel.text = "\(pcoinHistoryModel.Content/10) 元"
         }

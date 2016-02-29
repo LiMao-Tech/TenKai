@@ -76,6 +76,19 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         // Do any additional setup after loading the view.
     }
     
+    func initialData(){
+        let results = PcoinPurchaseHistoryCache().getPurchaseHistoryInfo()
+        if(!results.isEmpty){
+            for info in results.infos{
+                if (info.PurchaseType == 0){
+                    pcoinPurchaseHistory.append(info)
+                }else{
+                    pcoinPurchaseLevelHistory.append(info)
+                }
+            }
+        }
+    }
+    
     func refreshControl(){
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
@@ -144,7 +157,6 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
 //            let params = ["id":SHARED_USER.UserIndex,"pcoin":amount,"note":"花费了\(amount/10)元"]
             let url = Url_User + "/\(SHARED_USER.UserIndex)?pcoin=\(amount)&note=花费了\(amount/10)元"
             let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-            
             AFJSONManager.SharedInstance.putMethod(urlComplete!, success: { (task, response) -> Void in
                 let successAlert = UIAlertController(title: "购买成功", message: nil, preferredStyle: .Alert)
                 let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
@@ -174,7 +186,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             if(cell == nil){
                 cell = PCoinHistoryCell.init(style: .Default, reuseIdentifier: "historyCell")
             }
-            cell?.pcoinHistoryModel = pcoinPurchaseHistory[indexPath.row]
+            cell?.pcoinHistoryModel = pcoinPurchaseHistory.reverse()[indexPath.row]
             return cell!
         }
         if(modelType == .Transfer){
@@ -190,7 +202,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             if(cell == nil){
                 cell = PCoinUnlockedCell.init(style: .Default, reuseIdentifier: "unlockedCell")
             }
-            cell?.pcoinHistoryModel = pcoinPurchaseLevelHistory[indexPath.row]
+            cell?.pcoinHistoryModel = pcoinPurchaseLevelHistory.reverse()[indexPath.row]
             return cell!
         }
         
@@ -218,6 +230,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         return 4
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
         if(modelType == .History){
             return 64
         }
@@ -227,7 +240,6 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         if(modelType == .Unlocked){
             return 65
         }
-        
         
         return 64
     }

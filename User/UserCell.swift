@@ -91,7 +91,7 @@ class UserCell: UITableViewCell {
             }else{
                 lastMessage.text = "[P币]"
             }
-            timeLabel.text = "\(message.last?.chatMessage.MsgTime)"
+            timeLabel.text = "\(Tools.toDisplayTime((message.last?.chatMessage.MsgTime)!))"
         }
     }
     

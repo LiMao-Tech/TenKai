@@ -144,12 +144,12 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             print(response)
             let dict = response as! NSDictionary
             let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
+            SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
             if getResult {
                 UserCacheTool().updateUserInfo(dict)
                 DataInitializerTool.initialiseInfo()
             }
             else {
-                SharedUser.changeValue(dict as! [String : AnyObject])
                 UserCacheTool().addUserInfoByUser()
             }
             

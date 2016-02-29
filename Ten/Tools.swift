@@ -53,11 +53,16 @@ class Tools : NSObject{
         let calendar = NSCalendar.currentCalendar()
         let transTime = NSDate(timeIntervalSince1970: Double(time))
         let compsnow = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: NSDate())
-        let compsTrans = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: NSDate())
+        let compsTrans = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: transTime)
         if(compsTrans.year == compsnow.year){
             if(compsTrans.month == compsnow.month){
                 if(compsTrans.day == compsnow.day){
-                    disPlayTime = getTimeInDay(transTime)
+                    let minutes = String(format: "%02d", arguments: [compsTrans.minute])
+                    if(compsTrans.hour < 13){
+                        disPlayTime = "上午 \(compsTrans.hour):"+minutes
+                    }else{
+                        disPlayTime = "下午 \(compsTrans.hour-12):"+minutes
+                    }
                 }
                 else{
                     if(compsTrans.day + 1 == compsnow.day){

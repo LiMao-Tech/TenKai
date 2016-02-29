@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GTSlider: UISlider {
+class TenSlider: UISlider {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -10,7 +10,7 @@ import UIKit
 class SingleChatController : UIViewController,
                             UITableViewDelegate,
                             UITableViewDataSource,
-                            GTFaceButtonDelegate,
+                            TenFaceButtonDelegate,
                             UITextViewDelegate,
                             UIActionSheetDelegate,
                             UIImagePickerControllerDelegate,
@@ -44,7 +44,7 @@ class SingleChatController : UIViewController,
     var contentText : UITextView!
     var messageList : UITableView!
     var bottomImage : UIImageView!
-    var faceView : GTFaceView!
+    var faceView : TenFaceView!
     var member = NSDictionary()
     let margin : CGFloat = 5
     let iconSize : CGFloat = 30
@@ -145,7 +145,7 @@ class SingleChatController : UIViewController,
     /**
     GTFaceButton代理函数
     */
-    func faceButtonDidClicked(faceBtn: GTFaceButton) {
+    func faceButtonDidClicked(faceBtn: TenFaceButton) {
         let conText = NSMutableAttributedString()
         conText.setAttributes([NSFontAttributeName:UIFont.systemFontOfSize(15)], range: NSMakeRange(0, 0))
         conText.appendAttributedString(self.contentText.attributedText)
@@ -439,7 +439,7 @@ class SingleChatController : UIViewController,
     }
     
     func setup(){
-        faceView = GTFaceView(faceDelegateTemp:self)
+        faceView = TenFaceView(faceDelegateTemp:self)
         
         bottom = UIView(frame: CGRectMake(0, SCREEN_HEIGHT-44, SCREEN_WIDTH, 44))
         

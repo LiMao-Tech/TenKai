@@ -53,13 +53,13 @@ class RegistProfileViewController: UIViewController,
     var statusDetail:UITextView!
     var placeHolder:UILabel!
     
-    var innerBar:GTSlider!
+    var innerBar:TenSlider!
     var innerValue:UILabel!
     
-    var outerBar:GTSlider!
+    var outerBar:TenSlider!
     var outerValue:UILabel!
     
-    var energyBar:GTSlider!
+    var energyBar:TenSlider!
     var energyValue:UILabel!
     
     var button:UIButton!
@@ -190,7 +190,7 @@ class RegistProfileViewController: UIViewController,
         
         // Inner Label
         let InnerLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*12/12, labelWidth: labelLen, labelHeight: 100, labelText: "内在")
-        innerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
+        innerBar = TenSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
         innerBar.minimumValue = 1
         innerBar.maximumValue = 10
         innerBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
@@ -199,7 +199,7 @@ class RegistProfileViewController: UIViewController,
         innerValue.textColor = UIColor.whiteColor()
         
         let OuterLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*13/12, labelWidth: labelLen, labelHeight: 100, labelText: "外在")
-        outerBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*13/12+40, lineLength-30, 20))
+        outerBar = TenSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*13/12+40, lineLength-30, 20))
         outerBar.minimumValue = 1
         outerBar.maximumValue = 10
         outerBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
@@ -208,7 +208,7 @@ class RegistProfileViewController: UIViewController,
         outerValue.textColor = UIColor.whiteColor()
         
         let EnergyLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*14/12, labelWidth: 200, labelHeight: 100, labelText: "能量")
-        energyBar = GTSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*14/12+40, lineLength-30, 20))
+        energyBar = TenSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*14/12+40, lineLength-30, 20))
         energyBar.minimumValue = 1
         energyBar.maximumValue = 10
         energyBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
@@ -471,7 +471,7 @@ class RegistProfileViewController: UIViewController,
             print("postUser")
             print(response)
             let dict = response as! NSDictionary
-            SharedUser.changeValue(dict as! [String : AnyObject])
+            SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
             self.postImage()
             },failure: { (task, error) -> Void in
                 print("Post User Failed")
@@ -517,7 +517,7 @@ class RegistProfileViewController: UIViewController,
         AFJSONManager.SharedInstance.putMethod(putUrl, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
             print(response)
             let dict = response as! NSDictionary
-            SharedUser.changeValue(dict as! [String : AnyObject])
+            SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.button.enabled = true
                 self.indicator.stopAnimating()

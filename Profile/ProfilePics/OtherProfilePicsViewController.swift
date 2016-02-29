@@ -27,7 +27,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
 
     let rateAlert = UIAlertView(title: "评分", message: "看过用户的首页。你帮他／她的外表评几分呢？", delegate: nil, cancelButtonTitle: "取消")
-    let slider = GTSlider(frame: CGRectMake(20,10,200,20))
+    let slider = TenSlider(frame: CGRectMake(20,10,200,20))
 
     var tenUser: TenUser!
 
