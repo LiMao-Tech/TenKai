@@ -77,7 +77,7 @@ class ScoreView: UIView {
         scoreSlider = TenSlider(frame: CGRectMake(CGRectGetMaxX(headImageView.frame)+10,y,w,20))
         scoreSlider.addTarget(self, action: "scoreChange", forControlEvents: .ValueChanged)
         scoreSlider.maximumValue = 10
-        scoreSlider.minimumValue = 0
+        scoreSlider.minimumValue = 1
         contentView.addSubview(scoreSlider)
         y = CGRectGetMaxY(headImageView.frame) + 10
         let splitLine = UIView(frame: CGRectMake(0,y,contentL,1))

@@ -115,12 +115,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             sVC.tenUser = userChatActive[indexPath.row]
         }else{
             sVC.tenUser = userChatInActive[indexPath.row]
-            if(!ChatLockState){
+            if(!ChatFocusState){
                 ChatFocusState = true
-                NSUserDefaults.setValue(sVC.tenUser.UserIndex, forKey: "ChatFocusState")
+                NSUserDefaults.standardUserDefaults().setValue(sVC.tenUser.UserIndex, forKey: "ChatFocusState")
             }
         }
-        if(ChatLockState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){
+        if(ChatFocusState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){
             let focusAlert = UIAlertController(title: "注意！", message: "还没有为你的小伙伴的内在评分", preferredStyle: .Alert)
             let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
                 let index = NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int
@@ -182,6 +182,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         itemInactive.setImage(itemInactive.normalImage, forState: UIControlState.Normal)
         itemInactive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
         
+        
         tabView.addSubview(itemActive)
         tabView.addSubview(itemInactive)
         
@@ -194,6 +195,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.view.addSubview(tabView)
         self.view.addSubview(userList)
         self.view.backgroundColor = COLOR_BG
+        
+        if(NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") != nil){
+            ChatFocusState = true
+        }
         
         selectedBtn = itemActive
     }

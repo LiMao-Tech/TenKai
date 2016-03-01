@@ -84,14 +84,20 @@ class UserCell: UITableViewCell {
     var message = [SingleChatMessageFrame](){
         didSet{
             let msg = message.last
-            if(msg!.chatMessage.messageType.rawValue == 1){
-                lastMessage.text = "[图片]"
-            }else if(msg!.chatMessage.messageType.rawValue == 0){
-                lastMessage.text = msg!.chatMessage.MsgContent
-            }else{
-                lastMessage.text = "[P币]"
+            if(msg != nil){
+                if(msg!.chatMessage.messageType.rawValue == 1){
+                    lastMessage.text = "[图片]"
+                }else if(msg!.chatMessage.messageType.rawValue == 0){
+                    lastMessage.text = msg!.chatMessage.MsgContent
+                }else{
+                    lastMessage.text = "[P币]"
+                }
+                timeLabel.text = "\(Tools.toDisplayTime((message.last?.chatMessage.MsgTime)!))"
             }
-            timeLabel.text = "\(Tools.toDisplayTime((message.last?.chatMessage.MsgTime)!))"
+            else{
+                timeLabel.text = "\(Tools.toDisplayTime(Tools.getSinceTime(NSDate())))"
+                lastMessage.text = "[嘻嘻]快来和你的小伙伴聊天吧！"
+            }
         }
     }
     

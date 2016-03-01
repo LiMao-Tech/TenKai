@@ -25,6 +25,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     var item3:SettingButton!
     var selectedBtn:SettingButton!
     let pcoinNum = [10,20,50,100]
+    var purchaseIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named:"navBar_pcoin"), forBarMetrics: .Default)
@@ -72,6 +73,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         self.view.addSubview(topView)
         self.view.addSubview(pcoinItemList)
         selectedBtn = item0
+        initialData()
         refreshControl()
         // Do any additional setup after loading the view.
     }
@@ -79,6 +81,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     func initialData(){
         let results = PcoinPurchaseHistoryCache().getPurchaseHistoryInfo()
         if(!results.isEmpty){
+            purchaseIndex = (results.infos.last?.ID)!
             for info in results.infos{
                 if (info.PurchaseType == 0){
                     pcoinPurchaseHistory.append(info)
@@ -87,6 +90,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
                 }
             }
         }
+        pcoinItemList.reloadData()
     }
     
     func refreshControl(){
@@ -102,16 +106,22 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     func getPcoinHistory(refresh:UIRefreshControl){
         print("get history")
-        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseType":0], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseIndex":purchaseIndex], success: { (task, response) -> Void in
             print("purchase history done")
             print(response)
             let historyArray = response as! NSArray
             if(historyArray.count > 0){
                 for info in historyArray{
                     let history = PCoinHistoryModel(dict: info as! NSDictionary)
+                    self.purchaseIndex = history.ID
+                    PcoinPurchaseHistoryCache().addPurchaseHistoryInfo(history)
+                    if(history.PurchaseType == 0){
                     self.pcoinPurchaseHistory.append(history)
-                    self.pcoinItemList.reloadData()
+                    }else{
+                    self.pcoinPurchaseLevelHistory.append(history)
+                    }
                 }
+                self.pcoinItemList.reloadData()
             }
             refresh.endRefreshing()
             },failure:  { (task,error) -> Void in
@@ -120,23 +130,23 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
                 refresh.endRefreshing()
         })
         
-        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseType":1], success: { (task, response) -> Void in
-            print("purchase level history done")
-            print(response)
-            let historyArray = response as! NSArray
-            if(historyArray.count > 0){
-                for info in historyArray{
-                    let history = PCoinHistoryModel(dict: info as! NSDictionary)
-                    self.pcoinPurchaseLevelHistory.append(history)
-                    self.pcoinItemList.reloadData()
-                }
-            }
-            refresh.endRefreshing()
-            },failure:  { (task,error) -> Void in
-                print("getPurchaseLevelHistory Failed")
-                print(error.localizedDescription)
-                refresh.endRefreshing()
-        })
+//        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseType":1], success: { (task, response) -> Void in
+//            print("purchase level history done")
+//            print(response)
+//            let historyArray = response as! NSArray
+//            if(historyArray.count > 0){
+//                for info in historyArray{
+//                    let history = PCoinHistoryModel(dict: info as! NSDictionary)
+//                    
+//                    self.pcoinItemList.reloadData()
+//                }
+//            }
+//            refresh.endRefreshing()
+//            },failure:  { (task,error) -> Void in
+//                print("getPurchaseLevelHistory Failed")
+//                print(error.localizedDescription)
+//                refresh.endRefreshing()
+//        })
     }
     
     func changeModel(sender:SettingButton){
