@@ -138,16 +138,16 @@
     CGPoint circleCenter = _startingPoint;
     
     //1st circle initialization
-    float incAngle = ( 117/3 )*M_PI/180.0 ;
-    float curAngle = -1.4; //more value more to left;
+    float incAngle = M_PI/4.3;
+    float curAngle = -1.3; //more value more to left;
     float circleRadius = _fInnerRadius;
     
     for (int i = 0; i < _iNumberOfButtons; i++)
     {
         if(i == 3)//2nd circle
         {
-            curAngle = -1.4;
-            incAngle = ( 100/5 )*M_PI/180.0;
+            curAngle = -1.5;
+            incAngle = M_PI/7.7;
             circleRadius = _fInnerRadius + 60;
         }
 
