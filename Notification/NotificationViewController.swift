@@ -112,6 +112,8 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         itemNotification.setImage(itemNotification.normalImage, forState: UIControlState.Normal)
         itemSystem.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
         itemNotification.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
+        itemSystem.systemModel = .System
+        itemNotification.systemModel = .Notification
         
         tabView.addSubview(itemNotification)
         tabView.addSubview(itemSystem)

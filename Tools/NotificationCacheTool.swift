@@ -21,14 +21,12 @@ class NotificationCacheTool: NSObject {
         databasePath = docsDir1.stringByAppendingPathComponent("/notificationInfo.db")
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS NOTIFICATIONINFO_\(SHARED_USER.UserIndex) (ID INTEGER PRIMARY KEY,MSGTYPE INTEGER,MSGTIME TEXT,MSGCONTENT TEXT,MSGINDEX INTEGER)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS NOTIFICATIONINFO_\(SHARED_USER.UserIndex) (ID INTEGER PRIMARY KEY,MSGTYPE INTEGER,MSGTIME INTEGER,MSGCONTENT TEXT,MSGINDEX INTEGER)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
                 print("创表失败！")
             }
-
         }
-        
     }
     
     func addNotificationInfo(noti:Notification){
@@ -48,7 +46,7 @@ class NotificationCacheTool: NSObject {
                     let noteFrame = NotificationFrame()
                     let nott = Notification()
                     nott.MsgType = Int(rs.intForColumn("MSGTYPE"))
-                    nott.MsgTime = rs.stringForColumn("MSGTIME")
+                    nott.MsgTime = Int(rs.intForColumn("MSGTIME"))
                     nott.MsgContent = rs.stringForColumn("MSGCONTENT")
                     nott.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
                     noteFrame.notification = nott

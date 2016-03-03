@@ -12,7 +12,7 @@ class NotificationFrame: NSObject {
     
     let titleFrame = CGRectMake(5, 10, SCREEN_WIDTH - 110, 20)
     var detailFrame:CGRect!
-    let timeFrame = CGRectMake(SCREEN_WIDTH-120, 10, 95, 20)
+    let timeFrame = CGRectMake(SCREEN_WIDTH-100, 10, 95, 20)
     var cellheight:CGFloat!
     var splitFrame:CGRect!
     

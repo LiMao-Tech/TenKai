@@ -553,7 +553,7 @@ class SingleChatController : UIViewController,
                     "Receiver": tenUser.UserIndex,
                     "PhoneType": SHARED_USER.PhoneType,
                     "Amount": pcoinAmount!,
-                    "TransTime": NSDate().description
+                    "TransTime": Tools.getSinceTime(NSDate())
                 ]
             
             AFJSONManager.SharedInstance.postMethod(Url_PCoin, parameters: params, success: { (task, response)

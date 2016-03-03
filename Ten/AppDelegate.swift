@@ -27,9 +27,6 @@ class AppDelegate: UIResponder,
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        
-        // TODO: Update Token if has changed
-        
         // set Managers delegate
         LOC_MANAGER.delegate = self
         LOC_MANAGER.desiredAccuracy = kCLLocationAccuracyBest
@@ -103,8 +100,19 @@ class AppDelegate: UIResponder,
         
         let trimEnds = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
         DEVICE_TOKEN = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
-        
         print("Token: \(DEVICE_TOKEN!)")
+        if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
+            let params = ["userindex":SHARED_USER.UserIndex,"devicetoken":DEVICE_TOKEN!]
+            AFJSONManager.SharedInstance.postMethod(Url_Login, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                    print("更新devicetoken成功")
+                    print(response)
+                }, failure: { (task, error) -> Void in
+                    print("更新devicetoken失败")
+                    print(error.localizedDescription)
+            })
+        }
+        NSUserDefaults.standardUserDefaults().setValue(DEVICE_TOKEN, forKey: "DeviceToken")
+        
         
         // TODO: save this cleanToken into server and to default user data
 
