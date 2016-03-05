@@ -331,17 +331,14 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
         
         switch buttonIndex {
-        case 0:
-            let rpVC = RegistProfileViewController()
-            self.navigationController?.pushViewController(rpVC, animated: true)
+        case 0: break
+            // TODO: show females
 
-        case 1:
-            let wVC = WelcomeController()
-            self.navigationController?.pushViewController(wVC, animated: true)
+        case 1: break
+            // TODO: show males
         
-        case 2:
-            let eVC = EditProfileController()
-            self.navigationController?.pushViewController(eVC, animated: true)
+        case 2: break
+            // TODO: show both genders
 
         case 3:
             pushUserProfileVC()

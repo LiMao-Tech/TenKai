@@ -18,13 +18,28 @@ class MeProfileMasterViewController: ProfileMasterViewController,
 
     let uploadController = UIAlertController(title: "上传中", message: "请稍后。", preferredStyle: .Alert)
 
+    let addImageBtn = UIBarButtonItem()
+    let toAlbumBtn = UIBarButtonItem()
+    let toSettingsBtn = UIBarButtonItem()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // navigation
-        let addImageBtn = UIBarButtonItem(title: "新增", style: .Plain, target: self, action: "addImage")
-        self.navigationItem.rightBarButtonItem = addImageBtn
+        addImageBtn.image = UIImage(named: "plussign")
+        addImageBtn.style = .Plain
+        addImageBtn.target = self
+        addImageBtn.action = Selector("addImage")
 
+        toAlbumBtn.image = UIImage(named: "album")
+        toAlbumBtn.style = .Plain
+        toAlbumBtn.target = self
+        toAlbumBtn.action = Selector("toAlbum")
+
+        toSettingsBtn.image = UIImage(named: "gear")
+        toSettingsBtn.style = .Plain
+        toSettingsBtn.target = self
+        toSettingsBtn.action = Selector("toSettings")
 
         let activeFrameHeight = SCREEN_HEIGHT-STATUSBAR_HEIGHT-(self.navigationController?.navigationBar.frame.height)!
 
@@ -46,10 +61,22 @@ class MeProfileMasterViewController: ProfileMasterViewController,
 
     }
 
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
 
+    }
+
+    // show album
+    func toAlbum() {
+        self.navigationItem.rightBarButtonItem = addImageBtn
+        self.profileSV.contentOffset = CGPointMake(0, pPCVC.view.frame.origin.y)
     }
 
     // image picker
