@@ -96,8 +96,8 @@ class SingleChatController : UIViewController,
 
     
     deinit{
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-        UserChatModel.allChats().removeObserver(self, forKeyPath: "message")
+//        NSNotificationCenter.defaultCenter().removeObserver(self)
+//        UserChatModel.allChats().removeObserver(self, forKeyPath: "message")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -505,6 +505,9 @@ class SingleChatController : UIViewController,
                 self.tenUser.listType = .Active
                 UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
                 ChatFocusState = false
+                UserChatModel.allChats().raterIndex.append(self.tenUser.UserIndex)
+                UserRaterCache().addUserRater(self.tenUser.UserIndex)
+                self.tenUser.isRatered = true
                 NSUserDefaults.standardUserDefaults().removeObjectForKey("ChatFocusState")
                 self.navigationController?.popViewControllerAnimated(true)
                 self.scoreView!.removeFromSuperview()
@@ -563,13 +566,13 @@ class SingleChatController : UIViewController,
                     message.Sender = SHARED_USER.UserIndex
                     message.Receiver = self.tenUser.UserIndex
                     message.MsgType = 2
-                    var msgs = UserChatModel.allChats().message[self.tenUser.UserIndex]
+                    let msgs = UserChatModel.allChats().message[self.tenUser.UserIndex]
                     if(msgs!.count > 0){
                         message.MsgIndex = (msgs?.last?.chatMessage.MsgIndex)! + 1
                     }
                     message.MsgContent = String(pcoinAmount!)
                     chatFrame.chatMessage = message
-                    msgs?.append(chatFrame)
+                    UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(chatFrame)
                     MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
                     SHARED_USER.PCoin -= pcoinAmount!
                     UserCacheTool().upDateUserPCoin()
@@ -599,8 +602,9 @@ class SingleChatController : UIViewController,
         pcoinView!.removeFromSuperview()
         pcoinView!.isShow = false
     }
+    
     func backClicked(){
-        if(tenUser.listType == .InActive){
+        if(tenUser.listType == .Active && tenUser.isRatered == false){
             if(scoreView == nil){
                 scoreView = ScoreView()
             }

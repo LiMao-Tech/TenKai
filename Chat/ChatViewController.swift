@@ -27,6 +27,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.title = ChatTitle
         UserChatModel.allChats().addObserver(self, forKeyPath: "tenUser", options: NSKeyValueObservingOptions.New, context: nil)
         UserChatModel.allChats().addObserver(self, forKeyPath: "message", options: NSKeyValueObservingOptions.New, context: nil)
+        
+        if(NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") != nil){
+            ChatFocusState = true
+        }
+        
         separateUser()
         setup()
         refreshControl()
@@ -36,6 +41,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Do any additional setup after loading the view, typically from a nib.
     }
     override func viewWillAppear(animated: Bool) {
+        for user in userChatInActive{
+            let count = UserChatModel.allChats().message[user.UserIndex]?.count
+            if(count > 1){
+                for index in 1...(count!-1){
+                    if(UserChatModel.allChats().message[user.UserIndex]![index].chatMessage.Sender != UserChatModel.allChats().message[user.UserIndex]![index-1].chatMessage.Sender){
+                        user.listType = .Active
+                    }
+                }
+            }
+        }
         separateUser()
         self.userList.reloadData()
     }
@@ -115,16 +130,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             sVC.tenUser = userChatActive[indexPath.row]
         }else{
             sVC.tenUser = userChatInActive[indexPath.row]
-            if(!ChatFocusState){
-                ChatFocusState = true
-                NSUserDefaults.standardUserDefaults().setValue(sVC.tenUser.UserIndex, forKey: "ChatFocusState")
-            }
         }
+        
+        if(!sVC.tenUser.isRatered && !ChatFocusState){
+            ChatFocusState = true
+            NSUserDefaults.standardUserDefaults().setValue(sVC.tenUser.UserIndex, forKey: "ChatFocusState")
+        }
+        
         if(ChatFocusState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){
             let focusAlert = UIAlertController(title: "注意！", message: "还没有为你的小伙伴的内在评分", preferredStyle: .Alert)
             let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
                 let index = NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int
-                for user in self.userChatInActive{
+                for user in UserChatModel.allChats().tenUser{
                     if(user.UserIndex == index){
                         sVC.tenUser = user
                         self.navigationController?.pushViewController(sVC, animated: true)

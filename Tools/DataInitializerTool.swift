@@ -20,12 +20,24 @@ class DataInitializerTool: NSObject {
                 UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex)
             }
         }
+        
         //initialise Notification
         let notiInfo = NotificationCacheTool().loadNotification()
         if(!notiInfo.isEmpty){
             UserChatModel.allChats().notifications = notiInfo.notis
         }
-        
+        //initialise raterIndex
+        let rater = UserRaterCache().getUserRaterInfo()
+        if(!rater.isEmpty){
+            print("raterIndex")
+            print(rater.raterIndexs)
+            UserChatModel.allChats().raterIndex = rater.raterIndexs
+            for user in UserChatModel.allChats().tenUser{
+                if(rater.raterIndexs.contains(user.UserIndex)){
+                    user.isRatered = true
+                }
+            }
+        }
     }
     
     func deinitialiseInfo(){

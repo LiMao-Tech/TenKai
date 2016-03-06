@@ -14,11 +14,11 @@ class SettingDoubleLabelCell: UITableViewCell {
     var splitLabel:UIView!
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        itemLabel = UILabel(frame: CGRectMake(0, 40,SCREEN_WIDTH - 60, 15))
+        itemLabel = UILabel(frame: CGRectMake(0, 30,SCREEN_WIDTH - 60, 15))
         itemLabel.font = UIFont.systemFontOfSize(17)
         itemLabel.textColor = UIColor.orangeColor()
         itemLabel.text = "Version"
-        versionLabel = UILabel(frame: CGRectMake(SCREEN_WIDTH - 60 - 50, 40, 50, 15))
+        versionLabel = UILabel(frame: CGRectMake(SCREEN_WIDTH - 60 - 50, 30, 50, 15))
         versionLabel.font = UIFont.systemFontOfSize(15)
         versionLabel.textColor = UIColor.whiteColor()
         versionLabel.text = "1.1.14"

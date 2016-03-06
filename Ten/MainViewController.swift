@@ -51,7 +51,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         
         SHARED_USER.addObserver(self, forKeyPath: "Average", options: .New, context: nil)
         
-        //获取头像信息
+
         ALAMO_MANAGER.request(.GET, SHARED_USER.ProfileUrl) .responseImage { response in
             if let image = response.result.value {
                 SHARED_USER.Portrait = UIImagePNGRepresentation(image)

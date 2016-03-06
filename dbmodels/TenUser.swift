@@ -29,6 +29,10 @@ class TenUser: NSObject {
     var Longi : Double = -1
     var ProfileUrl = ""
     
+    //mobile end properties
+    
+    var isRatered = false
+    
     var Average :Int {
         get{
             return (self.OuterScore+self.InnerScore)/2

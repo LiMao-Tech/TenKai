@@ -10,6 +10,7 @@ import UIKit
 
 class UserChatModel: NSObject {
     var userIndex = [Int]() //check if user exist
+    var raterIndex = [Int]()
     dynamic var notifications = [NotificationFrame]()
     dynamic var tenUser = [TenUser]()
     dynamic var message = [Int :[SingleChatMessageFrame]]()

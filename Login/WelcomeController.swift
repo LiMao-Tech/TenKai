@@ -145,6 +145,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             let dict = response as! NSDictionary
             let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
             SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
+            
             if getResult {
                 UserCacheTool().updateUserInfo(dict)
                 DataInitializerTool.initialiseInfo()
@@ -152,12 +153,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             else {
                 UserCacheTool().addUserInfoByUser()
             }
-            
-            NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
-        
-            let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
-            self.presentViewController(nVC, animated: true, completion: nil)
+            self.getRaterUserIndexs()
         },
         failure: { (task, error) -> Void in
             let opera = task?.response as! NSHTTPURLResponse
@@ -172,6 +168,29 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 default:
                     break
             }
+        })
+    }
+    
+    func getRaterUserIndexs(){
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Rater, parameters: ["raterIndex":SHARED_USER.UserIndex], success: { (task, response) -> Void in
+            let raters = response as! [Int]
+            UserRaterCache().removeAllRater()
+            if(raters.count > 0){
+                UserChatModel.allChats().raterIndex = raters
+                UserRaterCache().addUserRaterByArray(raters)
+            }
+            NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+                self.presentViewController(nVC, animated: true, completion: nil)
+            })
+            
+            },failure: { (task, error) -> Void in
+                print("get raterIndex failed")
+                print(error.localizedDescription)
+                self.unmatchedLB.textColor = UIColor.redColor()
+                self.unmatchedLB.text = "网络异常请重新登陆"
         })
     }
 }

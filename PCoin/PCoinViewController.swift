@@ -17,6 +17,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     var pcoinItemList : UITableView!
     var pcoinPurchaseHistory = [PCoinHistoryModel]()
     var pcoinPurchaseLevelHistory = [PCoinHistoryModel]()
+    var pcoinTransHistory = [PCoinTransModel]()
     var modelType : pcoinModelType = .Pcoin
     let pcoinValue = [10,20,50,100]
     var item0:SettingButton!
@@ -26,6 +27,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     var selectedBtn:SettingButton!
     let pcoinNum = [10,20,50,100]
     var purchaseIndex = 0
+    var transIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named:"navBar_pcoin"), forBarMetrics: .Default)
@@ -130,23 +132,24 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
                 refresh.endRefreshing()
         })
         
-//        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseType":1], success: { (task, response) -> Void in
-//            print("purchase level history done")
-//            print(response)
-//            let historyArray = response as! NSArray
-//            if(historyArray.count > 0){
-//                for info in historyArray{
-//                    let history = PCoinHistoryModel(dict: info as! NSDictionary)
-//                    
-//                    self.pcoinItemList.reloadData()
-//                }
-//            }
-//            refresh.endRefreshing()
-//            },failure:  { (task,error) -> Void in
-//                print("getPurchaseLevelHistory Failed")
-//                print(error.localizedDescription)
-//                refresh.endRefreshing()
-//        })
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg, parameters: ["userIndex":SHARED_USER.UserIndex,"msgType":2,"currentIndex":transIndex], success: { (task, response) -> Void in
+            print("purchase level history done")
+            print(response)
+            let historyArray = response as! NSArray
+            if(historyArray.count > 0){
+                for info in historyArray{
+                    let history = PCoinTransModel(dict: info as! NSDictionary)
+                    self.transIndex = history.MsgIndex
+                    self.pcoinTransHistory.append(history)
+                }
+            }
+            self.pcoinItemList.reloadData()
+            refresh.endRefreshing()
+            },failure:  { (task,error) -> Void in
+                print("getPurchaseLevelHistory Failed")
+                print(error.localizedDescription)
+                refresh.endRefreshing()
+        })
     }
     
     func changeModel(sender:SettingButton){
@@ -204,7 +207,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             if(cell == nil){
                 cell = PCoinTransferCell.init(style: .Default, reuseIdentifier: "transferCell")
             }
-            cell?.transfer = PCoinTransferModel()
+            cell?.transfer = pcoinTransHistory[indexPath.row]
             return cell!
         }
         if(modelType == .Unlocked){
@@ -232,7 +235,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             return pcoinPurchaseHistory.count
         }
         if(modelType == .Transfer){
-            return 4
+            return pcoinTransHistory.count
         }
         if(modelType == .Unlocked){
             return pcoinPurchaseLevelHistory.count

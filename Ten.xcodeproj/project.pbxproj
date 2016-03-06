@@ -40,6 +40,8 @@
 		64F5CEC01BD8B51A00512972 /* PT_Sans-Web-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951D1BD8996900F1B6CA /* PT_Sans-Web-BoldItalic.ttf */; };
 		64F5CEC11BD8B51C00512972 /* PT_Sans-Web-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951E1BD8996900F1B6CA /* PT_Sans-Web-Italic.ttf */; };
 		64F5CEC21BD8B51F00512972 /* PT_Sans-Web-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649B951F1BD8996900F1B6CA /* PT_Sans-Web-Regular.ttf */; };
+		64F9AD041C8BE27200EDED82 /* UserRaterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F9AD031C8BE27200EDED82 /* UserRaterCache.swift */; };
+		64F9AD061C8C3E1B00EDED82 /* PCoinTransModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F9AD051C8C3E1B00EDED82 /* PCoinTransModel.swift */; };
 		C4CED30C1B88FB010008BCF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED30B1B88FB010008BCF2 /* AppDelegate.swift */; };
 		C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED30D1B88FB010008BCF2 /* MainViewController.swift */; };
 		C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4CED30F1B88FB010008BCF2 /* Main.storyboard */; };
@@ -92,9 +94,7 @@
 		D4EA5C281C13F669009E9927 /* PCoinHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */; };
 		D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */; };
 		D4EA5C2A1C13F669009E9927 /* PCoinTransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */; };
-		D4EA5C2B1C13F669009E9927 /* PCoinTransferModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C241C13F669009E9927 /* PCoinTransferModel.swift */; };
 		D4EA5C2C1C13F669009E9927 /* PCoinUnlockedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */; };
-		D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */; };
 		D4EA5C2E1C13F669009E9927 /* PCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C271C13F669009E9927 /* PCoinViewController.swift */; };
 		D4EA5C3A1C14037B009E9927 /* WelcomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C341C14037B009E9927 /* WelcomeController.swift */; };
 		D4EA5C3B1C14037B009E9927 /* WelcomeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C351C14037B009E9927 /* WelcomeController.xib */; };
@@ -360,6 +360,8 @@
 		64AF67661C7B086D00791E93 /* PCoinHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinHistoryModel.swift; sourceTree = "<group>"; };
 		64BE65AF1C380BAC00DA599A /* UserChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatModel.swift; sourceTree = "<group>"; };
 		64D306AA1C5F54A30007A4F1 /* PinCodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeController.swift; sourceTree = "<group>"; };
+		64F9AD031C8BE27200EDED82 /* UserRaterCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRaterCache.swift; sourceTree = "<group>"; };
+		64F9AD051C8C3E1B00EDED82 /* PCoinTransModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinTransModel.swift; path = ../PCoinCell/PCoinTransModel.swift; sourceTree = "<group>"; };
 		739546E248EBF5CE4B4D8971 /* Pods_Ten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90AE70C3C142642D3AB7DC64 /* Pods-Ten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.debug.xcconfig"; sourceTree = "<group>"; };
 		9923EEB62CE163E76F2BDA14 /* Pods-Ten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.release.xcconfig"; sourceTree = "<group>"; };
@@ -424,9 +426,7 @@
 		D4EA5C211C13F669009E9927 /* PCoinHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinHistoryCell.swift; path = ../PCoinHistoryCell.swift; sourceTree = "<group>"; };
 		D4EA5C221C13F669009E9927 /* PCoinPurchaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinPurchaseCell.swift; path = ../PCoinPurchaseCell.swift; sourceTree = "<group>"; };
 		D4EA5C231C13F669009E9927 /* PCoinTransferCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinTransferCell.swift; path = ../PCoinTransferCell.swift; sourceTree = "<group>"; };
-		D4EA5C241C13F669009E9927 /* PCoinTransferModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinTransferModel.swift; path = ../PCoinTransferModel.swift; sourceTree = "<group>"; };
 		D4EA5C251C13F669009E9927 /* PCoinUnlockedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinUnlockedCell.swift; path = ../PCoinUnlockedCell.swift; sourceTree = "<group>"; };
-		D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinUnlockedModel.swift; path = ../PCoinUnlockedModel.swift; sourceTree = "<group>"; };
 		D4EA5C271C13F669009E9927 /* PCoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinViewController.swift; sourceTree = "<group>"; };
 		D4EA5C341C14037B009E9927 /* WelcomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeController.swift; sourceTree = "<group>"; };
 		D4EA5C351C14037B009E9927 /* WelcomeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeController.xib; sourceTree = "<group>"; };
@@ -701,8 +701,7 @@
 		642452961C4CDAD2003A43C8 /* PCoinModel */ = {
 			isa = PBXGroup;
 			children = (
-				D4EA5C241C13F669009E9927 /* PCoinTransferModel.swift */,
-				D4EA5C261C13F669009E9927 /* PCoinUnlockedModel.swift */,
+				64F9AD051C8C3E1B00EDED82 /* PCoinTransModel.swift */,
 				642452971C4CDBD1003A43C8 /* PCoinModel.swift */,
 				64AF67661C7B086D00791E93 /* PCoinHistoryModel.swift */,
 			);
@@ -867,6 +866,7 @@
 				D434AC101C6401DD0013E27D /* UserCacheTool.swift */,
 				D434AC111C6401DD0013E27D /* UsersCacheTool.swift */,
 				641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */,
+				64F9AD031C8BE27200EDED82 /* UserRaterCache.swift */,
 			);
 			name = TenCaches;
 			sourceTree = "<group>";
@@ -1640,14 +1640,13 @@
 				D4EA5BF71C13EA12009E9927 /* DKCamera.swift in Sources */,
 				649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */,
 				D4D0F8891C657834007F3BF6 /* SharedInstances.swift in Sources */,
+				64F9AD041C8BE27200EDED82 /* UserRaterCache.swift in Sources */,
 				643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */,
 				D4EA5C291C13F669009E9927 /* PCoinPurchaseCell.swift in Sources */,
 				D414D0631C6E263500C6566F /* Urls.swift in Sources */,
 				D44624001C3B2D720098AE53 /* MyProfileViewController.swift in Sources */,
 				D4EA5C861C1424A1009E9927 /* TenTextAttachment.swift in Sources */,
-				D4EA5C2D1C13F669009E9927 /* PCoinUnlockedModel.swift in Sources */,
 				640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */,
-				D4EA5C2B1C13F669009E9927 /* PCoinTransferModel.swift in Sources */,
 				D434AC171C6402090013E27D /* TenMainGridManager.swift in Sources */,
 				C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */,
 				D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */,
@@ -1691,6 +1690,7 @@
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,
 				D4EA5BFC1C13EA12009E9927 /* DKPopoverViewController.swift in Sources */,
 				D434AC161C6402090013E27D /* TenImagesJSONManager.swift in Sources */,
+				64F9AD061C8C3E1B00EDED82 /* PCoinTransModel.swift in Sources */,
 				D4EA5C1D1C13F1F4009E9927 /* ProfileRegistraViewController.swift in Sources */,
 				640F3BE41C0C898700B31DA0 /* FMDatabasePool.m in Sources */,
 				D4EA5C8E1C1424AF009E9927 /* NotificationInfoCell.swift in Sources */,

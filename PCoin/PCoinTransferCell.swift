@@ -13,17 +13,27 @@ class PCoinTransferCell: UITableViewCell {
     var transferLabel:UILabel!
     var timeLabel:UILabel!
     var splitLine:UIView!
-    var transfer:PCoinTransferModel!{
+    var transfer:PCoinTransModel!{
         didSet{
-            let info = "\(transfer.username) transfered \(transfer.value) P Coin to you" as NSString
+            let info = transfer.MsgContent as NSString
             let size = info.boundingRectWithSize(CGSizeMake(SCREEN_WIDTH-80, CGFloat(MAXFLOAT)), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
             transferLabel = UILabel(frame: CGRectMake(70, 10, SCREEN_WIDTH-80, size.height))
             transferLabel.font = UIFont.systemFontOfSize(17)
             transferLabel.textColor = UIColor.orangeColor()
             transferLabel.numberOfLines = 0
             transferLabel.text = info as String
-            timeLabel.text = transfer.time
+            timeLabel.text = Tools.toDisplayTime(transfer.MsgTime)
             self.addSubview(transferLabel)
+            if(transfer.belongType == .Me){
+                headImage.setImage(SHARED_USER.PortraitImage, forState: .Normal)
+            }else{
+                let targetUrl = Url_GetHeadImage+"\(transfer.Sender)"
+                ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
+                    if let image = response.result.value {
+                        self.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
+                    }
+                }
+            }
             
         }
     }
