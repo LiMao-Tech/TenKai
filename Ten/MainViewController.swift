@@ -266,9 +266,9 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                     let url = Url_User + "/\(SHARED_USER.UserIndex)?pcoin=\(sender.level*10)&level=\(sender.level)"
                     let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
                     AFJSONManager.SharedInstance.putMethod(urlComplete!, success: { (task, response) -> Void in
-                        print("解锁成功")
-                        SHARED_USER.Expire = Tools.getSinceTime(NSDate()) + 60*60*24*30
-                        SHARED_USER.AVG = sender.level
+                        let info = response as! NSDictionary
+                        SHARED_USER.Expire = info["Expire"] as! Int
+                        SHARED_USER.AVG = info["AVG"] as! Int
                         SHARED_USER.PCoin -= Double(sender.level*10)
                         print(SHARED_USER.AVG)
                         self.refreshLevelButton()
@@ -390,6 +390,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                 "Energy" : SHARED_USER.Energy,
                 "Hobby" : SHARED_USER.Hobby,
                 "Quote" : SHARED_USER.Quote,
+                "Expire":SHARED_USER.Expire,
+                "AVG":SHARED_USER.AVG,
                 "Lati" : loc.coordinate.latitude,
                 "Longi" : loc.coordinate.longitude
             ]
