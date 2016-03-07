@@ -16,11 +16,11 @@ class SettingDoubleLabelCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         itemLabel = UILabel(frame: CGRectMake(0, 30,SCREEN_WIDTH - 60, 15))
         itemLabel.font = UIFont.systemFontOfSize(17)
-        itemLabel.textColor = UIColor.orangeColor()
+        itemLabel.textColor = COLOR_FONT_ORANGE
         itemLabel.text = "Version"
         versionLabel = UILabel(frame: CGRectMake(SCREEN_WIDTH - 60 - 50, 30, 50, 15))
         versionLabel.font = UIFont.systemFontOfSize(15)
-        versionLabel.textColor = UIColor.whiteColor()
+        versionLabel.textColor = COLOR_FONT_ORANGE
         versionLabel.text = "1.1.14"
         
         splitLabel = UIView(frame: CGRectMake(0, 59, SCREEN_WIDTH - 60, 1))

@@ -16,7 +16,7 @@ class settingCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         itemLabel = UILabel(frame: CGRectMake(0, 10, self.bounds.width, 20))
-        itemLabel.textColor = UIColor.orangeColor()
+        itemLabel.textColor = COLOR_FONT_ORANGE
         itemLabel.font = UIFont.systemFontOfSize(17)
         
         

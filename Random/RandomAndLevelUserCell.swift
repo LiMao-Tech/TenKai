@@ -48,7 +48,7 @@ class RandomAndLevelUserCell: UITableViewCell {
         let size = lableText.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
         
         nameLabel = UILabel(frame: CGRectMake(namex, 10, size.width, size.height))
-        nameLabel.textColor = UIColor.orangeColor()
+        nameLabel.textColor = COLOR_FONT_ORANGE
         nameLabel.font = UIFont.systemFontOfSize(17)
         
         let innerx = nameLabel.frame.origin.x
@@ -67,7 +67,7 @@ class RandomAndLevelUserCell: UITableViewCell {
         self.outerLabel.font = afont
         
         avgLabel = UILabel(frame: CGRectMake(innerx + 2*len, innery, len, innerh))
-        self.avgLabel.textColor = UIColor.orangeColor()
+        self.avgLabel.textColor = COLOR_FONT_ORANGE
         self.avgLabel.font = afont
         
         energyLabel = UILabel(frame: CGRectMake(innerx + 3*len, innery, len, innerh))

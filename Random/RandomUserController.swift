@@ -102,7 +102,7 @@ class RandomUserController: UIViewController,
         ALAMO_MANAGER.request(.GET, targetUrl)
             .responseImage { response in
                 if let image = response.result.value {
-                    cell!.headImage.setImage(image, forState: .Normal)
+                    cell!.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
                     user.Portrait = UIImagePNGRepresentation(image)
                     user.PortraitImage = image
                 }

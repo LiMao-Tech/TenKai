@@ -90,8 +90,8 @@ class PinCodeController: UIViewController {
     }
     
     func setupButtons(){
-        let x:CGFloat = 30
-        let y:CGFloat = 20
+        let x:CGFloat = SCREEN_WIDTH*0.1
+        let y:CGFloat = SCREEN_HEIGHT*0.03
         let iconw:CGFloat = 70
         let iconh:CGFloat = 70
         let marginw:CGFloat = (SCREEN_WIDTH - iconw*3 - x*2)/2
