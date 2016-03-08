@@ -13,10 +13,21 @@ class MeProfileMasterViewController: ProfileMasterViewController,
                                         UINavigationControllerDelegate,
                                         UIImagePickerControllerDelegate
 {
+
+    static var confirmed = false
+
     let pVC = MyProfileViewController(nibName: "ProfileViewController", bundle: nil)
     let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
 
     let uploadController = UIAlertController(title: "上传中", message: "请稍后。", preferredStyle: .Alert)
+    let confirmController = UIAlertController(title: "图片上传", message: "确定上传选中图片", preferredStyle: .Alert)
+    let cancelOption = UIAlertAction(title: "取消", style: .Cancel, handler: {action in
+        confirmed = false
+    })
+    let confirmOption = UIAlertAction(title: "确定", style: .Default, handler: {action in
+        confirmed = true
+    })
+
 
     let addImageBtn = UIBarButtonItem()
     let toAlbumBtn = UIBarButtonItem()
@@ -54,6 +65,9 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         profileSV.addSubview(pVC.view)
         profileSV.addSubview(pPCVC.view)
 
+        // alerts
+        confirmController.addAction(cancelOption)
+        confirmController.addAction(confirmOption)
 
         // images
         SHARED_PICKER.picker.delegate = self
@@ -85,24 +99,30 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         SHARED_PICKER.toImagePicker(self)
     }
 
+
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-
         picker.dismissViewControllerAnimated(true, completion: nil)
+        presentViewController(confirmController, animated: true, completion: nil)
 
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        if MeProfileMasterViewController.confirmed {
+            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
 
-        let imageRepre = UIImageJPEGRepresentation(image, 0.75)
-        let params: [String: AnyObject] = ["id": SHARED_USER.UserIndex]
+            let imageRepre = UIImageJPEGRepresentation(image, 0.75)
+            let params: [String: AnyObject] = ["id": SHARED_USER.UserIndex]
 
-        if let imageData = imageRepre {
-            presentViewController(uploadController, animated: true, completion: nil)
-            AFImageManager.SharedInstance.postUserImage(imageData, parameters: params, success: {(task, response) -> Void in
-                TenImagesJSONManager.SharedInstance.getJSONUpdating(self, alert: self.uploadController)
+            if let imageData = imageRepre {
+                // presentViewController(uploadController, animated: true, completion: nil)
+                AFImageManager.SharedInstance.postUserImage(imageData, parameters: params, success: {(task, response) -> Void in
+                    TenImagesJSONManager.SharedInstance.getJSONUpdating(self, alert: self.uploadController)
 
-                },failure: { (task, error) -> Void in
-                    print(error.localizedDescription)
-            })
+                    },failure: { (task, error) -> Void in
+                        print(error.localizedDescription)
+                })
+            }
+
         }
+
+
     }
 
 
