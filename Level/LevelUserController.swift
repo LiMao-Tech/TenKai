@@ -23,6 +23,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
         self.usersList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
         self.userList.reloadData()
     }
+    
     func setup(){
         self.title = "等级\(level)"
         userList = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))

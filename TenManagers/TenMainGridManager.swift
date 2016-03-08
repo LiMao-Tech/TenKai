@@ -13,13 +13,11 @@ import SwiftyJSON
 // boolean table
 
 class TenMainGridManager: NSObject {
-    
-
-    
+        
     static let SharedInstance = TenMainGridManager()
 
     private let minDiff: CGFloat = 15
-    private let radiusSQ: CGFloat = (SCREEN_WIDTH*4/5)*(SCREEN_WIDTH*4/5)
+    private let radiusSQ: CGFloat = (SCREEN_WIDTH*3/5)*(SCREEN_WIDTH*3/5)
 
     var numToGen: Int = 0
     var nodes: [TenGridButton] = [TenGridButton]()
@@ -35,8 +33,14 @@ class TenMainGridManager: NSObject {
         nodes.removeAll()
     }
     
-    func createButtons() -> [TenGridButton] {
-        gridUsers = TenOtherUsersJSONManager.SharedInstance.selectGridUsers()
+    func createButtons(gender: Int) -> [TenGridButton] {
+        if gender == 2 {
+            gridUsers = TenOtherUsersJSONManager.SharedInstance.selectGridUsers()
+        }
+        else {
+            gridUsers = TenOtherUsersJSONManager.SharedInstance.selectGridUsersByGender(gender)
+        }
+
         numToGen = gridUsers.count
         
         for i in 0..<numToGen {

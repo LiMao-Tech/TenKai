@@ -130,7 +130,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(distanceLabel)
       
         distanceChange()
-        }
+    }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
@@ -141,26 +141,19 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         
     }
     
-    func generateNodes() -> Void {
-        
-        let gridButtons = TenMainGridManager.SharedInstance.createButtons()
-        
-        for btn in gridButtons {
-
-            // add nodes with animation
-            self.view.addSubview(btn)
-            UIView.animateWithDuration(0.5, animations: {()->Void in
-                btn.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
-            },
-                
-            completion: {(finished) -> Void in
-                NSThread.sleepForTimeInterval(0.1)
-            })
-            btn.addTarget(self, action: "toTargetUser:", forControlEvents: .TouchUpInside)
-
-        }
+    func generateNodes() {
+        let gridButtons = TenMainGridManager.SharedInstance.createButtons(2)
+        showBtns(gridButtons)
     }
-    
+
+    func generateNodesByGender(gender: Int) {
+        TenMainGridManager.SharedInstance.clearNodes()
+        TenMainGridManager.SharedInstance.numToGen = 25
+        let gridButtons = TenMainGridManager.SharedInstance.createButtons(gender)
+        showBtns(gridButtons)
+        view.bringSubviewToFront(portraitBtn)
+    }
+
     func toTargetUser(sender: TenGridButton) {
         let otherPVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
 
@@ -331,14 +324,14 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
         
         switch buttonIndex {
-        case 0: break
-            // TODO: show females
+        case 0:
+            generateNodesByGender(1)
 
-        case 1: break
-            // TODO: show males
-        
-        case 2: break
-            // TODO: show both genders
+        case 1:
+            generateNodesByGender(0)
+
+        case 2:
+            refreshBtnClicked()
 
         case 3:
             pushUserProfileVC()
@@ -368,6 +361,23 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         let pVC = MeProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
         pVC.userID = SHARED_USER.UserIndex
         self.navigationController?.pushViewController(pVC, animated: true)
+    }
+
+    private func showBtns(gridBtns: [TenGridButton]) {
+        for btn in gridBtns {
+
+            // add nodes with animation
+            self.view.addSubview(btn)
+            UIView.animateWithDuration(0.5, animations: {()->Void in
+                btn.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
+                },
+
+                completion: {(finished) -> Void in
+                    NSThread.sleepForTimeInterval(0.1)
+            })
+            btn.addTarget(self, action: "toTargetUser:", forControlEvents: .TouchUpInside)
+            
+        }
     }
 
 

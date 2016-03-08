@@ -36,12 +36,27 @@ class TenOtherUsersJSONManager: NSObject {
         }
         return gridUsers
     }
+
+    func selectGridUsersByGender(gender: Int) -> [AnyObject] {
+
+        var gridUsers = [AnyObject]()
+
+        let count = userList.count < MaxUsersOnGrid ? userList.count : MaxUsersOnGrid
+
+        for i in 0..<count {
+            let userJSON = JSON(userList[i] as! [String: AnyObject])
+            if (userJSON["Gender"].intValue == gender) {
+                gridUsers.append(userList[i])
+            }
+        }
+        return gridUsers
+    }
     
     func selectLevelUsers(level:Int) -> [AnyObject]{
         var levelUsers = [AnyObject]()
         
         for user in userList{
-            let userJSON = user as! [String:AnyObject]
+            let userJSON = user as! [String: AnyObject]
             if(userJSON["AVG"] as! Int == level){
                 levelUsers.append(user)
             }

@@ -30,7 +30,9 @@ class ProfileViewController: UIViewController,
     @IBOutlet weak var quoteLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     
-    let gradientMask = CAGradientLayer()
+    @IBOutlet weak var maskIV: UIImageView!
+    
+    let gradient = CAGradientLayer()
     let albumBtn = UIBarButtonItem()
 
     var numProfilePics = 1
@@ -54,6 +56,13 @@ class ProfileViewController: UIViewController,
         
         self.title = ProfileTitle
         self.view.backgroundColor = COLOR_BG
+
+        // setup gradient mask
+        gradient.frame = CGRectMake(0, 0, SCREEN_WIDTH, maskIV.frame.height)
+        gradient.colors = [UIColor.clearColor().CGColor, UIColor.blackColor().CGColor]
+        maskIV.layer.addSublayer(gradient)
+        //        maskIV.backgroundColor = COLOR_BG
+//        maskIV.alpha = 0.2
         
         // add Image Button
         albumBtn.title = "相簿"
@@ -136,19 +145,19 @@ class ProfileViewController: UIViewController,
     func setScrollView() {
         profileSV.contentSize = CGSizeMake(SCREEN_WIDTH*CGFloat(numProfilePics), profileSV.frame.height)
 
-        profileIV1 = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
+        profileIV1 = UIImageView(frame: CGRectMake(0, 0, SCREEN_WIDTH, profileSV.frame.height))
         profileIV1!.contentMode = .ScaleAspectFill
         profileIV1!.clipsToBounds = true
         profileSV.addSubview(profileIV1!)
 
         if numProfilePics > 1 {
-            profileIV2 = UIImageView(frame: CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
+            profileIV2 = UIImageView(frame: CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, profileSV.frame.height))
             profileIV2!.contentMode = .ScaleAspectFill
             profileIV2!.clipsToBounds = true
             profileSV.addSubview(profileIV2!)
         }
         if numProfilePics > 2 {
-            profileIV3 = UIImageView(frame: CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, SCREEN_HEIGHT*2/3))
+            profileIV3 = UIImageView(frame: CGRectMake(SCREEN_WIDTH*2, 0, SCREEN_WIDTH, profileSV.frame.height))
             profileIV3!.contentMode = .ScaleAspectFill
             profileIV3!.clipsToBounds = true
             profileSV.addSubview(profileIV3!)
