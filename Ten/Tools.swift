@@ -28,8 +28,8 @@ class Tools : NSObject{
         return Formatter.stringFromDate(date)
     }
     
-    class func getSinceTime(date:NSDate) -> Int{
-        return Int(date.timeIntervalSince1970)
+    class func getSinceTime(date:NSDate) -> NSTimeInterval{
+        return NSTimeInterval(date.timeIntervalSince1970)
     }
     
     class func formatStringTime(time: String) -> String{
@@ -47,11 +47,16 @@ class Tools : NSObject{
         let timeDate = NSDate(timeIntervalSince1970: timeInterval)
         return timeDate
     }
+    class func toBitrhDate(time:NSTimeInterval) -> String{
+        let timeDate = NSDate(timeIntervalSince1970: time)
+        Formatter.dateFormat = "yyyy年MM月dd日"
+        return Formatter.stringFromDate(timeDate)
+    }
     
-    class func toDisplayTime(time:Int) -> String{
+    class func toDisplayTime(time:NSTimeInterval) -> String{
         var disPlayTime = ""
         let calendar = NSCalendar.currentCalendar()
-        let transTime = NSDate(timeIntervalSince1970: Double(time))
+        let transTime = NSDate(timeIntervalSince1970: time)
         let compsnow = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: NSDate())
         let compsTrans = calendar.components([.Year,.Month,.Day,.Hour,.Minute], fromDate: transTime)
         if(compsTrans.year == compsnow.year){

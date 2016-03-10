@@ -43,7 +43,7 @@ class TenUser: NSObject {
     
     var AVG:Int = 0 {
         didSet{
-            if(Tools.getSinceTime(NSDate()) > self.Expire){
+            if(Int(Tools.getSinceTime(NSDate())) > self.Expire){
                 AVG = self.Average
             }
         }
@@ -69,7 +69,7 @@ class TenUser: NSObject {
     // this needs to be explicit
     func ValueWithDict(dict:[String : AnyObject]) {
         self.setValuesForKeysWithDictionary(dict)
-        if(Tools.getSinceTime(NSDate()) > self.Expire){
+        if(Int(Tools.getSinceTime(NSDate())) > self.Expire){
             AVG = self.Average
         }
     }

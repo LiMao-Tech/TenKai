@@ -31,7 +31,14 @@ class OtherChatCell: ChatBaseCell {
                 context.imageEdgeInsets = UIEdgeInsets.init(top: 8, left: 3, bottom: 18, right: 0)
                 context.setImage(chatFrame.chatMessage.MsgImage!, forState: .Normal)
             }else{
-                content.attributedText = chatFrame.chatMessage.attrMsg
+                if(chatFrame.chatMessage.isString){
+                    print("isText")
+                    content.text = chatFrame.chatMessage.MsgContent
+                }else{
+                    print("isAttrText")
+                    content.attributedText = chatFrame.chatMessage.attrMsg
+                }
+                
                 timeLabel.text = "\(Tools.toDisplayTime(chatFrame.chatMessage.MsgTime))"
                 
             }

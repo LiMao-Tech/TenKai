@@ -41,7 +41,7 @@ class AFJSONManager: NSObject {
         })
     }
     
-    func postMethod(url:String,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
+    func postMethod(url:String,parameters:[String:AnyObject]?,success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
         
         afHttpSessionManager.POST(url, parameters: parameters, progress: nil, success: { (task, response) -> Void in
             success(task,response)

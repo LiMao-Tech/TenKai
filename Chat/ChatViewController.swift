@@ -44,9 +44,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for user in userChatInActive{
             let count = UserChatModel.allChats().message[user.UserIndex]?.count
             if(count > 1){
+                print(count)
                 for index in 1...(count!-1){
+                    print(user.UserName)
+                    print(UserChatModel.allChats().message[user.UserIndex]![index].chatMessage.Sender)
                     if(UserChatModel.allChats().message[user.UserIndex]![index].chatMessage.Sender != UserChatModel.allChats().message[user.UserIndex]![index-1].chatMessage.Sender){
                         user.listType = .Active
+                        print("listTypeChanged")
+                        break
                     }
                 }
             }

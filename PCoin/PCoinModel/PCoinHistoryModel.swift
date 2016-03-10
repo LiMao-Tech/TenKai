@@ -11,8 +11,8 @@ import UIKit
 class PCoinHistoryModel: NSObject {
     var ID = 1
     var UserId = ""
-    var PurchaseDate = 3
-    var ModifiedDate = 4
+    var PurchaseDate:NSTimeInterval = 3
+    var ModifiedDate:NSTimeInterval = 4
     var Content = 0
     var Status = ""
     var PurchaseType = 0

@@ -294,7 +294,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     deinit{
-        SHARED_USER.removeObserver(self, forKeyPath: "Average", context: nil)
+//        SHARED_USER.removeObserver(self, forKeyPath: "Average", context: nil)
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {

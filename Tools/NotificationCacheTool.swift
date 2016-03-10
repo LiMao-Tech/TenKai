@@ -46,7 +46,7 @@ class NotificationCacheTool: NSObject {
                     let noteFrame = NotificationFrame()
                     let nott = Notification()
                     nott.MsgType = Int(rs.intForColumn("MSGTYPE"))
-                    nott.MsgTime = Int(rs.intForColumn("MSGTIME"))
+                    nott.MsgTime = NSTimeInterval(rs.intForColumn("MSGTIME"))
                     nott.MsgContent = rs.stringForColumn("MSGCONTENT")
                     nott.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
                     noteFrame.notification = nott

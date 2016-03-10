@@ -189,6 +189,7 @@ class SingleChatController : UIViewController,
                 },
                 failure: { (task, error) -> Void in
                     print("Post User Failed")
+                    print(error.localizedDescription)
             })
             contentText.text = ""
             frameChange()
@@ -249,7 +250,7 @@ class SingleChatController : UIViewController,
                 UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0,"time":message.MsgTime]
-                AFImageManager.SharedInstance.postUserImage(data, parameters: params, success: { (task, response) -> Void in
+                AFImageManager.SharedInstance.postUserImage(data, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
                         print("postImage success")
                         print("response")
                         MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)

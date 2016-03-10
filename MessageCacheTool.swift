@@ -20,7 +20,7 @@ class MessageCacheTool: NSObject {
         dbq = FMDatabaseQueue(path: databasePath)
         
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (ID INTEGER PRIMARY KEY,MSGINDEX INTEGER,BELONGTYPE INTEGER,ISLOCKED INTEGER,MSGTYPE INTEGER,MSGTIME INTEGER,MSGCONTENT TEXT)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (ID INTEGER PRIMARY KEY,MSGINDEX INTEGER,SENDER INTEGER,RECEIVER,ISLOCKED INTEGER,MSGTYPE INTEGER,MSGTIME INTEGER,PHONETYPE INTEGER,MSGCONTENT TEXT)"
             let sql_pic_stmt = "CREATE TABLE IF NOT EXISTS MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (ID INTEGER PRIMARY KEY,MSGINDEX INTEGER,PICTURE BLOB,WIDTH REAL,HEIGHT REAL)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
@@ -34,9 +34,9 @@ class MessageCacheTool: NSObject {
     }
     //相应用户的聊天信息表中插入聊天信息
     func addMessageInfo(userIndex:Int,msg:SingleChatMessage){
-        let sql_insert = "INSERT INTO MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,BELONGTYPE,ISLOCKED,MSGTYPE,MSGTIME,MSGCONTENT) VALUES(?,?,?,?,?,?)"
+        let sql_insert = "INSERT INTO MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,SENDER,RECEIVER,ISLOCKED,MSGTYPE,MSGTIME,PHONETYPE,MSGCONTENT) VALUES(?,?,?,?,?,?,?,?)"
         dbq.inTransaction { (db, rollBack) -> Void in
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [msg.MsgIndex,msg.belongType.rawValue,msg.IsLocked,msg.messageType.rawValue,msg.MsgTime,msg.MsgContent]){                  print("插入失败")
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [msg.MsgIndex,msg.Sender,msg.Receiver,msg.IsLocked,msg.messageType.rawValue,msg.MsgTime,msg.PhoneType,msg.MsgContent]){                  print("插入失败")
             }
             if(msg.messageType == .Image){
                 let sql_pic_stmt = "INSERT INTO MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,PICTURE,WIDTH,HEIGHT) VALUES(?,?,?,?)"
@@ -80,11 +80,14 @@ class MessageCacheTool: NSObject {
                     let message = SingleChatMessage()
                     let msgFrame = SingleChatMessageFrame()
                     message.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
-                    message.belongType = (rs.intForColumn("BELONGTYPE") == 0) ? ChatBelongType.Me : ChatBelongType.Other
+                    message.Sender = Int(rs.intForColumn("SENDER"))
+                    message.Receiver = Int(rs.intForColumn("RECEIVER"))
                     message.IsLocked = Int(rs.intForColumn("ISLOCKED")) == 1
                     message.messageType = ChatMessageType(rawValue: Int(rs.intForColumn("MSGTYPE")))!
-                    message.MsgTime = Int(rs.intForColumn("MSGTIME"))
+                    message.MsgTime = NSTimeInterval(rs.intForColumn("MSGTIME"))
+                    message.PhoneType = Int(rs.intForColumn("PHONETYPE"))
                     message.MsgContent = rs.stringForColumn("MSGCONTENT")
+                    
                     if(message.messageType == .Image){
                         let sql_pic_stmt = "SELECT PICTURE FROM MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"
                         if let rs = db.executeQuery(sql_pic_stmt, withArgumentsInArray: [message.MsgIndex]){

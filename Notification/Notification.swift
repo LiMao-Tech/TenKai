@@ -14,7 +14,7 @@ class Notification: NSObject {
     
     var MsgContent = ""
     var MsgIndex = 0
-    var MsgTime = 0
+    var MsgTime:NSTimeInterval = 0
     var MsgType = 0{
         didSet{
             if(MsgType == 1){

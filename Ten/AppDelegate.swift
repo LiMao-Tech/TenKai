@@ -43,6 +43,9 @@ class AppDelegate: UIResponder,
             DataInitializerTool.initialiseInfo()
             
             self.window?.rootViewController = nVC
+        }else{
+            let wVC = WelcomeController()
+            self.window?.rootViewController = wVC
         }
         
         UITextField.appearance().tintColor = COLOR_ORANGE
@@ -102,8 +105,9 @@ class AppDelegate: UIResponder,
         DEVICE_TOKEN = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: [])
         print("Token: \(DEVICE_TOKEN!)")
         if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
-            let params = ["userindex":SHARED_USER.UserIndex,"devicetoken":DEVICE_TOKEN!]
-            AFJSONManager.SharedInstance.postMethod(Url_Login, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            let url = Url_Api + "TenLogins?userindex=\(SHARED_USER.UserIndex)&devicetoken=\(DEVICE_TOKEN!)"
+            let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+            AFJSONManager.SharedInstance.postMethod(newUrl!, parameters: nil, success: { (task, response) -> Void in
                     print("更新devicetoken成功")
                     print(response)
                 }, failure: { (task, error) -> Void in
@@ -218,20 +222,17 @@ class AppDelegate: UIResponder,
                         print(response)
                         let userDict = response as! NSDictionary
                         let user = TenUser(dict: userDict as! [String : AnyObject])
+                        UsersCacheTool().addUserInfoByUser(user)
+                        UserChatModel.allChats().tenUser.append(user)
                         //get tenUser portrait
-                        
                         ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
                             if let image = response.result.value {
                                 user.Portrait = UIImagePNGRepresentation(image)
-                                UsersCacheTool().addUserInfoByUser(user)
-                                UserChatModel.allChats().tenUser.append(user)
+                                UsersCacheTool().upDateUsersPortrait(user.UserIndex, portrait: image)
                             }
                             else {
-                                print("tenUser portraitfailed")
+                                print("get \(user.UserName) portrait failed")
                                 print(response.result.error?.localizedDescription)
-                                let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
-                                UserChatModel.allChats().userIndex.removeAtIndex(index!)
-                                print(UserChatModel.allChats().userIndex)
                             }
                         }
                         },

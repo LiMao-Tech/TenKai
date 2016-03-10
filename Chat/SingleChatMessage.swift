@@ -27,7 +27,7 @@ class SingleChatMessage: NSObject {
         }
     }
     var MsgIndex = 0
-    var MsgTime = 0
+    var MsgTime:NSTimeInterval = 0
     var MsgContent = ""{
         didSet{
             let stringToAtt = Tools.stringToAttributeString(self.MsgContent)
@@ -40,6 +40,7 @@ class SingleChatMessage: NSObject {
             self.messageType = ChatMessageType(rawValue: self.MsgType)!
         }
     }
+    
     var PhoneType = 0
     var IsLocked = false
     

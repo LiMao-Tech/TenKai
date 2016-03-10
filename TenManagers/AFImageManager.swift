@@ -18,7 +18,7 @@ class AFImageManager: NSObject {
     override init() {
         super.init()
         afHttpSessionManager.requestSerializer = AFHTTPRequestSerializer()
-        afHttpSessionManager.responseSerializer = AFJSONResponseSerializer()
+        afHttpSessionManager.responseSerializer = AFHTTPResponseSerializer()
     }
     
     func postHeadImage(url:String,image:NSData,parameters:[String:AnyObject],success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){

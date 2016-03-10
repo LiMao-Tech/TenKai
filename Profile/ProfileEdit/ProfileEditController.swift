@@ -38,14 +38,18 @@ class EditProfileController : UIViewController,
         
         self.view.backgroundColor = COLOR_BG
         self.title = ProfileTitle
+        let button = UIBarButtonItem(title: "完成", style: .Done, target: self, action: "editDone")
+        self.navigationItem.rightBarButtonItem = button
+        
         chosenImage = UIImage()
-        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 104, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar_140", targetAction: "toImagePicker")
+        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 104, btnWidth: 70, btnHeight: 70, imageName: "user_pic_radar_140", targetAction: "toImagePicker")
+        buttonProfile.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         var y = CGRectGetMaxY(buttonProfile.frame)+10
         userName = UILabel(frame: CGRectMake(0,y,SCREEN_WIDTH,20))
         userName.font = UIFont(name: FONTNAME_NORMAL, size: 17)
         userName.textColor = UIColor.whiteColor()
         userName.textAlignment = .Center
-        userName.text = "username"
+        userName.text = String(SHARED_USER.UserName)
         let margin:CGFloat = 25
         y = CGRectGetMaxY(userName.frame)+50
         
@@ -55,48 +59,45 @@ class EditProfileController : UIViewController,
         
         let textX:CGFloat = 145
         
-        let birthLabel = initLabel(posX: 15, posY: 5, labelWidth: 100, labelHeight: 20, labelText: "Date of birth")
+        let birthLabel = initLabel(posX: 15, posY: 5, labelWidth: 100, labelHeight: 20, labelText: "生日")
         birthDate = UILabel(frame:CGRectMake(textX,5,lineLength,20))
-        birthDate = initTextLabel(frame: CGRectMake(textX, 5, lineLength, 20),labelText: "4 July 1997 18 Cancer")
+        birthDate = initTextLabel(frame: CGRectMake(textX, 5, lineLength, 20),labelText: Tools.toBitrhDate(SHARED_USER.Birthday))
         y = CGRectGetMaxY(birthLabel.frame)+margin
-        let sexLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Sex")
-        sex = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: "Female")
+        let sexLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "性别")
+        sex = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: SHARED_USER.Gender == 0 ? "男" : "女")
         y = CGRectGetMaxY(sexLabel.frame)+margin
         let marriageLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Marriage")
-        singleBtn = initChooseBtn(CGRectMake(textX, y, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Single")
+        singleBtn = initChooseBtn(CGRectMake(textX, y, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身")
         singleBtn.setImage(singleBtn.seletedImage, forState: .Normal)
-        marriedBtn = initChooseBtn(CGRectMake(textX+80, y, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  Married")
+        marriedBtn = initChooseBtn(CGRectMake(textX+80, y, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚")
         y = CGRectGetMaxY(marriageLabel.frame)+margin
         let emailLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "E-mail")
         emailAddr = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: "example@example.com")
         y = CGRectGetMaxY(emailLabel.frame)+margin
-        let statusLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Status")
+        let statusLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "状态")
         statusDetail = UITextView(frame: CGRectMake(textX, y+5, lineLength, SCREEN_HEIGHT*2/12-10))
         statusDetail.backgroundColor = UIColor(red: 63.0/255.0, green: 63.0/255.0, blue: 64.0/255.0, alpha: 1)
         statusDetail.textColor = UIColor.whiteColor()
         statusDetail.bounces = false
         statusDetail.font = UIFont.systemFontOfSize(15)
-        statusDetail.text = "There is so much to.."
+        statusDetail.text = SHARED_USER.Quote
         y = CGRectGetMaxY(statusDetail.frame)+margin
-        let InnerLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Inner")
-        InnerValue = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: "6")
+        let InnerLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "内在")
+        InnerValue = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: String(SHARED_USER.InnerScore))
         y = CGRectGetMaxY(InnerLabel.frame)+margin
-        let OuterLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Outer")
-        OuterValue = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: "7")
+        let OuterLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "外在")
+        OuterValue = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: String(SHARED_USER.OuterScore))
         y = CGRectGetMaxY(OuterLabel.frame)+margin
-        let energyLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Energy")
+        let energyLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "能量")
         energyBar = TenSlider(frame: CGRectMake(textX, y, lineLength-30, 20))
-        energyBar.minimumValue = 0
+        energyBar.minimumValue = 1
         energyBar.maximumValue = 10
+        energyBar.setValue(Float(SHARED_USER.Energy), animated: false)
         energyBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
         energyValue = UILabel(frame: CGRectMake(CGRectGetMaxX(energyBar.frame)+10, y, 20, 20))
-        energyValue.text = "0"
+        energyValue.text = String(SHARED_USER.Energy)
         energyValue.textColor = UIColor.whiteColor()
         
-        let button = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,43))
-        button.setTitle("完成", forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(15)
-        button.addTarget(self, action: "editDone", forControlEvents: .TouchUpInside)
         
         self.view.addSubview(buttonProfile)
         self.view.addSubview(userName)
@@ -119,7 +120,7 @@ class EditProfileController : UIViewController,
         self.scroll.addSubview(energyLabel)
         self.scroll.addSubview(energyBar)
         self.scroll.addSubview(energyValue)
-        self.scroll.addSubview(button)
+        
     }
 
     override func didReceiveMemoryWarning() {

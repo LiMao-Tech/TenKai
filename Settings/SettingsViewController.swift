@@ -11,7 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var settingList:UITableView!
     var logoutBtn:UIButton!
-    let itemNames = ["Passcode","Change PIN","PCoin","","Term of Service","Privacy Policy"]
+    let itemNames = ["个人信息","滑动解锁","更改PIN","P   币","","服务条款","隐私声明"]
     var remainingPinEntries = 3
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:settingCell!
-        if(indexPath.row != 3){
+        if(indexPath.row != 4){
             cell = settingList.dequeueReusableCellWithIdentifier("settingCell") as? settingCell
             if(cell == nil){
                 cell = settingCell.init(style: .Default, reuseIdentifier: "settingCell")
@@ -60,28 +60,33 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
         return cell!
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if(indexPath.row == 3){
+        if(indexPath.row == 4){
             return 60
         }
         return 40
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return itemNames.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.row == 0){
+            let epVC = EditProfileController()
+            self.navigationController?.pushViewController(epVC, animated: true)
+            settingList.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+        else if(indexPath.row == 1){
             let pcVC = PasscodeController()
             self.navigationController?.pushViewController(pcVC, animated: true)
             settingList.deselectRowAtIndexPath(indexPath, animated: true)
         }
-        if (indexPath.row == 1){
+        else if (indexPath.row == 2){
             let pVC = PinCodeController()
             self.navigationController?.pushViewController(pVC, animated: true)
             settingList.deselectRowAtIndexPath(indexPath, animated: true)
         }
-        if(indexPath.row == 2){
+        else if(indexPath.row == 3){
             let pVC = PCoinViewController()
             self.navigationController?.pushViewController(pVC, animated: true)
             settingList.deselectRowAtIndexPath(indexPath, animated: true)
