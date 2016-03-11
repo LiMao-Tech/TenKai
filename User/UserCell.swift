@@ -26,6 +26,11 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     var tenUser = TenUser(){
         didSet{
+            //清除bottomView 上的字控件
+            for subview in bottomView.subviews {
+                subview.removeFromSuperview()
+            }
+            
             if(tenUser.listType == .InActive){
                 bottomLen = SCREEN_WIDTH/3
                 let len = (bottomLen-1)/2

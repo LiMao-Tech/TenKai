@@ -103,5 +103,41 @@ class MessageCacheTool: NSObject {
         }
         return messageFrames
     }
+    
+    func loadMessage (userIndex:Int,offSet:Int) ->[SingleChatMessageFrame]{
+        var messageFrames = [SingleChatMessageFrame]()
+        let sql_select = "SELECT * FROM MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) ORDER BY ID DESC LIMIT 18 OFFSET \(offSet)"
+        dbq.inTransaction { (db, rollBack) -> Void in
+            if let rs = db.executeQuery(sql_select, withArgumentsInArray: nil){
+                while rs.next(){
+                    let message = SingleChatMessage()
+                    let msgFrame = SingleChatMessageFrame()
+                    message.MsgIndex = Int(rs.intForColumn("MSGINDEX"))
+                    message.Sender = Int(rs.intForColumn("SENDER"))
+                    message.Receiver = Int(rs.intForColumn("RECEIVER"))
+                    message.IsLocked = Int(rs.intForColumn("ISLOCKED")) == 1
+                    message.messageType = ChatMessageType(rawValue: Int(rs.intForColumn("MSGTYPE")))!
+                    message.MsgTime = NSTimeInterval(rs.intForColumn("MSGTIME"))
+                    message.PhoneType = Int(rs.intForColumn("PHONETYPE"))
+                    message.MsgContent = rs.stringForColumn("MSGCONTENT")
+                    print("message:")
+                    print(message.MsgIndex)
+                    if(message.messageType == .Image){
+                        let sql_pic_stmt = "SELECT PICTURE FROM MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"
+                        if let rs = db.executeQuery(sql_pic_stmt, withArgumentsInArray: [message.MsgIndex]){
+                            while rs.next(){
+                                message.MsgImage = UIImage(data: rs.dataForColumn("PICTURE"))
+                            }
+                        }
+                    }
+                    msgFrame.chatMessage = message
+                    messageFrames.append(msgFrame)
+                }
+            }
+        }
+        print("messageFrames:")
+        print(messageFrames)
+        return messageFrames
+    }
 
 }

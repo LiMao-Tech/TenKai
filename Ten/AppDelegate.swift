@@ -168,6 +168,7 @@ class AppDelegate: UIResponder,
                     break
                 }
                 let senderIndex = info["Sender"] as! Int
+                
                 //notification
                 if(senderIndex == 0){
                     let noti = Notification(dict: info as! NSDictionary)
@@ -178,6 +179,11 @@ class AppDelegate: UIResponder,
                     // save to db
                     break
                 }
+                
+                if(UserChatModel.allChats().unReadMessageAmount[senderIndex] == nil){
+                    UserChatModel.allChats().unReadMessageAmount[senderIndex] = 0
+                }
+                UserChatModel.allChats().unReadMessageAmount[senderIndex]! += 1
                 
                 let messageFrame = SingleChatMessageFrame()
                 let msgType = info["MsgType"] as! Int
@@ -211,6 +217,8 @@ class AppDelegate: UIResponder,
                     SHARED_USER.PCoin += Double(messageFrame.chatMessage.MsgContent)!
                     UserCacheTool().upDateUserPCoin()
                 }
+                
+                //get userInfo
                 
                 if(!UserChatModel.allChats().userIndex.contains(senderIndex)){
                     UserChatModel.allChats().userIndex.append(senderIndex)

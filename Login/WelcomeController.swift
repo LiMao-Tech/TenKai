@@ -151,21 +151,11 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         AFJSONManager.SharedInstance.getMethod(urlComplete!, success: { (task, response) -> Void in
             print(response)
             let dict = response as! NSDictionary
-            let getResult = UserCacheTool().getUserInfo(dict["UserIndex"] as! Int)
             SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
-            
-            if getResult {
-                UserCacheTool().updateUserInfo(dict)
-                DataInitializerTool.initialiseInfo()
-            }
-            else {
-                UserCacheTool().addUserInfoByUser()
-            }
             self.getRaterUserIndexs()
         },
         failure: { (task, error) -> Void in
             let opera = task?.response as! NSHTTPURLResponse
-                
             switch opera.statusCode {
                 case 401:
                     self.unmatchedLB.textColor = UIColor.redColor()
@@ -187,13 +177,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 UserChatModel.allChats().raterIndex = raters
                 UserRaterCache().addUserRaterByArray(raters)
             }
-            NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
-                self.presentViewController(nVC, animated: true, completion: nil)
-            })
-            
+            self.getMsgIndex()
             },failure: { (task, error) -> Void in
                 print("get raterIndex failed")
                 print(error.localizedDescription)
@@ -201,4 +185,42 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 self.unmatchedLB.text = "网络异常请重新登陆"
         })
     }
+    
+    func getMsgIndex(){
+        let url = Url_Api+"TenMsgs?userIndex=\(SHARED_USER.UserIndex)"
+        let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        
+        let mana = AFHTTPSessionManager()
+        mana.requestSerializer = AFHTTPRequestSerializer()
+        mana.responseSerializer = AFHTTPResponseSerializer()
+        
+        mana.GET(newUrl!, parameters: nil, progress: nil, success: { (task, response) -> Void in
+            let index = response as! NSData
+            SHARED_USER.MsgIndex = Int(String.init(data: index, encoding: NSUTF8StringEncoding)!)!
+            print(SHARED_USER.MsgIndex)
+            let getResult = UserCacheTool().getUserInfo(SHARED_USER.UserIndex)
+            if getResult {
+                UserCacheTool().updateUserInfo()
+                DataInitializerTool.initialiseInfo()
+            }
+            else {
+                UserCacheTool().addUserInfoByUser()
+            }
+            print(MsgIndex)
+            //to mainVC
+            NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+                self.presentViewController(nVC, animated: true, completion: nil)
+            })
+
+            }, failure: { (task, error) -> Void in
+                print("get msgIndex failed")
+                print(error.localizedDescription)
+                print("-------------")
+                self.unmatchedLB.textColor = UIColor.redColor()
+                self.unmatchedLB.text = "网络异常请重新登陆"
+            })
+        }
 }

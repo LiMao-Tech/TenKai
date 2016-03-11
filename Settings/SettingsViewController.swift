@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
 
         self.title = SettingTitle
         self.view.backgroundColor = COLOR_BG
-        settingList = UITableView(frame: CGRectMake(30, 0, SCREEN_WIDTH - 60, 324))
+        settingList = UITableView(frame: CGRectMake(30, 0, SCREEN_WIDTH - 60, 400))
         settingList.dataSource = self
         settingList.delegate = self
         settingList.separatorStyle = .None

@@ -28,7 +28,7 @@
                         </constraints>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vf6-BP-kHJ">
-                        <rect key="frame" x="108" y="68" width="184" height="18"/>
+                        <rect key="frame" x="108" y="63.5" width="184" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="pZj-tY-pJV"/>
                         </constraints>
@@ -56,7 +56,7 @@
                     <constraint firstItem="G8A-WY-aPw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="ZAV-6m-KYK"/>
                     <constraint firstAttribute="bottomMargin" secondItem="PKT-Xf-bcl" secondAttribute="bottom" id="mQw-s3-7TG"/>
                     <constraint firstItem="Vf6-BP-kHJ" firstAttribute="leading" secondItem="PKT-Xf-bcl" secondAttribute="trailing" constant="5" id="opX-q7-m6v"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Vf6-BP-kHJ" secondAttribute="bottom" constant="1" id="yeO-59-Joy"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Vf6-BP-kHJ" secondAttribute="bottom" constant="5" id="yeO-59-Joy"/>
                     <constraint firstItem="PKT-Xf-bcl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="yqC-SL-PDg"/>
                 </constraints>
             </tableViewCellContentView>
