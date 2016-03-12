@@ -35,6 +35,8 @@ let Url_SetImage = Url_ImageMaster + "ChangeImageType"
 let Url_Lock = Url_ImageMaster + "SetIsLocked"
 let Url_PutImageJSON = Url_ImageMaster + "PutTenImage"
 
+let Url_SendImage = Url_Home+"TenImage/SendImage"
+
 
 
 let Url_DeviceToken = ""

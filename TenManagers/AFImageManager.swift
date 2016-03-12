@@ -44,4 +44,17 @@ class AFImageManager: NSObject {
                 failure(task,error)
         })
     }
+    
+    func postUserImage(url:String,image:NSData, parameters:[String:AnyObject], success:(NSURLSessionDataTask,AnyObject?) -> Void,failure:(NSURLSessionDataTask?,NSError) -> Void){
+        
+        let picName = Tools.getFileNameTime(NSDate())+".png"
+        afHttpSessionManager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data) -> Void in
+            data.appendPartWithFileData(image, name: "upload", fileName: picName, mimeType: "image/png")
+            }, progress: nil, success: { (task, response) -> Void in
+                success(task,response)
+            },failure:  { (task, error) -> Void in
+                failure(task,error)
+        })
+    }
+    
 }

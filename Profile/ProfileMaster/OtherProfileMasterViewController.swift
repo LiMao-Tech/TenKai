@@ -97,9 +97,6 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
     func pushChatView() -> Void {
         let singleChatC = SingleChatController()
         singleChatC.tenUser = tenUser
-
-
-//        self.presentViewController(singleChatC, animated: true, completion: nil)
         self.navigationController?.pushViewController(singleChatC, animated: true)
     }
 

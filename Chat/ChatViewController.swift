@@ -15,8 +15,8 @@ var ChatLockState = false
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UserCellDelegate {
     
-    var userChatActive = [TenUser]()
-    var userChatInActive = [TenUser]()
+    var userChatActive = SHARED_CHATS.activeUserIndex
+    var userChatInActive = SHARED_CHATS.inActiveUserIndex
     var tabView : UIView!
     var userList : UITableView!
     var modelType : chatType = .Active
@@ -25,38 +25,52 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = ChatTitle
-        UserChatModel.allChats().addObserver(self, forKeyPath: "tenUser", options: NSKeyValueObservingOptions.New, context: nil)
-        UserChatModel.allChats().addObserver(self, forKeyPath: "message", options: NSKeyValueObservingOptions.New, context: nil)
+        SHARED_CHATS.addObserver(self, forKeyPath: "tenUser", options: NSKeyValueObservingOptions.New, context: nil)
+        SHARED_CHATS.addObserver(self, forKeyPath: "message", options: NSKeyValueObservingOptions.New, context: nil)
         
         if(NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") != nil){
             ChatFocusState = true
         }
         
-        separateUser()
         setup()
         refreshControl()
 
-        
-        // userList.reloadData()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
     override func viewWillAppear(animated: Bool) {
-        for user in userChatInActive{
-            let count = UserChatModel.allChats().message[user.UserIndex]?.count
-            if(count > 1){
-                print(count)
-                for index in 1...(count!-1){
-                    print(user.UserName)
-                    print(UserChatModel.allChats().message[user.UserIndex]![index].chatMessage.Sender)
-                    if(UserChatModel.allChats().message[user.UserIndex]![index].chatMessage.Sender != UserChatModel.allChats().message[user.UserIndex]![index-1].chatMessage.Sender){
-                        user.listType = .Active
-                        print("listTypeChanged")
-                        break
+        if(!ChatFocusState){
+            for userIndex in userChatInActive{
+                let count = SHARED_CHATS.message[userIndex]?.count
+                if(SHARED_CHATS.raterIndex.contains(userIndex)){
+                    print("rater contains")
+                    let user = SHARED_CHATS.tenUsers[userIndex]!
+                    user.listType = .Active
+                    user.isRatered = true
+                    UsersCacheTool().updateUserInfo(user)
+                    let index = userChatInActive.indexOf(userIndex)
+                    userChatInActive.removeAtIndex(index!)
+                    userChatActive.insert(userIndex, atIndex: 0)
+                    
+                    break
+                }
+                if(count > 1){
+                    print(count)
+                    for index in 1...(count!-1){
+                        print(SHARED_CHATS.message[userIndex]![index].chatMessage.Sender)
+                        if(SHARED_CHATS.message[userIndex]![index].chatMessage.Sender != SHARED_CHATS.message[userIndex]![index-1].chatMessage.Sender){
+                            let user = SHARED_CHATS.tenUsers[userIndex]
+                            user!.listType = .Active
+                            UsersCacheTool().updateUserInfo(user!)
+                            ChatFocusState = true
+                            NSUserDefaults.standardUserDefaults().setValue(userIndex, forKey: "ChatFocusState")
+                            print("listTypeChanged & into focusState")
+                            return
+                        }
                     }
                 }
             }
         }
-        separateUser()
         self.userList.reloadData()
     }
     
@@ -73,33 +87,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    func separateUser(){
-        userChatActive.removeAll()
-        userChatInActive.removeAll()
-        for uc in UserChatModel.allChats().tenUser{
-            if uc.listType == .InActive {
-                userChatInActive.append(uc)
-            }else{
-                userChatActive.append(uc)
-            }
-        }
-    }
-    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "tenUser"){
-            print(UserChatModel.allChats().tenUser)
-            separateUser()
+            print(SHARED_CHATS.tenUser)
             self.userList.reloadData()
         }else if(keyPath == "message"){
-            separateUser()
             self.userList.reloadData()
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
     }
     deinit{
-        UserChatModel.allChats().removeObserver(self, forKeyPath: "tenUser", context: nil)
-        UserChatModel.allChats().removeObserver(self, forKeyPath: "message", context: nil)
+        SHARED_CHATS.removeObserver(self, forKeyPath: "tenUser", context: nil)
+        SHARED_CHATS.removeObserver(self, forKeyPath: "message", context: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -116,10 +116,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell = UserCell.loadFromNib()
         }
         if(modelType == .Active){
-            cell?.tenUser = userChatActive[indexPath.row]
+            cell?.tenUser =  SHARED_CHATS.tenUsers[userChatActive[indexPath.row]]!
             cell?.delegate = self
         }else{
-            cell?.tenUser = userChatInActive[indexPath.row]
+            cell?.tenUser = SHARED_CHATS.tenUsers[userChatInActive[indexPath.row]]!
             cell?.delegate = self
         }
         return cell!
@@ -132,14 +132,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sVC = SingleChatController()
         if(modelType == .Active){
-            sVC.tenUser = userChatActive[indexPath.row]
+            sVC.tenUser = SHARED_CHATS.tenUsers[userChatActive[indexPath.row]]!
         }else{
-            sVC.tenUser = userChatInActive[indexPath.row]
-        }
-        
-        if(!sVC.tenUser.isRatered && !ChatFocusState){
-            ChatFocusState = true
-            NSUserDefaults.standardUserDefaults().setValue(sVC.tenUser.UserIndex, forKey: "ChatFocusState")
+            sVC.tenUser = SHARED_CHATS.tenUsers[userChatInActive[indexPath.row]]!
         }
         
         if(ChatFocusState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){

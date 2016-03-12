@@ -173,6 +173,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         AFJSONManager.SharedInstance.getMethodWithParams(Url_Rater, parameters: ["raterIndex":SHARED_USER.UserIndex], success: { (task, response) -> Void in
             let raters = response as! [Int]
             UserRaterCache().removeAllRater()
+            print(raters)
             if(raters.count > 0){
                 UserChatModel.allChats().raterIndex = raters
                 UserRaterCache().addUserRaterByArray(raters)
@@ -206,7 +207,6 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             else {
                 UserCacheTool().addUserInfoByUser()
             }
-            print(MsgIndex)
             //to mainVC
             NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in

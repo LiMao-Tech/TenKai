@@ -104,7 +104,6 @@ class RandomUserController: UIViewController,
                 if let image = response.result.value {
                     cell!.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
                     user.Portrait = UIImagePNGRepresentation(image)
-                    user.PortraitImage = image
                 }
         }
         

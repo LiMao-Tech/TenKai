@@ -22,13 +22,14 @@ class SingleChatController : UIViewController,
     
     var tenUser = TenUser(){
         didSet{
-            if(!UserChatModel.allChats().userIndex.contains(tenUser.UserIndex)){
-                UserChatModel.allChats().userIndex.append(tenUser.UserIndex)
-                UserChatModel.allChats().message[tenUser.UserIndex] = [SingleChatMessageFrame]()
+            if(!SHARED_CHATS.activeUserIndex.contains(tenUser.UserIndex) && !SHARED_CHATS.inActiveUserIndex.contains(tenUser.UserIndex)){
+                print("add new user")
+                SHARED_CHATS.tenUsers[tenUser.UserIndex] = tenUser
+                SHARED_CHATS.inActiveUserIndex.insert(tenUser.UserIndex, atIndex: 0)
+                SHARED_CHATS.message[tenUser.UserIndex] = [SingleChatMessageFrame]()
                 UsersCacheTool().addUserInfoByUser(tenUser)
-                UserChatModel.allChats().tenUser.append(tenUser)
             }
-            messages = UserChatModel.allChats().message[tenUser.UserIndex]!
+            messages = SHARED_CHATS.message[tenUser.UserIndex]!
         }
     }
     
@@ -91,14 +92,46 @@ class SingleChatController : UIViewController,
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
-        refresh.endRefreshing()
+        if(messages.count == 0){
+            getMessageByNet(refresh, index: SHARED_USER.MsgIndex+1)
+        }
+        else{
+            let result = MessageCacheTool(userIndex: tenUser.UserIndex).loadMessage(tenUser.UserIndex, msgIndex: (messages.first?.chatMessage.MsgIndex)!)
+            if(result.isEmpty){
+                getMessageByNet(refresh, index: (messages.first?.chatMessage.MsgIndex)!)
+            }else{
+                messages = result.messageFrames + messages
+                self.messageList.reloadData()
+                refresh.endRefreshing()
+            }
+        }
+        
     }
-
     
-    deinit{
-//        NSNotificationCenter.defaultCenter().removeObserver(self)
-//        UserChatModel.allChats().removeObserver(self, forKeyPath: "message")
+    func getMessageByNet(refresh:UIRefreshControl,index:Int){
+        let url = Url_Api + "TenMsgs?sender=\(SHARED_USER.UserIndex)&receiver=\(tenUser.UserIndex)&msgIndx=\(index)&amount=20"
+        let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        AFJSONManager.SharedInstance.getMethod(newUrl!, success: { (task, response) -> Void in
+            print(response)
+            var msgTemp = [SingleChatMessageFrame]()
+            let msgArray = response as! NSArray
+            for msg in msgArray{
+                let dict = msg as! NSDictionary
+                let singleCMF = SingleChatMessageFrame()
+                let sCM = SingleChatMessage(dict: dict)
+                singleCMF.chatMessage = sCM
+                msgTemp.append(singleCMF)
+            }
+            self.messages = msgTemp + self.messages
+            self.messageList.reloadData()
+            refresh.endRefreshing()
+            }, failure: { (task, error) -> Void in
+                print("sgvc get msg failed")
+                print(error.localizedDescription)
+                refresh.endRefreshing()
+        })
     }
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
@@ -181,11 +214,16 @@ class SingleChatController : UIViewController,
             
             let chatFrame = SingleChatMessageFrame()
             chatFrame.chatMessage = SingleChatMessage(dict: params)
-            UserChatModel.allChats().message[tenUser.UserIndex]?.append(chatFrame)
-            AFJSONManager.SharedInstance.postMethod(Url_Msg, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+            SHARED_CHATS.message[tenUser.UserIndex]?.append(chatFrame)
+            AFJSONManager.SharedInstance.postMethod(Url_Msg, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
-                MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: chatFrame.chatMessage)
+                let message = SingleChatMessage(dict: response as! NSDictionary)
+                MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
+                if(SHARED_USER.MsgIndex < message.MsgIndex){
+                    SHARED_USER.MsgIndex = message.MsgIndex
+                    UserCacheTool().upDateUserMsgIndex()
+                }
                 },
                 failure: { (task, error) -> Void in
                     print("Post User Failed")
@@ -198,6 +236,7 @@ class SingleChatController : UIViewController,
     
     // 点击加号按钮
     func addBtnClicked(){
+        self.view.endEditing(true)
        let actionsheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "相   册", "赠送P币")
         actionsheet.showInView(self.view)
     }
@@ -249,11 +288,12 @@ class SingleChatController : UIViewController,
                 msgFrame.chatMessage = message
                 UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
-                let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0,"time":message.MsgTime]
-                AFImageManager.SharedInstance.postUserImage(data, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0]
+                AFImageManager.SharedInstance.postUserImage(Url_SendImage,image: data, parameters: params, success: { (task, response) -> Void in
                         print("postImage success")
-                        print("response")
-                        MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
+                    let dict = try! NSJSONSerialization.JSONObjectWithData(response as! NSData, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    let imageMsg = SingleChatMessage(dict: dict)
+                        MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: imageMsg)
                     }, failure: { (task, error) -> Void in
                         print("post Image failed")
                         print(error.localizedDescription)
@@ -502,7 +542,7 @@ class SingleChatController : UIViewController,
             "InnerScore": score,
             "Energy": -1,
             "Active": true]
-        AFJSONManager.SharedInstance.postMethod(Url_Rater, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(Url_Rater, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
                 self.tenUser.listType = .Active
                 UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
                 ChatFocusState = false

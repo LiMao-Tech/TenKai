@@ -23,3 +23,5 @@ let SHARED_USER = SharedUser.SharedInstance
 let SHARED_PICKER = LMImagePicker()
 
 let SHARED_IMAGE_CACHE = AutoPurgingImageCache()
+
+let SHARED_CHATS = UserChatModel.allChats()

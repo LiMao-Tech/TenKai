@@ -431,7 +431,7 @@ class RegistProfileViewController: UIViewController,
             "HashValue":hashResult
         ]
         
-        AFJSONManager.SharedInstance.postMethod(Url_Login, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(Url_Login, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
             let dict = response as! [String : AnyObject]
             self.tenLogin = TenLogin(loginDict: dict)
             self.postUser()
@@ -467,7 +467,7 @@ class RegistProfileViewController: UIViewController,
             "Longi" : 0
         ]
         
-        AFJSONManager.SharedInstance.postMethod(Url_User, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.postMethod(Url_User, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
             print("postUser")
             print(response)
             let dict = response as! NSDictionary

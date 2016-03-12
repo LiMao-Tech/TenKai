@@ -104,9 +104,10 @@ class MessageCacheTool: NSObject {
         return messageFrames
     }
     
-    func loadMessage (userIndex:Int,offSet:Int) ->[SingleChatMessageFrame]{
+    func loadMessage (userIndex:Int,msgIndex:Int) ->(messageFrames:[SingleChatMessageFrame],isEmpty:Bool){
         var messageFrames = [SingleChatMessageFrame]()
-        let sql_select = "SELECT * FROM MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) ORDER BY ID DESC LIMIT 18 OFFSET \(offSet)"
+        let sql_select = "SELECT * FROM MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX < \(msgIndex) ORDER BY ID DESC LIMIT 0,18"
+        var isEmpty = true
         dbq.inTransaction { (db, rollBack) -> Void in
             if let rs = db.executeQuery(sql_select, withArgumentsInArray: nil){
                 while rs.next(){
@@ -130,6 +131,7 @@ class MessageCacheTool: NSObject {
                             }
                         }
                     }
+                    isEmpty = false
                     msgFrame.chatMessage = message
                     messageFrames.append(msgFrame)
                 }
@@ -137,7 +139,7 @@ class MessageCacheTool: NSObject {
         }
         print("messageFrames:")
         print(messageFrames)
-        return messageFrames
+        return (messageFrames,isEmpty)
     }
 
 }

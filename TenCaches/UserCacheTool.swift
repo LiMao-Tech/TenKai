@@ -61,10 +61,10 @@ class UserCacheTool: NSObject {
         }
     }
     
-    func upDateUserMsgIndex(msgIndex:Int){
+    func upDateUserMsgIndex(){
         let sql_update = "UPDATE USERINFO SET MSGINDEX = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_update, withArgumentsInArray: [msgIndex, SHARED_USER.UserIndex])
+            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.MsgIndex, SHARED_USER.UserIndex])
         }
     }
     

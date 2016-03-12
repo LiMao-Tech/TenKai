@@ -10,37 +10,46 @@ import UIKit
 
 class DataInitializerTool: NSObject {
     class func initialiseInfo() {
+        print("msgIndex:")
+        print(SHARED_USER.MsgIndex)
         //initialiseUserAndMessages
         let usersInfo = UsersCacheTool().getUserInfo()
         if(!usersInfo.isEmpty){
-            UserChatModel.allChats().tenUser = usersInfo.users
+            SHARED_CHATS.tenUser = usersInfo.users
             for user in usersInfo.users{
                 print(user.UserName)
-                UserChatModel.allChats().unReadMessageAmount[user.UserIndex] = 0
-                UserChatModel.allChats().userIndex.append(user.UserIndex)
-//                UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex)
-                
-                UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex, offSet:0)
+                SHARED_CHATS.unReadMessageAmount[user.UserIndex] = 0
+                SHARED_CHATS.userIndex.append(user.UserIndex)
+                SHARED_CHATS.tenUsers[user.UserIndex] = user
+                UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex, msgIndex:SHARED_USER.MsgIndex+1).messageFrames
             }
         }
         
         //initialise Notification
         let notiInfo = NotificationCacheTool().loadNotification()
         if(!notiInfo.isEmpty){
-            UserChatModel.allChats().notifications = notiInfo.notis
+            SHARED_CHATS.notifications = notiInfo.notis
         }
         //initialise raterIndex
         let rater = UserRaterCache().getUserRaterInfo()
         if(!rater.isEmpty){
             print("raterIndex")
             print(rater.raterIndexs)
-            UserChatModel.allChats().raterIndex = rater.raterIndexs
-            for user in UserChatModel.allChats().tenUser{
+            SHARED_CHATS.raterIndex = rater.raterIndexs
+            for user in SHARED_CHATS.tenUser{
                 if(rater.raterIndexs.contains(user.UserIndex)){
                     user.isRatered = true
                 }
             }
         }
+        //initialise active & inactive userlist
+        if(NSUserDefaults.standardUserDefaults().valueForKey("activeUserIndex") != nil){
+            SHARED_CHATS.activeUserIndex = NSUserDefaults.standardUserDefaults().valueForKey("activeUserIndex") as! [Int]
+        }
+        if(NSUserDefaults.standardUserDefaults().valueForKey("inActiveUserIndex") != nil){
+            SHARED_CHATS.inActiveUserIndex = NSUserDefaults.standardUserDefaults().valueForKey("inActiveUserIndex") as! [Int]
+        }
+        
     }
     
     func deinitialiseInfo(){

@@ -8,8 +8,6 @@
 
 import UIKit
 
-var MsgIndex = 0
-
 class UserChatModel: NSObject {
     var userIndex = [Int]() //check if user exist
     var raterIndex = [Int]()

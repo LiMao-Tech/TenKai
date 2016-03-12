@@ -33,7 +33,7 @@ class UsersCacheTool: NSObject {
     
     func updateUserInfo(user:TenUser) {
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PHONETYPE = ?,GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,PROFILEURL = ?,PORTRATI = ?"
+            let sql_insert = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PHONETYPE = ?,GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,PROFILEURL = ?,PORTRAIT = ?"
             
             if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.PhoneType,user.Gender,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.ProfileUrl,user.Portrait!]){
                 print("修改失败")
@@ -43,7 +43,7 @@ class UsersCacheTool: NSObject {
     
     func upDateUsersPortrait(userIndex:Int,portrait:UIImage){
         let date = UIImagePNGRepresentation(portrait)
-        let sql_update = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PORTRATI = ? WHERE USERINDEX = ?"
+        let sql_update = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PORTRAIT = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
             db.executeUpdate(sql_update, withArgumentsInArray: [date!, userIndex])
         }

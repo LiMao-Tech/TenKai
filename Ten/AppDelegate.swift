@@ -148,7 +148,7 @@ class AppDelegate: UIResponder,
                 UserChatModel.allChats().notifications.append(notiFrame)
                 SHARED_USER.MsgIndex = noti.MsgIndex
                 // save to db
-                UserCacheTool().upDateUserMsgIndex(noti.MsgIndex)
+                UserCacheTool().upDateUserMsgIndex()
                 NotificationCacheTool().addNotificationInfo(noti)
                                 }
             },failure: { (task, response) -> Void in
@@ -180,6 +180,46 @@ class AppDelegate: UIResponder,
                     break
                 }
                 
+                //if user not exist get userInfo
+                if(UserChatModel.allChats().tenUsers[senderIndex] == nil){
+                    // get userInfo
+                    AFJSONManager.SharedInstance.getMethodWithParams(Url_User, parameters: ["id":senderIndex], success: { (task, response) -> Void in
+                        print("appdelegate get User")
+                        print(response)
+                        let userDict = response as! NSDictionary
+                        let user = TenUser(dict: userDict as! [String : AnyObject])
+                        UsersCacheTool().addUserInfoByUser(user)
+                        UserChatModel.allChats().tenUser.append(user)
+                        UserChatModel.allChats().tenUsers[senderIndex] = user
+                        UserChatModel.allChats().inActiveUserIndex.insert(senderIndex, atIndex: 0)
+                        //get tenUser portrait
+                        ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
+                            if let image = response.result.value {
+                                user.Portrait = UIImagePNGRepresentation(image)
+                                UsersCacheTool().upDateUsersPortrait(user.UserIndex, portrait: image)
+                            }
+                            else {
+                                print("get \(user.UserName) portrait failed")
+                                print(response.result.error?.localizedDescription)
+                            }
+                        }
+                        },
+                        failure: { (task, error) -> Void in
+                            print("appdelegate tenUser failed")
+                            print(error.localizedDescription)
+                    })
+                }
+                //bring the user to the first
+                if(UserChatModel.allChats().activeUserIndex.contains(senderIndex)){
+                   let index = UserChatModel.allChats().activeUserIndex.indexOf(senderIndex)
+                    UserChatModel.allChats().activeUserIndex.removeAtIndex(index!)
+                    UserChatModel.allChats().activeUserIndex.insert(senderIndex, atIndex: 0)
+                }else if(UserChatModel.allChats().inActiveUserIndex.contains(senderIndex)){
+                    let index = UserChatModel.allChats().inActiveUserIndex.indexOf(senderIndex)
+                    UserChatModel.allChats().inActiveUserIndex.removeAtIndex(index!)
+                    UserChatModel.allChats().inActiveUserIndex.insert(senderIndex, atIndex: 0)
+                }
+                //unread messages amount
                 if(UserChatModel.allChats().unReadMessageAmount[senderIndex] == nil){
                     UserChatModel.allChats().unReadMessageAmount[senderIndex] = 0
                 }
@@ -218,41 +258,41 @@ class AppDelegate: UIResponder,
                     UserCacheTool().upDateUserPCoin()
                 }
                 
-                //get userInfo
                 
-                if(!UserChatModel.allChats().userIndex.contains(senderIndex)){
-                    UserChatModel.allChats().userIndex.append(senderIndex)
-                    UserChatModel.allChats().message[senderIndex] = [SingleChatMessageFrame]()
-                    
-                    // get userInfo
-                    AFJSONManager.SharedInstance.getMethodWithParams(Url_User, parameters: ["id":senderIndex], success: { (task, response) -> Void in
-                        print("appdelegate get User")
-                        print(response)
-                        let userDict = response as! NSDictionary
-                        let user = TenUser(dict: userDict as! [String : AnyObject])
-                        UsersCacheTool().addUserInfoByUser(user)
-                        UserChatModel.allChats().tenUser.append(user)
-                        //get tenUser portrait
-                        ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
-                            if let image = response.result.value {
-                                user.Portrait = UIImagePNGRepresentation(image)
-                                UsersCacheTool().upDateUsersPortrait(user.UserIndex, portrait: image)
-                            }
-                            else {
-                                print("get \(user.UserName) portrait failed")
-                                print(response.result.error?.localizedDescription)
-                            }
-                        }
-                        },
-                        failure: { (task, error) -> Void in
-                            print("appdelegate tenUser failed")
-                            print(error.localizedDescription)
-                            let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
-                            UserChatModel.allChats().userIndex.removeAtIndex(index!)
-                            
-                    })
-                    print("UserIndex: \(UserChatModel.allChats().userIndex)")
-                }
+                
+//                if(!UserChatModel.allChats().userIndex.contains(senderIndex)){
+//                    UserChatModel.allChats().userIndex.append(senderIndex)
+//                    UserChatModel.allChats().message[senderIndex] = [SingleChatMessageFrame]()
+//                    
+//                    // get userInfo
+//                    AFJSONManager.SharedInstance.getMethodWithParams(Url_User, parameters: ["id":senderIndex], success: { (task, response) -> Void in
+//                        print("appdelegate get User")
+//                        print(response)
+//                        let userDict = response as! NSDictionary
+//                        let user = TenUser(dict: userDict as! [String : AnyObject])
+//                        UsersCacheTool().addUserInfoByUser(user)
+//                        UserChatModel.allChats().tenUser.append(user)
+//                        //get tenUser portrait
+//                        ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
+//                            if let image = response.result.value {
+//                                user.Portrait = UIImagePNGRepresentation(image)
+//                                UsersCacheTool().upDateUsersPortrait(user.UserIndex, portrait: image)
+//                            }
+//                            else {
+//                                print("get \(user.UserName) portrait failed")
+//                                print(response.result.error?.localizedDescription)
+//                            }
+//                        }
+//                        },
+//                        failure: { (task, error) -> Void in
+//                            print("appdelegate tenUser failed")
+//                            print(error.localizedDescription)
+//                            let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
+//                            UserChatModel.allChats().userIndex.removeAtIndex(index!)
+//                            
+//                    })
+//                    print("UserIndex: \(UserChatModel.allChats().userIndex)")
+//                }
                 
                 if(messageFrame.chatMessage.messageType != .Image){
                     UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
@@ -261,7 +301,7 @@ class AppDelegate: UIResponder,
             }
             let msgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
             SHARED_USER.MsgIndex = msgIndex
-            UserCacheTool().upDateUserMsgIndex(SHARED_USER.MsgIndex)
+            UserCacheTool().upDateUserMsgIndex()
             
             },failure:  { (task, error) -> Void in
               print(error.localizedDescription)
@@ -290,6 +330,8 @@ class AppDelegate: UIResponder,
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         LOC_MANAGER.stopUpdatingLocation()
+        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.activeUserIndex, forKey: "activeUserIndex")
+        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.inActiveUserIndex, forKey: "inActiveUserIndex")
         
         print("in Did Enter Background State")
     }
@@ -313,6 +355,9 @@ class AppDelegate: UIResponder,
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
+        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.activeUserIndex, forKey: "activeUserIndex")
+        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.inActiveUserIndex, forKey: "inActiveUserIndex")
+
         print("application Will Terminate")
     }
 }
