@@ -170,7 +170,6 @@ class MeProfileMasterViewController: ProfileMasterViewController,
                 self.pVC.getProfileImages()
 
                 self.pPCVC.dataInit()
-
             }
         }
     }

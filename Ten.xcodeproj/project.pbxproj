@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		164EA74D1BB799E700446691 /* MobileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164EA74C1BB799E700446691 /* MobileInfo.swift */; };
 		16988ADD1B8A57A500270DBA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16988ADC1B8A57A500270DBA /* Images.xcassets */; };
-		232820F016A2D161C2D47B4C /* Pods_Ten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739546E248EBF5CE4B4D8971 /* Pods_Ten.framework */; };
 		640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640467801C4BC8910062A8A4 /* PCoinTransView.swift */; };
 		640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BD81C0C898700B31DA0 /* FMDatabase.m */; };
 		640F3BE31C0C898700B31DA0 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BDA1C0C898700B31DA0 /* FMDatabaseAdditions.m */; };
@@ -48,6 +47,7 @@
 		C4CED3111B88FB010008BCF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4CED30F1B88FB010008BCF2 /* Main.storyboard */; };
 		C4CED3161B88FB010008BCF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CED3141B88FB010008BCF2 /* LaunchScreen.xib */; };
 		C4CED3221B88FB010008BCF2 /* TenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED3211B88FB010008BCF2 /* TenTests.swift */; };
+		D2D545A392C1B8FD10DA078C /* Pods_Ten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3ECC7684628AF240B6366C /* Pods_Ten.framework */; };
 		D414D0631C6E263500C6566F /* Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D414D0621C6E263500C6566F /* Urls.swift */; };
 		D414D0651C6E2AFA00C6566F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D414D0641C6E2AFA00C6566F /* Colors.swift */; };
 		D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC101C6401DD0013E27D /* UserCacheTool.swift */; };
@@ -325,6 +325,8 @@
 /* Begin PBXFileReference section */
 		164EA74C1BB799E700446691 /* MobileInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileInfo.swift; sourceTree = "<group>"; };
 		16988ADC1B8A57A500270DBA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1F4790B6BFA7B1644691D784 /* Pods-Ten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.debug.xcconfig"; sourceTree = "<group>"; };
+		4B3ECC7684628AF240B6366C /* Pods_Ten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		640467801C4BC8910062A8A4 /* PCoinTransView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinTransView.swift; sourceTree = "<group>"; };
 		640F3BD71C0C898700B31DA0 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		640F3BD81C0C898700B31DA0 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -364,9 +366,7 @@
 		64D306AA1C5F54A30007A4F1 /* PinCodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeController.swift; sourceTree = "<group>"; };
 		64F9AD031C8BE27200EDED82 /* UserRaterCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRaterCache.swift; sourceTree = "<group>"; };
 		64F9AD051C8C3E1B00EDED82 /* PCoinTransModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PCoinTransModel.swift; path = ../PCoinCell/PCoinTransModel.swift; sourceTree = "<group>"; };
-		739546E248EBF5CE4B4D8971 /* Pods_Ten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		90AE70C3C142642D3AB7DC64 /* Pods-Ten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.debug.xcconfig"; sourceTree = "<group>"; };
-		9923EEB62CE163E76F2BDA14 /* Pods-Ten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.release.xcconfig"; sourceTree = "<group>"; };
+		8D9B7B72A61A05D4E5F63F67 /* Pods-Ten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ten/Pods-Ten.release.xcconfig"; sourceTree = "<group>"; };
 		B84957B6987C4D31344DF3F5 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3061B88FB010008BCF2 /* Ten.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ten.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED30A1B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -638,7 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */,
-				232820F016A2D161C2D47B4C /* Pods_Ten.framework in Frameworks */,
+				D2D545A392C1B8FD10DA078C /* Pods_Ten.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,18 +657,9 @@
 			children = (
 				640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */,
 				B84957B6987C4D31344DF3F5 /* Pods.framework */,
-				739546E248EBF5CE4B4D8971 /* Pods_Ten.framework */,
+				4B3ECC7684628AF240B6366C /* Pods_Ten.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2269D83C2479FA2F5A205291 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				90AE70C3C142642D3AB7DC64 /* Pods-Ten.debug.xcconfig */,
-				9923EEB62CE163E76F2BDA14 /* Pods-Ten.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		640F3BD61C0C898700B31DA0 /* fmdb */ = {
@@ -798,7 +789,7 @@
 				C4CED31E1B88FB010008BCF2 /* TenTests */,
 				C4CED3071B88FB010008BCF2 /* Products */,
 				1255ABBAF454983E8551DED4 /* Frameworks */,
-				2269D83C2479FA2F5A205291 /* Pods */,
+				CEF2A4C84914E550216DFF76 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -858,6 +849,15 @@
 				C4CED3201B88FB010008BCF2 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CEF2A4C84914E550216DFF76 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1F4790B6BFA7B1644691D784 /* Pods-Ten.debug.xcconfig */,
+				8D9B7B72A61A05D4E5F63F67 /* Pods-Ten.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		D434AC0C1C63FA710013E27D /* TenCaches */ = {
@@ -1293,13 +1293,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4CED3251B88FB010008BCF2 /* Build configuration list for PBXNativeTarget "Ten" */;
 			buildPhases = (
-				0984A93363A43C79D676D173 /* Check Pods Manifest.lock */,
+				A319C3A50CD3D13CD7C48C35 /* Check Pods Manifest.lock */,
 				C4CED3021B88FB010008BCF2 /* Sources */,
 				C4CED3031B88FB010008BCF2 /* Frameworks */,
 				C4CED3041B88FB010008BCF2 /* Resources */,
 				640F3BFB1C0CAED000B31DA0 /* Embed App Extensions */,
-				88768F59A8FD7A6AB0A57820 /* Embed Pods Frameworks */,
-				A493770ED7C33D680B076871 /* Copy Pods Resources */,
+				C856085E83FB4C1A69F717E9 /* Embed Pods Frameworks */,
+				728A420DC980920CB8F0D470 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1583,7 +1583,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0984A93363A43C79D676D173 /* Check Pods Manifest.lock */ = {
+		728A420DC980920CB8F0D470 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ten/Pods-Ten-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A319C3A50CD3D13CD7C48C35 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1598,7 +1613,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		88768F59A8FD7A6AB0A57820 /* Embed Pods Frameworks */ = {
+		C856085E83FB4C1A69F717E9 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1611,21 +1626,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ten/Pods-Ten-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A493770ED7C33D680B076871 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ten/Pods-Ten-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1861,7 +1861,7 @@
 		};
 		C4CED3261B88FB010008BCF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 90AE70C3C142642D3AB7DC64 /* Pods-Ten.debug.xcconfig */;
+			baseConfigurationReference = 1F4790B6BFA7B1644691D784 /* Pods-Ten.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1885,7 +1885,7 @@
 		};
 		C4CED3271B88FB010008BCF2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9923EEB62CE163E76F2BDA14 /* Pods-Ten.release.xcconfig */;
+			baseConfigurationReference = 8D9B7B72A61A05D4E5F63F67 /* Pods-Ten.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
