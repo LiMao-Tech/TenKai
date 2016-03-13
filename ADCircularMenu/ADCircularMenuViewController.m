@@ -16,7 +16,7 @@
     float _fInnerRadius;
     
     NSUInteger _iNumberOfButtons;
-    NSMutableArray *_arrButtons;
+    
     NSArray *_arrButtonImageName;
     UIButton *_buttonCorner;
 

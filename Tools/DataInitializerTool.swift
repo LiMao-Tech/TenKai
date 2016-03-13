@@ -8,6 +8,8 @@
 
 import UIKit
 
+var unReadNum = 0
+
 class DataInitializerTool: NSObject {
     class func initialiseInfo() {
         print("msgIndex:")
@@ -15,11 +17,9 @@ class DataInitializerTool: NSObject {
         //initialiseUserAndMessages
         let usersInfo = UsersCacheTool().getUserInfo()
         if(!usersInfo.isEmpty){
-            SHARED_CHATS.tenUser = usersInfo.users
             for user in usersInfo.users{
                 print(user.UserName)
-                SHARED_CHATS.unReadMessageAmount[user.UserIndex] = 0
-                SHARED_CHATS.userIndex.append(user.UserIndex)
+                unReadNum += user.badgeNum
                 SHARED_CHATS.tenUsers[user.UserIndex] = user
                 UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex, msgIndex:SHARED_USER.MsgIndex+1).messageFrames
             }
@@ -36,30 +36,25 @@ class DataInitializerTool: NSObject {
             print("raterIndex")
             print(rater.raterIndexs)
             SHARED_CHATS.raterIndex = rater.raterIndexs
-            for user in SHARED_CHATS.tenUser{
+            for user in usersInfo.users{
                 if(rater.raterIndexs.contains(user.UserIndex)){
                     user.isRatered = true
                 }
             }
         }
         //initialise active & inactive userlist
-        if(NSUserDefaults.standardUserDefaults().valueForKey("activeUserIndex") != nil){
-            SHARED_CHATS.activeUserIndex = NSUserDefaults.standardUserDefaults().valueForKey("activeUserIndex") as! [Int]
+        let listCache = UserListCache()
+        if(!listCache.getUserList(0)){
+            listCache.addUserList(0)
         }
-        if(NSUserDefaults.standardUserDefaults().valueForKey("inActiveUserIndex") != nil){
-            SHARED_CHATS.inActiveUserIndex = NSUserDefaults.standardUserDefaults().valueForKey("inActiveUserIndex") as! [Int]
+        if(!listCache.getUserList(1)){
+            listCache.addUserList(1)
         }
         
-    }
-    
-    func deinitialiseInfo(){
-       let infos = UserChatModel.allChats()
-        infos.tenUser.removeAll()
-        infos.notifications.removeAll()
-        for index in infos.userIndex{
-            infos.message[index]?.removeAll()
-        }
-        infos.userIndex.removeAll()
+        print("activeUserIndex:")
+        print(SHARED_CHATS.activeUserIndex)
+        print("inActiveUserIndex:")
+        print(SHARED_CHATS.inActiveUserIndex)
         
     }
     

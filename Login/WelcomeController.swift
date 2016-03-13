@@ -202,11 +202,11 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             let getResult = UserCacheTool().getUserInfo(SHARED_USER.UserIndex)
             if getResult {
                 UserCacheTool().updateUserInfo()
-                DataInitializerTool.initialiseInfo()
             }
             else {
                 UserCacheTool().addUserInfoByUser()
             }
+            DataInitializerTool.initialiseInfo()
             //to mainVC
             NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in

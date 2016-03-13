@@ -22,6 +22,7 @@
 @interface ADCircularMenuViewController : UIViewController
 
 @property(nonatomic) id <ADCircularMenuDelegate> circularMenuDelegate;
+@property(nonatomic,strong) NSMutableArray *arrButtons;
 
 -(id)initWithFrame:(CGRect) frame;
 

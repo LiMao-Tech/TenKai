@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import JSBadgeView
 protocol UserCellDelegate:class{
     func menuMidLockBtnDidClicked(cell:UserCell)
     func menuInfoBtnDidClicked(cell:UserCell)
@@ -22,10 +22,17 @@ class UserCell: UITableViewCell {
     var menuIsShow = false
     var initialX:CGFloat = 0
     var delegate:UserCellDelegate?
+    var badgeView:JSBadgeView!
     @IBOutlet weak var lastMessage: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     var tenUser = TenUser(){
         didSet{
+            if(tenUser.badgeNum == 0){
+                badgeView.hidden = true
+            }else{
+                badgeView.hidden = false
+                badgeView.badgeText = tenUser.badgeNum < 100 ? String(tenUser.badgeNum) : "99+"
+            }
             //清除bottomView 上的字控件
             for subview in bottomView.subviews {
                 subview.removeFromSuperview()
@@ -76,7 +83,7 @@ class UserCell: UITableViewCell {
             let w = SCREEN_WIDTH - 190
             let attr = [NSFontAttributeName:UIFont.systemFontOfSize(15)]
             let size = tenUser.UserName.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
-            nameLabel.frame = CGRectMake(CGRectGetMaxX(headImage.frame)+5, headImage.frame.origin.y, size.width, 21)
+            nameLabel.frame = CGRectMake(CGRectGetMaxX(headImage.frame)+10, headImage.frame.origin.y, size.width, 21)
             nameLabel.text = tenUser.UserName
             nameLabel.textColor = UIColor.orangeColor()
             let x = CGRectGetMaxX(nameLabel.frame)
@@ -122,6 +129,7 @@ class UserCell: UITableViewCell {
         self.contentView.backgroundColor = COLOR_BG
         lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
         headImage.setImage(UIImage(named: "user_pic_radar_140"), forState: UIControlState.Normal)
+        badgeView = JSBadgeView(parentView: headImage, alignment: .BottomLeft)
         nameLabel = UILabel()
         nameLabel.font = UIFont.systemFontOfSize(15)
         nameLabel.textColor = UIColor.orangeColor()

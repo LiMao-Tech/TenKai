@@ -45,7 +45,6 @@ class UserCacheTool: NSObject {
         dbq.inDatabase { (db) -> Void in
             db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.Gender,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.AVG,SHARED_USER.Expire, SHARED_USER.UserIndex])
         }
-
     }
     
     func upDateUserPortrait(){

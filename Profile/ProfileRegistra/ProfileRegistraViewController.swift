@@ -523,6 +523,7 @@ class RegistProfileViewController: UIViewController,
                 self.indicator.stopAnimating()
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 UserCacheTool().addUserInfoByUser()
+                DataInitializerTool.initialiseInfo()
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController

@@ -18,7 +18,8 @@
 		640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 640F3BE11C0C898700B31DA0 /* FMResultSet.m */; };
 		640F3BE81C0C89FB00B31DA0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */; };
 		641CDAB41C841E940036655F /* PcoinPurchaseHistoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */; };
-		641CDAB61C8481FE0036655F /* MessageCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641CDAB51C8481FE0036655F /* MessageCacheTool.swift */; };
+		641F2AD61C9592EB00D687BB /* MessageCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641CDAB51C8481FE0036655F /* MessageCacheTool.swift */; };
+		641F2AD81C9595AA00D687BB /* UserListCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641F2AD71C9595AA00D687BB /* UserListCache.swift */; };
 		642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642452971C4CDBD1003A43C8 /* PCoinModel.swift */; };
 		642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */; };
 		643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */; };
@@ -339,6 +340,7 @@
 		640F3BE71C0C89FB00B31DA0 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PcoinPurchaseHistoryCache.swift; sourceTree = "<group>"; };
 		641CDAB51C8481FE0036655F /* MessageCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCacheTool.swift; sourceTree = "<group>"; };
+		641F2AD71C9595AA00D687BB /* UserListCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListCache.swift; sourceTree = "<group>"; };
 		642452971C4CDBD1003A43C8 /* PCoinModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCoinModel.swift; sourceTree = "<group>"; };
 		642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInitializerTool.swift; sourceTree = "<group>"; };
 		643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCacheTool.swift; path = Tools/NotificationCacheTool.swift; sourceTree = "<group>"; };
@@ -867,6 +869,7 @@
 				D434AC111C6401DD0013E27D /* UsersCacheTool.swift */,
 				641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */,
 				64F9AD031C8BE27200EDED82 /* UserRaterCache.swift */,
+				641F2AD71C9595AA00D687BB /* UserListCache.swift */,
 			);
 			name = TenCaches;
 			sourceTree = "<group>";
@@ -1649,6 +1652,7 @@
 				640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */,
 				D434AC171C6402090013E27D /* TenMainGridManager.swift in Sources */,
 				C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */,
+				641F2AD81C9595AA00D687BB /* UserListCache.swift in Sources */,
 				D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */,
 				D4EA5BFA1C13EA12009E9927 /* DKImagePickerController.swift in Sources */,
 				D4C671021C81B06B00C09CFD /* ProfileMasterViewController.swift in Sources */,
@@ -1686,6 +1690,7 @@
 				641CDAB41C841E940036655F /* PcoinPurchaseHistoryCache.swift in Sources */,
 				643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */,
 				D4EA5C851C1424A1009E9927 /* TenSlider.swift in Sources */,
+				641F2AD61C9592EB00D687BB /* MessageCacheTool.swift in Sources */,
 				643C8BCC1C4B6B8A00682A60 /* ScoreView.swift in Sources */,
 				D48134901BE9E26500F49D63 /* TenUser.swift in Sources */,
 				D4EA5BFC1C13EA12009E9927 /* DKPopoverViewController.swift in Sources */,
@@ -1700,7 +1705,6 @@
 				640F3BE51C0C898700B31DA0 /* FMDatabaseQueue.m in Sources */,
 				D4EA5C051C13EAE3009E9927 /* LMCollectionViewLayout.m in Sources */,
 				642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */,
-				641CDAB61C8481FE0036655F /* MessageCacheTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */,
 				D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */,

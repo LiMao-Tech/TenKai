@@ -17,7 +17,8 @@ PODS:
   - Alamofire (3.1.4)
   - AlamofireImage (2.2.0):
     - Alamofire (~> 3.1)
-  - CryptoSwift (0.1.1)
+  - CryptoSwift (0.2.2)
+  - JSBadgeView (1.4.1)
   - PureLayout (3.0.1)
   - SwiftyJSON (2.3.2)
   - Tweaks (2.0.0)
@@ -27,6 +28,7 @@ DEPENDENCIES:
   - Alamofire (~> 3.0)
   - AlamofireImage (~> 2.0)
   - CryptoSwift
+  - JSBadgeView
   - PureLayout
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
   - Tweaks
@@ -37,18 +39,17 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftyJSON:
-    :commit: 5f59648a6e9356b26c5cb698ab924fa7d750b6c9
+    :commit: 42bdb102d2624b143c07850ebdc1537d5b6579b6
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
   AlamofireImage: bedb8a4bdfb98eda81ba12952fba6e9e90420922
-  CryptoSwift: c11640d3d66107efc8333e4131a5173f072b1d61
+  CryptoSwift: d382228d6301c09474132417878a741c2a2e68cd
+  JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Tweaks: 524fa47636cce3bf3a4d9156e980f10ae9480e81
 
-PODFILE CHECKSUM: 3d362327c034fa238e6b7b30835e7eb2af161961
-
-COCOAPODS: 1.0.0.beta.2
+COCOAPODS: 0.39.0

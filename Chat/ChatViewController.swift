@@ -13,6 +13,8 @@ var ChatFocusState = false
 
 var ChatLockState = false
 
+var comunicatingIndex = 0
+
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UserCellDelegate {
     
     var userChatActive = SHARED_CHATS.activeUserIndex
@@ -43,18 +45,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             for userIndex in userChatInActive{
                 let count = SHARED_CHATS.message[userIndex]?.count
                 if(SHARED_CHATS.raterIndex.contains(userIndex)){
-                    print("rater contains")
+                    print("rater contains:\(userIndex)")
                     let user = SHARED_CHATS.tenUsers[userIndex]!
                     user.listType = .Active
                     user.isRatered = true
                     UsersCacheTool().updateUserInfo(user)
-                    let index = userChatInActive.indexOf(userIndex)
-                    userChatInActive.removeAtIndex(index!)
-                    userChatActive.insert(userIndex, atIndex: 0)
-                    
-                    break
+                    moveInActiveToActive(userIndex)
+                    continue
                 }
-                if(count > 1){
+                if(count > 1 && !ChatFocusState){
                     print(count)
                     for index in 1...(count!-1){
                         print(SHARED_CHATS.message[userIndex]![index].chatMessage.Sender)
@@ -62,16 +61,24 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                             let user = SHARED_CHATS.tenUsers[userIndex]
                             user!.listType = .Active
                             UsersCacheTool().updateUserInfo(user!)
+                            moveInActiveToActive(userIndex)
                             ChatFocusState = true
                             NSUserDefaults.standardUserDefaults().setValue(userIndex, forKey: "ChatFocusState")
                             print("listTypeChanged & into focusState")
-                            return
+                            break
                         }
                     }
                 }
             }
         }
         self.userList.reloadData()
+    }
+    
+    func moveInActiveToActive(userIndex:Int){
+        let index = userChatInActive.indexOf(userIndex)
+        userChatInActive.removeAtIndex(index!)
+        userChatActive.insert(userIndex, atIndex: 0)
+        UserListCache().updateUserList()
     }
     
     //UserCellDelegate func
@@ -89,7 +96,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "tenUser"){
-            print(SHARED_CHATS.tenUser)
             self.userList.reloadData()
         }else if(keyPath == "message"){
             self.userList.reloadData()
@@ -141,14 +147,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let focusAlert = UIAlertController(title: "注意！", message: "还没有为你的小伙伴的内在评分", preferredStyle: .Alert)
             let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
                 let index = NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int
-                for user in UserChatModel.allChats().tenUser{
-                    if(user.UserIndex == index){
-                        sVC.tenUser = user
-                        self.navigationController?.pushViewController(sVC, animated: true)
-                        self.userList.deselectRowAtIndexPath(indexPath, animated: true)
-                        return
-                    }
-                }
+                sVC.tenUser = SHARED_CHATS.tenUsers[index]!
+                self.navigationController?.pushViewController(sVC, animated: true)
+                self.userList.deselectRowAtIndexPath(indexPath, animated: true)
             })
             focusAlert.addAction(focusAction)
             self.presentViewController(focusAlert, animated: true, completion: nil)

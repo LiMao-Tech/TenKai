@@ -26,9 +26,13 @@ class SingleChatController : UIViewController,
                 print("add new user")
                 SHARED_CHATS.tenUsers[tenUser.UserIndex] = tenUser
                 SHARED_CHATS.inActiveUserIndex.insert(tenUser.UserIndex, atIndex: 0)
+                UserListCache().updateUserList()
                 SHARED_CHATS.message[tenUser.UserIndex] = [SingleChatMessageFrame]()
                 UsersCacheTool().addUserInfoByUser(tenUser)
             }
+            tenUser.badgeNum = 0
+            UsersCacheTool().updateUsersBadgeNum(tenUser.UserIndex, badgeNum: 0)
+            comunicatingIndex = tenUser.UserIndex
             messages = SHARED_CHATS.message[tenUser.UserIndex]!
         }
     }
@@ -58,10 +62,18 @@ class SingleChatController : UIViewController,
     var needTransfrom = true
     var initialFrame:CGRect!
     var keyBoardHeight:CGFloat = 0
-
+    var leftItem:UIBarButtonItem!
+    
+    var otherUnreadNum = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let leftItem = UIBarButtonItem(title: "返回", style: .Done, target: self, action: "backClicked")
+        getOtherUnreadNum()
+        var unreadNum = otherUnreadNum < 100 ? "(\(otherUnreadNum))" : "(99+)"
+        if(otherUnreadNum == 0){
+            unreadNum = ""
+        }
+        leftItem = UIBarButtonItem(title: "返回"+unreadNum, style: .Done, target: self, action: "backClicked")
         self.navigationItem.setLeftBarButtonItem(leftItem, animated: true)
         setup()
         refreshControl()
@@ -73,8 +85,23 @@ class SingleChatController : UIViewController,
         self.title = tenUser.UserName
     }
     
+    func getOtherUnreadNum(){
+        if(tenUser.listType == .Active){
+            for userIndex in SHARED_CHATS.activeUserIndex{
+                otherUnreadNum += (SHARED_CHATS.tenUsers[userIndex]?.badgeNum)!
+            }
+        }else{
+            for userIndex in SHARED_CHATS.inActiveUserIndex{
+                otherUnreadNum += (SHARED_CHATS.tenUsers[userIndex]?.badgeNum)!
+            }
+        }
+    }
+    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "message"){
+            getOtherUnreadNum()
+            let unreadNum = otherUnreadNum < 100 ? String(otherUnreadNum) : "99+"
+            leftItem.title = "返回("+unreadNum+")"
             self.messages = UserChatModel.allChats().message[tenUser.UserIndex]
             self.messageList.reloadData()
             self.rollToLastRow()
@@ -98,10 +125,13 @@ class SingleChatController : UIViewController,
         else{
             let result = MessageCacheTool(userIndex: tenUser.UserIndex).loadMessage(tenUser.UserIndex, msgIndex: (messages.first?.chatMessage.MsgIndex)!)
             if(result.isEmpty){
+                print("get from net")
                 getMessageByNet(refresh, index: (messages.first?.chatMessage.MsgIndex)!)
             }else{
-                messages = result.messageFrames + messages
+                print("get from db")
+                SHARED_CHATS.message[tenUser.UserIndex] = result.messageFrames + messages
                 self.messageList.reloadData()
+                rollToRow(result.messageFrames.count)
                 refresh.endRefreshing()
             }
         }
@@ -121,9 +151,11 @@ class SingleChatController : UIViewController,
                 let sCM = SingleChatMessage(dict: dict)
                 singleCMF.chatMessage = sCM
                 msgTemp.append(singleCMF)
+                MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: sCM)
             }
-            self.messages = msgTemp + self.messages
+            SHARED_CHATS.message[self.tenUser.UserIndex] = msgTemp + self.messages
             self.messageList.reloadData()
+            self.rollToRow(msgArray.count)
             refresh.endRefreshing()
             }, failure: { (task, error) -> Void in
                 print("sgvc get msg failed")
@@ -286,7 +318,7 @@ class SingleChatController : UIViewController,
                     message.MsgIndex = SHARED_USER.MsgIndex+1
                 }
                 msgFrame.chatMessage = message
-                UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(msgFrame)
+                SHARED_CHATS.message[self.tenUser.UserIndex]?.append(msgFrame)
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0]
                 AFImageManager.SharedInstance.postUserImage(Url_SendImage,image: data, parameters: params, success: { (task, response) -> Void in
@@ -463,6 +495,14 @@ class SingleChatController : UIViewController,
         }
     }
     
+    func rollToRow(index:Int){
+//        let index = messageList.numberOfRowsInSection(0)-index
+        if(index > 0){
+            let index = NSIndexPath(forRow: index, inSection: 0)
+            messageList.scrollToRowAtIndexPath(index, atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+        }
+    }
+    
     // attributeString转换String
     func attributeStringToString() -> String {
         
@@ -544,11 +584,16 @@ class SingleChatController : UIViewController,
             "Active": true]
         AFJSONManager.SharedInstance.postMethod(Url_Rater, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
                 self.tenUser.listType = .Active
-                UsersCacheTool().updateUsersListType(self.tenUser.UserIndex,listType: self.tenUser.listType)
-                ChatFocusState = false
-                UserChatModel.allChats().raterIndex.append(self.tenUser.UserIndex)
-                UserRaterCache().addUserRater(self.tenUser.UserIndex)
                 self.tenUser.isRatered = true
+                let index = SHARED_CHATS.inActiveUserIndex.indexOf(self.tenUser.UserIndex)
+                SHARED_CHATS.inActiveUserIndex.removeAtIndex(index!)
+                SHARED_CHATS.activeUserIndex.insert(self.tenUser.UserIndex, atIndex: 0)
+                UserListCache().updateUserList()
+                UsersCacheTool().updateUserInfo(self.tenUser)
+                ChatFocusState = false
+                SHARED_CHATS.raterIndex.append(self.tenUser.UserIndex)
+                UserRaterCache().addUserRater(self.tenUser.UserIndex)
+                comunicatingIndex = 0
                 NSUserDefaults.standardUserDefaults().removeObjectForKey("ChatFocusState")
                 self.navigationController?.popViewControllerAnimated(true)
                 self.scoreView!.removeFromSuperview()
@@ -563,6 +608,7 @@ class SingleChatController : UIViewController,
     }
     
     func scoreViewCancelBtnClicked() {
+        comunicatingIndex = 0
         scoreView!.removeFromSuperview()
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -653,6 +699,7 @@ class SingleChatController : UIViewController,
             scoreView!.delegate = self
             self.view.addSubview(scoreView!)
         }else{
+            comunicatingIndex = 0
             self.navigationController?.popViewControllerAnimated(true)
         }
     }

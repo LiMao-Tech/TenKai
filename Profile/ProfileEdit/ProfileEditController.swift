@@ -68,8 +68,14 @@ class EditProfileController : UIViewController,
         y = CGRectGetMaxY(sexLabel.frame)+margin
         let marriageLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Marriage")
         singleBtn = initChooseBtn(CGRectMake(textX, y, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身")
-        singleBtn.setImage(singleBtn.seletedImage, forState: .Normal)
+        singleBtn.addTarget(self, action: "marriageBtnClicked:", forControlEvents: .TouchUpInside)
         marriedBtn = initChooseBtn(CGRectMake(textX+80, y, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚")
+        marriedBtn.addTarget(self, action: "marriageBtnClicked:", forControlEvents: .TouchUpInside)
+        if(SHARED_USER.Marriage == 0){
+            singleBtn.setImage(singleBtn.seletedImage, forState: .Normal)
+        }else{
+            marriedBtn.setImage(marriedBtn.seletedImage, forState: .Normal)
+        }
         y = CGRectGetMaxY(marriageLabel.frame)+margin
         let emailLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "E-mail")
         emailAddr = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: "example@example.com")
@@ -222,7 +228,6 @@ class EditProfileController : UIViewController,
     
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
         // TODO: add image into profile
         // chosenImages
         picker .dismissViewControllerAnimated(true, completion: nil)
@@ -267,12 +272,12 @@ class EditProfileController : UIViewController,
     
     func marriageBtnClicked(sender:SettingButton){
         sender.enabled = false
-        if(sender.currentTitle == "  Single"){
+        if(sender.currentTitle == "  单身"){
             singleBtn.setImage(singleBtn.seletedImage, forState: .Normal)
             singleBtn.titleLabel?.alpha = 0.4
             marriedBtn.setImage(marriedBtn.normalImage, forState: .Normal)
-            marriedBtn.enabled = true
             marriedBtn.titleLabel?.alpha = 1
+            marriedBtn.enabled = true
         }
         else{
             singleBtn.setImage(singleBtn.normalImage, forState: .Normal)

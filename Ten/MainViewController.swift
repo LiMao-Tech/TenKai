@@ -33,6 +33,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     var distance : TenSlider!
     var gap : Int!
     
+    var menuBtnImageHighlight = ["btn_menu_chat_not","btn_menu_notification_not"]
+    
     let portraitBtn: UIButton = UIButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/5, SCREEN_WIDTH/5))
     
     let distances = [50, 100, 500, 1000]
@@ -135,6 +137,12 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
         updateLocation()
+        let chatBtn = circularMenuVC.arrButtons[5] as! UIButton
+        if(unReadNum == 0){
+            chatBtn.setImage(UIImage(named: "btn_menu_chat_normal"), forState: .Normal)
+        }else{
+            chatBtn.setImage(UIImage(named: "btn_menu_chat_not"), forState: .Normal)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

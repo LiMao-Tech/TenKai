@@ -57,6 +57,8 @@ class TenUser: NSObject {
     }
     var PortraitImage:UIImage?
     
+    var badgeNum = 0
+    
     override init() {
         super.init()
     }

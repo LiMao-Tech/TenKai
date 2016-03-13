@@ -22,7 +22,7 @@ class UsersCacheTool: NSObject {
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERSINFO_\(SHARED_USER.UserIndex) (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY TEXT,JOINEDDATE TEXT,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,LISTTYPE INTEGER)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERSINFO_\(SHARED_USER.UserIndex) (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,BIRTHDAY TEXT,JOINEDDATE TEXT,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,LISTTYPE INTEGER,BADGENUM INTERGER)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
                 print("创表失败！")
@@ -33,9 +33,9 @@ class UsersCacheTool: NSObject {
     
     func updateUserInfo(user:TenUser) {
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PHONETYPE = ?,GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,PROFILEURL = ?,PORTRAIT = ?"
+            let sql_insert = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PHONETYPE = ?,GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,PROFILEURL = ?,PORTRAIT = ?,BADGENUM = ?"
             
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.PhoneType,user.Gender,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.ProfileUrl,user.Portrait!]){
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.PhoneType,user.Gender,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.ProfileUrl,user.Portrait!,user.badgeNum]){
                 print("修改失败")
             }
         }
@@ -54,15 +54,21 @@ class UsersCacheTool: NSObject {
             db.executeUpdate(sql_update, withArgumentsInArray: [listType.rawValue, userIndex])
         }
     }
+    func updateUsersBadgeNum(userIndex:Int,badgeNum:Int){
+        let sql_update = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET BADGENUM = ? WHERE USERINDEX = ?"
+        dbq.inDatabase { (db) -> Void in
+            db.executeUpdate(sql_update, withArgumentsInArray: [badgeNum, userIndex])
+        }
+    }
+    
     
     func addUserInfoByUser(user:TenUser){
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "INSERT INTO USERSINFO_\(SHARED_USER.UserIndex)(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,LISTTYPE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.UserIndex,user.UserName,user.PhoneType,user.Gender,user.Birthday,user.JoinedDate,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.Portrait!,user.ProfileUrl,user.listType.rawValue]){
+            let sql_insert = "INSERT INTO USERSINFO_\(SHARED_USER.UserIndex)(USERINDEX,USERNAME,PHONETYPE,GENDER,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,LISTTYPE,BADGENUM) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.UserIndex,user.UserName,user.PhoneType,user.Gender,user.Birthday,user.JoinedDate,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.Portrait!,user.ProfileUrl,user.listType.rawValue,user.badgeNum]){
                 print("插入失败")
             }
         }
-        
     }
     
     func getUserInfo() ->(users:[TenUser],isEmpty:Bool){
@@ -91,6 +97,7 @@ class UsersCacheTool: NSObject {
                     user.ProfileUrl = rs.stringForColumn("PROFILEURL")
                     user.Portrait = rs.dataForColumn("PORTRAIT") //读取到的是插入时候已经将图片转成的NSData
                     user.listType = chatType(rawValue: Int(rs.intForColumn("LISTTYPE")))!
+                    user.badgeNum = Int(rs.intForColumn("BADGENUM"))
                     isEmpty = false
                     users.append(user)
                 }

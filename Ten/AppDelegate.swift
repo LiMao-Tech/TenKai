@@ -145,7 +145,7 @@ class AppDelegate: UIResponder,
                 let notiFrame = NotificationFrame()
                 notiFrame.notification = noti
                 //add notification to notifications
-                UserChatModel.allChats().notifications.append(notiFrame)
+                SHARED_CHATS.notifications.append(notiFrame)
                 SHARED_USER.MsgIndex = noti.MsgIndex
                 // save to db
                 UserCacheTool().upDateUserMsgIndex()
@@ -180,6 +180,11 @@ class AppDelegate: UIResponder,
                     break
                 }
                 
+                if(SHARED_CHATS.tenUsers[senderIndex] != nil && senderIndex != comunicatingIndex){
+                    SHARED_CHATS.tenUsers[senderIndex]?.badgeNum += 1
+                    UsersCacheTool().updateUsersBadgeNum(senderIndex, badgeNum: (SHARED_CHATS.tenUsers[senderIndex]?.badgeNum)!)
+                }
+                
                 //if user not exist get userInfo
                 if(UserChatModel.allChats().tenUsers[senderIndex] == nil){
                     // get userInfo
@@ -188,10 +193,12 @@ class AppDelegate: UIResponder,
                         print(response)
                         let userDict = response as! NSDictionary
                         let user = TenUser(dict: userDict as! [String : AnyObject])
+                        user.badgeNum = (SHARED_CHATS.message[senderIndex]?.count)!
                         UsersCacheTool().addUserInfoByUser(user)
-                        UserChatModel.allChats().tenUser.append(user)
-                        UserChatModel.allChats().tenUsers[senderIndex] = user
-                        UserChatModel.allChats().inActiveUserIndex.insert(senderIndex, atIndex: 0)
+                        SHARED_CHATS.tenUsers[senderIndex] = user
+                        SHARED_CHATS.inActiveUserIndex.insert(senderIndex, atIndex: 0)
+                        UserListCache().updateUserList()
+                     
                         //get tenUser portrait
                         ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
                             if let image = response.result.value {
@@ -219,11 +226,7 @@ class AppDelegate: UIResponder,
                     UserChatModel.allChats().inActiveUserIndex.removeAtIndex(index!)
                     UserChatModel.allChats().inActiveUserIndex.insert(senderIndex, atIndex: 0)
                 }
-                //unread messages amount
-                if(UserChatModel.allChats().unReadMessageAmount[senderIndex] == nil){
-                    UserChatModel.allChats().unReadMessageAmount[senderIndex] = 0
-                }
-                UserChatModel.allChats().unReadMessageAmount[senderIndex]! += 1
+                UserListCache().updateUserList()
                 
                 let messageFrame = SingleChatMessageFrame()
                 let msgType = info["MsgType"] as! Int
@@ -233,7 +236,6 @@ class AppDelegate: UIResponder,
                 }
                 else if msgType == 1 {
                     let tempMessage = SingleChatMessage(dict: info as! NSDictionary)
-                    
                     
                     ALAMO_MANAGER.request(.GET, tempMessage.MsgContent) .responseImage { response in
                         if let image = response.result.value {
@@ -258,41 +260,6 @@ class AppDelegate: UIResponder,
                     UserCacheTool().upDateUserPCoin()
                 }
                 
-                
-                
-//                if(!UserChatModel.allChats().userIndex.contains(senderIndex)){
-//                    UserChatModel.allChats().userIndex.append(senderIndex)
-//                    UserChatModel.allChats().message[senderIndex] = [SingleChatMessageFrame]()
-//                    
-//                    // get userInfo
-//                    AFJSONManager.SharedInstance.getMethodWithParams(Url_User, parameters: ["id":senderIndex], success: { (task, response) -> Void in
-//                        print("appdelegate get User")
-//                        print(response)
-//                        let userDict = response as! NSDictionary
-//                        let user = TenUser(dict: userDict as! [String : AnyObject])
-//                        UsersCacheTool().addUserInfoByUser(user)
-//                        UserChatModel.allChats().tenUser.append(user)
-//                        //get tenUser portrait
-//                        ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
-//                            if let image = response.result.value {
-//                                user.Portrait = UIImagePNGRepresentation(image)
-//                                UsersCacheTool().upDateUsersPortrait(user.UserIndex, portrait: image)
-//                            }
-//                            else {
-//                                print("get \(user.UserName) portrait failed")
-//                                print(response.result.error?.localizedDescription)
-//                            }
-//                        }
-//                        },
-//                        failure: { (task, error) -> Void in
-//                            print("appdelegate tenUser failed")
-//                            print(error.localizedDescription)
-//                            let index = UserChatModel.allChats().userIndex.indexOf(senderIndex)
-//                            UserChatModel.allChats().userIndex.removeAtIndex(index!)
-//                            
-//                    })
-//                    print("UserIndex: \(UserChatModel.allChats().userIndex)")
-//                }
                 
                 if(messageFrame.chatMessage.messageType != .Image){
                     UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
@@ -330,9 +297,6 @@ class AppDelegate: UIResponder,
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         LOC_MANAGER.stopUpdatingLocation()
-        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.activeUserIndex, forKey: "activeUserIndex")
-        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.inActiveUserIndex, forKey: "inActiveUserIndex")
-        
         print("in Did Enter Background State")
     }
 
@@ -355,8 +319,6 @@ class AppDelegate: UIResponder,
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
-        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.activeUserIndex, forKey: "activeUserIndex")
-        NSUserDefaults.standardUserDefaults().setValue(SHARED_CHATS.inActiveUserIndex, forKey: "inActiveUserIndex")
 
         print("application Will Terminate")
     }
