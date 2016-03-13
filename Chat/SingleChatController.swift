@@ -19,7 +19,7 @@ class SingleChatController : UIViewController,
                             PCoinTransDelegate,
                             ChatBaseCellDelegate
 {
-    
+    var messages:[SingleChatMessageFrame]!
     var tenUser = TenUser(){
         didSet{
             if(!SHARED_CHATS.activeUserIndex.contains(tenUser.UserIndex) && !SHARED_CHATS.inActiveUserIndex.contains(tenUser.UserIndex)){
@@ -36,8 +36,6 @@ class SingleChatController : UIViewController,
             messages = SHARED_CHATS.message[tenUser.UserIndex]!
         }
     }
-    
-    var messages: [SingleChatMessageFrame]!
     
     var scoreView:ScoreView?
     var pcoinView:PCoinTransView?
@@ -77,8 +75,13 @@ class SingleChatController : UIViewController,
         self.navigationItem.setLeftBarButtonItem(leftItem, animated: true)
         setup()
         refreshControl()
-        UserChatModel.allChats().addObserver(self, forKeyPath: "message", options: .New, context: nil)
+        
+        SHARED_CHATS.addObserver(self, forKeyPath: "message", options: .New, context: nil)
         // Do any additional setup after loading the view.
+    }
+    
+    deinit{
+     SHARED_CHATS.removeObserver(self, forKeyPath: "message")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,9 +103,12 @@ class SingleChatController : UIViewController,
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "message"){
             getOtherUnreadNum()
-            let unreadNum = otherUnreadNum < 100 ? String(otherUnreadNum) : "99+"
-            leftItem.title = "返回("+unreadNum+")"
-            self.messages = UserChatModel.allChats().message[tenUser.UserIndex]
+            var unreadNum = otherUnreadNum < 100 ? "(\(otherUnreadNum))" : "(99+)"
+            if(otherUnreadNum == 0){
+                unreadNum = ""
+            }
+            leftItem.title = "返回"+unreadNum
+            self.messages = UserChatModel.allChats().message[tenUser.UserIndex]!
             self.messageList.reloadData()
             self.rollToLastRow()
         }else{
@@ -123,10 +129,12 @@ class SingleChatController : UIViewController,
             getMessageByNet(refresh, index: SHARED_USER.MsgIndex+1)
         }
         else{
-            let result = MessageCacheTool(userIndex: tenUser.UserIndex).loadMessage(tenUser.UserIndex, msgIndex: (messages.first?.chatMessage.MsgIndex)!)
+            let result = MessageCacheTool(userIndex: tenUser.UserIndex).loadMessage(tenUser.UserIndex, msgIndex: (self.messages.first?.chatMessage.MsgIndex)!)
+            print("msgindex:")
+            print(self.messages.first?.chatMessage.MsgIndex)
             if(result.isEmpty){
                 print("get from net")
-                getMessageByNet(refresh, index: (messages.first?.chatMessage.MsgIndex)!)
+                getMessageByNet(refresh, index: (self.messages.first?.chatMessage.MsgIndex)!)
             }else{
                 print("get from db")
                 SHARED_CHATS.message[tenUser.UserIndex] = result.messageFrames + messages
@@ -153,9 +161,18 @@ class SingleChatController : UIViewController,
                 msgTemp.append(singleCMF)
                 MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: sCM)
             }
-            SHARED_CHATS.message[self.tenUser.UserIndex] = msgTemp + self.messages
-            self.messageList.reloadData()
-            self.rollToRow(msgArray.count)
+            
+                SHARED_CHATS.message[self.tenUser.UserIndex] = msgTemp + self.messages
+                self.messageList.reloadData()
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                if(msgArray.count == 0){
+                    self.rollToRow(0)
+                }else{
+                    self.rollToRow(msgArray.count-1)
+                }
+               
+            })
+           
             refresh.endRefreshing()
             }, failure: { (task, error) -> Void in
                 print("sgvc get msg failed")
@@ -496,8 +513,7 @@ class SingleChatController : UIViewController,
     }
     
     func rollToRow(index:Int){
-//        let index = messageList.numberOfRowsInSection(0)-index
-        if(index > 0){
+        if(index >= 0){
             let index = NSIndexPath(forRow: index, inSection: 0)
             messageList.scrollToRowAtIndexPath(index, atScrollPosition: UITableViewScrollPosition.Top, animated: false)
         }
