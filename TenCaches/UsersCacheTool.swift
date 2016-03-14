@@ -33,9 +33,9 @@ class UsersCacheTool: NSObject {
     
     func updateUserInfo(user:TenUser) {
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PHONETYPE = ?,GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,PROFILEURL = ?,PORTRAIT = ?,BADGENUM = ?"
+            let sql_insert = "UPDATE USERSINFO_\(SHARED_USER.UserIndex) SET PHONETYPE = ?,GENDER = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,PROFILEURL = ?,PORTRAIT = ?,LISTTYPE = ?,BADGENUM = ? WHERE USERINDEX = ?"
             
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.PhoneType,user.Gender,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.ProfileUrl,user.Portrait!,user.badgeNum]){
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [user.PhoneType,user.Gender,user.PCoin,user.OuterScore,user.InnerScore,user.Energy,user.Hobby,user.Quote,user.Lati,user.Longi,user.ProfileUrl,user.Portrait!,user.listType.rawValue,user.badgeNum,user.UserIndex]){
                 print("修改失败")
             }
         }

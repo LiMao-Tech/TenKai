@@ -27,6 +27,22 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     var tenUser = TenUser(){
         didSet{
+            print("tenUser.active")
+            print(tenUser.listType)
+            nameLabel.text = tenUser.UserName
+            message = UserChatModel.allChats().message[tenUser.UserIndex]!
+            let w = SCREEN_WIDTH - 190
+            let attr = [NSFontAttributeName:UIFont.systemFontOfSize(15)]
+            let size = tenUser.UserName.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
+            nameLabel.frame = CGRectMake(CGRectGetMaxX(headImage.frame)+10, headImage.frame.origin.y, size.width, 21)
+            nameLabel.text = tenUser.UserName
+            nameLabel.textColor = UIColor.orangeColor()
+            let x = CGRectGetMaxX(nameLabel.frame)
+            dotView.frame =  CGRectMake(x+10, nameLabel.frame.origin.y+7, 7, 7)
+            dotView.image = UIImage(named: "icon_chat_dot_l\(tenUser.Average)")
+            let image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            headImage.setImage(image, forState: .Normal)
+            
             if(tenUser.badgeNum == 0){
                 badgeView.hidden = true
             }else{
@@ -78,19 +94,6 @@ class UserCell: UITableViewCell {
                 deleteBtn.addTarget(self, action: "deleteBtnClicked", forControlEvents: .TouchUpInside)
                 bottomView.addSubview(deleteBtn)
             }
-            nameLabel.text = tenUser.UserName
-            message = UserChatModel.allChats().message[tenUser.UserIndex]!
-            let w = SCREEN_WIDTH - 190
-            let attr = [NSFontAttributeName:UIFont.systemFontOfSize(15)]
-            let size = tenUser.UserName.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
-            nameLabel.frame = CGRectMake(CGRectGetMaxX(headImage.frame)+10, headImage.frame.origin.y, size.width, 21)
-            nameLabel.text = tenUser.UserName
-            nameLabel.textColor = UIColor.orangeColor()
-            let x = CGRectGetMaxX(nameLabel.frame)
-            dotView.frame =  CGRectMake(x+10, nameLabel.frame.origin.y+7, 7, 7)
-            dotView.image = UIImage(named: "icon_chat_dot_l\(tenUser.Average)")
-            let image = Tools.toCirclurImage(tenUser.PortraitImage!)
-            headImage.setImage(image, forState: .Normal)
         }
     }
     var message = [SingleChatMessageFrame](){

@@ -17,8 +17,8 @@ var comunicatingIndex = 0
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UserCellDelegate {
     
-    var userChatActive = SHARED_CHATS.activeUserIndex
-    var userChatInActive = SHARED_CHATS.inActiveUserIndex
+//    var userChatActive = SHARED_CHATS.activeUserIndex
+//    var userChatInActive = SHARED_CHATS.inActiveUserIndex
     var tabView : UIView!
     var userList : UITableView!
     var modelType : chatType = .Active
@@ -27,7 +27,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = ChatTitle
-        SHARED_CHATS.addObserver(self, forKeyPath: "tenUser", options: NSKeyValueObservingOptions.New, context: nil)
+        SHARED_CHATS.addObserver(self, forKeyPath: "activeUserIndex", options: NSKeyValueObservingOptions.New, context: nil)
+         SHARED_CHATS.addObserver(self, forKeyPath: "inActiveUserIndex", options: NSKeyValueObservingOptions.New, context: nil)
         SHARED_CHATS.addObserver(self, forKeyPath: "message", options: NSKeyValueObservingOptions.New, context: nil)
         
         if(NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") != nil){
@@ -42,7 +43,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillAppear(animated: Bool) {
         if(!ChatFocusState){
-            for userIndex in userChatInActive{
+            for userIndex in SHARED_CHATS.inActiveUserIndex{
                 let count = SHARED_CHATS.message[userIndex]?.count
                 if(SHARED_CHATS.raterIndex.contains(userIndex)){
                     print("rater contains:\(userIndex)")
@@ -75,9 +76,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func moveInActiveToActive(userIndex:Int){
-        let index = userChatInActive.indexOf(userIndex)
-        userChatInActive.removeAtIndex(index!)
-        userChatActive.insert(userIndex, atIndex: 0)
+        let index = SHARED_CHATS.inActiveUserIndex.indexOf(userIndex)
+        SHARED_CHATS.inActiveUserIndex.removeAtIndex(index!)
+        SHARED_CHATS.activeUserIndex.insert(userIndex, atIndex: 0)
         UserListCache().updateUserList()
     }
     
@@ -87,7 +88,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func menuInfoBtnDidClicked(cell: UserCell) {
-        
+        let pVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
+        //pVC.userID = cell.tenUser.UserIndex
+        pVC.tenUser = cell.tenUser
+        self.navigationController?.pushViewController(pVC, animated: true)
     }
     
     func menuMidLockBtnDidClicked(cell: UserCell) {
@@ -95,16 +99,20 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if(keyPath == "tenUser"){
+        if(keyPath == "activeUserIndex"){
+            self.userList.reloadData()
+        }else if(keyPath == "inActiveUserIndex"){
             self.userList.reloadData()
         }else if(keyPath == "message"){
             self.userList.reloadData()
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
+
     }
     deinit{
-        SHARED_CHATS.removeObserver(self, forKeyPath: "tenUser", context: nil)
+        SHARED_CHATS.removeObserver(self, forKeyPath: "activeUserIndex", context: nil)
+        SHARED_CHATS.removeObserver(self, forKeyPath: "inActiveUserIndex", context: nil)
         SHARED_CHATS.removeObserver(self, forKeyPath: "message", context: nil)
     }
     
@@ -122,25 +130,25 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell = UserCell.loadFromNib()
         }
         if(modelType == .Active){
-            cell?.tenUser =  SHARED_CHATS.tenUsers[userChatActive[indexPath.row]]!
+            cell?.tenUser =  SHARED_CHATS.tenUsers[SHARED_CHATS.activeUserIndex[indexPath.row]]!
             cell?.delegate = self
         }else{
-            cell?.tenUser = SHARED_CHATS.tenUsers[userChatInActive[indexPath.row]]!
+            cell?.tenUser = SHARED_CHATS.tenUsers[SHARED_CHATS.inActiveUserIndex[indexPath.row]]!
             cell?.delegate = self
         }
         return cell!
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return modelType == chatType.Active ? userChatActive.count : userChatInActive.count
+        return modelType == chatType.Active ? SHARED_CHATS.activeUserIndex.count : SHARED_CHATS.inActiveUserIndex.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sVC = SingleChatController()
         if(modelType == .Active){
-            sVC.tenUser = SHARED_CHATS.tenUsers[userChatActive[indexPath.row]]!
+            sVC.tenUser = SHARED_CHATS.tenUsers[SHARED_CHATS.activeUserIndex[indexPath.row]]!
         }else{
-            sVC.tenUser = SHARED_CHATS.tenUsers[userChatInActive[indexPath.row]]!
+            sVC.tenUser = SHARED_CHATS.tenUsers[SHARED_CHATS.inActiveUserIndex[indexPath.row]]!
         }
         
         if(ChatFocusState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){

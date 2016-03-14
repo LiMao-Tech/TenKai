@@ -30,6 +30,7 @@ class SingleChatController : UIViewController,
                 SHARED_CHATS.message[tenUser.UserIndex] = [SingleChatMessageFrame]()
                 UsersCacheTool().addUserInfoByUser(tenUser)
             }
+            
             tenUser.badgeNum = 0
             UsersCacheTool().updateUsersBadgeNum(tenUser.UserIndex, badgeNum: 0)
             comunicatingIndex = tenUser.UserIndex
@@ -342,6 +343,7 @@ class SingleChatController : UIViewController,
                         print("postImage success")
                     let dict = try! NSJSONSerialization.JSONObjectWithData(response as! NSData, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
                     let imageMsg = SingleChatMessage(dict: dict)
+                    imageMsg.MsgImage = asset.fullResolutionImage
                         MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: imageMsg)
                     }, failure: { (task, error) -> Void in
                         print("post Image failed")

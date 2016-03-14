@@ -1,6 +1,6 @@
 // Request+AlamofireImage.swift
 //
-// Copyright (c) 2015 Alamofire Software Foundation (http://alamofire.org/)
+// Copyright (c) 2015-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -139,7 +139,7 @@ extension Request {
     }
 
     private class func imageFromResponseData(data: NSData, imageScale: CGFloat) throws -> UIImage {
-        if let image = UIImage(data: data, scale: imageScale) {
+        if let image = UIImage.af_threadSafeImageWithData(data, scale: imageScale) {
             return image
         }
 
