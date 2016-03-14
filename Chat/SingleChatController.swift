@@ -73,7 +73,9 @@ class SingleChatController : UIViewController,
             unreadNum = ""
         }
         leftItem = UIBarButtonItem(title: "返回"+unreadNum, style: .Done, target: self, action: "backClicked")
+        let rightItem = UIBarButtonItem(image: UIImage(named:"btn_navBarIcon_caht_more"), style: .Done, target: self, action: "moreBtnClicked")
         self.navigationItem.setLeftBarButtonItem(leftItem, animated: true)
+        self.navigationItem.setRightBarButtonItem(rightItem, animated: true)
         setup()
         refreshControl()
         
@@ -81,12 +83,21 @@ class SingleChatController : UIViewController,
         // Do any additional setup after loading the view.
     }
     
+    
     deinit{
      SHARED_CHATS.removeObserver(self, forKeyPath: "message")
     }
     
     override func viewWillAppear(animated: Bool) {
         self.title = tenUser.UserName
+    }
+    
+    func moreBtnClicked(){
+        self.view.endEditing(true)
+        let actionsheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil, otherButtonTitles: "用户信息", "删除对话")
+        actionsheet.tag = 1
+        actionsheet.destructiveButtonIndex = 2
+        actionsheet.showInView(self.view)
     }
     
     func getOtherUnreadNum(){
@@ -294,13 +305,25 @@ class SingleChatController : UIViewController,
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        switch buttonIndex {
-        case 1:
-            self.choosePhoto()
-        case 2:
-            self.transformCoin()
-        default:
-            break
+        if(actionSheet.tag == 0){
+            switch buttonIndex{
+            case 0:
+                self.choosePhoto()
+            case 1:
+                self.transformCoin()
+            default:
+                break
+            }
+        }else if(actionSheet.tag == 1){
+            switch buttonIndex{
+            case 1:
+                self.showProfile()
+            case 2:
+                self.deleteConversation()
+            default:
+                break
+            }
+
         }
     }
     
@@ -368,6 +391,29 @@ class SingleChatController : UIViewController,
         pcoinView?.delegate = self
         pcoinView?.isShow = true
         self.view.addSubview(pcoinView!)
+    }
+    
+    func showProfile(){
+        let pVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
+        pVC.tenUser = tenUser
+        self.navigationController?.pushViewController(pVC, animated: true)
+    }
+    
+    func deleteConversation(){
+        if(tenUser.listType == .Active){
+            let index = SHARED_CHATS.activeUserIndex.indexOf(tenUser.UserIndex)
+            SHARED_CHATS.activeUserIndex.removeAtIndex(index!)
+        }else{
+            let index = SHARED_CHATS.inActiveUserIndex.indexOf(tenUser.UserIndex)
+            SHARED_CHATS.inActiveUserIndex.removeAtIndex(index!)
+        }
+        UserListCache().updateUserList()
+        UsersCacheTool().deleteUserInfo(tenUser.UserIndex)
+        if(ChatFocusState && NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int == tenUser.UserIndex){
+            ChatFocusState = false
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("ChatFocusState")
+        }
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // 点击表情按钮
