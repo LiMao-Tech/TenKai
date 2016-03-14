@@ -27,8 +27,6 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     var tenUser = TenUser(){
         didSet{
-            print("tenUser.active")
-            print(tenUser.listType)
             nameLabel.text = tenUser.UserName
             message = UserChatModel.allChats().message[tenUser.UserIndex]!
             let w = SCREEN_WIDTH - 190

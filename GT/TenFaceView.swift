@@ -35,7 +35,6 @@ class TenFaceView: UIView {
             let c = CGFloat((i-1)%column)
             let r = CGFloat((i-1)/column)
             let p = (i-1)/(column*row)
-//            println("\(c)+\(r)+\(p)")
             let x = margin+c*(margin+w)+screen.width*CGFloat(p)
             let y = (r%CGFloat(row))*(h+margin)
             faceBtn.frame = CGRectMake(x, y, w, h)

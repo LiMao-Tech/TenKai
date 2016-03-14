@@ -262,7 +262,7 @@ class AppDelegate: UIResponder,
                 
                 
                 if(messageFrame.chatMessage.messageType != .Image){
-                    UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
+                    SHARED_CHATS.message[senderIndex]?.append(messageFrame)
                     MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
                 }
             }

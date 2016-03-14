@@ -12,6 +12,12 @@ var unReadNum = 0
 
 class DataInitializerTool: NSObject {
     class func initialiseInfo() {
+        //face codes
+        let faceMap = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("_expression_en", ofType: "plist")!)!
+        for i in 1...faceMap.count{
+            let name = NSString(format: "[%03d]", i)
+            faceCodes.addObject(name)
+        }
         print("msgIndex:")
         print(SHARED_USER.MsgIndex)
         //initialiseUserAndMessages
@@ -21,7 +27,7 @@ class DataInitializerTool: NSObject {
                 print(user.UserName)
                 unReadNum += user.badgeNum
                 SHARED_CHATS.tenUsers[user.UserIndex] = user
-                UserChatModel.allChats().message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex, msgIndex:SHARED_USER.MsgIndex+1).messageFrames
+                SHARED_CHATS.message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex, msgIndex:SHARED_USER.MsgIndex+1).messageFrames
             }
         }
         
@@ -55,6 +61,7 @@ class DataInitializerTool: NSObject {
         print(SHARED_CHATS.activeUserIndex)
         print("inActiveUserIndex:")
         print(SHARED_CHATS.inActiveUserIndex)
+        
         
     }
     

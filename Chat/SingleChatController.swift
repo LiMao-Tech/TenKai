@@ -140,8 +140,8 @@ class SingleChatController : UIViewController,
                 print("get from db")
                 SHARED_CHATS.message[tenUser.UserIndex] = result.messageFrames + messages
                 self.messageList.reloadData()
-                rollToRow(result.messageFrames.count)
                 refresh.endRefreshing()
+                rollToRow(result.messageFrames.count)
             }
         }
         
@@ -264,11 +264,13 @@ class SingleChatController : UIViewController,
             
             let chatFrame = SingleChatMessageFrame()
             chatFrame.chatMessage = SingleChatMessage(dict: params)
-            SHARED_CHATS.message[tenUser.UserIndex]?.append(chatFrame)
+            messages.append(chatFrame)
             AFJSONManager.SharedInstance.postMethod(Url_Msg, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
                 let message = SingleChatMessage(dict: response as! NSDictionary)
+                chatFrame.chatMessage = message
+                SHARED_CHATS.message[self.tenUser.UserIndex]?.append(chatFrame)
                 MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
                 if(SHARED_USER.MsgIndex < message.MsgIndex){
                     SHARED_USER.MsgIndex = message.MsgIndex
@@ -336,14 +338,17 @@ class SingleChatController : UIViewController,
                     message.MsgIndex = SHARED_USER.MsgIndex+1
                 }
                 msgFrame.chatMessage = message
-                SHARED_CHATS.message[self.tenUser.UserIndex]?.append(msgFrame)
+                self.messages.append(msgFrame)
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0]
                 AFImageManager.SharedInstance.postUserImage(Url_SendImage,image: data, parameters: params, success: { (task, response) -> Void in
                         print("postImage success")
                     let dict = try! NSJSONSerialization.JSONObjectWithData(response as! NSData, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    print(dict)
                     let imageMsg = SingleChatMessage(dict: dict)
                     imageMsg.MsgImage = asset.fullResolutionImage
+                    msgFrame.chatMessage = imageMsg
+                    SHARED_CHATS.message[self.tenUser.UserIndex]?.append(msgFrame)
                         MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: imageMsg)
                     }, failure: { (task, error) -> Void in
                         print("post Image failed")

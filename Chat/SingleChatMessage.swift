@@ -30,14 +30,14 @@ class SingleChatMessage: NSObject {
     var MsgTime:NSTimeInterval = 0
     var MsgContent = ""{
         didSet{
-            let stringToAtt = Tools.stringToAttributeString(self.MsgContent)
-            self.attrMsg = stringToAtt.text
-            self.isString = stringToAtt.isString
+            let stringToAtt = Tools.stringToAttributeString(MsgContent)
+            isString = stringToAtt.isString
+            attrMsg = stringToAtt.text
         }
     }
     var MsgType = 0{
         didSet{
-            self.messageType = ChatMessageType(rawValue: self.MsgType)!
+            messageType = ChatMessageType(rawValue: MsgType)!
         }
     }
     
