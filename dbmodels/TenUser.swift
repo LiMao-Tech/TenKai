@@ -50,7 +50,7 @@ class TenUser: NSObject {
     }
     var listType = chatType.InActive
     
-    var Portrait = UIImagePNGRepresentation(UIImage(named: "user_pic_radar_140")!) {
+    var Portrait = UIImagePNGRepresentation(UIImage(named: "user_pic_radar")!) {
         didSet{
             PortraitImage = UIImage(data: Portrait!)
         }

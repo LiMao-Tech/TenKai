@@ -14,24 +14,16 @@ class MeProfileMasterViewController: ProfileMasterViewController,
                                         UIImagePickerControllerDelegate
 {
 
-    static var confirmed = false
-
     let pVC = MyProfileViewController(nibName: "ProfileViewController", bundle: nil)
     let pPCVC = MyProfilePicsViewController(nibName: "MyProfilePicsViewController", bundle: nil)
 
     let uploadController = UIAlertController(title: "上传中", message: "请稍后。", preferredStyle: .Alert)
-    let confirmController = UIAlertController(title: "图片上传", message: "确定上传选中图片", preferredStyle: .Alert)
-    let cancelOption = UIAlertAction(title: "取消", style: .Cancel, handler: {action in
-        confirmed = false
-    })
-    let confirmOption = UIAlertAction(title: "确定", style: .Default, handler: {action in
-        confirmed = true
-    })
 
 
     let addImageBtn = UIBarButtonItem()
     let toAlbumBtn = UIBarButtonItem()
     let toSettingsBtn = UIBarButtonItem()
+    let toProfileBtn = UIBarButtonItem()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +44,13 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         toSettingsBtn.target = self
         toSettingsBtn.action = Selector("toSettings")
 
+        toProfileBtn.title = "首页"
+        toProfileBtn.style = .Plain
+        toProfileBtn.target = self
+        toProfileBtn.action = Selector("toProfile")
+
+        self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
+
         let activeFrameHeight = SCREEN_HEIGHT-STATUSBAR_HEIGHT-(self.navigationController?.navigationBar.frame.height)!
 
         // child controller
@@ -65,12 +64,9 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         profileSV.addSubview(pVC.view)
         profileSV.addSubview(pPCVC.view)
 
-        // alerts
-        confirmController.addAction(cancelOption)
-        confirmController.addAction(confirmOption)
-
         // images
         SHARED_PICKER.picker.delegate = self
+        SHARED_PICKER.picker.allowsEditing = true
         getImagesJSON()
 
     }
@@ -78,7 +74,7 @@ class MeProfileMasterViewController: ProfileMasterViewController,
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
         self.navigationController?.navigationBar.translucent = false
-        self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,42 +83,54 @@ class MeProfileMasterViewController: ProfileMasterViewController,
 
     }
 
+    // scrollview
+
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < scrollView.contentSize.height/2 {
+            self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
+        }
+        else {
+            self.navigationItem.rightBarButtonItems = [addImageBtn, toProfileBtn]
+        }
+    }
+
     // show album
     func toAlbum() {
-        self.navigationItem.rightBarButtonItem = addImageBtn
+        self.navigationItem.rightBarButtonItems = [addImageBtn, toProfileBtn]
         self.profileSV.contentOffset = CGPointMake(0, pPCVC.view.frame.origin.y)
     }
 
-    // image picker
-
-    func addImage() -> Void {
+    func addImage() {
         SHARED_PICKER.toImagePicker(self)
+    }
+
+    func toProfile() {
+        self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
+        self.profileSV.contentOffset = CGPointMake(0, pVC.view.frame.origin.y)
+    }
+
+    func toSettings() {
+
     }
 
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true, completion: nil)
-        presentViewController(confirmController, animated: true, completion: nil)
 
-        if MeProfileMasterViewController.confirmed {
-            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
 
-            let imageRepre = UIImageJPEGRepresentation(image, 0.75)
-            let params: [String: AnyObject] = ["id": SHARED_USER.UserIndex]
+        let imageRepre = UIImageJPEGRepresentation(image, 0.75)
+        let params: [String: AnyObject] = ["id": SHARED_USER.UserIndex]
 
-            if let imageData = imageRepre {
-                // presentViewController(uploadController, animated: true, completion: nil)
-                AFImageManager.SharedInstance.postUserImage(imageData, parameters: params, success: {(task, response) -> Void in
-                    TenImagesJSONManager.SharedInstance.getJSONUpdating(self, alert: self.uploadController)
+        if let imageData = imageRepre {
+            presentViewController(uploadController, animated: true, completion: nil)
+            AFImageManager.SharedInstance.postUserImage(imageData, parameters: params, success: {(task, response) -> Void in
+                TenImagesJSONManager.SharedInstance.getJSONUpdating(self, alert: self.uploadController)
 
-                    },failure: { (task, error) -> Void in
-                        print(error.localizedDescription)
-                })
-            }
-
+                },failure: { (task, error) -> Void in
+                    print(error.localizedDescription)
+            })
         }
-
-
     }
 
 

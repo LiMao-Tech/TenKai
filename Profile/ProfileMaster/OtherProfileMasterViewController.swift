@@ -17,11 +17,14 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
     let pPCVC = OtherProfilePicsViewController(nibName: "OtherProfilePicsViewController", bundle: nil)
 
 
+    let rateAlert = UIAlertView(title: "评分", message: "看过用户的首页。你帮他／她的外表评几分呢？", delegate: nil, cancelButtonTitle: "取消")
+    
     var tenUser: TenUser!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let chatBtn = UIBarButtonItem(image: UIImage(named: "btn_navBarIcon_chat_normal"), style: .Plain, target: self, action: "pushChatView")
+        
         self.navigationItem.rightBarButtonItem = chatBtn;
 
         let activeFrameHeight = SCREEN_HEIGHT-STATUSBAR_HEIGHT-(self.navigationController?.navigationBar.frame.height)!
@@ -43,8 +46,10 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
 
 
         getImagesJSON()
-        
 
+
+        // rating
+        // TODO: Ask Tuantuan how to add slider rating
     }
 
     override func didReceiveMemoryWarning() {

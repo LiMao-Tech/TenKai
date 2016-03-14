@@ -17,7 +17,8 @@ class TenMainGridManager: NSObject {
     static let SharedInstance = TenMainGridManager()
 
     private let minDiff: CGFloat = 15
-    private let radiusSQ: CGFloat = (SCREEN_WIDTH*3/5)*(SCREEN_WIDTH*3/5)
+    private let radiusSQ: CGFloat = (SCREEN_WIDTH*2/5)*(SCREEN_WIDTH*2/5)
+    private let profileIconRadius: CGFloat = 60
 
     var numToGen: Int = 0
     var nodes: [TenGridButton] = [TenGridButton]()
@@ -61,8 +62,9 @@ class TenMainGridManager: NSObject {
                     let yAway = y-SCREEN_HEIGHT/2
 
                     let away = xAway*xAway+yAway*yAway
-                    
-                    if xDiff < minDiff || yDiff < minDiff || away > radiusSQ {
+
+                    let inProfileIcon = (x<(SCREEN_WIDTH/2+profileIconRadius) && x>(SCREEN_WIDTH/2-profileIconRadius))||(y<(SCREEN_HEIGHT/2-profileIconRadius) && y>(SCREEN_HEIGHT/2+profileIconRadius))
+                    if xDiff < minDiff || yDiff < minDiff || away > radiusSQ || inProfileIcon {
                         x = CGFloat(drand48()) * SCREEN_WIDTH*4/5 + SCREEN_WIDTH/10
                         y = CGFloat(drand48()) * SCREEN_HEIGHT*3/5 + SCREEN_HEIGHT/5
                         

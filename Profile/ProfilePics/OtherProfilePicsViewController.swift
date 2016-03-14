@@ -26,21 +26,12 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     @IBOutlet weak var ageLabel: UILabel!
 
 
-    let rateAlert = UIAlertView(title: "评分", message: "看过用户的首页。你帮他／她的外表评几分呢？", delegate: nil, cancelButtonTitle: "取消")
-    let slider = TenSlider(frame: CGRectMake(20,10,200,20))
-
     var tenUser: TenUser!
 
     var pVC: OtherProfileViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // rating
-        slider.minimumValue = 1
-        slider.maximumValue = 10
-        rateAlert.addSubview(slider)
-        rateAlert.show()
 
         lmCollectionView.reloadData()
 
