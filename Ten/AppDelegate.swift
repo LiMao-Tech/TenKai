@@ -179,8 +179,10 @@ class AppDelegate: UIResponder,
                     // save to db
                     break
                 }
-                
-                if(SHARED_CHATS.tenUsers[senderIndex] != nil && senderIndex != comunicatingIndex){
+                if(SHARED_CHATS.tenUsers[senderIndex] == nil){
+                    SHARED_CHATS.tenUsers[senderIndex] = TenUser()
+                }
+                if(senderIndex != comunicatingIndex){
                     SHARED_CHATS.tenUsers[senderIndex]?.badgeNum += 1
                     UsersCacheTool().updateUsersBadgeNum(senderIndex, badgeNum: (SHARED_CHATS.tenUsers[senderIndex]?.badgeNum)!)
                 }
@@ -192,21 +194,19 @@ class AppDelegate: UIResponder,
                         print("appdelegate get User")
                         print(response)
                         let userDict = response as! NSDictionary
-                        let user = TenUser(dict: userDict as! [String : AnyObject])
-                        user.badgeNum = (SHARED_CHATS.message[senderIndex]?.count)!
-                        UsersCacheTool().addUserInfoByUser(user)
-                        SHARED_CHATS.tenUsers[senderIndex] = user
+                        SHARED_CHATS.tenUsers[senderIndex]?.ValueWithDict(userDict as! [String : AnyObject])
+                        UsersCacheTool().addUserInfoByUser(SHARED_CHATS.tenUsers[senderIndex]!)
                         SHARED_CHATS.inActiveUserIndex.insert(senderIndex, atIndex: 0)
                         UserListCache().updateUserList()
                      
                         //get tenUser portrait
-                        ALAMO_MANAGER.request(.GET, user.ProfileUrl) .responseImage { response in
+                        ALAMO_MANAGER.request(.GET, SHARED_CHATS.tenUsers[senderIndex]!.ProfileUrl) .responseImage { response in
                             if let image = response.result.value {
-                                user.Portrait = UIImagePNGRepresentation(image)
-                                UsersCacheTool().upDateUsersPortrait(user.UserIndex, portrait: image)
+                                SHARED_CHATS.tenUsers[senderIndex]!.Portrait = UIImagePNGRepresentation(image)
+                                UsersCacheTool().upDateUsersPortrait(SHARED_CHATS.tenUsers[senderIndex]!.UserIndex, portrait: image)
                             }
                             else {
-                                print("get \(user.UserName) portrait failed")
+                                print("get \(SHARED_CHATS.tenUsers[senderIndex]!.UserName) portrait failed")
                                 print(response.result.error?.localizedDescription)
                             }
                         }
