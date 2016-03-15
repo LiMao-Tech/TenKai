@@ -44,7 +44,6 @@ class MessageCacheTool: NSObject {
                     print("图片插入失败")
                 }else{
                     print("插入图片！！！")
-                    print(msg.MsgContent)
                 }
                
             }
@@ -131,10 +130,7 @@ class MessageCacheTool: NSObject {
                                 message.MsgImage = UIImage(data: rs.dataForColumn("PICTURE"))
                             }
                         }
-                        print("读取到图片")
                     }
-                    print("msgIndex:\(message.MsgIndex)")
-                    print("msgContet:\(message.MsgContent)")
                     isEmpty = false
                     msgFrame.chatMessage = message
                     messageFrames.append(msgFrame)

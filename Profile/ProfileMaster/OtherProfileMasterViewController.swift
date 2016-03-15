@@ -68,7 +68,6 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
 
                 let imagesJSON = (values as? [AnyObject])!
                 self.imagesJSON = imagesJSON
-
                 self.pPCVC.imagesJSON = imagesJSON
                 self.pPCVC.lmCollectionView.reloadData()
 

@@ -177,18 +177,22 @@ class AppDelegate: UIResponder,
                     //add notification to notifications
                     UserChatModel.allChats().notifications.append(notiFrame)
                     // save to db
+                    NotificationCacheTool().addNotificationInfo(noti)
                     break
                 }
+                
                 if(SHARED_CHATS.tenUsers[senderIndex] == nil){
                     SHARED_CHATS.tenUsers[senderIndex] = TenUser()
                 }
                 if(senderIndex != comunicatingIndex){
+                    unReadNum += 1
                     SHARED_CHATS.tenUsers[senderIndex]?.badgeNum += 1
                     UsersCacheTool().updateUsersBadgeNum(senderIndex, badgeNum: (SHARED_CHATS.tenUsers[senderIndex]?.badgeNum)!)
                 }
                 
                 //if user not exist get userInfo
-                if(UserChatModel.allChats().tenUsers[senderIndex] == nil){
+                if(SHARED_CHATS.tenUsers[senderIndex] == nil){
+                    SHARED_CHATS.message[senderIndex] = [SingleChatMessageFrame]()
                     // get userInfo
                     AFJSONManager.SharedInstance.getMethodWithParams(Url_User, parameters: ["id":senderIndex], success: { (task, response) -> Void in
                         print("appdelegate get User")
@@ -217,14 +221,14 @@ class AppDelegate: UIResponder,
                     })
                 }
                 //bring the user to the first
-                if(UserChatModel.allChats().activeUserIndex.contains(senderIndex)){
+                if(SHARED_CHATS.activeUserIndex.contains(senderIndex)){
                    let index = UserChatModel.allChats().activeUserIndex.indexOf(senderIndex)
-                    UserChatModel.allChats().activeUserIndex.removeAtIndex(index!)
-                    UserChatModel.allChats().activeUserIndex.insert(senderIndex, atIndex: 0)
+                    SHARED_CHATS.activeUserIndex.removeAtIndex(index!)
+                    SHARED_CHATS.activeUserIndex.insert(senderIndex, atIndex: 0)
                 }else if(UserChatModel.allChats().inActiveUserIndex.contains(senderIndex)){
                     let index = UserChatModel.allChats().inActiveUserIndex.indexOf(senderIndex)
-                    UserChatModel.allChats().inActiveUserIndex.removeAtIndex(index!)
-                    UserChatModel.allChats().inActiveUserIndex.insert(senderIndex, atIndex: 0)
+                    SHARED_CHATS.inActiveUserIndex.removeAtIndex(index!)
+                    SHARED_CHATS.inActiveUserIndex.insert(senderIndex, atIndex: 0)
                 }
                 UserListCache().updateUserList()
                 
@@ -233,20 +237,18 @@ class AppDelegate: UIResponder,
                 
                 if msgType == 0 {
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
+                    SHARED_CHATS.message[senderIndex]?.append(messageFrame)
+                    MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
                 }
                 else if msgType == 1 {
                     let tempMessage = SingleChatMessage(dict: info as! NSDictionary)
                     
                     ALAMO_MANAGER.request(.GET, tempMessage.MsgContent) .responseImage { response in
                         if let image = response.result.value {
-                            if UserChatModel.allChats().message[senderIndex] != nil {
-                                tempMessage.MsgImage = image
-                                messageFrame.chatMessage = tempMessage
-                                UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
-                                MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
-                            }
-                            
-                            UserChatModel.allChats().message[senderIndex]?.append(messageFrame)
+                            tempMessage.MsgImage = image
+                            messageFrame.chatMessage = tempMessage
+                            SHARED_CHATS.message[senderIndex]?.append(messageFrame)
+                            MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
                         }
                         else {
                             print(response.result.error?.localizedDescription)
@@ -258,14 +260,11 @@ class AppDelegate: UIResponder,
                     messageFrame.chatMessage = SingleChatMessage(dict: info as! NSDictionary)
                     SHARED_USER.PCoin += Double(messageFrame.chatMessage.MsgContent)!
                     UserCacheTool().upDateUserPCoin()
-                }
-                
-                
-                if(messageFrame.chatMessage.messageType != .Image){
                     SHARED_CHATS.message[senderIndex]?.append(messageFrame)
                     MessageCacheTool(userIndex: senderIndex).addMessageInfo(senderIndex, msg: messageFrame.chatMessage)
                 }
             }
+            
             let msgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
             SHARED_USER.MsgIndex = msgIndex
             UserCacheTool().upDateUserMsgIndex()

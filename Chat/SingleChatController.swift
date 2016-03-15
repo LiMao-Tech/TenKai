@@ -398,6 +398,7 @@ class SingleChatController : UIViewController,
     func showProfile(){
         let pVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
         pVC.tenUser = tenUser
+        pVC.userID = tenUser.UserIndex
         self.navigationController?.pushViewController(pVC, animated: true)
     }
     
@@ -654,17 +655,13 @@ class SingleChatController : UIViewController,
             "Energy": -1,
             "Active": true]
         AFJSONManager.SharedInstance.postMethod(Url_Rater, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
-                self.tenUser.listType = .Active
                 self.tenUser.isRatered = true
-                let index = SHARED_CHATS.inActiveUserIndex.indexOf(self.tenUser.UserIndex)
-                SHARED_CHATS.inActiveUserIndex.removeAtIndex(index!)
-                SHARED_CHATS.activeUserIndex.insert(self.tenUser.UserIndex, atIndex: 0)
                 UserListCache().updateUserList()
                 UsersCacheTool().updateUserInfo(self.tenUser)
-                ChatFocusState = false
                 SHARED_CHATS.raterIndex.append(self.tenUser.UserIndex)
                 UserRaterCache().addUserRater(self.tenUser.UserIndex)
                 comunicatingIndex = 0
+                ChatFocusState = false
                 NSUserDefaults.standardUserDefaults().removeObjectForKey("ChatFocusState")
                 self.navigationController?.popViewControllerAnimated(true)
                 self.scoreView!.removeFromSuperview()

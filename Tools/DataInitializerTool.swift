@@ -18,8 +18,6 @@ class DataInitializerTool: NSObject {
             let name = NSString(format: "[%03d]", i)
             faceCodes.addObject(name)
         }
-        print("msgIndex:")
-        print(SHARED_USER.MsgIndex)
         //initialiseUserAndMessages
         let usersInfo = UsersCacheTool().getUserInfo()
         if(!usersInfo.isEmpty){
