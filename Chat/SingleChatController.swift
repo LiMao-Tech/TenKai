@@ -146,7 +146,7 @@ class SingleChatController : UIViewController,
             print(self.messages.first?.chatMessage.MsgIndex)
             if(result.isEmpty){
                 print("get from net")
-                getMessageByNet(refresh, index: (self.messages.first?.chatMessage.MsgIndex)!)
+                getMessageByNet(refresh, index: (SHARED_CHATS.message[tenUser.UserIndex]!.first?.chatMessage.MsgIndex)!)
             }else{
                 print("get from db")
                 SHARED_CHATS.message[tenUser.UserIndex] = result.messageFrames + messages

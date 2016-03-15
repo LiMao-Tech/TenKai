@@ -38,7 +38,12 @@ class UserCell: UITableViewCell {
             let x = CGRectGetMaxX(nameLabel.frame)
             dotView.frame =  CGRectMake(x+10, nameLabel.frame.origin.y+7, 7, 7)
             dotView.image = UIImage(named: "icon_chat_dot_l\(tenUser.Average)")
-            let image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            var image : UIImage!
+            if(tenUser.PortraitImage == nil){
+                image = UIImage(named: "user_pic_radar")!
+            }else{
+                image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            }
             headImage.setImage(image, forState: .Normal)
             
             if(tenUser.badgeNum == 0){

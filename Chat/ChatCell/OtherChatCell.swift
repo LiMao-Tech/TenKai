@@ -32,10 +32,8 @@ class OtherChatCell: ChatBaseCell {
                 context.setImage(chatFrame.chatMessage.MsgImage!, forState: .Normal)
             }else{
                 if(chatFrame.chatMessage.isString){
-                    print("isText")
                     content.text = chatFrame.chatMessage.MsgContent
                 }else{
-                    print("isAttrText")
                     content.attributedText = chatFrame.chatMessage.attrMsg
                 }
                 

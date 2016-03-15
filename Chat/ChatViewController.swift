@@ -84,7 +84,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //UserCellDelegate func
     func menuDeleteBtnDidClicked(cell: UserCell) {
-
+        let user = cell.tenUser
+        print(user.UserIndex)
+        var index = 0
+        if(user.listType == .Active){
+            index = SHARED_CHATS.activeUserIndex.indexOf(user.UserIndex)!
+            SHARED_CHATS.activeUserIndex.removeAtIndex(index)
+        }else{
+            index = SHARED_CHATS.inActiveUserIndex.indexOf(user.UserIndex)!
+            SHARED_CHATS.inActiveUserIndex.removeAtIndex(user.UserIndex)
+        }
+        UsersCacheTool().deleteUserInfo(user.UserIndex)
+        UserListCache().updateUserList()
+        self.userList.reloadData()
     }
     
     func menuInfoBtnDidClicked(cell: UserCell) {
@@ -95,7 +107,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func menuMidLockBtnDidClicked(cell: UserCell) {
-        
+        cell.lockBtnDidClicked()
     }
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "activeUserIndex"){
