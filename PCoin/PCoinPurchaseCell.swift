@@ -35,7 +35,7 @@ class PCoinPurchaseCell: UITableViewCell {
         priceLabel.textColor = UIColor.whiteColor()
         //buyButton
         buyButton = UIButton(frame: CGRectMake(SCREEN_WIDTH-60, 0, 60, 64))
-        buyButton.setTitle("Buy", forState: .Normal)
+        buyButton.setTitle("购买", forState: .Normal)
         buyButton.titleLabel?.textColor = UIColor.whiteColor()
         buyButton.titleLabel?.font = UIFont.systemFontOfSize(17)
         buyButton.addTarget(self, action: "buyButtonClicked", forControlEvents: .TouchUpInside)

@@ -25,16 +25,19 @@ class PCoinTransferCell: UITableViewCell {
             timeLabel.text = Tools.toDisplayTime(transfer.MsgTime)
             self.addSubview(transferLabel)
             if(transfer.belongType == .Me){
-                headImage.setImage(SHARED_USER.PortraitImage, forState: .Normal)
+                headImage.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
             }else{
-                let targetUrl = Url_GetHeadImage+"\(transfer.Sender)"
-                ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
-                    if let image = response.result.value {
-                        self.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
+                if(SHARED_CHATS.tenUsers[transfer.Sender] == nil){
+                    let targetUrl = Url_GetHeadImage+"\(transfer.Sender)"
+                    ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
+                        if let image = response.result.value {
+                            self.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
+                        }
                     }
+                }else{
+                    headImage.setImage(Tools.toCirclurImage(SHARED_CHATS.tenUsers[transfer.Sender]!.PortraitImage!), forState: .Normal)
                 }
             }
-            
         }
     }
     

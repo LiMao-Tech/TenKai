@@ -223,8 +223,8 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         if(cell == nil){
             cell = PCoinPurchaseCell.init(style: .Default, reuseIdentifier: "purchaseCell")
         }
-        cell?.pcoinLabel.text = "\(pcoinValue[indexPath.row]) P Coin"
-        cell?.priceLabel.text = "Price:\(pcoinValue[indexPath.row]/10) USD"
+        cell?.pcoinLabel.text = "\(pcoinValue[indexPath.row]) P币"
+        cell?.priceLabel.text = "Price:\(pcoinValue[indexPath.row]/10) 元"
         cell?.index = indexPath.row
         cell?.delegate = self
         return cell!
