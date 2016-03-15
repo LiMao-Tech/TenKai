@@ -10,7 +10,13 @@ import UIKit
 
 class SharedUser: TenUser {
     
-    var MsgIndex = 1
+    var MsgIndex = 1{
+        didSet{
+            if(oldValue > MsgIndex){
+                MsgIndex = oldValue
+            }
+        }
+    }
     
     static let SharedInstance = SharedUser()
     

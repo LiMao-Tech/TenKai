@@ -30,6 +30,7 @@ let Url_DeletePic = Url_ImageMaster + "DeletePhoto"
 let Url_GetHeadImage = Url_ImageMaster + "GetProfileByUser?userIndex="
 let Url_UploadHeadImage = Url_ImageMaster + "UploadProfileImage/"
 let Url_UploadPhotos = Url_ImageMaster + "UploadPhotos/"
+let Url_GetAlbumImage = Url_ImageMaster + "GetAlbumImages?id="
 
 let Url_SetImage = Url_ImageMaster + "ChangeImageType"
 let Url_Lock = Url_ImageMaster + "SetIsLocked"

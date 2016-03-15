@@ -233,7 +233,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         }
         else {
             let imageIndex = imageJSON["ID"].stringValue
-            let targetUrl = Url_Image + imageIndex
+            let targetUrl = Url_GetAlbumImage + imageIndex
             
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
                 if let image = response.result.value {

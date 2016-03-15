@@ -39,11 +39,14 @@ class MessageCacheTool: NSObject {
             if !db.executeUpdate(sql_insert, withArgumentsInArray: [msg.MsgIndex,msg.Sender,msg.Receiver,msg.IsLocked,msg.messageType.rawValue,msg.MsgTime,msg.PhoneType,msg.MsgContent]){                  print("插入失败")
             }
             if(msg.messageType == .Image){
-                let sql_pic_stmt = "INSERT INTO MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,PICTURE,WIDTH,HEIGHT) VALUES(?,?,?,?)"
-                if !db.executeUpdate(sql_pic_stmt, withArgumentsInArray: [msg.MsgIndex,UIImagePNGRepresentation(msg.MsgImage!)!,(msg.MsgImage?.size.width)!,(msg.MsgImage?.size.height)!]){
+                let sql_pic_stmt = "INSERT INTO MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,PICTURE) VALUES(?,?)"
+                if !db.executeUpdate(sql_pic_stmt, withArgumentsInArray: [msg.MsgIndex,UIImagePNGRepresentation(msg.MsgImage!)!]){
                     print("图片插入失败")
+                }else{
+                    print("插入图片！！！")
+                    print(msg.MsgContent)
                 }
-                print("插入图片！！！")
+               
             }
         }
     }
@@ -128,7 +131,10 @@ class MessageCacheTool: NSObject {
                                 message.MsgImage = UIImage(data: rs.dataForColumn("PICTURE"))
                             }
                         }
+                        print("读取到图片")
                     }
+                    print("msgIndex:\(message.MsgIndex)")
+                    print("msgContet:\(message.MsgContent)")
                     isEmpty = false
                     msgFrame.chatMessage = message
                     messageFrames.append(msgFrame)

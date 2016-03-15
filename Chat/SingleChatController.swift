@@ -276,6 +276,7 @@ class SingleChatController : UIViewController,
             let chatFrame = SingleChatMessageFrame()
             chatFrame.chatMessage = SingleChatMessage(dict: params)
             messages.append(chatFrame)
+            self.messageList.reloadData()
             AFJSONManager.SharedInstance.postMethod(Url_Msg, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
                 print("postMsg")
                 print(response)
@@ -283,10 +284,8 @@ class SingleChatController : UIViewController,
                 chatFrame.chatMessage = message
                 SHARED_CHATS.message[self.tenUser.UserIndex]?.append(chatFrame)
                 MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
-                if(SHARED_USER.MsgIndex < message.MsgIndex){
                     SHARED_USER.MsgIndex = message.MsgIndex
                     UserCacheTool().upDateUserMsgIndex()
-                }
                 },
                 failure: { (task, error) -> Void in
                     print("Post User Failed")
@@ -307,9 +306,9 @@ class SingleChatController : UIViewController,
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         if(actionSheet.tag == 0){
             switch buttonIndex{
-            case 0:
-                self.choosePhoto()
             case 1:
+                self.choosePhoto()
+            case 2:
                 self.transformCoin()
             default:
                 break
@@ -362,6 +361,7 @@ class SingleChatController : UIViewController,
                 }
                 msgFrame.chatMessage = message
                 self.messages.append(msgFrame)
+                self.messageList.reloadData()
                 let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0]
                 AFImageManager.SharedInstance.postUserImage(Url_SendImage,image: data, parameters: params, success: { (task, response) -> Void in
@@ -371,6 +371,8 @@ class SingleChatController : UIViewController,
                     let imageMsg = SingleChatMessage(dict: dict)
                     imageMsg.MsgImage = asset.fullResolutionImage
                     msgFrame.chatMessage = imageMsg
+                    SHARED_USER.MsgIndex = imageMsg.MsgIndex
+                    UserCacheTool().upDateUserMsgIndex()
                     SHARED_CHATS.message[self.tenUser.UserIndex]?.append(msgFrame)
                         MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: imageMsg)
                     }, failure: { (task, error) -> Void in
