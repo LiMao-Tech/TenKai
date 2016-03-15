@@ -84,7 +84,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //UserCellDelegate func
     func menuDeleteBtnDidClicked(cell: UserCell) {
-        
+
     }
     
     func menuInfoBtnDidClicked(cell: UserCell) {
@@ -97,7 +97,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func menuMidLockBtnDidClicked(cell: UserCell) {
         
     }
-    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "activeUserIndex"){
             self.userList.reloadData()

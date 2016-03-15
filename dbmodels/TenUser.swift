@@ -32,6 +32,7 @@ class TenUser: NSObject {
     //mobile end properties
     
     var isRatered = false
+    var isLocked = false
     
     var Average :Int {
         get{

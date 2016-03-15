@@ -16,6 +16,8 @@ class PCoinHistoryModel: NSObject {
     var Content = 0
     var Status = ""
     var PurchaseType = 0
+    var Note = ""
+    var Balance = 0
     
     override init() {
         super.init()

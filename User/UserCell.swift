@@ -129,6 +129,7 @@ class UserCell: UITableViewCell {
         // Initialization code
         self.contentView.backgroundColor = COLOR_BG
         lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
+        lockBtn.addTarget(self, action: "lockBtnDidClicked", forControlEvents: .TouchUpInside)
         headImage.setImage(UIImage(named: "user_pic_radar_140"), forState: UIControlState.Normal)
         badgeView = JSBadgeView(parentView: headImage, alignment: .BottomLeft)
         nameLabel = UILabel()
@@ -203,6 +204,16 @@ class UserCell: UITableViewCell {
     }
     class func loadFromNib() ->UserCell {
         return NSBundle.mainBundle().loadNibNamed("UserCell", owner: self, options: nil).last as! UserCell
+    }
+    
+    func lockBtnDidClicked(){
+        if(tenUser.isLocked){
+            tenUser.isLocked = false
+            lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: .Normal)
+        }else{
+            tenUser.isLocked = true
+            lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
+        }
     }
     
     func infoBtnClicked(){
