@@ -11,4 +11,7 @@ import UIKit
 class RandomAndLevelUser: TenUser {
     var distance = 0
     
+    override init(dict: [String : AnyObject]) {
+        super.init(dict: dict)
+    }
 }

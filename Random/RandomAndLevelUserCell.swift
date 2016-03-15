@@ -25,11 +25,11 @@ class RandomAndLevelUserCell: UITableViewCell {
     var RALuser:RandomAndLevelUser!{
         didSet{
             nameLabel.text = "\(RALuser.UserName)"
-            innerLabel.text = "inner \(RALuser.InnerScore)"
-            outerLabel.text = "outer \(RALuser.OuterScore)"
+            innerLabel.text = "内在 \(RALuser.InnerScore)"
+            outerLabel.text = "外在 \(RALuser.OuterScore)"
             avgLabel.text = "AVG \(RALuser.Average)"
-            energyLabel.text = "energy \(RALuser.Energy)"
-            distanceLabel.text = "\(RALuser.distance) km"
+            energyLabel.text = "能量 \(RALuser.Energy)"
+            distanceLabel.text = "\(RALuser.distance) m"
         }
     }
     
@@ -42,12 +42,12 @@ class RandomAndLevelUserCell: UITableViewCell {
         
         //nameLabel
         let namex = CGRectGetMaxX(headImage.frame) + 5
-        let lableText:NSString = "userName"
-        let w = SCREEN_WIDTH - 190
-        let attr = [NSFontAttributeName:UIFont.systemFontOfSize(17)]
-        let size = lableText.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
+//        let lableText:NSString = "userName"
+//        let w = SCREEN_WIDTH - 190
+//        let attr = [NSFontAttributeName:UIFont.systemFontOfSize(17)]
+//        let size = lableText.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
         
-        nameLabel = UILabel(frame: CGRectMake(namex, 10, size.width, size.height))
+        nameLabel = UILabel(frame: CGRectMake(namex, 10, 160, 25))
         nameLabel.textColor = COLOR_FONT_ORANGE
         nameLabel.font = UIFont.systemFontOfSize(17)
         
@@ -76,13 +76,13 @@ class RandomAndLevelUserCell: UITableViewCell {
         
         //distanceLabel
         let distancew:CGFloat = 60
-        distanceLabel = UILabel(frame: CGRectMake(SCREEN_WIDTH - 65, 10, distancew, innerh))
+        distanceLabel = UILabel(frame: CGRectMake(SCREEN_WIDTH - 65, 10, distancew-10, innerh))
         distanceLabel.textAlignment = .Right
         distanceLabel.font = UIFont.systemFontOfSize(13)
         distanceLabel.textColor = UIColor.whiteColor()
         
         //splitline
-        splitLine = UIView(frame: CGRectMake(CGRectGetMaxX(headImage.frame), CGRectGetMaxY(headImage.frame) + 1, SCREEN_WIDTH - 70, 1))
+        splitLine = UIView(frame: CGRectMake(CGRectGetMaxX(headImage.frame), CGRectGetMaxY(headImage.frame) + 10, SCREEN_WIDTH - 70, 1))
         splitLine.backgroundColor = UIColor.whiteColor()
         splitLine.alpha = 0.6
         

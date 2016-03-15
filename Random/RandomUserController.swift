@@ -19,6 +19,7 @@ class RandomUserController: UIViewController,
     var userListView : UITableView!
     var userList: [AnyObject] = [AnyObject]()
     var users = [TenUser]()
+    var ralUsers = [RandomAndLevelUser]()
     // View Controls
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,8 @@ class RandomUserController: UIViewController,
         for user in userList{
             let newUser = user as! [String: AnyObject]
             let tenUser = TenUser(dict: newUser)
+            let ralUser = RandomAndLevelUser(dict: newUser)
+            ralUsers.append(ralUser)
             users.append(tenUser)
         }
         self.userListView.reloadData()
@@ -84,7 +87,7 @@ class RandomUserController: UIViewController,
         return SCREEN_HEIGHT/8
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+        return self.ralUsers.count
     }
     
     
@@ -95,7 +98,7 @@ class RandomUserController: UIViewController,
             cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
         }
         
-        let user = users[indexPath.row]
+        let user = ralUsers[indexPath.row]
         
         let imageIndex = user.UserIndex.description
         let targetUrl = Url_GetHeadImage + imageIndex
@@ -106,20 +109,20 @@ class RandomUserController: UIViewController,
                     user.Portrait = UIImagePNGRepresentation(image)
                 }
         }
+        cell!.RALuser = user
+//        cell!.nameLabel.text = user.UserName
         
-        cell!.nameLabel.text = user.UserName
-        
-        let inner = user.InnerScore
-        let outer = user.OuterScore
-        let energy = user.Energy
-        let avg = (inner+outer)/2
-
-        cell!.innerLabel.text = "内在 \(inner)"
-        cell!.outerLabel.text = "外在 \(outer)"
-        cell!.energyLabel.text = "能量 \(energy)"
-        cell!.avgLabel.text = "平均 \(avg)"
-        
-        cell!.distanceLabel.text = "距离 0"
+//        let inner = user.InnerScore
+//        let outer = user.OuterScore
+//        let energy = user.Energy
+//        let avg = (inner+outer)/2
+//
+//        cell!.innerLabel.text = "内在 \(inner)"
+//        cell!.outerLabel.text = "外在 \(outer)"
+//        cell!.energyLabel.text = "能量 \(energy)"
+//        cell!.avgLabel.text = "平均 \(avg)"
+//        
+//        cell!.distanceLabel.text = "距离 0"
         
         return cell!
     }
