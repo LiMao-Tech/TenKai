@@ -44,7 +44,7 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         toSettingsBtn.target = self
         toSettingsBtn.action = Selector("toSettings")
 
-        toProfileBtn.title = "首页"
+        toProfileBtn.image = UIImage(named: "navBar_profile")
         toProfileBtn.style = .Plain
         toProfileBtn.target = self
         toProfileBtn.action = Selector("toProfile")

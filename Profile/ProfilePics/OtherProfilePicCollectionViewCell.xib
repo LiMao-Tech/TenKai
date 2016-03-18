@@ -15,7 +15,6 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JCn-wQ-t76">
                         <rect key="frame" x="0.0" y="0.0" width="272" height="177"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_chat_lock_19" translatesAutoresizingMaskIntoConstraints="NO" id="sVH-T1-0hJ">
                         <rect key="frame" x="131" y="82" width="10" height="14"/>

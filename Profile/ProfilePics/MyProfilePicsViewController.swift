@@ -237,21 +237,21 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         }
         else {
             let imageIndex = imageJSON["ID"].stringValue
-            let targetUrl = Url_GetAlbumImage + imageIndex
-            
+            let targetUrl = Url_Image + imageIndex + "&thumbnail=true"
+
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
                 if let image = response.result.value {
+
                     cell.picIV.image = image
                     SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
+
                     if imageJSON["IsLocked"].boolValue == true {
                         self.setLockStatus(cell, status: true)
                     }
                     else {
                         self.setLockStatus(cell, status: false)
                     }
-                }
-                else {
-                    cell.backgroundColor = COLOR_BG
+
                 }
             }
         }
@@ -427,13 +427,13 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
     private func setLockStatus(cell: MyProfilePicCollectionViewCell, status: Bool) {
         if status {
-            cell.picIV.alpha = 0.7
+            cell.picIV.alpha = 0.8
         }
         else {
             cell.picIV.alpha = 1.0
         }
 
-        cell.picIV.hidden = !status
+        cell.lockIV.hidden = !status
     }
 
     private func deleteImage(id: Int, oldJSON: JSON) {
@@ -444,7 +444,6 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         ALAMO_MANAGER.request(.DELETE, Url_DeletePic, parameters: params, encoding: .JSON) .responseJSON{
             response in
 
-            print(response.debugDescription)
             if let values = response.result.value {
 
                 if oldJSON["ImageType"].intValue == 3 {

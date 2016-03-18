@@ -101,12 +101,15 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
             }
         }
         else {
+
             let imageIndex = imageJSON["ID"].stringValue
-            let targetUrl = Url_GetAlbumImage + imageIndex
+            let targetUrl = Url_Image + imageIndex + "&thumbnail=true"
 
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
+
                 if let image = response.result.value {
                     cell.picIV.image = image
+
                     SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
                     if imageJSON["IsLocked"].boolValue == true {
                         self.setLockStatus(cell, status: true)
@@ -114,9 +117,6 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
                     else {
                         self.setLockStatus(cell, status: false)
                     }
-                }
-                else {
-                    cell.backgroundColor = COLOR_BG
                 }
             }
         }
@@ -165,12 +165,12 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
     private func setLockStatus(cell: OtherProfilePicCollectionViewCell, status: Bool) {
         if status {
-            cell.picIV.alpha = 0.7
+            cell.picIV.alpha = 0.3
         }
         else {
             cell.picIV.alpha = 1.0
         }
 
-        cell.picIV.hidden = !status
+        cell.lockIV.hidden = !status
     }
 }
