@@ -49,8 +49,8 @@ class DataInitializerTool: NSObject {
         let raterOuter = UserRaterCache().getUserRaterInfo(1)
         if(!raterOuter.isEmpty){
             print("raterOuterIndex:")
-            print(rater.raterIndexs)
-            SHARED_CHATS.raterIndex = rater.raterIndexs
+            print(raterOuter.raterIndexs)
+            SHARED_CHATS.outerRaterIndex = raterOuter.raterIndexs
         }
 
         //initialise active & inactive userlist
