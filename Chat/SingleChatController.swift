@@ -119,7 +119,7 @@ class SingleChatController : UIViewController,
             if(otherUnreadNum == 0){
                 unreadNum = ""
             }
-            leftItem.title = "返回"+unreadNum
+            leftItem.title = "返回" + unreadNum
             self.messages = UserChatModel.allChats().message[tenUser.UserIndex]!
             self.messageList.reloadData()
             self.rollToLastRow()

@@ -244,7 +244,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     }
     
     // button actions
-    func levelSelect(sender:LevelButton){
+    func levelSelect(sender: LevelButton){
         if(sender.lockState == .Lock){
             let unlockAlert = UIAlertController(title: "等级解锁", message: "您需要花费 \(sender.level*10) P币来解锁该等级", preferredStyle: UIAlertControllerStyle.Alert)
             let ok = UIAlertAction(title: "解锁", style: UIAlertActionStyle.Destructive, handler: { (ac) -> Void in

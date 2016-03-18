@@ -20,6 +20,7 @@ let Url_Purchase = Url_Api + "Purchase/"
 
 
 // Image related
+let Url_Unlocker = Url_Api + "ImageUnlocker/"
 
 let Url_ImageMaster = "http://www.limao-tech.com/Ten/TenImage/"
 

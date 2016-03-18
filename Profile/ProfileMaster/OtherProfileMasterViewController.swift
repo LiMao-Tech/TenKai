@@ -17,7 +17,7 @@ class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDel
     let pPCVC = OtherProfilePicsViewController(nibName: "OtherProfilePicsViewController", bundle: nil)
 
 
-    let rateAlert = UIAlertView(title: "评分", message: "看过用户的首页。你帮他／她的外表评几分呢？", delegate: nil, cancelButtonTitle: "取消")
+    let loadingAlert = UIAlertController(title: "载入中", message: "请稍后", preferredStyle: UIAlertControllerStyle.Alert)
     
     var tenUser: TenUser!
     
@@ -34,6 +34,7 @@ class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDel
         // child controller
         pVC.tenUser = tenUser
         pPCVC.tenUser = tenUser
+        pPCVC.userId = userID
 
         pVC.view.frame = CGRectMake(0, 0, profileSV.frame.width, profileSV.frame.height)
         pPCVC.view.frame = CGRectMake(0, activeFrameHeight, profileSV.frame.width, profileSV.frame.height)
@@ -47,6 +48,7 @@ class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDel
         profileSV.addSubview(pPCVC.view)
 
 
+        navigationController?.presentViewController(loadingAlert, animated: true, completion: nil)
         getImagesJSON()
 
 
@@ -71,6 +73,7 @@ class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDel
                 let imagesJSON = (values as? [AnyObject])!
                 self.imagesJSON = imagesJSON
                 self.pPCVC.imagesJSON = imagesJSON
+                self.loadingAlert.dismissViewControllerAnimated(true, completion: nil)
                 self.pPCVC.lmCollectionView.reloadData()
 
                 for obj in self.imagesJSON! {
