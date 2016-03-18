@@ -66,9 +66,9 @@ class RandomUserController: UIViewController,
         
         let otherPVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
 
-        let tenUser = users[indexPath.row]
-        otherPVC.tenUser = tenUser
-        otherPVC.userID = tenUser.UserIndex
+        let user = ralUsers[indexPath.row] as TenUser
+        otherPVC.tenUser = user
+        otherPVC.userID = user.UserIndex
         self.navigationController?.pushViewController(otherPVC, animated: true)
     }
     
@@ -99,19 +99,6 @@ class RandomUserController: UIViewController,
             }
         }
         cell!.RALuser = user
-//        cell!.nameLabel.text = user.UserName
-        
-//        let inner = user.InnerScore
-//        let outer = user.OuterScore
-//        let energy = user.Energy
-//        let avg = (inner+outer)/2
-//
-//        cell!.innerLabel.text = "内在 \(inner)"
-//        cell!.outerLabel.text = "外在 \(outer)"
-//        cell!.energyLabel.text = "能量 \(energy)"
-//        cell!.avgLabel.text = "平均 \(avg)"
-//        
-//        cell!.distanceLabel.text = "距离 0"
         
         return cell!
     }

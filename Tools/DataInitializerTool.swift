@@ -35,9 +35,9 @@ class DataInitializerTool: NSObject {
             SHARED_CHATS.notifications = notiInfo.notis
         }
         //initialise raterIndex
-        let rater = UserRaterCache().getUserRaterInfo()
+        let rater = UserRaterCache().getUserRaterInfo(0)
         if(!rater.isEmpty){
-            print("raterIndex")
+            print("raterIndex:")
             print(rater.raterIndexs)
             SHARED_CHATS.raterIndex = rater.raterIndexs
             for user in usersInfo.users{
@@ -46,6 +46,13 @@ class DataInitializerTool: NSObject {
                 }
             }
         }
+        let raterOuter = UserRaterCache().getUserRaterInfo(1)
+        if(!raterOuter.isEmpty){
+            print("raterOuterIndex:")
+            print(rater.raterIndexs)
+            SHARED_CHATS.raterIndex = rater.raterIndexs
+        }
+
         //initialise active & inactive userlist
         let listCache = UserListCache()
         if(!listCache.getUserList(0)){

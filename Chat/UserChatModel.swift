@@ -10,6 +10,7 @@ import UIKit
 
 class UserChatModel: NSObject {
     var raterIndex = [Int]()//本用户评分过的用户的userIndex列表
+    var outerRaterIndex = [Int]()
     
     var activeUserIndex = [Int]()//聊天中的用户的userIndex列表，展示聊天中的用户
     var inActiveUserIndex = [Int]()//等待中的用户的userIndex列表，展示等待中的用户

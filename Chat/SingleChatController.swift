@@ -659,7 +659,7 @@ class SingleChatController : UIViewController,
                 UserListCache().updateUserList()
                 UsersCacheTool().updateUserInfo(self.tenUser)
                 SHARED_CHATS.raterIndex.append(self.tenUser.UserIndex)
-                UserRaterCache().addUserRater(self.tenUser.UserIndex)
+                UserRaterCache().addUserRater(self.tenUser.UserIndex,type: 0)
                 comunicatingIndex = 0
                 ChatFocusState = false
                 NSUserDefaults.standardUserDefaults().removeObjectForKey("ChatFocusState")

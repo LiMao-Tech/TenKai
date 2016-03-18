@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class OtherProfileMasterViewController: ProfileMasterViewController {
+class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDelegate {
 
 
 
@@ -20,6 +20,8 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
     let rateAlert = UIAlertView(title: "评分", message: "看过用户的首页。你帮他／她的外表评几分呢？", delegate: nil, cancelButtonTitle: "取消")
     
     var tenUser: TenUser!
+    
+    var scoreView:ScoreView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,9 +100,55 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
 
     // TODO: tuantuan
     func pushChatView() -> Void {
-        let singleChatC = SingleChatController()
-        singleChatC.tenUser = tenUser
-        self.navigationController?.pushViewController(singleChatC, animated: true)
+        if(SHARED_CHATS.outerRaterIndex.contains(tenUser.UserIndex)){
+            let singleChatC = SingleChatController()
+            singleChatC.tenUser = tenUser
+            self.navigationController?.pushViewController(singleChatC, animated: true)
+        }else{
+            if(scoreView == nil){
+                scoreView = ScoreView()
+            }
+            scoreView!.tenUser = tenUser
+            scoreView!.delegate = self
+            self.view.addSubview(scoreView!)
+        }
+    }
+    
+    //delegete funcs for scoreView
+    func scoreViewOkBtnClicked() {
+        let score = Int((scoreView?.scoreSlider.value)!)
+        //post new score of the other person
+        let params = ["RaterIndex": SHARED_USER.UserIndex,
+            "UserIndex": tenUser.UserIndex,
+            "OuterScore": score,
+            "InnerScore": -1,
+            "Energy": -1,
+            "Active": false]
+        AFJSONManager.SharedInstance.postMethod(Url_Rater, parameters: params as? [String : AnyObject], success: { (task, response) -> Void in
+            SHARED_CHATS.outerRaterIndex.append(self.tenUser.UserIndex)
+            UserRaterCache().addUserRater(self.tenUser.UserIndex,type: 1)
+            self.scoreView!.removeFromSuperview()
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                let singleChatC = SingleChatController()
+                singleChatC.tenUser = self.tenUser
+                self.navigationController?.pushViewController(singleChatC, animated: true)
+            })
+            },failure: { (task, error) -> Void in
+                print("post rater error:")
+                print(error.localizedDescription)
+                let scoreFailed = UIAlertController(title: "评分失败", message: "请重评分，以解锁锁定状态", preferredStyle: .Alert)
+                let failAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Destructive, handler: nil)
+                scoreFailed.addAction(failAction)
+                self.presentViewController(scoreFailed, animated: true, completion: nil)
+        })
+    }
+    
+    func scoreViewCancelBtnClicked() {
+        scoreView!.removeFromSuperview()
+    }
+    
+    func scoreViewScoreChange() {
+        scoreView!.scoreLabel.text = "\(Int(scoreView!.scoreSlider.value))"
     }
 
 }

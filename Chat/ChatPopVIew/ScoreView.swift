@@ -19,6 +19,7 @@ class ScoreView: UIView {
         didSet{
             nameLabel.text = tenUser.UserName
             if(tenUser.PortraitImage == nil){
+                print("portrait nil")
                 headImageView.image = UIImage(named: "user_pic_radar")!
             }else{
                 headImageView.image = Tools.toCirclurImage(tenUser.PortraitImage!)

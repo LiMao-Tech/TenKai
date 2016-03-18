@@ -38,7 +38,8 @@ class ProfileViewController: UIViewController,
     var numProfilePics = 1
     
     var userID: Int!
-
+    
+    var tenUser:TenUser!
 
     var image1JSON: JSON?
     var image2JSON: JSON?
@@ -99,6 +100,8 @@ class ProfileViewController: UIViewController,
 
             if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
                 self.profileIV1?.image = image
+                self.tenUser.Portrait = UIImagePNGRepresentation(image)
+                UsersCacheTool().upDateUsersPortrait(self.tenUser.UserIndex, portrait: image)
             }
             else {
                 let targetUrl = Url_Image + json["ID"].stringValue

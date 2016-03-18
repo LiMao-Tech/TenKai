@@ -171,12 +171,18 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     
     func getRaterUserIndexs(){
         AFJSONManager.SharedInstance.getMethodWithParams(Url_Rater, parameters: ["raterIndex":SHARED_USER.UserIndex], success: { (task, response) -> Void in
-            let raters = response as! [Int]
+            let raters = response as! NSDictionary
+            let innerRaters = raters["Inner"] as! [Int]
+            let outerRaters = raters["Outer"] as! [Int]
             UserRaterCache().removeAllRater()
             print(raters)
-            if(raters.count > 0){
-                UserChatModel.allChats().raterIndex = raters
-                UserRaterCache().addUserRaterByArray(raters)
+            if(innerRaters.count > 0){
+                SHARED_CHATS.raterIndex = innerRaters
+                UserRaterCache().addUserRaterByArray(innerRaters,type: 0)
+            }
+            if(outerRaters.count > 0){
+                SHARED_CHATS.outerRaterIndex = outerRaters
+                UserRaterCache().addUserRaterByArray(outerRaters, type: 1)
             }
             self.getMsgIndex()
             },failure: { (task, error) -> Void in

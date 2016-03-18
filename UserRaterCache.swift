@@ -21,45 +21,41 @@ class UserRaterCache: NSObject {
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERRATERINFO_\(SHARED_USER.UserIndex) (ID INTEGER PRIMARY KEY,RATERINDEX INTEGER)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERRATERINFO_\(SHARED_USER.UserIndex) (ID INTEGER PRIMARY KEY,RATERINDEX INTEGER,TYPE INTEGER)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
                 print("创表失败！")
             }
-            
         }
     }
     
-    func addUserRaterByArray(raterArray:[Int]){
-        let sql_insert = "INSERT INTO USERRATERINFO_\(SHARED_USER.UserIndex)(RATERINDEX) VALUES(?)"
-
+    func addUserRaterByArray(raterArray:[Int],type:Int){
+        let sql_insert = "INSERT INTO USERRATERINFO_\(SHARED_USER.UserIndex)(RATERINDEX,TYPE) VALUES(?,?)"
         for rater in raterArray{
             dbq.inDatabase { (db) -> Void in
-                if !db.executeUpdate(sql_insert, withArgumentsInArray: [rater]){
+                if !db.executeUpdate(sql_insert, withArgumentsInArray: [rater,type]){
                     print("插入失败")
                 }
             }
         }
-        
     }
-    func addUserRater(raterIndex:Int){
-        
-        let sql_insert = "INSERT INTO USERRATERINFO_\(SHARED_USER.UserIndex)(RATERINDEX) VALUES(?)"
+    
+    func addUserRater(raterIndex:Int,type:Int){
+        let sql_insert = "INSERT INTO USERRATERINFO_\(SHARED_USER.UserIndex)(RATERINDEX,TYPE) VALUES(?,?)"
         dbq.inDatabase { (db) -> Void in
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [raterIndex]){
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [raterIndex,type]){
                 print("插入失败")
             }
         }
-        
     }
 
     
-    func getUserRaterInfo() ->(raterIndexs:[Int],isEmpty:Bool){
+    func getUserRaterInfo(type:Int) ->(raterIndexs:[Int],isEmpty:Bool){
         var isEmpty = true
         var raterIndexs = [Int]()
         dbq.inDatabase { (db) -> Void in
-            let sql_select = "SELECT * FROM USERRATERINFO_\(SHARED_USER.UserIndex)"
-            if let rs = db.executeQuery(sql_select, withArgumentsInArray:nil){  //可选绑定
+            let sql_select = "SELECT * FROM USERRATERINFO_\(SHARED_USER.UserIndex) WHERE TYPE = ?"
+            if let rs = db.executeQuery(sql_select, withArgumentsInArray:[type]){  //可选绑定
                 
                 while rs.next(){
                     raterIndexs.append(Int(rs.intForColumn("RATERINDEX")))
@@ -72,14 +68,10 @@ class UserRaterCache: NSObject {
     
     func removeAllRater(){
         let sql_delete = "DELETE FROM USERRATERINFO_\(SHARED_USER.UserIndex)"
-//        let sql_seqSet = "UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = 'USERRATERINFO_\(SHARED_USER.UserIndex)'"
         dbq.inDatabase { (db) -> Void in
             if !db.executeUpdate(sql_delete, withArgumentsInArray: nil){
                 print("rater table delete failed")
             }
-//            if !db.executeUpdate(sql_seqSet, withArgumentsInArray: nil){
-//                print("rater seq set zero failed")
-//            }
         }
     }
 
