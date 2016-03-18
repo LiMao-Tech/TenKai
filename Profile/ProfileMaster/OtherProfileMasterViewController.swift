@@ -92,7 +92,6 @@ class OtherProfileMasterViewController: ProfileMasterViewController {
                 self.pVC.setScrollView()
                 self.pVC.getProfileImages()
                 self.pPCVC.dataInit()
-
             }
         }
     }

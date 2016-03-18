@@ -69,7 +69,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         //protraitBtn
         portraitBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
         if(SHARED_USER.PortraitImage == nil){
-            portraitBtn.setImage(UIImage(named: "user_pic_radar_140")!, forState: .Normal)
+            portraitBtn.setImage(UIImage(named: "user_pic_radar")!, forState: .Normal)
         }else{
             portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         }
@@ -334,34 +334,35 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         switch buttonIndex {
         case 0:
             generateNodesByGender(1)
+            circularMenuVC.removeViewWithAnimation()
 
         case 1:
             generateNodesByGender(0)
-
+            circularMenuVC.removeViewWithAnimation()
         case 2:
             refreshBtnClicked()
-
+            circularMenuVC.removeViewWithAnimation()
         case 3:
             pushUserProfileVC()
-        
+            circularMenuVC.removeViewWithAnimation()
         case 4:
             self.navigationController?.navigationBar.hidden = true
             self.circularMenuVC.resignFirstResponder()
-            
+            circularMenuVC.removeViewWithAnimation()
         case 5:
             let cVC = ChatViewController()
             self.navigationController?.pushViewController(cVC, animated: true)
-            
+            circularMenuVC.removeViewWithAnimation()
         case 6:
             let nVC = NotificationViewController()
             self.navigationController?.pushViewController(nVC, animated: true)
-            
+            circularMenuVC.removeViewWithAnimation()
         case 7:
             let sVC = SettingsViewController()
             self.navigationController?.pushViewController(sVC, animated: true)
-            
+            circularMenuVC.removeViewWithAnimation()
         default:
-            self.circularMenuVC.resignFirstResponder()
+            circularMenuVC.removeViewWithAnimation()
         }
     }
 

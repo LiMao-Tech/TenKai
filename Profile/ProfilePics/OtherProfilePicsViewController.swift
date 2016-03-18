@@ -9,6 +9,9 @@
 import UIKit
 import SwiftyJSON
 
+private let ProfilePicCellIdentifier = "OtherProPicCell"
+private let ProfilePicCellNibName = "OtherProfilePicCollectionViewCell"
+
 class OtherProfilePicsViewController: ProfilePicsViewController,
                                         LMCollectionViewLayoutDelegate,
                                         UICollectionViewDataSource
@@ -80,7 +83,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.lmCollectionView.dequeueReusableCellWithReuseIdentifier(self.ProfilePicCellIdentifier, forIndexPath: indexPath) as! ProfilePicCollectionViewCell
+        let cell = self.lmCollectionView.dequeueReusableCellWithReuseIdentifier(ProfilePicCellIdentifier, forIndexPath: indexPath) as! OtherProfilePicCollectionViewCell
 
         let obj = self.imagesJSON[indexPath.row]
         let imageJSON = JSON(obj as! [String: AnyObject])
@@ -89,7 +92,13 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         let cachedImage = SHARED_IMAGE_CACHE.imageWithIdentifier(imageName)
 
         if let retrivedImage = cachedImage {
-            cell.imageView.image = retrivedImage
+            cell.picIV.image = retrivedImage
+            if imageJSON["IsLocked"].boolValue == true {
+                setLockStatus(cell, status: true)
+            }
+            else {
+                setLockStatus(cell, status: false)
+            }
         }
         else {
             let imageIndex = imageJSON["ID"].stringValue
@@ -97,8 +106,14 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
                 if let image = response.result.value {
-                    cell.imageView.image = image
+                    cell.picIV.image = image
                     SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
+                    if imageJSON["IsLocked"].boolValue == true {
+                        self.setLockStatus(cell, status: true)
+                    }
+                    else {
+                        self.setLockStatus(cell, status: false)
+                    }
                 }
                 else {
                     cell.backgroundColor = COLOR_BG
@@ -115,15 +130,15 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         return CGSizeMake(dim, dim)
     }
 
-    func magnifyCellAtIndexPath(indexPath: NSIndexPath) {
+    private func magnifyCellAtIndexPath(indexPath: NSIndexPath) {
         if indexPath.row > self.dims.count || self.isProcessing {
             return
         }
 
         self.isProcessing = true
 
-        let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
-        let cellImage = selectedCell?.imageView.image
+        let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? OtherProfilePicCollectionViewCell
+        let cellImage = selectedCell?.picIV.image
 
         self.lmCollectionView.performBatchUpdates({() in
             if self.dims[indexPath.row] == BlockDim.Std {
@@ -142,9 +157,20 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
             }
             },
             completion: {(done) in
-                let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
-                novaCell?.imageView.image = cellImage
+                let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? OtherProfilePicCollectionViewCell
+                novaCell?.picIV.image = cellImage
                 self.isProcessing = false
         })
+    }
+
+    private func setLockStatus(cell: OtherProfilePicCollectionViewCell, status: Bool) {
+        if status {
+            cell.picIV.alpha = 0.7
+        }
+        else {
+            cell.picIV.alpha = 1.0
+        }
+
+        cell.picIV.hidden = !status
     }
 }

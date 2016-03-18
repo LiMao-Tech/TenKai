@@ -16,9 +16,6 @@ enum BlockDim: CGFloat {
 
 class ProfilePicsViewController: UIViewController {
     
-    let ProfilePicCellIdentifier = "ProPicCell"
-    let ProfilePicCellNibName = "ProfilePicCollectionViewCell"
-    
     let layout = LMCollectionViewLayout()
     
     var isProcessing: Bool = false

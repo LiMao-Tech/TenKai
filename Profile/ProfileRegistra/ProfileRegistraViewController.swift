@@ -107,7 +107,7 @@ class RegistProfileViewController: UIViewController,
         backBtn.addTarget(self, action: "viewBack", forControlEvents: .TouchUpInside)
         
         // init buttons
-        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 70, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar_140", targetAction: "toImagePicker")
+        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 70, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar", targetAction: "toImagePicker")
         buttonProfile.layer.masksToBounds = true
         buttonProfile.layer.cornerRadius = buttonProfile.bounds.width*0.5
         

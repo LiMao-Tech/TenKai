@@ -135,7 +135,7 @@ class UserCell: UITableViewCell {
         self.contentView.backgroundColor = COLOR_BG
         lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
         lockBtn.addTarget(self, action: "lockBtnDidClicked", forControlEvents: .TouchUpInside)
-        headImage.setImage(UIImage(named: "user_pic_radar_140"), forState: UIControlState.Normal)
+        headImage.setImage(UIImage(named: "user_pic_radar"), forState: UIControlState.Normal)
         badgeView = JSBadgeView(parentView: headImage, alignment: .BottomLeft)
         nameLabel = UILabel()
         nameLabel.font = UIFont.systemFontOfSize(15)

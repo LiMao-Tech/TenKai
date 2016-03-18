@@ -31,10 +31,6 @@
                         <constraint firstAttribute="width" constant="19" id="JmU-Eh-vhQ"/>
                     </constraints>
                 </imageView>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="L6N-g4-OIW">
-                    <rect key="frame" x="0.0" y="45" width="600" height="461"/>
-                    <collectionViewLayout key="collectionViewLayout" id="fwF-n5-NRs" customClass="LMCollectionViewLayout"/>
-                </collectionView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4D-oz-TSe">
                     <rect key="frame" x="530" y="9" width="62" height="22"/>
                     <constraints>
@@ -70,6 +66,10 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="L6N-g4-OIW">
+                    <rect key="frame" x="0.0" y="45" width="600" height="461"/>
+                    <collectionViewLayout key="collectionViewLayout" id="fwF-n5-NRs" customClass="LMCollectionViewLayout"/>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>

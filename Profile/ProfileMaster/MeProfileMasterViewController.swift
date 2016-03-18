@@ -110,7 +110,8 @@ class MeProfileMasterViewController: ProfileMasterViewController,
     }
 
     func toSettings() {
-
+        let sVC = SettingsViewController()
+        self.navigationController?.pushViewController(sVC, animated: true)
     }
 
 

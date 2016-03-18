@@ -44,7 +44,7 @@ class PCoinTransferCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         headImage = UIButton(frame: CGRectMake(10, 10, 55, 55))
-        headImage.setImage(UIImage(named: "user_pic_110"), forState: .Normal)
+        headImage.setImage(UIImage(named: "user_pic"), forState: .Normal)
         headImage.enabled = false
         headImage.adjustsImageWhenDisabled = false
         timeLabel = UILabel(frame: CGRectMake(70, 55, SCREEN_WIDTH-80, 15))

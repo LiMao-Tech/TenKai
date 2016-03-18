@@ -47,7 +47,7 @@
 -(id)initWithFrame:(CGRect)frame {
     self = [super init];
     _screenFrame = frame;
-    _startingPoint= CGPointMake(BUTTON_DENO, _screenFrame.size.height*(BUTTON_DENO-1)/BUTTON_DENO);
+    _startingPoint= CGPointMake(BUTTON_DENO+5, _screenFrame.size.height*(BUTTON_DENO-1)/BUTTON_DENO);
     NSArray * names = [[NSArray alloc] initWithObjects: @"btn_menu_search_female", @"btn_menu_search_male", @"btn_menu_search_all", @"btn_menu_profile", @"btn_menu_radar", @"btn_menu_chat_normal", @"btn_menu_notification_normal", @"btn_menu_setting", nil];
     if (self)
     {
@@ -55,7 +55,7 @@
         _arrButtonImageName = names;
         
         [self setupData];
-        [self setTapGesture];
+        // [self setTapGesture];
         [self setupButtons];
     }
     return self;
@@ -90,8 +90,9 @@
     //Corner button
     _buttonCorner = [UIButton buttonWithType:UIButtonTypeCustom];
     [_buttonCorner addTarget:self action:@selector(hideMenu:) forControlEvents:UIControlEventTouchUpInside];
-    [_buttonCorner setFrame:CGRectMake(0, _screenFrame.size.height*(BUTTON_DENO-1)/BUTTON_DENO, BUTTON_DENO*3, BUTTON_DENO*3)];
+    [_buttonCorner setFrame:CGRectMake(5, _screenFrame.size.height*(BUTTON_DENO-1)/BUTTON_DENO-5, BUTTON_DENO*3, BUTTON_DENO*3)];
     [_buttonCorner setImage:[UIImage imageNamed:@"btn_menu"] forState:UIControlStateNormal];
+
     //Circular menu buttons
     _arrButtons = [[NSMutableArray alloc] init];
 

@@ -59,7 +59,7 @@ class OtherChatCell: ChatBaseCell {
         super.awakeFromNib()
         self.selectionStyle = .None
         self.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
-        headImage.setImage(UIImage(named: "user_pic_88"), forState: UIControlState.Normal)
+        headImage.setImage(UIImage(named: "user_pic"), forState: UIControlState.Normal)
         context.titleLabel?.numberOfLines = 0
                 // Initialization code
         self.lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)

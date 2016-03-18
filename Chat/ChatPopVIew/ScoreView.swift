@@ -19,7 +19,7 @@ class ScoreView: UIView {
         didSet{
             nameLabel.text = tenUser.UserName
             if(tenUser.PortraitImage == nil){
-                headImageView.image = UIImage(named: "user_pic_radar_140")!
+                headImageView.image = UIImage(named: "user_pic_radar")!
             }else{
                 headImageView.image = Tools.toCirclurImage(tenUser.PortraitImage!)
             }
@@ -64,7 +64,7 @@ class ScoreView: UIView {
         contentView.addSubview(nameLabel)
         var y = CGRectGetMaxY(nameLabel.frame)+10
         headImageView = UIImageView(frame: CGRectMake(gap,y,50,50))
-        headImageView.image = UIImage(named: "user_pic_radar_55")
+        headImageView.image = UIImage(named: "user_pic_radar")
         contentView.addSubview(headImageView)
         y += 15
         scoreLabel = UILabel(frame: CGRectMake(contentL-gap*2,y,20,20))

@@ -9,5 +9,5 @@
 import UIKit
 
 class PCoinTransModel: SingleChatMessage {
-    var portrait = UIImage(named: "user_pic_110")
+    var portrait = UIImage(named: "user_pic")
 }

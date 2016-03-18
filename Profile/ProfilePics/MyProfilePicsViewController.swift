@@ -14,6 +14,10 @@ private enum ProfilePic: Int {
 }
 
 
+private let ProfilePicCellIdentifier = "MyProPicCell"
+private let ProfilePicCellNibName = "MyProfilePicCollectionViewCell"
+
+
 class MyProfilePicsViewController: ProfilePicsViewController,
                                     LMCollectionViewLayoutDelegate,
                                     UICollectionViewDataSource
@@ -165,7 +169,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
     // collection view
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
+        let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? MyProfilePicCollectionViewCell
         let imageJSON = JSON(imagesJSON[indexPath.row] as! [String: AnyObject])
         let id = imageJSON["ID"].intValue
 
@@ -213,7 +217,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.lmCollectionView.dequeueReusableCellWithReuseIdentifier(self.ProfilePicCellIdentifier, forIndexPath: indexPath) as! ProfilePicCollectionViewCell
+        let cell = self.lmCollectionView.dequeueReusableCellWithReuseIdentifier(ProfilePicCellIdentifier, forIndexPath: indexPath) as! MyProfilePicCollectionViewCell
         
         let obj = self.imagesJSON[indexPath.row]
         let imageJSON = JSON(obj as! [String: AnyObject])
@@ -223,7 +227,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
 
         if let retrivedImage = cachedImage {
-            cell.imageView.image = retrivedImage
+            cell.picIV.image = retrivedImage
             if imageJSON["IsLocked"].boolValue == true {
                 setLockStatus(cell, status: true)
             }
@@ -237,7 +241,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
                 if let image = response.result.value {
-                    cell.imageView.image = image
+                    cell.picIV.image = image
                     SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
                     if imageJSON["IsLocked"].boolValue == true {
                         self.setLockStatus(cell, status: true)
@@ -287,8 +291,8 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         
         self.isProcessing = true
         
-        let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
-        let cellImage = selectedCell?.imageView.image
+        let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? MyProfilePicCollectionViewCell
+        let cellImage = selectedCell?.picIV.image
         
         self.lmCollectionView.performBatchUpdates({() in
             if self.dims[indexPath.row] == BlockDim.Std {
@@ -306,8 +310,8 @@ class MyProfilePicsViewController: ProfilePicsViewController,
                 self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
             }        },
         completion: {(done) in
-            let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? ProfilePicCollectionViewCell
-            novaCell?.imageView.image = cellImage
+            let novaCell = self.lmCollectionView.cellForItemAtIndexPath(indexPath) as? MyProfilePicCollectionViewCell
+            novaCell?.picIV.image = cellImage
             self.isProcessing = false
         })
         
@@ -399,7 +403,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         deleteBarBtn.enabled = true
     }
 
-    private func postLockStatus(cell: ProfilePicCollectionViewCell, id: Int, status: Bool ) {
+    private func postLockStatus(cell: MyProfilePicCollectionViewCell, id: Int, status: Bool ) {
         let params: [String : AnyObject] = [
             "ID": id,
             "IsLocked": status
@@ -421,15 +425,15 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         }
     }
 
-    private func setLockStatus(cell: ProfilePicCollectionViewCell, status: Bool) {
+    private func setLockStatus(cell: MyProfilePicCollectionViewCell, status: Bool) {
         if status {
-            cell.imageView.alpha = 0.7
+            cell.picIV.alpha = 0.7
         }
         else {
-            cell.imageView.alpha = 1.0
+            cell.picIV.alpha = 1.0
         }
 
-        cell.lockImageView.hidden = !status
+        cell.picIV.hidden = !status
     }
 
     private func deleteImage(id: Int, oldJSON: JSON) {

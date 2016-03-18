@@ -26,9 +26,11 @@
 
 -(id)initWithFrame:(CGRect) frame;
 
-//shows menus
--(void)show;
 
+//shows menus
+- (void)show;
+
+- (void)removeViewWithAnimation;
 @end
 
 // 版权属于原作者

@@ -42,7 +42,7 @@ class EditProfileController : UIViewController,
         self.navigationItem.rightBarButtonItem = button
         
         chosenImage = UIImage()
-        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 104, btnWidth: 70, btnHeight: 70, imageName: "user_pic_radar_140", targetAction: "toImagePicker")
+        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 104, btnWidth: 70, btnHeight: 70, imageName: "user_pic_radar", targetAction: "toImagePicker")
         buttonProfile.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         var y = CGRectGetMaxY(buttonProfile.frame)+10
         userName = UILabel(frame: CGRectMake(0,y,SCREEN_WIDTH,20))

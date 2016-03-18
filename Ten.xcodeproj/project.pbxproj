@@ -48,6 +48,8 @@
 		C4CED3161B88FB010008BCF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CED3141B88FB010008BCF2 /* LaunchScreen.xib */; };
 		C4CED3221B88FB010008BCF2 /* TenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CED3211B88FB010008BCF2 /* TenTests.swift */; };
 		D2D545A392C1B8FD10DA078C /* Pods_Ten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3ECC7684628AF240B6366C /* Pods_Ten.framework */; };
+		D4032B4F1C995B3400A518EE /* SingleChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4032B4D1C995B3400A518EE /* SingleChatMessage.swift */; };
+		D4032B501C995B3400A518EE /* SingleChatMessageFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4032B4E1C995B3400A518EE /* SingleChatMessageFrame.swift */; };
 		D414D0631C6E263500C6566F /* Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D414D0621C6E263500C6566F /* Urls.swift */; };
 		D414D0651C6E2AFA00C6566F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D414D0641C6E2AFA00C6566F /* Colors.swift */; };
 		D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D434AC101C6401DD0013E27D /* UserCacheTool.swift */; };
@@ -63,6 +65,8 @@
 		D45D81EA1C4F8B2B0035A213 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D45D81E91C4F8B2B0035A213 /* ProfileViewController.xib */; };
 		D481348F1BE9E26500F49D63 /* TenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348D1BE9E26500F49D63 /* TenLogin.swift */; };
 		D48134901BE9E26500F49D63 /* TenUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D481348E1BE9E26500F49D63 /* TenUser.swift */; };
+		D4972BE41C9B777B004D7A16 /* MyProfilePicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4972BE21C9B777B004D7A16 /* MyProfilePicCollectionViewCell.swift */; };
+		D4972BE51C9B777B004D7A16 /* MyProfilePicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4972BE31C9B777B004D7A16 /* MyProfilePicCollectionViewCell.xib */; };
 		D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5EF991C40590700B48C48 /* LMImagePicker.swift */; };
 		D4C236C31C42097400740FA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C236C11C42097400740FA7 /* ProfileViewController.swift */; };
 		D4C671021C81B06B00C09CFD /* ProfileMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C671001C81B06B00C09CFD /* ProfileMasterViewController.swift */; };
@@ -76,8 +80,8 @@
 		D4D0F88E1C664A11007F3BF6 /* TenGridButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F88D1C664A11007F3BF6 /* TenGridButton.swift */; };
 		D4D0F8921C66BE81007F3BF6 /* TenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F8911C66BE81007F3BF6 /* TenTimeManager.swift */; };
 		D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA2B331C53D03E00A52829 /* ProfilePicsViewController.swift */; };
-		D4EA2B371C53D05E00A52829 /* ProfilePicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */; };
-		D4EA2B381C53D05E00A52829 /* ProfilePicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */; };
+		D4EA2B371C53D05E00A52829 /* OtherProfilePicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA2B351C53D05E00A52829 /* OtherProfilePicCollectionViewCell.swift */; };
+		D4EA2B381C53D05E00A52829 /* OtherProfilePicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4EA2B361C53D05E00A52829 /* OtherProfilePicCollectionViewCell.xib */; };
 		D4EA5BD51C13E787009E9927 /* ADCircularMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BD41C13E787009E9927 /* ADCircularMenuViewController.m */; };
 		D4EA5BE61C13E8C5009E9927 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BE51C13E8C5009E9927 /* Common.swift */; };
 		D4EA5BEB1C13E98E009E9927 /* LockView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BEA1C13E98E009E9927 /* LockView.m */; };
@@ -107,8 +111,6 @@
 		D4EA5C631C142430009E9927 /* ChatBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */; };
 		D4EA5C641C142430009E9927 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C5B1C142430009E9927 /* ChatViewController.swift */; };
 		D4EA5C691C142430009E9927 /* SingleChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C601C142430009E9927 /* SingleChatController.swift */; };
-		D4EA5C6A1C142430009E9927 /* SingleChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C611C142430009E9927 /* SingleChatMessage.swift */; };
-		D4EA5C6B1C142430009E9927 /* SingleChatMessageFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */; };
 		D4EA5C6F1C142443009E9927 /* LevelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C6D1C142443009E9927 /* LevelButton.swift */; };
 		D4EA5C701C142443009E9927 /* LevelUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C6E1C142443009E9927 /* LevelUserController.swift */; };
 		D4EA5C761C142452009E9927 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C721C142452009E9927 /* UserCell.swift */; };
@@ -377,6 +379,8 @@
 		C4CED31B1B88FB010008BCF2 /* TenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CED3201B88FB010008BCF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CED3211B88FB010008BCF2 /* TenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenTests.swift; sourceTree = "<group>"; };
+		D4032B4D1C995B3400A518EE /* SingleChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatMessage.swift; sourceTree = "<group>"; };
+		D4032B4E1C995B3400A518EE /* SingleChatMessageFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatMessageFrame.swift; sourceTree = "<group>"; };
 		D414D0621C6E263500C6566F /* Urls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Urls.swift; sourceTree = "<group>"; };
 		D414D0641C6E2AFA00C6566F /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		D434AC101C6401DD0013E27D /* UserCacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCacheTool.swift; path = TenCaches/UserCacheTool.swift; sourceTree = "<group>"; };
@@ -392,6 +396,8 @@
 		D45D81E91C4F8B2B0035A213 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		D481348D1BE9E26500F49D63 /* TenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLogin.swift; sourceTree = "<group>"; };
 		D481348E1BE9E26500F49D63 /* TenUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenUser.swift; sourceTree = "<group>"; };
+		D4972BE21C9B777B004D7A16 /* MyProfilePicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfilePicCollectionViewCell.swift; sourceTree = "<group>"; };
+		D4972BE31C9B777B004D7A16 /* MyProfilePicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyProfilePicCollectionViewCell.xib; sourceTree = "<group>"; };
 		D4A5EF991C40590700B48C48 /* LMImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMImagePicker.swift; sourceTree = "<group>"; };
 		D4C236C11C42097400740FA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D4C671001C81B06B00C09CFD /* ProfileMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileMasterViewController.swift; path = ProfileMaster/ProfileMasterViewController.swift; sourceTree = "<group>"; };
@@ -405,8 +411,8 @@
 		D4D0F88D1C664A11007F3BF6 /* TenGridButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenGridButton.swift; path = SubClasses/TenGridButton.swift; sourceTree = "<group>"; };
 		D4D0F8911C66BE81007F3BF6 /* TenTimeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenTimeManager.swift; path = TenManagers/TenTimeManager.swift; sourceTree = "<group>"; };
 		D4EA2B331C53D03E00A52829 /* ProfilePicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicsViewController.swift; sourceTree = "<group>"; };
-		D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePicCollectionViewCell.swift; sourceTree = "<group>"; };
-		D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilePicCollectionViewCell.xib; sourceTree = "<group>"; };
+		D4EA2B351C53D05E00A52829 /* OtherProfilePicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfilePicCollectionViewCell.swift; sourceTree = "<group>"; };
+		D4EA2B361C53D05E00A52829 /* OtherProfilePicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfilePicCollectionViewCell.xib; sourceTree = "<group>"; };
 		D4EA5BD31C13E787009E9927 /* ADCircularMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADCircularMenuViewController.h; sourceTree = "<group>"; };
 		D4EA5BD41C13E787009E9927 /* ADCircularMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADCircularMenuViewController.m; sourceTree = "<group>"; };
 		D4EA5BE51C13E8C5009E9927 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
@@ -440,8 +446,6 @@
 		D4EA5C5A1C142430009E9927 /* ChatBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatBaseCell.swift; path = ../ChatBaseCell.swift; sourceTree = "<group>"; };
 		D4EA5C5B1C142430009E9927 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D4EA5C601C142430009E9927 /* SingleChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleChatController.swift; sourceTree = "<group>"; };
-		D4EA5C611C142430009E9927 /* SingleChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleChatMessage.swift; path = ../SingleChatMessage.swift; sourceTree = "<group>"; };
-		D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleChatMessageFrame.swift; path = ../SingleChatMessageFrame.swift; sourceTree = "<group>"; };
 		D4EA5C6D1C142443009E9927 /* LevelButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LevelButton.swift; path = ../Level/LevelButton.swift; sourceTree = "<group>"; };
 		D4EA5C6E1C142443009E9927 /* LevelUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUserController.swift; sourceTree = "<group>"; };
 		D4EA5C721C142452009E9927 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
@@ -722,15 +726,6 @@
 				643C8BBF1C48DF5400682A60 /* PCoinCell.xib */,
 			);
 			path = ChatCell;
-			sourceTree = "<group>";
-		};
-		643E8CD51C3E492800349187 /* ChatModel */ = {
-			isa = PBXGroup;
-			children = (
-				D4EA5C611C142430009E9927 /* SingleChatMessage.swift */,
-				D4EA5C621C142430009E9927 /* SingleChatMessageFrame.swift */,
-			);
-			path = ChatModel;
 			sourceTree = "<group>";
 		};
 		643F9C751BF6DCC300361C55 /* Other */ = {
@@ -1025,8 +1020,10 @@
 				D45D81D81C4F75160035A213 /* MyProfilePicsViewController.xib */,
 				D45D81D91C4F75160035A213 /* OtherProfilePicsViewController.swift */,
 				D45D81DA1C4F75160035A213 /* OtherProfilePicsViewController.xib */,
-				D4EA2B351C53D05E00A52829 /* ProfilePicCollectionViewCell.swift */,
-				D4EA2B361C53D05E00A52829 /* ProfilePicCollectionViewCell.xib */,
+				D4EA2B351C53D05E00A52829 /* OtherProfilePicCollectionViewCell.swift */,
+				D4EA2B361C53D05E00A52829 /* OtherProfilePicCollectionViewCell.xib */,
+				D4972BE21C9B777B004D7A16 /* MyProfilePicCollectionViewCell.swift */,
+				D4972BE31C9B777B004D7A16 /* MyProfilePicCollectionViewCell.xib */,
 			);
 			path = ProfilePics;
 			sourceTree = "<group>";
@@ -1047,8 +1044,9 @@
 		D4EA5C591C142430009E9927 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				D4032B4D1C995B3400A518EE /* SingleChatMessage.swift */,
+				D4032B4E1C995B3400A518EE /* SingleChatMessageFrame.swift */,
 				643C8BC61C4B4CB300682A60 /* ChatPopVIew */,
-				643E8CD51C3E492800349187 /* ChatModel */,
 				643E8CCC1C3E309E00349187 /* ChatCell */,
 				D4EA5C5B1C142430009E9927 /* ChatViewController.swift */,
 				D4EA5C601C142430009E9927 /* SingleChatController.swift */,
@@ -1468,6 +1466,7 @@
 				D4EA5DEE1C14252B009E9927 /* _expression_cn.plist in Resources */,
 				D4EA5DA31C14252B009E9927 /* 048@2x.png in Resources */,
 				D4EA5DE01C14252B009E9927 /* 079.png in Resources */,
+				D4972BE51C9B777B004D7A16 /* MyProfilePicCollectionViewCell.xib in Resources */,
 				D4EA5D521C14252B009E9927 /* 008.png in Resources */,
 				D4EA5DA41C14252B009E9927 /* 049.png in Resources */,
 				D4EA5DC11C14252B009E9927 /* 063@2x.png in Resources */,
@@ -1531,7 +1530,7 @@
 				D4EA5D741C14252B009E9927 /* 025.png in Resources */,
 				D4EA5DA91C14252B009E9927 /* 051@2x.png in Resources */,
 				D4EA5D681C14252B009E9927 /* 019.png in Resources */,
-				D4EA2B381C53D05E00A52829 /* ProfilePicCollectionViewCell.xib in Resources */,
+				D4EA2B381C53D05E00A52829 /* OtherProfilePicCollectionViewCell.xib in Resources */,
 				D4EA5D841C14252B009E9927 /* 033.png in Resources */,
 				D4EA5D921C14252B009E9927 /* 040.png in Resources */,
 				D4EA5D751C14252B009E9927 /* 025@2x.png in Resources */,
@@ -1652,6 +1651,7 @@
 				640F3BE21C0C898700B31DA0 /* FMDatabase.m in Sources */,
 				D434AC171C6402090013E27D /* TenMainGridManager.swift in Sources */,
 				C4CED30E1B88FB010008BCF2 /* MainViewController.swift in Sources */,
+				D4032B501C995B3400A518EE /* SingleChatMessageFrame.swift in Sources */,
 				641F2AD81C9595AA00D687BB /* UserListCache.swift in Sources */,
 				D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */,
 				D4EA5BFA1C13EA12009E9927 /* DKImagePickerController.swift in Sources */,
@@ -1671,11 +1671,11 @@
 				D4EA5C2E1C13F669009E9927 /* PCoinViewController.swift in Sources */,
 				D4EA5C6F1C142443009E9927 /* LevelButton.swift in Sources */,
 				D434AC131C6401DD0013E27D /* UsersCacheTool.swift in Sources */,
-				D4EA5C6B1C142430009E9927 /* SingleChatMessageFrame.swift in Sources */,
 				D4EA5BF61C13EA12009E9927 /* DKAssetGroupVC.swift in Sources */,
 				D4EA5C691C142430009E9927 /* SingleChatController.swift in Sources */,
 				649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */,
 				D4EA5C631C142430009E9927 /* ChatBaseCell.swift in Sources */,
+				D4972BE41C9B777B004D7A16 /* MyProfilePicCollectionViewCell.swift in Sources */,
 				D4EA5C2A1C13F669009E9927 /* PCoinTransferCell.swift in Sources */,
 				640F3BE61C0C898700B31DA0 /* FMResultSet.m in Sources */,
 				D4EA5C171C13F1F4009E9927 /* ProfileEditController.swift in Sources */,
@@ -1716,7 +1716,6 @@
 				D4D0F88E1C664A11007F3BF6 /* TenGridButton.swift in Sources */,
 				D44624021C3B2D9E0098AE53 /* OtherProfileViewController.swift in Sources */,
 				644F1D0E1C286210002E65CE /* SharedUser.swift in Sources */,
-				D4EA5C6A1C142430009E9927 /* SingleChatMessage.swift in Sources */,
 				D4EA5C641C142430009E9927 /* ChatViewController.swift in Sources */,
 				D4C236C31C42097400740FA7 /* ProfileViewController.swift in Sources */,
 				D4EA5C961C1424C6009E9927 /* RandomUserController.swift in Sources */,
@@ -1724,8 +1723,9 @@
 				640467811C4BC8910062A8A4 /* PCoinTransView.swift in Sources */,
 				642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */,
 				64AF67671C7B086D00791E93 /* PCoinHistoryModel.swift in Sources */,
+				D4032B4F1C995B3400A518EE /* SingleChatMessage.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
-				D4EA2B371C53D05E00A52829 /* ProfilePicCollectionViewCell.swift in Sources */,
+				D4EA2B371C53D05E00A52829 /* OtherProfilePicCollectionViewCell.swift in Sources */,
 				D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */,
 				D4EA5C8C1C1424AF009E9927 /* Notification.swift in Sources */,
 				C4CED30C1B88FB010008BCF2 /* AppDelegate.swift in Sources */,

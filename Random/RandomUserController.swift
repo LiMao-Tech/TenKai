@@ -20,6 +20,8 @@ class RandomUserController: UIViewController,
     var userList: [AnyObject] = [AnyObject]()
     var users = [TenUser]()
     var ralUsers = [RandomAndLevelUser]()
+
+    
     // View Controls
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,26 +34,17 @@ class RandomUserController: UIViewController,
         userListView.separatorStyle = .None
         
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
+        refresh.addTarget(self, action: "refreshList:", forControlEvents: .ValueChanged)
         
         self.view.addSubview(userListView)
         self.userListView.addSubview(refresh)
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.userList = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
-        for user in userList{
-            let newUser = user as! [String: AnyObject]
-            let tenUser = TenUser(dict: newUser)
-            let ralUser = RandomAndLevelUser(dict: newUser)
-            ralUsers.append(ralUser)
-            users.append(tenUser)
-        }
-        self.userListView.reloadData()
+        TenOtherUsersJSONManager.SharedInstance.getRandomUserList(self)
     }
     
-    
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -61,14 +54,12 @@ class RandomUserController: UIViewController,
         return UIStatusBarStyle.LightContent
     }
     
-    func refreshStateChange(refresh:UIRefreshControl){
-        
-        // TODO: Get Users here
+    func refreshList(refresh: UIRefreshControl){
+
         self.userList = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
         self.userListView.reloadData()
         
         refresh.endRefreshing()
-        print("refreshed")
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -90,7 +81,6 @@ class RandomUserController: UIViewController,
         return self.ralUsers.count
     }
     
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         var cell = userListView.dequeueReusableCellWithIdentifier("RALUserCell") as? RandomAndLevelUserCell
@@ -102,12 +92,11 @@ class RandomUserController: UIViewController,
         
         let imageIndex = user.UserIndex.description
         let targetUrl = Url_GetHeadImage + imageIndex
-        ALAMO_MANAGER.request(.GET, targetUrl)
-            .responseImage { response in
-                if let image = response.result.value {
-                    cell!.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
-                    user.Portrait = UIImagePNGRepresentation(image)
-                }
+        ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
+            if let image = response.result.value {
+                cell!.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
+                user.Portrait = UIImagePNGRepresentation(image)
+            }
         }
         cell!.RALuser = user
 //        cell!.nameLabel.text = user.UserName

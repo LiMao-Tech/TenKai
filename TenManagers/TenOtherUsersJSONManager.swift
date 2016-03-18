@@ -17,11 +17,12 @@ class TenOtherUsersJSONManager: NSObject {
     private let MaxUsersOnGrid = 10
     
     private var userList: [AnyObject] = [AnyObject]()
+
+    private var userListLv: [AnyObject]?
     
     override init() {
         super.init()
-    
-        getUserList()
+
     }
     
    
@@ -77,8 +78,9 @@ class TenOtherUsersJSONManager: NSObject {
         return randomUsers
     }
     
-    private func getUserList() -> Void {
+    func getRandomUserList(ruc: RandomUserController) -> Void {
         ALAMO_MANAGER.request(.GET, Url_User, parameters: nil) .responseJSON { response in
+
             if let values = response.result.value {
                 self.userList = (values as? [AnyObject])!
                 
@@ -89,6 +91,15 @@ class TenOtherUsersJSONManager: NSObject {
                         break
                     }
                 }
+
+                for user in self.userList {
+                    let newUser = user as! [String: AnyObject]
+                    let tenUser = TenUser(dict: newUser)
+                    let ralUser = RandomAndLevelUser(dict: newUser)
+                    ruc.ralUsers.append(ralUser)
+                    ruc.users.append(tenUser)
+                }
+                ruc.userListView.reloadData()
             }
         }
     }

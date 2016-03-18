@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ProfilePicCollectionViewCell: UICollectionViewCell {
+class OtherProfilePicCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var lockImageView: UIImageView!
+    @IBOutlet weak var picIV: UIImageView!
+    @IBOutlet weak var lockIV: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
