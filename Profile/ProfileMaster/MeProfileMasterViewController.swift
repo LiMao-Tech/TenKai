@@ -20,33 +20,15 @@ class MeProfileMasterViewController: ProfileMasterViewController,
     let uploadController = UIAlertController(title: "上传中", message: "请稍后。", preferredStyle: .Alert)
 
 
-    let addImageBtn = UIBarButtonItem()
-    let toAlbumBtn = UIBarButtonItem()
-    let toSettingsBtn = UIBarButtonItem()
-    let toProfileBtn = UIBarButtonItem()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // navigation
-        addImageBtn.image = UIImage(named: "plussign")
-        addImageBtn.style = .Plain
-        addImageBtn.target = self
+        // add btn targets
         addImageBtn.action = Selector("addImage")
-
-        toAlbumBtn.image = UIImage(named: "album")
-        toAlbumBtn.style = .Plain
-        toAlbumBtn.target = self
         toAlbumBtn.action = Selector("toAlbum")
-
-        toSettingsBtn.image = UIImage(named: "gear")
-        toSettingsBtn.style = .Plain
-        toSettingsBtn.target = self
         toSettingsBtn.action = Selector("toSettings")
-
-        toProfileBtn.image = UIImage(named: "navBar_profile")
-        toProfileBtn.style = .Plain
-        toProfileBtn.target = self
         toProfileBtn.action = Selector("toProfile")
 
         self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
@@ -94,7 +76,7 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         }
     }
 
-    // show album
+
     func toAlbum() {
         self.navigationItem.rightBarButtonItems = [addImageBtn, toProfileBtn]
         self.profileSV.contentOffset = CGPointMake(0, pPCVC.view.frame.origin.y)

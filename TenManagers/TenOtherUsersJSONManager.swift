@@ -92,6 +92,9 @@ class TenOtherUsersJSONManager: NSObject {
                     }
                 }
 
+                ruc.ralUsers.removeAll()
+                ruc.users.removeAll()
+
                 for user in self.userList {
                     let newUser = user as! [String: AnyObject]
                     let tenUser = TenUser(dict: newUser)

@@ -31,9 +31,11 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
     @IBOutlet weak var ageLabel: UILabel!
 
     let unlockAlert = UIAlertController(title: "相片解锁", message: "您需要花费 \(picUnlockCost) P币来解锁该等级", preferredStyle: UIAlertControllerStyle.Alert)
+    let unlockingAlert = UIAlertController(title: "解锁中", message: "请稍后", preferredStyle: UIAlertControllerStyle.Alert)
     let loadingAlert = UIAlertController(title: "载入中", message: "请稍后", preferredStyle: UIAlertControllerStyle.Alert)
 
     var unlockId = 0
+    var selectedCellIndexPath: NSIndexPath?
 
     var userId: Int!
     var tenUser: TenUser!
@@ -60,7 +62,6 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         }
 
         let ok = UIAlertAction(title: "解锁", style: UIAlertActionStyle.Destructive, handler: { (ac) -> Void in
-            print("解锁")
 
             if SHARED_USER.PCoin < picUnlockCost {
                 let insufficientAlert = UIAlertController(title: "解锁失败", message: "P币数量不足，请充值后解锁", preferredStyle: .Alert)
@@ -75,6 +76,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
                 self.presentViewController(insufficientAlert, animated: true, completion: nil)
             }
             else {
+                self.navigationController?.presentViewController(self.unlockingAlert, animated: true, completion: nil)
                 let params: [String : AnyObject] =
                 [
                     "TenImageID": self.unlockId,
@@ -86,8 +88,15 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
                 ALAMO_MANAGER.request(.POST, Url_Unlocker, parameters: params, encoding: .JSON, headers: nil) .responseJSON {
                     response in
+
+
+
                     if response.result.isSuccess {
+                        self.unlocksJSON.append(response.result.value!)
                         SHARED_USER.PCoin -= picUnlockCost
+                        let cell = self.lmCollectionView.cellForItemAtIndexPath(self.selectedCellIndexPath!) as! OtherProfilePicCollectionViewCell
+                        self.setLockStatus(cell, status: false)
+                        self.unlockingAlert.dismissViewControllerAnimated(true, completion: nil)
                     }
                 }
             }
@@ -112,8 +121,6 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         lmCollectionView.dataSource = self
         let lmLayout = lmCollectionView.collectionViewLayout as? LMCollectionViewLayout
         lmLayout?.delegate = self
-
-        
         
         
         // labels
@@ -138,6 +145,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
     // lm collection view
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        selectedCellIndexPath = indexPath
         magnifyCellAtIndexPath(indexPath)
     }
     
@@ -161,19 +169,17 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
         unlockId = imageJSON["ID"].intValue
 
+        var unlockedByUser = false
+        for item in self.unlocksJSON! {
+            let unlockJSON = JSON(item)
+            if unlockJSON["TenImageID"].intValue == self.unlockId {
+                unlockedByUser = true
+            }
+
+        }
+
         if let retrivedImage = cachedImage {
             cell.picIV.image = retrivedImage
-
-            var unlockedByUser = false
-
-            for item in self.unlocksJSON! {
-                let unlockJSON = JSON(item)
-                print("UnlockedJSON: \(unlockJSON["TenImageID"].intValue) unlockId: \(unlockId)")
-                if unlockJSON["TenImageID"].intValue == unlockId {
-                    unlockedByUser = true
-                }
-                
-            }
 
             if imageJSON["IsLocked"].boolValue == true && !unlockedByUser {
                 setLockStatus(cell, status: true)
@@ -188,22 +194,10 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
             let targetUrl = Url_Image + imageIndex + "&thumbnail=true"
 
             ALAMO_MANAGER.request(.GET, targetUrl) .responseImage { response in
-
                 if let image = response.result.value {
                     cell.picIV.image = image
 
                     SHARED_IMAGE_CACHE.addImage(image, withIdentifier: imageName)
-
-                    var unlockedByUser = false
-                    for item in self.unlocksJSON! {
-                        let unlockJSON = JSON(item)
-                        print("UnlockedJSON: \(unlockJSON["TenImageID"].intValue) unlockId: \(self.unlockId)")
-                        if unlockJSON["TenImageID"].intValue == self.unlockId {
-                            unlockedByUser = true
-                        }
-
-                    }
-
                     if imageJSON["IsLocked"].boolValue == true && !unlockedByUser {
                         self.setLockStatus(cell, status: true)
                     }
@@ -247,7 +241,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
         if imageJSON["IsLocked"] == true && !unlockedByUser {
             self.navigationController?.presentViewController(unlockAlert, animated: true, completion: nil)
-
+            self.isProcessing = false
         }
         else {
             let selectedCell = lmCollectionView.cellForItemAtIndexPath(indexPath) as? OtherProfilePicCollectionViewCell
@@ -279,7 +273,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
     private func setLockStatus(cell: OtherProfilePicCollectionViewCell, status: Bool) {
         if status {
-            cell.picIV.alpha = 0.1
+            cell.picIV.alpha = 0.05
         }
         else {
             cell.picIV.alpha = 1.0

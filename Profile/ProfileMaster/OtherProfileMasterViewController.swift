@@ -9,23 +9,23 @@
 import UIKit
 import SwiftyJSON
 
-class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDelegate {
-
-
-
+class OtherProfileMasterViewController: ProfileMasterViewController,
+                                        ScoreViewDelegate
+{
     let pVC = OtherProfileViewController(nibName: "ProfileViewController", bundle: nil)
     let pPCVC = OtherProfilePicsViewController(nibName: "OtherProfilePicsViewController", bundle: nil)
 
-
-    let loadingAlert = UIAlertController(title: "载入中", message: "请稍后", preferredStyle: UIAlertControllerStyle.Alert)
     
     var tenUser: TenUser!
     
-    var scoreView:ScoreView?
+    var scoreView: ScoreView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let chatBtn = UIBarButtonItem(image: UIImage(named: "btn_navBarIcon_chat_normal"), style: .Plain, target: self, action: "pushChatView")
+        
+        chatBtn.action = Selector("pushChatView")
+        toAlbumBtn.action = Selector("toAlbum")
+        toProfileBtn.action = Selector("toProfile")
         
         self.navigationItem.rightBarButtonItem = chatBtn;
 
@@ -47,18 +47,23 @@ class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDel
         profileSV.addSubview(pVC.view)
         profileSV.addSubview(pPCVC.view)
 
-
-        navigationController?.presentViewController(loadingAlert, animated: true, completion: nil)
         getImagesJSON()
-
-
-        // rating
-        // TODO: Ask Tuantuan how to add slider rating
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    // scrollview
+
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < scrollView.contentSize.height/2 {
+            self.navigationItem.rightBarButtonItems = [chatBtn, toAlbumBtn]
+        }
+        else {
+            self.navigationItem.rightBarButtonItems = [chatBtn, toProfileBtn]
+        }
     }
     
 
@@ -73,7 +78,6 @@ class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDel
                 let imagesJSON = (values as? [AnyObject])!
                 self.imagesJSON = imagesJSON
                 self.pPCVC.imagesJSON = imagesJSON
-                self.loadingAlert.dismissViewControllerAnimated(true, completion: nil)
                 self.pPCVC.lmCollectionView.reloadData()
 
                 for obj in self.imagesJSON! {
@@ -152,6 +156,16 @@ class OtherProfileMasterViewController: ProfileMasterViewController,ScoreViewDel
     
     func scoreViewScoreChange() {
         scoreView!.scoreLabel.text = "\(Int(scoreView!.scoreSlider.value))"
+    }
+
+    func toAlbum() {
+        self.navigationItem.rightBarButtonItems = [addImageBtn, toProfileBtn]
+        self.profileSV.contentOffset = CGPointMake(0, pPCVC.view.frame.origin.y)
+    }
+
+    func toProfile() {
+        self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
+        self.profileSV.contentOffset = CGPointMake(0, pVC.view.frame.origin.y)
     }
 
 }

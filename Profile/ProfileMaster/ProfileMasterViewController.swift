@@ -19,6 +19,12 @@ class ProfileMasterViewController: UIViewController,
 
     var userID: Int!
     var imagesJSON: [AnyObject]?
+
+    let addImageBtn = UIBarButtonItem()
+    let toAlbumBtn = UIBarButtonItem()
+    let toSettingsBtn = UIBarButtonItem()
+    let toProfileBtn = UIBarButtonItem()
+    let chatBtn = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +33,28 @@ class ProfileMasterViewController: UIViewController,
         let activeFrameHeight = SCREEN_HEIGHT-STATUSBAR_HEIGHT-(self.navigationController?.navigationBar.frame.height)!
 
         profileSV.contentSize = CGSizeMake(SCREEN_WIDTH, activeFrameHeight*2)
+
+        // navigation
+        addImageBtn.image = UIImage(named: "plussign")
+        addImageBtn.style = .Plain
+        addImageBtn.target = self
+
+
+        toAlbumBtn.image = UIImage(named: "album")
+        toAlbumBtn.style = .Plain
+        toAlbumBtn.target = self
+
+        toSettingsBtn.image = UIImage(named: "gear")
+        toSettingsBtn.style = .Plain
+        toSettingsBtn.target = self
+
+        toProfileBtn.image = UIImage(named: "navBar_profile")
+        toProfileBtn.style = .Plain
+        toProfileBtn.target = self
+
+        chatBtn.image = UIImage(named: "btn_navBarIcon_chat_normal")
+        chatBtn.style = .Plain
+        chatBtn.target = self
 
     }
 
@@ -44,6 +72,9 @@ class ProfileMasterViewController: UIViewController,
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+
+    
 
 
 

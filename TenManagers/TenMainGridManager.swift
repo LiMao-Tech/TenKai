@@ -18,7 +18,7 @@ class TenMainGridManager: NSObject {
 
     private let minDiff: CGFloat = 15
     private let radiusSQ: CGFloat = (SCREEN_WIDTH*2/5)*(SCREEN_WIDTH*2/5)
-    private let profileIconRadius: CGFloat = 60
+    private let profileIconRadius: CGFloat = 70
 
     var numToGen: Int = 0
     var nodes: [TenGridButton] = [TenGridButton]()
