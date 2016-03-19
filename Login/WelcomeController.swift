@@ -195,7 +195,9 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     
     func getMsgIndex(){
         let url = Url_Api+"TenMsgs?userIndex=\(SHARED_USER.UserIndex)"
-        let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+//        let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        let charSet = NSCharacterSet(charactersInString: url)
+        let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
         
         let mana = AFHTTPSessionManager()
         mana.requestSerializer = AFHTTPRequestSerializer()

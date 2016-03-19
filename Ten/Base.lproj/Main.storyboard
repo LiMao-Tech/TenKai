@@ -22,14 +22,6 @@
             </objects>
             <point key="canvasLocation" x="833" y="386"/>
         </scene>
-        <!--Welcome Controller-->
-        <scene sceneID="VVD-4T-JLN">
-            <objects>
-                <viewController id="2mY-wI-NB3" customClass="WelcomeController" customModule="Ten" customModuleProvider="target" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vBA-ix-TUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="16" y="386"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="99f-EP-rdf">
             <objects>

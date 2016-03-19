@@ -268,8 +268,10 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                 }else{
                     //同步服务器数据，获得相应的等级
                     let url = Url_User + "/\(SHARED_USER.UserIndex)?pcoin=\(sender.level*10)&level=\(sender.level)"
-                    let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-                    AFJSONManager.SharedInstance.putMethod(urlComplete!, success: { (task, response) -> Void in
+//                    let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+                    let charSet = NSCharacterSet(charactersInString: url)
+                    let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+                    AFJSONManager.SharedInstance.putMethod(newUrl!, success: { (task, response) -> Void in
                         let info = response as! NSDictionary
                         SHARED_USER.Expire = info["Expire"] as! Int
                         SHARED_USER.AVG = info["AVG"] as! Int

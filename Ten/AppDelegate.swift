@@ -56,8 +56,14 @@ class AppDelegate: UIResponder,
         
         switch(getMajorSystemVersion()) {
         case 7:
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(
-                [UIRemoteNotificationType.Badge, UIRemoteNotificationType.Sound, UIRemoteNotificationType.Alert])
+            let pushSettings: UIUserNotificationSettings = UIUserNotificationSettings(
+                forTypes:
+                [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound],
+                categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(pushSettings)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+//            UIApplication.sharedApplication().registerForRemoteNotificationTypes(
+//                [UIRemoteNotificationType.Badge, UIRemoteNotificationType.Sound, UIRemoteNotificationType.Alert])
             
         case 8:
             let pushSettings: UIUserNotificationSettings = UIUserNotificationSettings(
@@ -106,8 +112,10 @@ class AppDelegate: UIResponder,
         print("Token: \(DEVICE_TOKEN!)")
         if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
             let url = Url_Api + "TenLogins?userindex=\(SHARED_USER.UserIndex)&devicetoken=\(DEVICE_TOKEN!)"
-            let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-            AFJSONManager.SharedInstance.postMethod(newUrl!, parameters: nil, success: { (task, response) -> Void in
+//            let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+            let charSet = NSCharacterSet(charactersInString: url)
+            let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+            AFJSONManager.SharedInstance.postMethod(urlNew!, parameters: nil, success: { (task, response) -> Void in
                     print("更新devicetoken成功")
                     print(response)
                 }, failure: { (task, error) -> Void in
