@@ -52,7 +52,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         print(SHARED_USER.UserIndex)
         
         SHARED_USER.addObserver(self, forKeyPath: "Average", options: .New, context: nil)
-        
+        SHARED_CHATS.addObserver(self, forKeyPath: "message", options: .New, context: nil)
 
         ALAMO_MANAGER.request(.GET, SHARED_USER.ProfileUrl) .responseImage { response in
             if let image = response.result.value {
@@ -137,6 +137,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
         updateLocation()
+        print("unreadNum:\(unReadNum)")
         let chatBtn = circularMenuVC.arrButtons[5] as! UIButton
         if(unReadNum == 0){
             chatBtn.setImage(UIImage(named: "btn_menu_chat_normal"), forState: .Normal)
@@ -144,10 +145,12 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             chatBtn.setImage(UIImage(named: "btn_menu_chat_not"), forState: .Normal)
         }
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        
+
+    deinit{
+//        SHARED_CHATS.removeObserver(self, forKeyPath: "message")
+//        SHARED_USER.removeObserver(self, forKeyPath: "Average")
     }
+    
     
     func generateNodes() {
         let gridButtons = TenMainGridManager.SharedInstance.createButtons(2)
@@ -301,13 +304,17 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         }
     }
     
-    deinit{
-//        SHARED_USER.removeObserver(self, forKeyPath: "Average", context: nil)
-    }
-    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        print("observe received")
         if(keyPath == "Average"){
             refreshLevelButton()
+        }else if(keyPath == "message"){
+            let chatBtn = circularMenuVC.arrButtons[5] as! UIButton
+            if(unReadNum == 0){
+                chatBtn.setImage(UIImage(named: "btn_menu_chat_normal"), forState: .Normal)
+            }else{
+                chatBtn.setImage(UIImage(named: "btn_menu_chat_not"), forState: .Normal)
+            }
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }

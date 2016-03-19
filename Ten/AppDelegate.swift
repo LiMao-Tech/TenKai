@@ -132,9 +132,11 @@ class AppDelegate: UIResponder,
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         
         print(userInfo["aps"])
+        print("appdelegate in")
         //notification
         let notiParams = ["receiver":0,"currIndex":SHARED_USER.MsgIndex]
         AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg, parameters: notiParams, success: { (task, response) -> Void in
+            print("get notification response:")
             print(response)
             let userInfoArray = response as! NSArray
             if userInfoArray.count == 0{
@@ -151,8 +153,9 @@ class AppDelegate: UIResponder,
                 UserCacheTool().upDateUserMsgIndex()
                 NotificationCacheTool().addNotificationInfo(noti)
                                 }
-            },failure: { (task, response) -> Void in
-                print(response)
+            },failure: { (task, error) -> Void in
+                print("get notification failed")
+                print(error.localizedDescription)
         })
         
         //msg
@@ -162,10 +165,11 @@ class AppDelegate: UIResponder,
             if userInfoArray.count == 0{
                 return
             }
+            print("get msg array:")
             print(userInfoArray)
             for info in userInfoArray{
                 if(info["MsgType"] as! Int == 3){
-                    break
+                    continue
                 }
                 let senderIndex = info["Sender"] as! Int
                 
@@ -178,24 +182,16 @@ class AppDelegate: UIResponder,
                     UserChatModel.allChats().notifications.append(notiFrame)
                     // save to db
                     NotificationCacheTool().addNotificationInfo(noti)
-                    break
+                    continue
                 }
-                
-                if(SHARED_CHATS.tenUsers[senderIndex] == nil){
-                    SHARED_CHATS.tenUsers[senderIndex] = TenUser()
-                }
-                if(senderIndex != comunicatingIndex){
-                    unReadNum += 1
-                    SHARED_CHATS.tenUsers[senderIndex]?.badgeNum += 1
-                    UsersCacheTool().updateUsersBadgeNum(senderIndex, badgeNum: (SHARED_CHATS.tenUsers[senderIndex]?.badgeNum)!)
-                }
-                
                 //if user not exist get userInfo
                 if(SHARED_CHATS.tenUsers[senderIndex] == nil){
+                    print("get chat user")
+                    SHARED_CHATS.tenUsers[senderIndex] = TenUser()
                     SHARED_CHATS.message[senderIndex] = [SingleChatMessageFrame]()
                     // get userInfo
                     AFJSONManager.SharedInstance.getMethodWithParams(Url_User, parameters: ["id":senderIndex], success: { (task, response) -> Void in
-                        print("appdelegate get User")
+                        print("appdelegate get User:")
                         print(response)
                         let userDict = response as! NSDictionary
                         SHARED_CHATS.tenUsers[senderIndex]?.ValueWithDict(userDict as! [String : AnyObject])
@@ -220,6 +216,13 @@ class AppDelegate: UIResponder,
                             print(error.localizedDescription)
                     })
                 }
+                
+                if(senderIndex != comunicatingIndex){
+                    unReadNum += 1
+                    SHARED_CHATS.tenUsers[senderIndex]?.badgeNum += 1
+                    UsersCacheTool().updateUsersBadgeNum(senderIndex, badgeNum: (SHARED_CHATS.tenUsers[senderIndex]?.badgeNum)!)
+                }
+                
                 //bring the user to the first
                 if(SHARED_CHATS.activeUserIndex.contains(senderIndex)){
                    let index = UserChatModel.allChats().activeUserIndex.indexOf(senderIndex)
@@ -270,7 +273,8 @@ class AppDelegate: UIResponder,
             UserCacheTool().upDateUserMsgIndex()
             
             },failure:  { (task, error) -> Void in
-              print(error.localizedDescription)
+                print("get msg failed:")
+                print(error.localizedDescription)
         })
         
         

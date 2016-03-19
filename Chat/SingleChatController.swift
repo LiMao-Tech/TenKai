@@ -30,8 +30,6 @@ class SingleChatController : UIViewController,
                 SHARED_CHATS.message[tenUser.UserIndex] = [SingleChatMessageFrame]()
                 UsersCacheTool().addUserInfoByUser(tenUser)
             }
-            
-            tenUser.badgeNum = 0
             UsersCacheTool().updateUsersBadgeNum(tenUser.UserIndex, badgeNum: 0)
             comunicatingIndex = tenUser.UserIndex
             messages = SHARED_CHATS.message[tenUser.UserIndex]!
@@ -90,6 +88,8 @@ class SingleChatController : UIViewController,
     
     override func viewWillAppear(animated: Bool) {
         self.title = tenUser.UserName
+        unReadNum -= tenUser.badgeNum
+        tenUser.badgeNum = 0
     }
     
     func moreBtnClicked(){
@@ -103,10 +103,16 @@ class SingleChatController : UIViewController,
     func getOtherUnreadNum(){
         if(tenUser.listType == .Active){
             for userIndex in SHARED_CHATS.activeUserIndex{
+                if(userIndex == tenUser.UserIndex){
+                    continue
+                }
                 otherUnreadNum += (SHARED_CHATS.tenUsers[userIndex]?.badgeNum)!
             }
         }else{
             for userIndex in SHARED_CHATS.inActiveUserIndex{
+                if(userIndex == tenUser.UserIndex){
+                    continue
+                }
                 otherUnreadNum += (SHARED_CHATS.tenUsers[userIndex]?.badgeNum)!
             }
         }

@@ -28,12 +28,11 @@ class UserChatModel: NSObject {
     }
     
     class func removeAll(){
-        Chats.message = [Int :[SingleChatMessageFrame]]()
         Chats.notifications = [NotificationFrame]()
-        Chats.tenUsers = [Int:TenUser]()
         Chats.activeUserIndex = [Int]()
         Chats.inActiveUserIndex = [Int]()
         Chats.raterIndex = [Int]()
+        Chats.outerRaterIndex = [Int]()
     }
    
 }

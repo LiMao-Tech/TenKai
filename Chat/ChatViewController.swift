@@ -161,7 +161,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }else{
             sVC.tenUser = SHARED_CHATS.tenUsers[SHARED_CHATS.inActiveUserIndex[indexPath.row]]!
         }
-        unReadNum = unReadNum - sVC.tenUser.badgeNum
         if(ChatFocusState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){
             let focusAlert = UIAlertController(title: "注意！", message: "还没有为你的小伙伴的内在评分", preferredStyle: .Alert)
             let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
