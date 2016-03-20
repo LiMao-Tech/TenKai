@@ -7,20 +7,26 @@
 //
 
 import UIKit
+protocol TenFaceViewDelegate : class{
+    func faceButtonDidClicked(faceBtn :TenFaceButton)
+    func backButtonDidClicked()
+}
 
 var faceCodes = NSMutableArray()
 class TenFaceView: UIView {
     var faceMap = NSDictionary()
     var faceView : UIScrollView
+    var delegate : TenFaceViewDelegate?
     
     let screen = UIScreen.mainScreen().bounds.size
-    init(faceDelegateTemp:TenFaceButtonDelegate) {
+    init() {
         faceMap = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("_expression_en", ofType: "plist")!)!
         faceView = UIScrollView(frame: CGRectMake(0, 0, screen.width, 200))
         faceView.pagingEnabled = true
         faceView.showsHorizontalScrollIndicator = false
         faceView.showsVerticalScrollIndicator = false
         faceView.bounces = false
+        super.init(frame: CGRectMake(0, 0, screen.width, 224))
         
         let column: Int = 7
         let row: Int = 4
@@ -41,14 +47,17 @@ class TenFaceView: UIView {
             let imageName = NSString(format: "%03d", i)
             faceBtn.faceCode = NSString(format:"[%03d]", i)
             faceBtn.faceImage = UIImage(named: imageName as String)
-            faceBtn.delegate = faceDelegateTemp
+            faceBtn.addTarget(self, action: "faceBtnClicked:", forControlEvents: .TouchUpInside)
             faceView.addSubview(faceBtn)
             faceCodes.addObject(faceBtn.faceCode)
         }
         
         //pagecontrol
-        super.init(frame: CGRectMake(0, 0, screen.width, 224))
         self.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
+        let backBtn = UIButton(frame: CGRectMake(screen.width-48,4*(h+margin)+10,38,28))
+        backBtn.setImage(UIImage(named: "del_emoji_select"), forState: .Normal)
+        backBtn.addTarget(self, action: "backBtnClicked", forControlEvents: .TouchUpInside)
+        self.addSubview(backBtn)
         self.addSubview(faceView)
         
         
@@ -56,6 +65,16 @@ class TenFaceView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func backBtnClicked(){
+        if(delegate != nil){
+            self.delegate?.backButtonDidClicked()
+        }
+    }
+    func faceBtnClicked(btn:TenFaceButton){
+        if(delegate != nil){
+            self.delegate?.faceButtonDidClicked(btn)
+        }
     }
     /*
     // Only override drawRect: if you perform custom drawing.

@@ -7,9 +7,9 @@
 //
 
 import UIKit
-protocol TenFaceButtonDelegate : class{
-    func faceButtonDidClicked(faceBtn :TenFaceButton)
-}
+//protocol TenFaceButtonDelegate : class{
+//    func faceButtonDidClicked(faceBtn :TenFaceButton)
+//}
 
 class TenFaceButton: UIButton {
     var faceCode : NSString = ""
@@ -18,7 +18,6 @@ class TenFaceButton: UIButton {
             self.setImage(newValue, forState: UIControlState.Normal)
         }
     }
-    weak var delegate : TenFaceButtonDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,15 +28,15 @@ class TenFaceButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch: UITouch = (touches as NSSet).anyObject() as! UITouch
-        let point: CGPoint = touch.locationInView(self)
-        if(CGRectContainsPoint(self.bounds, point)){
-            if((self.delegate) != nil){
-                self.delegate!.faceButtonDidClicked(self)
-            }
-        }
-    }
+//    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        let touch: UITouch = (touches as NSSet).anyObject() as! UITouch
+//        let point: CGPoint = touch.locationInView(self)
+//        if(CGRectContainsPoint(self.bounds, point)){
+//            if((self.delegate) != nil){
+//                self.delegate!.faceButtonDidClicked(self)
+//            }
+//        }
+//    }
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

@@ -10,7 +10,7 @@ import UIKit
 class SingleChatController : UIViewController,
                             UITableViewDelegate,
                             UITableViewDataSource,
-                            TenFaceButtonDelegate,
+                            TenFaceViewDelegate,
                             UITextViewDelegate,
                             UIActionSheetDelegate,
                             UIImagePickerControllerDelegate,
@@ -245,7 +245,7 @@ class SingleChatController : UIViewController,
         MessageCacheTool(userIndex: tenUser.UserIndex).upDateLockState(tenUser.UserIndex, MsgIndex: msg.MsgIndex, isLock: msg.IsLocked)
     }
     /**
-    GTFaceButton代理函数
+    TenFaceView代理函数
     */
     func faceButtonDidClicked(faceBtn: TenFaceButton) {
         let conText = NSMutableAttributedString()
@@ -261,6 +261,33 @@ class SingleChatController : UIViewController,
         print(self.contentText.contentSize.height)
         self.frameChange()
         
+    }
+    
+    func backButtonDidClicked() {
+        let text = self.attributeStringToString()
+        if(text.characters.count >= 5){
+            let matchString = text.substringFromIndex(text.endIndex.advancedBy(-5))
+            let pattern = "\\[\\d{3}\\]"
+            let expression=try! NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
+            var deleted = false
+            expression.enumerateMatchesInString(matchString, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, matchString.characters.count)) { (result, flag, stop) -> Void in
+                print(result)
+                if((result) != nil){
+                   let delStr = text.substringToIndex(text.endIndex.advancedBy(-5))
+                    self.contentText.attributedText = Tools.stringToAttributeString(delStr).text
+                    deleted = true
+                }else if(!deleted){
+                    let delStr = text.substringToIndex(text.endIndex.advancedBy(-1))
+                    self.contentText.attributedText = Tools.stringToAttributeString(delStr).text
+                }
+            }
+        }else if(text.characters.count > 0){
+            let delStr = text.substringToIndex(text.endIndex.advancedBy(-1))
+            self.contentText.attributedText = Tools.stringToAttributeString(delStr).text
+        }
+        
+        
+        print("back")
     }
     
     func sendBtnClicked() {
@@ -600,7 +627,8 @@ class SingleChatController : UIViewController,
     }
     
     func setup(){
-        faceView = TenFaceView(faceDelegateTemp:self)
+        faceView = TenFaceView()
+        faceView.delegate = self
         
         bottom = UIView(frame: CGRectMake(0, SCREEN_HEIGHT-44, SCREEN_WIDTH, 44))
         

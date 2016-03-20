@@ -9,9 +9,9 @@
 import Foundation
 
 #if DEVELOPMENT
-    let Url_Home = "http://www.limao-tech.com/Ten/"
-#else
     let Url_Home = "http://www.limao-tech.com/TenDev/"
+#else
+    let Url_Home = "http://www.limao-tech.com/Ten/"
 #endif
 
 
