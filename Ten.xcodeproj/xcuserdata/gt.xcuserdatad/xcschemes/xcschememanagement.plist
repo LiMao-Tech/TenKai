@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Ten Dev.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
 		<key>Ten.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>649569C61C9E8D0F0028EA1A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C4CED3051B88FB010008BCF2</key>
 		<dict>
 			<key>primary</key>
