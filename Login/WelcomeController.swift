@@ -14,6 +14,7 @@ import AFNetworking
 class WelcomeController: UIViewController,UITextFieldDelegate {
     
     var cancelAction: UIAlertAction?
+    var loading:TenLoadingView?
     //忘记密码
     @IBAction func forgetPassword(sender: AnyObject) {
         print("forgotPassword")
@@ -127,8 +128,10 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     }
     
     func login() {
-        let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler:nil)
-        
+        let cancelAction = UIAlertAction(title: "确定", style: .Cancel) { (ac) -> Void in
+            self.loginBtn.enabled = true
+        }
+        loginBtn.enabled = false
         if self.passwordTF.text!.isEmpty || emailTF.text!.isEmpty {
             let emptyAlertController = UIAlertController(title: "请输入邮箱和密码。", message: "", preferredStyle: UIAlertControllerStyle.Alert)
             self.presentViewController(emptyAlertController, animated: true, completion: nil)
@@ -140,14 +143,17 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             invalidEmailAlertController.addAction(cancelAction)
             return
         }
-
         let timeStamp = Tools.getNormalTime(NSDate())
         let stringHash = "\(emailTF.text!)\(passwordTF.text!)\(timeStamp)\(UUID)\(DEVICE_TOKEN!)\(COMPANYCODE)"
         let hashResult = stringHash.sha256()
         
         let url:NSString = Url_Login+"?userID=\(emailTF.text!)&userPWD=\(passwordTF.text!)&lastLogin=\(timeStamp)&DeviceUUID=\(UUID)&DeviceToken=\(DEVICE_TOKEN!)&HashValue=\(hashResult)"
         let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        
+        if(loading == nil){
+            loading = TenLoadingView()
+            loading?.loadingTitle = "登录中..."
+        }
+        self.view.addSubview(loading!)
         AFJSONManager.SharedInstance.getMethod(urlComplete!, success: { (task, response) -> Void in
             print(response)
             let dict = response as! NSDictionary
@@ -156,6 +162,8 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         },
         failure: { (task, error) -> Void in
             let opera = task?.response as! NSHTTPURLResponse
+            self.loginBtn.enabled = true
+            self.loading?.removeFromSuperview()
             switch opera.statusCode {
                 case 401:
                     self.unmatchedLB.textColor = UIColor.redColor()
@@ -188,6 +196,8 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             },failure: { (task, error) -> Void in
                 print("get raterIndex failed")
                 print(error.localizedDescription)
+                self.loginBtn.enabled = true
+                self.loading?.removeFromSuperview()
                 self.unmatchedLB.textColor = UIColor.redColor()
                 self.unmatchedLB.text = "网络异常请重新登陆"
         })
@@ -218,6 +228,8 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             //to mainVC
             NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.loginBtn.enabled = true
+                self.loading?.removeFromSuperview()
                 let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                 let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
                 self.presentViewController(nVC, animated: true, completion: nil)
@@ -227,6 +239,8 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 print("get msgIndex failed")
                 print(error.localizedDescription)
                 print("-------------")
+                self.loginBtn.enabled = true
+                self.loading?.removeFromSuperview()
                 self.unmatchedLB.textColor = UIColor.redColor()
                 self.unmatchedLB.text = "网络异常请重新登陆"
             })

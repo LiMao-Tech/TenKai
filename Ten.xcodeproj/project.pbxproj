@@ -322,6 +322,7 @@
 		64956AEB1C9E8D0F0028EA1A /* 070@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5D231C14252B009E9927 /* 070@2x.png */; };
 		64956AEC1C9E8D0F0028EA1A /* 011.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5CAC1C14252B009E9927 /* 011.png */; };
 		64956AED1C9E8D0F0028EA1A /* 077.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5D301C14252B009E9927 /* 077.png */; };
+		64956AF71C9EB5900028EA1A /* TenLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956AF61C9EB5900028EA1A /* TenLoadingView.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
 		64AF67671C7B086D00791E93 /* PCoinHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AF67661C7B086D00791E93 /* PCoinHistoryModel.swift */; };
@@ -660,6 +661,7 @@
 		644F1D0D1C286210002E65CE /* SharedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUser.swift; sourceTree = "<group>"; };
 		64956AF41C9E8D0F0028EA1A /* Ten Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ten Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64956AF51C9E8D100028EA1A /* Ten Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Ten Dev-Info.plist"; path = "/Users/gt/GitHub/TenKai/Ten Dev-Info.plist"; sourceTree = "<absolute>"; };
+		64956AF61C9EB5900028EA1A /* TenLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLoadingView.swift; sourceTree = "<group>"; };
 		649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
 		649B951C1BD8996900F1B6CA /* PT_Sans-Web-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Bold.ttf"; sourceTree = "<group>"; };
@@ -1393,6 +1395,7 @@
 				D4EA5C801C1424A1009E9927 /* TenFaceView.swift */,
 				D4EA5C811C1424A1009E9927 /* TenSlider.swift */,
 				D4EA5C821C1424A1009E9927 /* TenTextAttachment.swift */,
+				64956AF61C9EB5900028EA1A /* TenLoadingView.swift */,
 			);
 			name = TenUIs;
 			path = GT;
@@ -2391,6 +2394,7 @@
 				642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */,
 				D4EA5C561C142321009E9927 /* settingCell.swift in Sources */,
 				D4EA2B341C53D03E00A52829 /* ProfilePicsViewController.swift in Sources */,
+				64956AF71C9EB5900028EA1A /* TenLoadingView.swift in Sources */,
 				D434AC121C6401DD0013E27D /* UserCacheTool.swift in Sources */,
 				D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */,
 				64D306AB1C5F54A30007A4F1 /* PinCodeController.swift in Sources */,

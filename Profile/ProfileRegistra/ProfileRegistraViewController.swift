@@ -19,7 +19,7 @@ class RegistProfileViewController: UIViewController,
                                     UIScrollViewDelegate
 {
     let lineLength:CGFloat = SCREEN_WIDTH*0.6
-
+    
     //property
     var password:String!
     var email:String!
@@ -63,10 +63,10 @@ class RegistProfileViewController: UIViewController,
     var energyValue:UILabel!
     
     var button:UIButton!
-    
-    var indicator: UIActivityIndicatorView!
 
     var kbSize: CGSize?
+    
+    var loading:TenLoadingView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,13 +215,6 @@ class RegistProfileViewController: UIViewController,
         energyValue = UILabel(frame: CGRectMake(CGRectGetMaxX(energyBar.frame)+10, SCREEN_HEIGHT*14/12+40, 20, 20))
         energyValue.text = "0"
         energyValue.textColor = UIColor.whiteColor()
-        
-        indicator = UIActivityIndicatorView(frame: CGRectMake(0,0,30,30))
-        indicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        indicator.activityIndicatorViewStyle = .White
-        
-        self.view.addSubview(indicator)
-        
 
         self.scrollView!.addSubview(buttonProfile!)
         self.scrollView!.addSubview(userNameLabel)
@@ -396,12 +389,12 @@ class RegistProfileViewController: UIViewController,
     }
     
     func toRadarPage() {
-        
         let sex = maleBtn.enabled || feMaleBtn.enabled
         let marriage = singleBtn.enabled || marriedBtn.enabled
         
         if(username.text!.isEmpty || birthDate.text!.isEmpty || !sex || !marriage) {
             let cancelAction = UIAlertAction(title: "确定", style: .Cancel) { action -> Void in
+                self.button.enabled = true
                 self.scrollView.scrollRectToVisible(CGRectMake(0, 0, 100, 100), animated: true)
             }
             
@@ -413,11 +406,11 @@ class RegistProfileViewController: UIViewController,
         }
         
         button.enabled = false
-        indicator.startAnimating()
-//        let time = NSDate()
-//        let format = NSDateFormatter()
-//        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        let timeStamp = format.stringFromDate(time)
+        if(loading == nil){
+            loading = TenLoadingView()
+            loading?.loadingTitle = "注册中..."
+        }
+        self.view.addSubview(loading!)
         let timeStamp = Tools.getSinceTime(NSDate())
         let stringHash = "\(email)\(password)\(UUID)\(timeStamp)\(DEVICE_TOKEN!)\(COMPANYCODE)"
         
@@ -436,6 +429,8 @@ class RegistProfileViewController: UIViewController,
             self.tenLogin = TenLogin(loginDict: dict)
             self.postUser()
             },failure: { (task, error) -> Void in
+                self.button.enabled = true
+                self.loading?.removeFromSuperview()
                 print("login Failed")
                 print(error.localizedDescription)
         })
@@ -474,6 +469,8 @@ class RegistProfileViewController: UIViewController,
             SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
             self.postImage()
             },failure: { (task, error) -> Void in
+                self.button.enabled = true
+                self.loading?.removeFromSuperview()
                 print("Post User Failed")
                 print(error.localizedDescription)
         })
@@ -482,7 +479,6 @@ class RegistProfileViewController: UIViewController,
     func postImage() {
 
         let image = UIImageJPEGRepresentation(chosenImage, 0.75)
-//        let image = UIImagePNGRepresentation(chosenImage!)
         if image != nil {
             SHARED_USER.Portrait = image!
             let params : NSDictionary = ["id": SHARED_USER.UserIndex]
@@ -494,6 +490,8 @@ class RegistProfileViewController: UIViewController,
                     self.putUserIndex()
                 })
                 },failure: { (task, error) -> Void in
+                    self.button.enabled = true
+                    self.loading?.removeFromSuperview()
                     print("Post Portrait Failed")
                     print(error.localizedDescription)
             })
@@ -520,11 +518,12 @@ class RegistProfileViewController: UIViewController,
             SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.button.enabled = true
-                self.indicator.stopAnimating()
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 UserCacheTool().addUserInfoByUser()
                 DataInitializerTool.initialiseInfo()
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.button.enabled = true
+                    self.loading?.removeFromSuperview()
                     let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
                     self.presentViewController(nVC, animated: true, completion: { () -> Void in
@@ -532,6 +531,8 @@ class RegistProfileViewController: UIViewController,
 
                 })            })
             },failure:  { (task, error) -> Void in
+                self.button.enabled = true
+                self.loading?.removeFromSuperview()
                 print(error.localizedDescription)
         })
     }
