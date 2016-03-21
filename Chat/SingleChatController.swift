@@ -540,11 +540,12 @@ class SingleChatController : UIViewController,
     当输入变化时调用
     */
     func textViewDidChange(textView: UITextView) {
-        if(contentText.attributedText.length > 0){
-            let str = NSMutableAttributedString(attributedString: contentText.attributedText)
-            str.setAttributes([NSFontAttributeName: UIFont.systemFontOfSize(15)], range: NSRange(location: contentText.attributedText.length-1,length: 1))
-            contentText.attributedText = str
-        }
+//        if(contentText.attributedText.length > 0){
+//            let str = NSMutableAttributedString(attributedString: NSAttributedString(string: ""))
+//            str.appendAttributedString(contentText.attributedText)
+//            str.setAttributes([NSFontAttributeName: UIFont.systemFontOfSize(15)], range: NSRange(location: contentText.attributedText.length-1,length: 1))
+//            contentText.attributedText = str
+//        }
         frameChange()
     }
     
@@ -649,6 +650,7 @@ class SingleChatController : UIViewController,
         sendBtn.addTarget(self, action: "sendBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
         
         contentText = UITextView(frame: CGRectMake(CGRectGetMaxX(faceBtn.frame) + margin, 6, SCREEN_WIDTH-3*iconSize-5*margin, 32))
+//        contentText.text = " "
         contentText.delegate = self
         contentText.layer.masksToBounds = true
         contentText.layer.cornerRadius = 3

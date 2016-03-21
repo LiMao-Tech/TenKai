@@ -170,6 +170,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         unlockId = imageJSON["ID"].intValue
 
         var unlockedByUser = false
+        
         for item in self.unlocksJSON! {
             let unlockJSON = JSON(item)
             if unlockJSON["TenImageID"].intValue == self.unlockId {
