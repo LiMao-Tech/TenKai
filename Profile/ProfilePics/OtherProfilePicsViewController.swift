@@ -42,7 +42,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
     var pVC: OtherProfileViewController!
 
-    var unlocksJSON: [AnyObject]!
+    var unlocksJSON = [AnyObject]()
 
 
     override func viewDidLoad() {
@@ -57,6 +57,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
             if let values = response.result.value {
 
                 self.unlocksJSON = (values as? [AnyObject])!
+                self.lmCollectionView.reloadData()
                 self.loadingAlert.dismissViewControllerAnimated(true, completion: nil)
             }
         }
@@ -171,7 +172,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
         var unlockedByUser = false
         
-        for item in self.unlocksJSON! {
+        for item in self.unlocksJSON {
             let unlockJSON = JSON(item)
             if unlockJSON["TenImageID"].intValue == self.unlockId {
                 unlockedByUser = true
@@ -232,7 +233,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
 
         unlockId = imageJSON["ID"].intValue
 
-        for item in self.unlocksJSON! {
+        for item in self.unlocksJSON {
             let unlockJSON = JSON(item)
             if unlockJSON["TenImageID"].intValue == unlockId {
                 unlockedByUser = true

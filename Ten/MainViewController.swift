@@ -160,7 +160,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
     func generateNodesByGender(gender: Int) {
         TenMainGridManager.SharedInstance.clearNodes()
-        TenMainGridManager.SharedInstance.numToGen = 25
         let gridButtons = TenMainGridManager.SharedInstance.createButtons(gender)
         showBtns(gridButtons)
         view.bringSubviewToFront(portraitBtn)
@@ -201,8 +200,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     func refreshBtnClicked() {
         self.refreshBtn.enabled = false
         TenMainGridManager.SharedInstance.clearNodes()
-        TenMainGridManager.SharedInstance.numToGen = 25
-        
         generateNodes()
         view.bringSubviewToFront(portraitBtn)
         refreshBtn.enabled = true

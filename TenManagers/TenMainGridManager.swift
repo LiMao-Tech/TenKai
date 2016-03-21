@@ -16,21 +16,15 @@ class TenMainGridManager: NSObject {
         
     static let SharedInstance = TenMainGridManager()
 
-    private let minDiff: CGFloat = 15
-    private let radiusSQ: CGFloat = (SCREEN_WIDTH*2/5)*(SCREEN_WIDTH*2/5)
-    private let profileIconRadius: CGFloat = 70
-
     var numToGen: Int = 0
     var nodes: [TenGridButton] = [TenGridButton]()
     var gridUsers: [AnyObject] = [AnyObject]()
-    
-    private var spots: [CGPoint] = [CGPoint]()
+
     
     func clearNodes() {
         for node in nodes {
             node.removeFromSuperview()
         }
-        spots.removeAll()
         nodes.removeAll()
     }
     
@@ -45,37 +39,13 @@ class TenMainGridManager: NSObject {
         numToGen = gridUsers.count
         
         for i in 0..<numToGen {
-            
-            var x = CGFloat(drand48()) * SCREEN_WIDTH*4/5 + SCREEN_WIDTH/10
-            var y = CGFloat(drand48()) * SCREEN_HEIGHT*3/5 + SCREEN_HEIGHT/5
-            
-            var good = false
-            while !good {
-                
-                good = true
-                for spot in spots {
-                
-                    let xDiff = abs(x-spot.x)
-                    let yDiff = abs(y-spot.y)
 
-                    let xAway = x-SCREEN_WIDTH/2
-                    let yAway = y-SCREEN_HEIGHT/2
+            let xIncre = CGFloat(drand48()+0.1)*SCREEN_WIDTH/7
+            let yIncre = CGFloat(drand48()+0.1)*SCREEN_HEIGHT/13
 
-                    let away = xAway*xAway+yAway*yAway
-
-                    let inProfileIcon = (x<(SCREEN_WIDTH/2+profileIconRadius) && x>(SCREEN_WIDTH/2-profileIconRadius))||(y<(SCREEN_HEIGHT/2-profileIconRadius) && y>(SCREEN_HEIGHT/2+profileIconRadius))
-                    if xDiff < minDiff || yDiff < minDiff || away > radiusSQ || inProfileIcon {
-                        x = CGFloat(drand48()) * SCREEN_WIDTH*4/5 + SCREEN_WIDTH/10
-                        y = CGFloat(drand48()) * SCREEN_HEIGHT*3/5 + SCREEN_HEIGHT/5
-                        
-                        good = false
-                        break
-                    }
-                }
-            }
-            spots.append(CGPointMake(x, y))
+            let spot = CGPointMake(grid2[i].0*SCREEN_WIDTH+xIncre, grid2[i].1*SCREEN_HEIGHT+yIncre)
             
-            let node = TenGridButton(frame: CGRectMake(spots[i].x, spots[i].y, SCREEN_WIDTH/20, SCREEN_WIDTH/20))
+            let node = TenGridButton(frame: CGRectMake(spot.x, spot.y, SCREEN_WIDTH/20, SCREEN_WIDTH/20))
             node.layer.cornerRadius = SCREEN_WIDTH/40
             
             nodes.append(node)
@@ -94,4 +64,20 @@ class TenMainGridManager: NSObject {
 
         return nodes
     }
+
+    private let grid2: [(CGFloat, CGFloat)] = [
+        // center
+        (1/6,4/9),             (3/5,4/9),
+        (1/5,3/9), (2/5,3/11), (3/5,3/9),
+        (1/5,5/9), (2/5,5/9),  (3/5,5/9),
+        (1/5,2/9), (2/5,2/11), (3/5,2/9),
+        (1/5,6/9), (2/5,6/9),  (3/5,6/9),
+
+        // edges
+        (0,4/9),  (4/5,4/9),
+        (0,3/9),  (4/5,3/9),
+        (0,5/9),  (4/5,5/9),
+        (0,2/9),  (4/5,2/9),
+        (0,6/9),  (4/5,6/9),
+    ]
 }

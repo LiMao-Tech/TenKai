@@ -14,7 +14,7 @@ class TenOtherUsersJSONManager: NSObject {
     
     static let SharedInstance = TenOtherUsersJSONManager()
     
-    private let MaxUsersOnGrid = 10
+    private let MaxUsersOnGrid = 24
     
     private var userList: [AnyObject] = [AnyObject]()
 
