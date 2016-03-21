@@ -46,16 +46,14 @@ class RemoteNotificationManager: NSObject {
             print(userInfoArray)
             for info in userInfoArray{
                 let senderIndex = info["Sender"] as! Int
-                print("senderIndex:\(senderIndex)")
+//                print("senderIndex:\(senderIndex)")
                 //notification
                 if(senderIndex == 0){
-                    print("notifications:")
                     let noti = Notification(dict: info as! NSDictionary)
                     let notiFrame = NotificationFrame()
                     notiFrame.notification = noti
                     //add notification to notifications
                     SHARED_CHATS.notifications.append(notiFrame)
-                    print(SHARED_CHATS.notifications)
                     // save to db
                     NotificationCacheTool().addNotificationInfo(noti)
                     continue

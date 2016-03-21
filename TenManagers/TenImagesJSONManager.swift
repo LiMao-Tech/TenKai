@@ -27,7 +27,7 @@ class TenImagesJSONManager: NSObject {
     func getJSONUpdating(master: MeProfileMasterViewController, alert: UIAlertController) -> Void {
 
         let targetUrl = Url_ImagesJSON + String(SHARED_USER.UserIndex)
-
+        
         ALAMO_MANAGER.request(.GET, targetUrl) .responseJSON { response in
 
             if let values = response.result.value {
