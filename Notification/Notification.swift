@@ -18,7 +18,7 @@ class Notification: NSObject {
     var MsgType = 0{
         didSet{
             if(MsgType == 3){
-                title = "您获得了新的评分"
+                title = "   您获得了新的评分"
             }
         }
     }

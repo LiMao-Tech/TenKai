@@ -27,13 +27,14 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         setUp()
         refreshControl()
         print("system number : \(system.count)")
+        print("notification number : \(notification.count)")
         UserChatModel.allChats().addObserver(self, forKeyPath: "notifications", options: .New, context: nil)
     }
     
     func seperateNotification(){
         system.removeAll()
         notification.removeAll()
-        for noti in UserChatModel.allChats().notifications{
+        for noti in SHARED_CHATS.notifications.reverse(){
             if(noti.notification.MsgType == 0){
                 system .append(noti)
             }else{

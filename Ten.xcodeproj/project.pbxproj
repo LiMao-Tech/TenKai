@@ -323,6 +323,7 @@
 		64956AEC1C9E8D0F0028EA1A /* 011.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5CAC1C14252B009E9927 /* 011.png */; };
 		64956AED1C9E8D0F0028EA1A /* 077.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5D301C14252B009E9927 /* 077.png */; };
 		64956AF71C9EB5900028EA1A /* TenLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956AF61C9EB5900028EA1A /* TenLoadingView.swift */; };
+		64956AFC1C9FFB920028EA1A /* RemoteNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956AFB1C9FFB920028EA1A /* RemoteNotificationManager.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
 		64AF67671C7B086D00791E93 /* PCoinHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AF67661C7B086D00791E93 /* PCoinHistoryModel.swift */; };
@@ -662,6 +663,7 @@
 		64956AF41C9E8D0F0028EA1A /* Ten Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ten Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64956AF51C9E8D100028EA1A /* Ten Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Ten Dev-Info.plist"; path = "/Users/gt/GitHub/TenKai/Ten Dev-Info.plist"; sourceTree = "<absolute>"; };
 		64956AF61C9EB5900028EA1A /* TenLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TenLoadingView.swift; sourceTree = "<group>"; };
+		64956AFB1C9FFB920028EA1A /* RemoteNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationManager.swift; sourceTree = "<group>"; };
 		649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseAdditionsVariadic.swift; sourceTree = "<group>"; };
 		649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMDatabaseVariadic.swift; sourceTree = "<group>"; };
 		649B951C1BD8996900F1B6CA /* PT_Sans-Web-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PT_Sans-Web-Bold.ttf"; sourceTree = "<group>"; };
@@ -1195,6 +1197,7 @@
 				D4D0F88A1C66389F007F3BF6 /* TenOtherUsersJSONManager.swift */,
 				D434AC151C6402090013E27D /* TenMainGridManager.swift */,
 				D4D0F8911C66BE81007F3BF6 /* TenTimeManager.swift */,
+				64956AFB1C9FFB920028EA1A /* RemoteNotificationManager.swift */,
 			);
 			name = TenManagers;
 			sourceTree = "<group>";
@@ -2413,6 +2416,7 @@
 				64AF67671C7B086D00791E93 /* PCoinHistoryModel.swift in Sources */,
 				D4032B4F1C995B3400A518EE /* SingleChatMessage.swift in Sources */,
 				D4EA5C571C142321009E9927 /* SettingDoubleLabelCell.swift in Sources */,
+				64956AFC1C9FFB920028EA1A /* RemoteNotificationManager.swift in Sources */,
 				D4EA2B371C53D05E00A52829 /* OtherProfilePicCollectionViewCell.swift in Sources */,
 				D4A5EF9A1C40590700B48C48 /* LMImagePicker.swift in Sources */,
 				D4EA5C8C1C1424AF009E9927 /* Notification.swift in Sources */,

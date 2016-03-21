@@ -143,7 +143,7 @@ class OtherProfileMasterViewController: ProfileMasterViewController,
             },failure: { (task, error) -> Void in
                 print("post rater error:")
                 print(error.localizedDescription)
-                let scoreFailed = UIAlertController(title: "评分失败", message: "请重评分，以解锁锁定状态", preferredStyle: .Alert)
+                let scoreFailed = UIAlertController(title: "评分失败", message: "请重新尝试评分", preferredStyle: .Alert)
                 let failAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Destructive, handler: nil)
                 scoreFailed.addAction(failAction)
                 self.presentViewController(scoreFailed, animated: true, completion: nil)
