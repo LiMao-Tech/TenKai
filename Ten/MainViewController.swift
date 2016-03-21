@@ -49,6 +49,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
         self.navigationController?.navigationBar.backgroundColor = COLOR_NAV_BAR
         self.view.backgroundColor = COLOR_BG
+        
         print(SHARED_USER.UserIndex)
         
         SHARED_USER.addObserver(self, forKeyPath: "Average", options: .New, context: nil)
@@ -130,7 +131,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(plus)
         self.view.addSubview(refreshBtn)
         self.view.addSubview(distanceLabel)
-      
+        
         distanceChange()
     }
     

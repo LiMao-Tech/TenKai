@@ -324,6 +324,7 @@
 		64956AED1C9E8D0F0028EA1A /* 077.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5D301C14252B009E9927 /* 077.png */; };
 		64956AF71C9EB5900028EA1A /* TenLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956AF61C9EB5900028EA1A /* TenLoadingView.swift */; };
 		64956AFC1C9FFB920028EA1A /* RemoteNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956AFB1C9FFB920028EA1A /* RemoteNotificationManager.swift */; };
+		64956AFD1CA00BBD0028EA1A /* TenLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956AF61C9EB5900028EA1A /* TenLoadingView.swift */; };
 		649B94D81BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94CF1BD4846000F1B6CA /* FMDatabaseAdditionsVariadic.swift */; };
 		649B94D91BD4846000F1B6CA /* FMDatabaseVariadic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B94D01BD4846000F1B6CA /* FMDatabaseVariadic.swift */; };
 		64AF67671C7B086D00791E93 /* PCoinHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AF67661C7B086D00791E93 /* PCoinHistoryModel.swift */; };
@@ -2294,6 +2295,7 @@
 				64956A0F1C9E8D0F0028EA1A /* DataInitializerTool.swift in Sources */,
 				64956A101C9E8D0F0028EA1A /* settingCell.swift in Sources */,
 				64956A111C9E8D0F0028EA1A /* ProfilePicsViewController.swift in Sources */,
+				64956AFD1CA00BBD0028EA1A /* TenLoadingView.swift in Sources */,
 				64956A121C9E8D0F0028EA1A /* UserCacheTool.swift in Sources */,
 				64956A131C9E8D0F0028EA1A /* RandomAndLevelUserCell.swift in Sources */,
 				64956A141C9E8D0F0028EA1A /* PinCodeController.swift in Sources */,

@@ -9,7 +9,8 @@
 import UIKit
 
 class TenLoadingView: UIView {
-    private let contentL = SCREEN_WIDTH-110
+//    private let contentL = SCREEN_WIDTH-110
+    private let contentL:CGFloat = 120
     private let contentH:CGFloat = 120
     private var title:UILabel!
     var loadingTitle = ""{
@@ -29,7 +30,7 @@ class TenLoadingView: UIView {
         title.center = CGPointMake(contentL/2, 100)
         title.textAlignment = .Center
         title.textColor = UIColor.whiteColor()
-        title.font = UIFont.systemFontOfSize(18)
+        title.font = UIFont.systemFontOfSize(15)
         self.addSubview(title)
         self.backgroundColor = UIColor.blackColor()
         self.layer.cornerRadius = 7
