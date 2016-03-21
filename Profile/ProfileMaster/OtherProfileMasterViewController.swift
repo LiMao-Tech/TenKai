@@ -18,6 +18,8 @@ class OtherProfileMasterViewController: ProfileMasterViewController,
     
     var tenUser: TenUser!
     
+    var pushVCType = 0
+    
     var scoreView: ScoreView?
 
     override func viewDidLoad() {
@@ -108,9 +110,14 @@ class OtherProfileMasterViewController: ProfileMasterViewController,
     // TODO: tuantuan
     func pushChatView() -> Void {
         if(SHARED_CHATS.outerRaterIndex.contains(tenUser.UserIndex)){
-            let singleChatC = SingleChatController()
-            singleChatC.tenUser = tenUser
-            self.navigationController?.pushViewController(singleChatC, animated: true)
+            if(pushVCType == 0){
+                let singleChatC = SingleChatController()
+                singleChatC.tenUser = tenUser
+                self.navigationController?.pushViewController(singleChatC, animated: true)
+            }else{
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+            
         }else{
             if(scoreView == nil){
                 scoreView = ScoreView()
@@ -136,9 +143,13 @@ class OtherProfileMasterViewController: ProfileMasterViewController,
             UserRaterCache().addUserRater(self.tenUser.UserIndex,type: 1)
             self.scoreView!.removeFromSuperview()
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                let singleChatC = SingleChatController()
-                singleChatC.tenUser = self.tenUser
-                self.navigationController?.pushViewController(singleChatC, animated: true)
+                if(self.pushVCType == 0){
+                    let singleChatC = SingleChatController()
+                    singleChatC.tenUser = self.tenUser
+                    self.navigationController?.pushViewController(singleChatC, animated: true)
+                }else{
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
             })
             },failure: { (task, error) -> Void in
                 print("post rater error:")

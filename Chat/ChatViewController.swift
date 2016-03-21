@@ -101,8 +101,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func menuInfoBtnDidClicked(cell: UserCell) {
         let pVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
-        //pVC.userID = cell.tenUser.UserIndex
+        pVC.userID = cell.tenUser.UserIndex
         pVC.tenUser = cell.tenUser
+        pVC.pushVCType = 1
         self.navigationController?.pushViewController(pVC, animated: true)
     }
     

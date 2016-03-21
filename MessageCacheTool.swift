@@ -37,6 +37,8 @@ class MessageCacheTool: NSObject {
         let sql_insert = "INSERT INTO MESSAGEINFO_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,SENDER,RECEIVER,ISLOCKED,MSGTYPE,MSGTIME,PHONETYPE,MSGCONTENT) VALUES(?,?,?,?,?,?,?,?)"
         dbq.inTransaction { (db, rollBack) -> Void in
             if !db.executeUpdate(sql_insert, withArgumentsInArray: [msg.MsgIndex,msg.Sender,msg.Receiver,msg.IsLocked,msg.messageType.rawValue,msg.MsgTime,msg.PhoneType,msg.MsgContent]){                  print("插入失败")
+            }else{
+               print("插入成功")
             }
             if(msg.messageType == .Image){
                 let sql_pic_stmt = "INSERT INTO MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) (MSGINDEX,PICTURE) VALUES(?,?)"
@@ -123,6 +125,7 @@ class MessageCacheTool: NSObject {
                     message.MsgTime = NSTimeInterval(rs.intForColumn("MSGTIME"))
                     message.PhoneType = Int(rs.intForColumn("PHONETYPE"))
                     message.MsgContent = rs.stringForColumn("MSGCONTENT")
+                    print(message.messageType)
                     if(message.messageType == .Image){
                         let sql_pic_stmt = "SELECT PICTURE FROM MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"
                         if let rs = db.executeQuery(sql_pic_stmt, withArgumentsInArray: [message.MsgIndex]){

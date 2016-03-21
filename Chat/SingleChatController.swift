@@ -434,6 +434,7 @@ class SingleChatController : UIViewController,
         let pVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
         pVC.tenUser = tenUser
         pVC.userID = tenUser.UserIndex
+        pVC.pushVCType = 1
         self.navigationController?.pushViewController(pVC, animated: true)
     }
     
@@ -765,6 +766,10 @@ class SingleChatController : UIViewController,
                     chatFrame.chatMessage = message
                     UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(chatFrame)
                     MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)
+                    if(SHARED_USER.MsgIndex < message.MsgIndex){
+                        SHARED_USER.MsgIndex = message.MsgIndex
+                        UserCacheTool().upDateUserMsgIndex()
+                    }
                     SHARED_USER.PCoin -= pcoinAmount!
                     UserCacheTool().upDateUserPCoin()
                     self.pcoinView!.removeFromSuperview()
