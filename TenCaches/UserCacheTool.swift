@@ -69,7 +69,7 @@ class UserCacheTool: NSObject {
     
     func addUserInfoByUser(){
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,MARRIAGE,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX,AVG,EXPIRE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,MARRIAGE,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX,AVG,EXPIRE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             if !db.executeUpdate(sql_insert, withArgumentsInArray: [SHARED_USER.UserIndex,SHARED_USER.UserName,SHARED_USER.PhoneType,SHARED_USER.Gender,SHARED_USER.Marriage,SHARED_USER.Birthday,SHARED_USER.JoinedDate,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.Portrait!,SHARED_USER.ProfileUrl,SHARED_USER.MsgIndex,SHARED_USER.AVG,SHARED_USER.Expire]){
                 print("插入失败")
             }
