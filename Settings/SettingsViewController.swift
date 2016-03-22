@@ -96,6 +96,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
     
     func logout(){
         NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
         let wVC = WelcomeController()
         UserChatModel.removeAll()
         self.presentViewController(wVC, animated: true, completion: nil)

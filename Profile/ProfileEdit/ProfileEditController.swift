@@ -30,15 +30,21 @@ class EditProfileController : UIViewController,
     var OuterValue:UILabel!
     var energyBar:TenSlider!
     var energyValue:UILabel!
+    var button:UIBarButtonItem!
+    
+    var loading:TenLoadingView?
+    
+    var changePortarit = false
     
     let lineLength:CGFloat = SCREEN_HEIGHT == 568 ? 150 : 200
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("marriage")
+        print(SHARED_USER.Marriage)
         self.view.backgroundColor = COLOR_BG
         self.title = ProfileTitle
-        let button = UIBarButtonItem(title: "完成", style: .Done, target: self, action: "editDone")
+        button = UIBarButtonItem(title: "完成", style: .Done, target: self, action: "editDone")
         self.navigationItem.rightBarButtonItem = button
         
         chosenImage = UIImage()
@@ -78,7 +84,8 @@ class EditProfileController : UIViewController,
         }
         y = CGRectGetMaxY(marriageLabel.frame)+margin
         let emailLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "E-mail")
-        emailAddr = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: "example@example.com")
+        let loginEmail = NSUserDefaults.standardUserDefaults().valueForKey("LoginEmail") as! String
+        emailAddr = initTextLabel(frame: CGRectMake(textX, y, lineLength, 20),labelText: loginEmail)
         y = CGRectGetMaxY(emailLabel.frame)+margin
         let statusLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "状态")
         statusDetail = UITextView(frame: CGRectMake(textX, y+5, lineLength, SCREEN_HEIGHT*2/12-10))
@@ -140,11 +147,13 @@ class EditProfileController : UIViewController,
     func editDone(){
         // TODO: what is this?
         print("done")
+        putSharedUserInfo()
     }
     
     func barChanged(){
         let value = Int(energyBar.value+1)-1
         energyValue.text = "\(value)"
+        SHARED_USER.Energy = value
     }
     
     func initButton(posX posX: CGFloat, posY: CGFloat, btnWidth: CGFloat, btnHeight: CGFloat, imageName: String, targetAction: Selector) -> UIButton{
@@ -160,20 +169,22 @@ class EditProfileController : UIViewController,
         //
         print("going to do imagepicker here")
         
-        let alert:UIAlertController=UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default)
+        
+        let alert:UIAlertController=UIAlertController(title: "选择图片", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let cameraAction = UIAlertAction(title: "相机", style: UIAlertActionStyle.Default)
             {
                 UIAlertAction in
                 self.openCamera()
                 
         }
-        let gallaryAction = UIAlertAction(title: "Gallary", style: UIAlertActionStyle.Default)
+        let gallaryAction = UIAlertAction(title: "相册", style: UIAlertActionStyle.Default)
             {
                 UIAlertAction in
                 self.openGallary()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel)
+        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel)
             {
                 UIAlertAction in
                 
@@ -229,11 +240,13 @@ class EditProfileController : UIViewController,
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         // TODO: add image into profile
+        
         // chosenImages
         picker .dismissViewControllerAnimated(true, completion: nil)
         let image=info[UIImagePickerControllerOriginalImage] as? UIImage
         chosenImage = image
-        self.buttonProfile?.setImage(image, forState: UIControlState.Normal)
+        self.buttonProfile?.setImage(Tools.toCirclurImage(image!), forState: UIControlState.Normal)
+        changePortarit = true
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -278,6 +291,7 @@ class EditProfileController : UIViewController,
             marriedBtn.setImage(marriedBtn.normalImage, forState: .Normal)
             marriedBtn.titleLabel?.alpha = 1
             marriedBtn.enabled = true
+            SHARED_USER.Marriage = 0
         }
         else{
             singleBtn.setImage(singleBtn.normalImage, forState: .Normal)
@@ -285,8 +299,99 @@ class EditProfileController : UIViewController,
             marriedBtn.setImage(marriedBtn.seletedImage, forState: .Normal)
             marriedBtn.titleLabel?.alpha = 0.4
             singleBtn.enabled = true
+            SHARED_USER.Marriage = 1
         }
     }
     
+    func putSharedUserInfo(){
+        button.enabled = false
+        
+        if(loading == nil){
+            loading = TenLoadingView()
+            loading?.loadingTitle = "更新中..."
+        }
+        self.view.addSubview(loading!)
+        let params = [
+            "UserIndex": SHARED_USER.UserIndex,
+            "UserName" : SHARED_USER.UserName,
+            "PhoneType" : SHARED_USER.PhoneType,
+            "Gender" : SHARED_USER.Gender,
+            "Marrige" : SHARED_USER.Marriage,
+            "Birthday" : SHARED_USER.Birthday,
+            "JoinedDate" : SHARED_USER.JoinedDate,
+            "PCoin" : SHARED_USER.PCoin,
+            "ProfileUrl":SHARED_USER.ProfileUrl,
+            "OuterScore" : SHARED_USER.OuterScore,
+            "InnerScore" : SHARED_USER.InnerScore,
+            "Energy" : SHARED_USER.Energy,
+            "Hobby" : SHARED_USER.Hobby,
+            "Quote" : statusDetail.text,
+            "Expire":SHARED_USER.Expire,
+            "AVG":SHARED_USER.AVG,
+            "Lati" : SHARED_USER.Lati,
+            "Longi" : SHARED_USER.Longi
+        ]
+        
+        let targetUrl = Url_User + String(SHARED_USER.UserIndex)
+        
+        ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON{
+            response in
+            if response.result.isSuccess{
+                print("update shareduser info")
+                print(response.result.value)
+                self.button.enabled = true
+                SHARED_USER.Quote = self.statusDetail.text
+                UserCacheTool().updateUserInfo()
+                if(self.changePortarit){
+                    self.updatePortrait()
+                    self.changePortarit = false
+                }else{
+                    self.delayMiss()
+                }
+            }else{
+                self.button.enabled = true
+                let alert = UIAlertController(title: "更新个人信息失败,请重新尝试", message: nil, preferredStyle: .Alert)
+                let cancel = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                alert.addAction(cancel)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func updatePortrait(){
+        let image = UIImageJPEGRepresentation(chosenImage!, 0.75)
+        if image != nil {
+            let params : NSDictionary = ["id": SHARED_USER.UserIndex]
+            
+            AFImageManager.SharedInstance.postHeadImage(Url_UploadHeadImage, image: image!, parameters: params as! [String : AnyObject], success: { (task, response) -> Void in
+                print("post Image")
+                print(response)
+                SHARED_USER.Portrait = image!
+                self.button.enabled = true
+                UserCacheTool().upDateUserPortrait()
+                self.delayMiss()
+                },failure: { (task, error) -> Void in
+                    self.button.enabled = true
+                    self.loading?.removeFromSuperview()
+                    print("change Portrait Failed")
+                    print(error.localizedDescription)
+                    let alert = UIAlertController(title: "更新个人信息失败,请重新尝试", message: nil, preferredStyle: .Alert)
+                    let cancel = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                    alert.addAction(cancel)
+                    self.presentViewController(alert, animated: true, completion: nil)
+            })
+        }
+
+    }
+    private func delayMiss(){
+        let time: NSTimeInterval = 1
+        let delay = dispatch_time(DISPATCH_TIME_NOW,Int64(time * Double(NSEC_PER_SEC)))
+        loading?.loadingTitle = "更新成功"
+        loading?.acIndicator.hidden = true
+        dispatch_after(delay, dispatch_get_main_queue()) {
+            self.loading?.removeFromSuperview()
+//            self.loading?.acIndicator.hidden = false
+        }
+    }
     
 }

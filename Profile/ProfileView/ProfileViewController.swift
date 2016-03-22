@@ -100,8 +100,6 @@ class ProfileViewController: UIViewController,
 
             if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
                 self.profileIV1?.image = image
-                self.tenUser.Portrait = UIImagePNGRepresentation(image)
-                UsersCacheTool().upDateUsersPortrait(self.tenUser.UserIndex, portrait: image)
             }
             else {
                 let targetUrl = Url_Image + json["ID"].stringValue
@@ -109,6 +107,10 @@ class ProfileViewController: UIViewController,
                     if let image = response.result.value {
                         self.profileIV1?.image = image
                         SHARED_IMAGE_CACHE.addImage(image, withIdentifier: json["FileName"].stringValue)
+                        if(self.userID != nil && self.userID != SHARED_USER.UserIndex){
+                            self.tenUser.Portrait = UIImagePNGRepresentation(image)
+                            UsersCacheTool().upDateUsersPortrait(self.tenUser.UserIndex, portrait: image)
+                        }
                     }
                 }
             }

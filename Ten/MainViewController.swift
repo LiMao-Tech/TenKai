@@ -69,11 +69,11 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
         //protraitBtn
         portraitBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        if(SHARED_USER.PortraitImage == nil){
-            portraitBtn.setImage(UIImage(named: "user_pic_radar")!, forState: .Normal)
-        }else{
-            portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
-        }
+//        if(SHARED_USER.PortraitImage == nil){
+//            portraitBtn.setImage(UIImage(named: "user_pic_radar")!, forState: .Normal)
+//        }else{
+//            portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+//        }
         portraitBtn.addTarget(self, action: "pushUserProfileVC", forControlEvents: .TouchUpInside)
         
         // set circularMenu
@@ -139,6 +139,11 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.navigationController?.navigationBar.hidden = true
         updateLocation()
         print("unreadNum:\(unReadNum)")
+        if(SHARED_USER.PortraitImage == nil){
+            portraitBtn.setImage(UIImage(named: "user_pic_radar")!, forState: .Normal)
+        }else{
+            portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+        }
         let chatBtn = circularMenuVC.arrButtons[5] as! UIButton
         if(unReadNum == 0){
             chatBtn.setImage(UIImage(named: "btn_menu_chat_normal"), forState: .Normal)

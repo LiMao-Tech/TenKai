@@ -760,11 +760,9 @@ class SingleChatController : UIViewController,
                     message.Sender = SHARED_USER.UserIndex
                     message.Receiver = self.tenUser.UserIndex
                     message.MsgType = 2
-                    let msgs = UserChatModel.allChats().message[self.tenUser.UserIndex]
-                    if(msgs!.count > 0){
-                        message.MsgIndex = (msgs?.last?.chatMessage.MsgIndex)! + 1
-                    }
+                    message.MsgIndex = SHARED_USER.MsgIndex + 1
                     message.MsgContent = String(pcoinAmount!)
+                    message.MsgTime = Tools.getSinceTime(NSDate())
                     chatFrame.chatMessage = message
                     UserChatModel.allChats().message[self.tenUser.UserIndex]?.append(chatFrame)
                     MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: message)

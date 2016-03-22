@@ -125,7 +125,6 @@ class MessageCacheTool: NSObject {
                     message.MsgTime = NSTimeInterval(rs.intForColumn("MSGTIME"))
                     message.PhoneType = Int(rs.intForColumn("PHONETYPE"))
                     message.MsgContent = rs.stringForColumn("MSGCONTENT")
-                    print(message.messageType)
                     if(message.messageType == .Image){
                         let sql_pic_stmt = "SELECT PICTURE FROM MESSAGEINFO_PIC_\(SHARED_USER.UserIndex)_\(userIndex) WHERE MSGINDEX = ?"
                         if let rs = db.executeQuery(sql_pic_stmt, withArgumentsInArray: [message.MsgIndex]){

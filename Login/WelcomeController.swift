@@ -228,6 +228,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             //to mainVC
             NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                NSUserDefaults.standardUserDefaults().setValue(self.emailTF.text!, forKey: "LoginEmail")
                 self.loginBtn.enabled = true
                 self.loading?.removeFromSuperview()
                 let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
