@@ -22,7 +22,6 @@ class TenOtherUsersJSONManager: NSObject {
     
     override init() {
         super.init()
-
     }
     
    

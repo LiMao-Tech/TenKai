@@ -8,6 +8,12 @@
 
 import UIKit
 
+/*
+TODO: This class needs to be revised, since the declaration is rather simple
+and I believe that it can be merged with TenUser. It is expensive to keep two
+arrays with similar objects.
+*/
+
 class RandomAndLevelUser: TenUser {
     var distance = 0
     

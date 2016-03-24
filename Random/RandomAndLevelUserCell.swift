@@ -95,8 +95,8 @@ class RandomAndLevelUserCell: UITableViewCell {
         self.addSubview(energyLabel)
         self.addSubview(distanceLabel)
         self.addSubview(splitLine)
-        self.backgroundColor = UIColor.clearColor()
         
+        self.backgroundColor = UIColor.clearColor()
     }
 
     required init?(coder aDecoder: NSCoder) {

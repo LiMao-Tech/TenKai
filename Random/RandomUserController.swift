@@ -16,7 +16,7 @@ class RandomUserController: UIViewController,
                             UITableViewDataSource
 {
     // Declarations
-    var userListView : UITableView!
+    var userListView: UITableView!
     var userList: [AnyObject] = [AnyObject]()
     var users = [TenUser]()
     var ralUsers = [RandomAndLevelUser]()
@@ -47,7 +47,6 @@ class RandomUserController: UIViewController,
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
