@@ -24,6 +24,34 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var modelType : chatType = .Active
     var selectedBtn : SettingButton!
     
+    var itemActive:SettingButton!
+    var itemInactive:SettingButton!
+    
+    var titleActive:String{
+        get{
+            var numAc = 0
+            for index in SHARED_CHATS.activeUserIndex{
+                numAc += (SHARED_CHATS.tenUsers[index]?.badgeNum)!
+            }
+            if(numAc == 0){
+                return "聊天中"
+            }
+            return "聊天中(\(numAc))"
+        }
+    }
+    var titleInActive:String{
+        get{
+            var numInAc = 0
+            for index in SHARED_CHATS.inActiveUserIndex{
+                numInAc += (SHARED_CHATS.tenUsers[index]?.badgeNum)!
+            }
+            if(numInAc == 0){
+                return "等待中"
+            }
+            return "等待中(\(numInAc))"
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = ChatTitle
@@ -72,6 +100,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+        self.itemActive.setTitle(titleActive, forState: .Normal)
+        self.itemInactive.setTitle(titleInActive, forState: .Normal)
         self.userList.reloadData()
     }
     
@@ -116,6 +146,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }else if(keyPath == "inActiveUserIndex"){
             self.userList.reloadData()
         }else if(keyPath == "message"){
+            self.itemActive.setTitle(titleActive, forState: .Normal)
+            self.itemInactive.setTitle(titleInActive, forState: .Normal)
             self.userList.reloadData()
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
@@ -192,31 +224,35 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func itemClicked(sender:SettingButton){
-        selectedBtn.setImage(selectedBtn.normalImage, forState: .Normal)
+        selectedBtn.setBackgroundImage(selectedBtn.normalImage, forState: .Normal)
         selectedBtn = sender
-        sender.setImage(sender.seletedImage, forState: .Normal)
+        sender.setBackgroundImage(sender.seletedImage, forState: .Normal)
         modelType = sender.chatModel
         userList.reloadData()
     }
     
     func setup(){
         tabView = UIView(frame: CGRectMake(0, 64, SCREEN_WIDTH, TAP_BAR_HEIGHT))
+        let tabBgc = UIColor(red: 41.0/255.0, green: 43.0/255.0, blue: 45.0/255.0, alpha: 1.0)
+        itemActive = SettingButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
+        itemInactive = SettingButton(frame: CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
         
-        let itemActive = SettingButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
-        let itemInactive = SettingButton(frame: CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
-        
-        itemActive.normalImage = UIImage(named: "tab_chat_activeChats_normal")
-        itemActive.seletedImage = UIImage(named: "tab_chat_activeChats_highlight")
+        itemActive.normalImage = nil
+        itemActive.seletedImage = UIImage(named: "tabBar_bg_chat")
         itemActive.chatModel = .Active
         itemActive.contentMode = .ScaleAspectFit
-        itemActive.setImage(itemActive.seletedImage, forState: UIControlState.Normal)
+        itemActive.setBackgroundImage(itemActive.seletedImage, forState: UIControlState.Normal)
+        itemActive.setTitle(titleActive, forState: .Normal)
+        itemActive.backgroundColor = tabBgc
         itemActive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
         
-        itemInactive.normalImage = UIImage(named: "tab_chat_inactiveChats_normal")
-        itemInactive.seletedImage = UIImage(named: "tab_chat_inactiveChats_highlight")
+        itemInactive.normalImage = nil
+        itemInactive.seletedImage = UIImage(named: "tabBar_bg_chat")
         itemInactive.chatModel = .InActive
         itemInactive.contentMode = .ScaleAspectFill
-        itemInactive.setImage(itemInactive.normalImage, forState: UIControlState.Normal)
+        itemInactive.setBackgroundImage(itemInactive.normalImage, forState: UIControlState.Normal)
+        itemInactive.setTitle(titleInActive, forState: .Normal)
+        itemInactive.backgroundColor = tabBgc
         itemInactive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
         
         
