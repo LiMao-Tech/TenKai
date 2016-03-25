@@ -7,9 +7,14 @@
 //
 
 import UIKit
+enum passcodeType : Int{
+    case Set,Reset
+}
 
 class PasscodeController: UIViewController,LockViewDelegate {
-
+    
+    var times  = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()

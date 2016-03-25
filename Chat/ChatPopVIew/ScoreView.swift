@@ -70,7 +70,7 @@ class ScoreView: UIView {
         y += 15
         scoreLabel = UILabel(frame: CGRectMake(contentL-gap*2,y,20,20))
         scoreLabel.textAlignment = .Right
-        scoreLabel.text = "0"
+        scoreLabel.text = "1"
         scoreLabel.textColor = UIColor.whiteColor()
         scoreLabel.font = UIFont.systemFontOfSize(15)
         contentView.addSubview(scoreLabel)
