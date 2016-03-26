@@ -66,7 +66,6 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
             cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
         }
         let user = JSON(usersList[indexPath.row] as! [String: AnyObject])
-        
         let imageIndex = user["UserIndex"].stringValue
         let targetUrl = Url_GetHeadImage + imageIndex
         ALAMO_MANAGER.request(.GET, targetUrl)
@@ -75,6 +74,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
                     cell!.headImage.setImage(image, forState: .Normal)
                 }
         }
+        
         
         cell!.nameLabel.text = user["UserName"].stringValue
         

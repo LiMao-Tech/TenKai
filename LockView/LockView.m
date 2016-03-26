@@ -31,11 +31,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
-        if (self.type == 0) {
-            
-        }else{
-            
-        }
     }
     return self;
 }
@@ -44,11 +39,6 @@
 {
     if (self = [super initWithCoder:aDecoder]) {
         [self setup];
-        if (self.type == 0) {
-            
-        }else{
-            
-        }
     }
     return self;
 }

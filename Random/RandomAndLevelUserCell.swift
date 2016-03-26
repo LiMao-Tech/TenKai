@@ -22,14 +22,14 @@ class RandomAndLevelUserCell: UITableViewCell {
     
     var splitLine : UIView!
     
-    var RALuser:RandomAndLevelUser!{
+    var user:TenUser!{
         didSet{
-            nameLabel.text = "\(RALuser.UserName)"
-            innerLabel.text = "内在 \(RALuser.InnerScore)"
-            outerLabel.text = "外在 \(RALuser.OuterScore)"
-            avgLabel.text = "AVG \(RALuser.Average)"
-            energyLabel.text = "能量 \(RALuser.Energy)"
-            distanceLabel.text = "\(RALuser.distance) m"
+            nameLabel.text = "\(user.UserName)"
+            innerLabel.text = "内在 \(user.InnerScore)"
+            outerLabel.text = "外在 \(user.OuterScore)"
+            avgLabel.text = "AVG \(user.Average)"
+            energyLabel.text = "能量 \(user.Energy)"
+            distanceLabel.text = "\(user.distance) m"
         }
     }
     

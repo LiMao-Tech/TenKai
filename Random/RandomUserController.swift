@@ -19,7 +19,7 @@ class RandomUserController: UIViewController,
     var userListView: UITableView!
     var userList: [AnyObject] = [AnyObject]()
     var users = [TenUser]()
-    var ralUsers = [RandomAndLevelUser]()
+//    var ralUsers = [RandomAndLevelUser]()
 
     
     // View Controls
@@ -65,7 +65,7 @@ class RandomUserController: UIViewController,
         
         let otherPVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
 
-        let user = ralUsers[indexPath.row] as TenUser
+        let user = users[indexPath.row]
         otherPVC.tenUser = user
         otherPVC.userID = user.UserIndex
         self.navigationController?.pushViewController(otherPVC, animated: true)
@@ -77,7 +77,7 @@ class RandomUserController: UIViewController,
         return SCREEN_HEIGHT/8
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.ralUsers.count
+        return self.users.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -87,7 +87,7 @@ class RandomUserController: UIViewController,
             cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
         }
         
-        let user = ralUsers[indexPath.row]
+        let user = users[indexPath.row]
         
         let imageIndex = user.UserIndex.description
         let targetUrl = Url_GetHeadImage + imageIndex
@@ -97,7 +97,7 @@ class RandomUserController: UIViewController,
                 user.Portrait = UIImagePNGRepresentation(image)
             }
         }
-        cell!.RALuser = user
+        cell!.user = user
         
         return cell!
     }

@@ -22,8 +22,9 @@ class PinCodeController: UIViewController {
     var dotFo:UIImageView!
     var pinCodes = [Int]()
     var pin = 0
+    var pinTemp = 0
     var times = 0
-    var pinModel = PinCodeMode.Set
+    var pinModel = PinCodeMode.ReSet
     var count = 0{
         didSet{
             light(count)
@@ -48,12 +49,15 @@ class PinCodeController: UIViewController {
     func setUp(){
         textLabel.textColor = UIColor.whiteColor()
         textLabel.textAlignment = .Center
+        textLabel.font = UIFont.systemFontOfSize(17)
         self.view.addSubview(textLabel)
         textLabel.font = UIFont.systemFontOfSize(15)
         if(NSUserDefaults.standardUserDefaults().valueForKey("PinCode") == nil){
             textLabel.text = "设置PIN"
         }else{
             textLabel.text = "重置PIN"
+            print("pin is:")
+            print(NSUserDefaults.standardUserDefaults().valueForKey("PinCode"))
         }
         lightView = UIView(frame: CGRectMake(0,0,180,40))
         lightView.center = CGPointMake(SCREEN_WIDTH/2, 120)
@@ -130,13 +134,15 @@ class PinCodeController: UIViewController {
             pinCodes.append(sender.tag)
         }
         if(count == 4){
-            var pinTemp = 0
             for num in pinCodes{
-                pinTemp += num
+                pinTemp = num + pinTemp*10
             }
+            print("pinTemp:")
+            print(pinTemp)
             if(pinModel == .Unlock){
-                if( pin == NSUserDefaults.standardUserDefaults().valueForKey("PinCode") as! Int){
+                if( pinTemp == NSUserDefaults.standardUserDefaults().valueForKey("PinCode") as! Int){
                     //解锁成功，回到主界面
+                    pinTemp = 0
                 }else{
                     //解锁失败
                     let failedAction = UIAlertController(title: "解锁失败，请重新尝试", message:nil , preferredStyle: .Alert)
@@ -148,34 +154,44 @@ class PinCodeController: UIViewController {
                 }
             }
             else if(pinModel == .ReSet){
-                if( pin == NSUserDefaults.standardUserDefaults().valueForKey("PinCode") as! Int){
+                if( pinTemp == NSUserDefaults.standardUserDefaults().valueForKey("PinCode") as! Int){
                     pinModel = .Set
+                    self.textLabel.text = "设置PIN"
+                    self.pinTemp = 0
+                    self.count = 0
+                    self.pinCodes.removeAll()
+                    
                 }else{
                     //解锁失败
-                    let failedAction = UIAlertController(title: "请输入正确的PIN", message:nil , preferredStyle: .Alert)
+                    let failedAlert = UIAlertController(title: "请输入正确的PIN", message:nil , preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
                         self.count = 0
                         self.pinCodes.removeAll()
                     })
-                    failedAction.addAction(okAction)
+                    failedAlert.addAction(okAction)
+                    self.presentViewController(failedAlert, animated: true, completion: nil)
                 }
             }
             else{
                 if(times == 0){
-                    let time: NSTimeInterval = 0.5
+                    let time: NSTimeInterval = 0.7
                     let delay = dispatch_time(DISPATCH_TIME_NOW,
                         Int64(time * Double(NSEC_PER_SEC)))
                     dispatch_after(delay, dispatch_get_main_queue()) {
                         self.times = 1
-                        self.pin = pinTemp
+                        self.pin = self.pinTemp
                         self.textLabel.text = "确认PIN"
                         self.count = 0
                         self.pinCodes.removeAll()
+                        self.pinTemp = 0
                     }
                 }else{
                     if(pin == pinTemp){
                         NSUserDefaults.standardUserDefaults().setValue(pin, forKey: "PinCode")
-                        self.navigationController?.popViewControllerAnimated(true)
+                        let successAlert = UIAlertController(title: "PIN设置成功", message: nil, preferredStyle: .Alert)
+                        let okAction = UIAlertAction(title: "确定", style: .Cancel, handler:nil)
+                        successAlert.addAction(okAction)
+                        self.presentViewController(successAlert, animated: true, completion: nil)
                     }else{
                         let failAlert = UIAlertController(title: "两次输入的密码不一致，请重新设置", message: nil, preferredStyle: .Alert)
                         let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
@@ -185,6 +201,7 @@ class PinCodeController: UIViewController {
                             dispatch_after(delay, dispatch_get_main_queue()) {
                                 self.times = 0
                                 self.count = 0
+                                self.pinTemp=0
                                 self.pinCodes.removeAll()
                                 self.pin = 0
                                 self.textLabel.text = "设置PIN"

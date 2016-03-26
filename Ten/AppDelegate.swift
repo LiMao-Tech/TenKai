@@ -26,6 +26,7 @@ class AppDelegate: UIResponder,
     
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        print(Url_Home)
         
         // set Managers delegate
         LOC_MANAGER.delegate = self

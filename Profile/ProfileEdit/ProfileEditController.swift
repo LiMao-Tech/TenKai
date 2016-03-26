@@ -49,7 +49,11 @@ class EditProfileController : UIViewController,
         
         chosenImage = UIImage()
         buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 104, btnWidth: 70, btnHeight: 70, imageName: "user_pic_radar", targetAction: "toImagePicker")
-        buttonProfile.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+        if(SHARED_USER.PortraitImage != nil){
+            buttonProfile.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
+        }else{
+            buttonProfile.setImage(Tools.toCirclurImage(UIImage(named: "user_pic_radar")!), forState: .Normal)
+        }
         var y = CGRectGetMaxY(buttonProfile.frame)+10
         userName = UILabel(frame: CGRectMake(0,y,SCREEN_WIDTH,20))
         userName.font = UIFont(name: FONTNAME_NORMAL, size: 17)

@@ -34,6 +34,8 @@ class TenUser: NSObject {
     var isRatered = false
     var isLocked = false
     
+    var distance = 0
+    
     var Average :Int {
         get{
             return (self.OuterScore+self.InnerScore)/2

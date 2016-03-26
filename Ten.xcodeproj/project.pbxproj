@@ -21,6 +21,7 @@
 		641F2AD81C9595AA00D687BB /* UserListCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641F2AD71C9595AA00D687BB /* UserListCache.swift */; };
 		642452981C4CDBD1003A43C8 /* PCoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642452971C4CDBD1003A43C8 /* PCoinModel.swift */; };
 		642CFEDD1C43EA8B00654CB2 /* DataInitializerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642CFEDC1C43EA8B00654CB2 /* DataInitializerTool.swift */; };
+		64326D321CA6632900860B29 /* RemoteNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956AFB1C9FFB920028EA1A /* RemoteNotificationManager.swift */; };
 		643C8BBB1C47BB0900682A60 /* NotificationCacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBA1C47BB0800682A60 /* NotificationCacheTool.swift */; };
 		643C8BC01C48DF5400682A60 /* PCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C8BBE1C48DF5400682A60 /* PCoinCell.swift */; };
 		643C8BC11C48DF5400682A60 /* PCoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 643C8BBF1C48DF5400682A60 /* PCoinCell.xib */; };
@@ -2314,6 +2315,7 @@
 				64956A211C9E8D0F0028EA1A /* PCoinHistoryModel.swift in Sources */,
 				64956A221C9E8D0F0028EA1A /* SingleChatMessage.swift in Sources */,
 				64956A231C9E8D0F0028EA1A /* SettingDoubleLabelCell.swift in Sources */,
+				64326D321CA6632900860B29 /* RemoteNotificationManager.swift in Sources */,
 				64956A241C9E8D0F0028EA1A /* OtherProfilePicCollectionViewCell.swift in Sources */,
 				64956A251C9E8D0F0028EA1A /* LMImagePicker.swift in Sources */,
 				64956A261C9E8D0F0028EA1A /* Notification.swift in Sources */,
@@ -2478,7 +2480,27 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DEVELOPMENT\"";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AFNetworking\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AlamofireImage\"",
+					"-framework",
+					"\"CryptoSwift\"",
+					"-framework",
+					"\"JSBadgeView\"",
+					"-framework",
+					"\"PureLayout\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"Tweaks\"",
+					"-DEVELOPMENT",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEVELOPMENT\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.limaotech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2503,7 +2525,27 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DEVELOPMENT\"";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AFNetworking\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AlamofireImage\"",
+					"-framework",
+					"\"CryptoSwift\"",
+					"-framework",
+					"\"JSBadgeView\"",
+					"-framework",
+					"\"PureLayout\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"Tweaks\"",
+					"-DEVELOPMENT",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEVELOPMENT\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.limaotech.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

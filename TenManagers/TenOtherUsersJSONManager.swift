@@ -90,15 +90,12 @@ class TenOtherUsersJSONManager: NSObject {
                         break
                     }
                 }
-
-                ruc.ralUsers.removeAll()
+                
                 ruc.users.removeAll()
 
                 for user in self.userList {
                     let newUser = user as! [String: AnyObject]
                     let tenUser = TenUser(dict: newUser)
-                    let ralUser = RandomAndLevelUser(dict: newUser)
-                    ruc.ralUsers.append(ralUser)
                     ruc.users.append(tenUser)
                 }
                 ruc.userListView.reloadData()
