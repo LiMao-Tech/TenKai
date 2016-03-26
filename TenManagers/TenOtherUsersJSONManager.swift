@@ -65,19 +65,20 @@ class TenOtherUsersJSONManager: NSObject {
         return levelUsers
     }
     
-    func selectRandomUsers() -> [AnyObject] {
+    func selectRandomUsers() -> [TenUser] {
         
-        var randomUsers = [AnyObject]()
+        var randomUsers = [TenUser]()
         
-        for user in userList {
-            
+        for entity in userList {
+
+            let user = TenUser(dict: entity as! [String : AnyObject])
             randomUsers.append(user)
         }
         
         return randomUsers
     }
     
-    func getRandomUserList(ruc: RandomUserController) -> Void {
+    func getUserList(mainVC: MainViewController) {
         ALAMO_MANAGER.request(.GET, Url_User, parameters: nil) .responseJSON { response in
 
             if let values = response.result.value {
@@ -85,20 +86,15 @@ class TenOtherUsersJSONManager: NSObject {
                 
                 for i in 0..<self.userList.count {
                     let userJSON = JSON(self.userList[i] as! [String: AnyObject])
-                    if userJSON["UserIndex"].intValue == SHARED_USER.UserIndex {
+                    let avg = (userJSON["OuterScore"].intValue + userJSON["InnerScore"].intValue)/2
+                    if userJSON["UserIndex"].intValue == SHARED_USER.UserIndex || SHARED_USER.Average < avg {
                         self.userList.removeAtIndex(i)
                         break
                     }
                 }
                 
-                ruc.users.removeAll()
-
-                for user in self.userList {
-                    let newUser = user as! [String: AnyObject]
-                    let tenUser = TenUser(dict: newUser)
-                    ruc.users.append(tenUser)
-                }
-                ruc.userListView.reloadData()
+                mainVC.userListAlert.dismissViewControllerAnimated(true, completion: nil)
+                mainVC.refreshBtnClicked()
             }
         }
     }

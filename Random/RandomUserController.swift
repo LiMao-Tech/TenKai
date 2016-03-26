@@ -19,7 +19,6 @@ class RandomUserController: UIViewController,
     var userListView: UITableView!
     var userList: [AnyObject] = [AnyObject]()
     var users = [TenUser]()
-//    var ralUsers = [RandomAndLevelUser]()
 
     
     // View Controls
@@ -41,7 +40,7 @@ class RandomUserController: UIViewController,
     }
     
     override func viewWillAppear(animated: Bool) {
-        TenOtherUsersJSONManager.SharedInstance.getRandomUserList(self)
+        randomizeDisplayedUsers()
     }
     
 
@@ -100,5 +99,12 @@ class RandomUserController: UIViewController,
         cell!.user = user
         
         return cell!
+    }
+
+
+    private func randomizeDisplayedUsers() {
+        users.removeAll()
+        users = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
+        userListView.reloadData()
     }
 }

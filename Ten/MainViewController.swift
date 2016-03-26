@@ -14,10 +14,9 @@ import SwiftyJSON
 
 class MainViewController: UIViewController, ADCircularMenuDelegate {
     
-    
-
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
+
+    let userListAlert = UIAlertController(title: "获取周围用户", message: "正在加载，请稍后。", preferredStyle: .Alert)
     
     // buttons
     let menuButton = UIButton(frame: CGRectMake(5, SCREEN_HEIGHT*(BUTTON_DENO-1)/BUTTON_DENO-5, SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
@@ -46,11 +45,15 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barStyle = .Black
-
         self.navigationController?.navigationBar.backgroundColor = COLOR_NAV_BAR
+        self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
+
+        TenOtherUsersJSONManager.SharedInstance.getUserList(self)
+
         self.view.backgroundColor = COLOR_BG
         
         print(SHARED_USER.UserIndex)
+
         
         SHARED_USER.addObserver(self, forKeyPath: "Average", options: .New, context: nil)
         SHARED_CHATS.addObserver(self, forKeyPath: "message", options: .New, context: nil)

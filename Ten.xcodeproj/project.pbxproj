@@ -84,7 +84,6 @@
 		649569FA1C9E8D0F0028EA1A /* MyProfilePicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45D81D71C4F75160035A213 /* MyProfilePicsViewController.swift */; };
 		649569FB1C9E8D0F0028EA1A /* DKAssetGroupDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5BED1C13EA12009E9927 /* DKAssetGroupDetailVC.swift */; };
 		649569FC1C9E8D0F0028EA1A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C721C142452009E9927 /* UserCell.swift */; };
-		649569FD1C9E8D0F0028EA1A /* RandomAndLevelUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C911C1424C6009E9927 /* RandomAndLevelUser.swift */; };
 		649569FE1C9E8D0F0028EA1A /* PcoinPurchaseHistoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641CDAB31C841E940036655F /* PcoinPurchaseHistoryCache.swift */; };
 		649569FF1C9E8D0F0028EA1A /* MeChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E8CCD1C3E309E00349187 /* MeChatCell.swift */; };
 		64956A001C9E8D0F0028EA1A /* TenSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C811C1424A1009E9927 /* TenSlider.swift */; };
@@ -419,7 +418,6 @@
 		D4EA5C8D1C1424AF009E9927 /* NotificationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C891C1424AF009E9927 /* NotificationFrame.swift */; };
 		D4EA5C8E1C1424AF009E9927 /* NotificationInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C8A1C1424AF009E9927 /* NotificationInfoCell.swift */; };
 		D4EA5C8F1C1424AF009E9927 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C8B1C1424AF009E9927 /* NotificationViewController.swift */; };
-		D4EA5C941C1424C6009E9927 /* RandomAndLevelUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C911C1424C6009E9927 /* RandomAndLevelUser.swift */; };
 		D4EA5C951C1424C6009E9927 /* RandomAndLevelUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C921C1424C6009E9927 /* RandomAndLevelUserCell.swift */; };
 		D4EA5C961C1424C6009E9927 /* RandomUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EA5C931C1424C6009E9927 /* RandomUserController.swift */; };
 		D4EA5D441C14252B009E9927 /* 001.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EA5C981C14252B009E9927 /* 001.png */; };
@@ -768,7 +766,6 @@
 		D4EA5C891C1424AF009E9927 /* NotificationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationFrame.swift; sourceTree = "<group>"; };
 		D4EA5C8A1C1424AF009E9927 /* NotificationInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationInfoCell.swift; sourceTree = "<group>"; };
 		D4EA5C8B1C1424AF009E9927 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		D4EA5C911C1424C6009E9927 /* RandomAndLevelUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomAndLevelUser.swift; sourceTree = "<group>"; };
 		D4EA5C921C1424C6009E9927 /* RandomAndLevelUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomAndLevelUserCell.swift; sourceTree = "<group>"; };
 		D4EA5C931C1424C6009E9927 /* RandomUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomUserController.swift; sourceTree = "<group>"; };
 		D4EA5C981C14252B009E9927 /* 001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001.png; sourceTree = "<group>"; };
@@ -1420,7 +1417,6 @@
 		D4EA5C901C1424C6009E9927 /* Random */ = {
 			isa = PBXGroup;
 			children = (
-				D4EA5C911C1424C6009E9927 /* RandomAndLevelUser.swift */,
 				D4EA5C921C1424C6009E9927 /* RandomAndLevelUserCell.swift */,
 				D4EA5C931C1424C6009E9927 /* RandomUserController.swift */,
 			);
@@ -2275,7 +2271,6 @@
 				649569FA1C9E8D0F0028EA1A /* MyProfilePicsViewController.swift in Sources */,
 				649569FB1C9E8D0F0028EA1A /* DKAssetGroupDetailVC.swift in Sources */,
 				649569FC1C9E8D0F0028EA1A /* UserCell.swift in Sources */,
-				649569FD1C9E8D0F0028EA1A /* RandomAndLevelUser.swift in Sources */,
 				649569FE1C9E8D0F0028EA1A /* PcoinPurchaseHistoryCache.swift in Sources */,
 				649569FF1C9E8D0F0028EA1A /* MeChatCell.swift in Sources */,
 				64956A001C9E8D0F0028EA1A /* TenSlider.swift in Sources */,
@@ -2380,7 +2375,6 @@
 				D45D81DF1C4F75160035A213 /* MyProfilePicsViewController.swift in Sources */,
 				D4EA5BF51C13EA12009E9927 /* DKAssetGroupDetailVC.swift in Sources */,
 				D4EA5C761C142452009E9927 /* UserCell.swift in Sources */,
-				D4EA5C941C1424C6009E9927 /* RandomAndLevelUser.swift in Sources */,
 				641CDAB41C841E940036655F /* PcoinPurchaseHistoryCache.swift in Sources */,
 				643E8CD11C3E309E00349187 /* MeChatCell.swift in Sources */,
 				D4EA5C851C1424A1009E9927 /* TenSlider.swift in Sources */,

@@ -44,7 +44,7 @@ class TenUser: NSObject {
     
     var Expire = 0
     
-    var AVG:Int = 0 {
+    var AVG: Int = 0 {
         didSet{
             if(Int(Tools.getSinceTime(NSDate())) > self.Expire){
                 AVG = self.Average
