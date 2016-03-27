@@ -124,7 +124,7 @@ class UserCell: UITableViewCell {
             }
             else{
                 timeLabel.text = "\(Tools.toDisplayTime(Tools.getSinceTime(NSDate())))"
-                lastMessage.text = "[嘻嘻]快来和你的小伙伴聊天吧！"
+                lastMessage.text = "[系统]嘻嘻，快来和你的小伙伴聊天吧！"
             }
         }
     }
