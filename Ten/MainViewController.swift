@@ -134,8 +134,9 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(plus)
         self.view.addSubview(refreshBtn)
         self.view.addSubview(distanceLabel)
-        
         distanceChange()
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {

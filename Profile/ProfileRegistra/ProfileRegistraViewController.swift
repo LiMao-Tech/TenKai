@@ -16,7 +16,8 @@ class RegistProfileViewController: UIViewController,
                                     UIImagePickerControllerDelegate,
                                     UITextViewDelegate,
                                     UITextFieldDelegate,
-                                    UIScrollViewDelegate
+                                    UIScrollViewDelegate,
+                                    TenPasscodeDelegate
 {
     let lineLength:CGFloat = SCREEN_WIDTH*0.6
     
@@ -521,15 +522,14 @@ class RegistProfileViewController: UIViewController,
                 NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 UserCacheTool().addUserInfoByUser()
                 DataInitializerTool.initialiseInfo()
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.button.enabled = true
-                    self.loading?.removeFromSuperview()
-                    let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                    let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
-                    self.presentViewController(nVC, animated: true, completion: { () -> Void in
-                    })
+                self.button.enabled = true
+                self.loading?.removeFromSuperview()
 
-                })            })
+                let pVC = PasscodeController()
+                pVC.passcodeModel = passcodeType.Set
+                pVC.delegate = self
+                self.presentViewController(pVC, animated: true, completion: nil)
+            })
             },failure:  { (task, error) -> Void in
                 self.button.enabled = true
                 self.loading?.removeFromSuperview()
@@ -554,6 +554,13 @@ class RegistProfileViewController: UIViewController,
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func passcodeDidSet(pVC: PasscodeController) {
+        pVC.dismissViewControllerAnimated(true, completion: nil)
+        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
+        self.presentViewController(nVC, animated: true, completion: nil)
     }
     
 } // end of the class

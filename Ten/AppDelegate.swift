@@ -172,6 +172,16 @@ class AppDelegate: UIResponder,
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         print("*********** in Did Become Active *************")
+        let vc = self.window?.rootViewController
+        if(vc!.isKindOfClass(UINavigationController)){
+            let nvc = vc as! UINavigationController
+            print("root vc visible : \(nvc.visibleViewController)")
+            let pvc = PasscodeController()
+            pvc.passcodeModel = .Unlock
+            nvc.presentViewController(pvc, animated: false, completion: nil)
+
+            
+        }
         RemoteNotificationManager.getInfos()
         
         // clear notification badge

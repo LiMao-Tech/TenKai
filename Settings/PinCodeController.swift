@@ -54,6 +54,7 @@ class PinCodeController: UIViewController {
         textLabel.font = UIFont.systemFontOfSize(15)
         if(NSUserDefaults.standardUserDefaults().valueForKey("PinCode") == nil){
             textLabel.text = "设置PIN"
+            pinModel = .Set
         }else{
             textLabel.text = "重置PIN"
             print("pin is:")

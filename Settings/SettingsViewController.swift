@@ -78,6 +78,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
         }
         else if(indexPath.row == 1){
             let pcVC = PasscodeController()
+            pcVC.passcodeModel = .Reset
             self.navigationController?.pushViewController(pcVC, animated: true)
             settingList.deselectRowAtIndexPath(indexPath, animated: true)
         }
