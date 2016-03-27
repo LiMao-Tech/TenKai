@@ -26,7 +26,7 @@ class MeChatCell: ChatBaseCell {
                 conText.attributedText = chatFrame.chatMessage.attrMsg
                 time.text = "\(Tools.toDisplayTime(chatFrame.chatMessage.MsgTime))"
             }
-            if(MsgIsLock){
+            if(chatFrame.chatMessage.IsLocked){
                 lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
             }else{
                 lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
@@ -58,12 +58,12 @@ class MeChatCell: ChatBaseCell {
     }
     
     func lockBtnClicked(){
-        if(MsgIsLock){
+        if(chatFrame.chatMessage.IsLocked){
             lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
         }else{
             lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
         }
-        self.MsgIsLock = !MsgIsLock
+        chatFrame.chatMessage.IsLocked = !chatFrame.chatMessage.IsLocked
         self.delegate?.unlockBtnClicked(self)
        
         

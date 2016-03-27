@@ -40,8 +40,7 @@ class OtherChatCell: ChatBaseCell {
                 timeLabel.text = "\(Tools.toDisplayTime(chatFrame.chatMessage.MsgTime))"
                 
             }
-            MsgIsLock = chatFrame.chatMessage.IsLocked
-            if(MsgIsLock){
+            if(chatFrame.chatMessage.IsLocked){
                 lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
             }else{
                 lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
@@ -73,13 +72,12 @@ class OtherChatCell: ChatBaseCell {
     }
     
     func lockBtnClicked(){
-        if(MsgIsLock){
+        if(chatFrame.chatMessage.IsLocked){
             lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
         }else{
             lockBtn.setImage(UIImage(named: "icon_chat_lock_19"), forState: .Normal)
         }
-        MsgIsLock = !MsgIsLock
-        chatFrame.chatMessage.IsLocked = MsgIsLock
+        chatFrame.chatMessage.IsLocked = !chatFrame.chatMessage.IsLocked
         self.delegate?.unlockBtnClicked(self)
     }
 }

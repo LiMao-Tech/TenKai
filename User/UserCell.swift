@@ -28,7 +28,17 @@ class UserCell: UITableViewCell {
     var tenUser = TenUser(){
         didSet{
             nameLabel.text = tenUser.UserName
-            message = UserChatModel.allChats().message[tenUser.UserIndex]!
+            var temp = [SingleChatMessageFrame()]
+            if(ChatLockState){
+                for msg in SHARED_CHATS.message[tenUser.UserIndex]!{
+                    if(!msg.chatMessage.IsLocked){
+                        temp.append(msg)
+                    }
+                }
+            }else{
+                temp = SHARED_CHATS.message[tenUser.UserIndex]!
+            }
+            message = temp
             let w = SCREEN_WIDTH - 190
             let attr = [NSFontAttributeName:UIFont.systemFontOfSize(15)]
             let size = tenUser.UserName.boundingRectWithSize(CGSizeMake(w, 21), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attr, context: nil)
