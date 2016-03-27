@@ -19,7 +19,24 @@ class SingleChatController : UIViewController,
                             PCoinTransDelegate,
                             ChatBaseCellDelegate
 {
-    var messages:[SingleChatMessageFrame]!
+    var messages:[SingleChatMessageFrame]!{
+        get{
+            var temp = [SingleChatMessageFrame]()
+            if(ChatLockState){
+                for msg in SHARED_CHATS.message[tenUser.UserIndex]!{
+                    if(!msg.chatMessage.IsLocked){
+                        temp.append(msg)
+                    }
+                }
+            }else{
+                temp = SHARED_CHATS.message[tenUser.UserIndex]!
+            }
+            return temp
+        }
+        set{
+            
+        }
+    }
     var tenUser = TenUser(){
         didSet{
             if(!SHARED_CHATS.activeUserIndex.contains(tenUser.UserIndex) && !SHARED_CHATS.inActiveUserIndex.contains(tenUser.UserIndex)){
@@ -32,7 +49,6 @@ class SingleChatController : UIViewController,
             }
             UsersCacheTool().updateUsersBadgeNum(tenUser.UserIndex, badgeNum: 0)
             comunicatingIndex = tenUser.UserIndex
-            messages = SHARED_CHATS.message[tenUser.UserIndex]!
         }
     }
     
@@ -126,7 +142,6 @@ class SingleChatController : UIViewController,
                 unreadNum = ""
             }
             leftItem.title = "返回" + unreadNum
-            self.messages = UserChatModel.allChats().message[tenUser.UserIndex]!
             self.messageList.reloadData()
             self.rollToLastRow()
         }else{
