@@ -166,7 +166,6 @@ class SingleChatController : UIViewController,
     
     func getMessageByNet(refresh:UIRefreshControl,index:Int){
         let url = Url_Api + "TenMsgs?sender=\(SHARED_USER.UserIndex)&receiver=\(tenUser.UserIndex)&msgIndx=\(index)&amount=20"
-//        let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         let  charSet = NSCharacterSet(charactersInString: url)
         let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
         AFJSONManager.SharedInstance.getMethod(newUrl!, success: { (task, response) -> Void in

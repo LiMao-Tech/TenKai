@@ -59,14 +59,11 @@ class PasscodeController: UIViewController,LockViewDelegate {
         if(passcodeModel == .Unlock){
             if (passcodeTemp == NSUserDefaults.standardUserDefaults().valueForKey("passcode") as? Int){
                 //TODO: 解锁成功
-                self.dismissViewControllerAnimated(true, completion: nil)
+                ChatLockState = false
             }else{
-                let failAlert = UIAlertController(title: "滑动解锁失败", message: nil, preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-                failAlert.addAction(okAction)
-                self.presentViewController(failAlert, animated: true, completion: nil)
-
+                ChatLockState = true
             }
+            self.dismissViewControllerAnimated(true, completion: nil)
         }else if(passcodeModel == .Set){
             if(times == 0){
                 print("set 0")
@@ -79,7 +76,7 @@ class PasscodeController: UIViewController,LockViewDelegate {
                 titleLabel.text = "重置滑动解锁"
                 if(passcode == passcodeTemp!){
                     NSUserDefaults.standardUserDefaults().setValue(passcode, forKey: "passcode")
-                    let successAlert = UIAlertController(title: "PIN设置成功", message: nil, preferredStyle: .Alert)
+                    let successAlert = UIAlertController(title: "滑动解锁设置成功", message: nil, preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
                         self.delegate?.passcodeDidSet(self)
                     })

@@ -19,6 +19,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
 //    var userChatActive = SHARED_CHATS.activeUserIndex
 //    var userChatInActive = SHARED_CHATS.inActiveUserIndex
+    
     var tabView : UIView!
     var userList : UITableView!
     var modelType : chatType = .Active
@@ -49,6 +50,29 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return "等待中"
             }
             return "等待中(\(numInAc))"
+        }
+    }
+    var chatLockActiveIndex : [Int]{
+        get{
+            var temp = [Int]()
+            for index in SHARED_CHATS.activeUserIndex{
+                if(SHARED_CHATS.tenUsers[index]?.isLocked == false){
+                    temp.append(index)
+                }
+            }
+            return temp
+        }
+    }
+    
+    var chatLockInActiveIndex:[Int]{
+        get{
+            var temp = [Int]()
+            for index in SHARED_CHATS.inActiveUserIndex{
+                if(SHARED_CHATS.tenUsers[index]?.isLocked == false){
+                    temp.append(index)
+                }
+            }
+            return temp
         }
     }
     
@@ -174,26 +198,37 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell = UserCell.loadFromNib()
         }
         if(modelType == .Active){
-            cell?.tenUser =  SHARED_CHATS.tenUsers[SHARED_CHATS.activeUserIndex[indexPath.row]]!
+            let indexArray = ChatLockState ? self.chatLockActiveIndex : SHARED_CHATS.activeUserIndex
+            cell?.tenUser =  SHARED_CHATS.tenUsers[indexArray[indexPath.row]]!
             cell?.delegate = self
         }else{
-            cell?.tenUser = SHARED_CHATS.tenUsers[SHARED_CHATS.inActiveUserIndex[indexPath.row]]!
+            let indexArray = ChatLockState ? self.chatLockInActiveIndex : SHARED_CHATS.inActiveUserIndex
+            cell?.tenUser = SHARED_CHATS.tenUsers[indexArray[indexPath.row]]!
             cell?.delegate = self
         }
         return cell!
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return modelType == chatType.Active ? SHARED_CHATS.activeUserIndex.count : SHARED_CHATS.inActiveUserIndex.count
+        var count = 0
+        if(!ChatLockState){
+            count = modelType == chatType.Active ? SHARED_CHATS.activeUserIndex.count : SHARED_CHATS.inActiveUserIndex.count
+        }else{
+            count = modelType == chatType.Active ? self.chatLockActiveIndex.count : self.chatLockInActiveIndex.count
+        }
+        return count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sVC = SingleChatController()
         if(modelType == .Active){
-            sVC.tenUser = SHARED_CHATS.tenUsers[SHARED_CHATS.activeUserIndex[indexPath.row]]!
+            let indexArray = ChatLockState ? self.chatLockActiveIndex : SHARED_CHATS.activeUserIndex
+            sVC.tenUser =  SHARED_CHATS.tenUsers[indexArray[indexPath.row]]!
         }else{
-            sVC.tenUser = SHARED_CHATS.tenUsers[SHARED_CHATS.inActiveUserIndex[indexPath.row]]!
+            let indexArray = ChatLockState ? self.chatLockInActiveIndex : SHARED_CHATS.inActiveUserIndex
+            sVC.tenUser = SHARED_CHATS.tenUsers[indexArray[indexPath.row]]!
         }
+        
         if(ChatFocusState && sVC.tenUser.UserIndex != NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int){
             let focusAlert = UIAlertController(title: "注意！", message: "还没有为你的小伙伴的内在评分", preferredStyle: .Alert)
             let focusAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
