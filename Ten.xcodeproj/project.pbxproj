@@ -1676,6 +1676,9 @@
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "LiMao Tech";
 				TargetAttributes = {
+					649569C61C9E8D0F0028EA1A = {
+						DevelopmentTeam = QDC996CTVH;
+					};
 					C4CED3051B88FB010008BCF2 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = QDC996CTVH;
