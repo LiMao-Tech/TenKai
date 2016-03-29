@@ -74,7 +74,6 @@ class OtherProfileViewController: ProfileViewController {
                 let dist = String(Int(distDouble))
                 self.pcoindistanceLabel.text = "\(dist) m"
             }
-
         }
         else {
             self.pcoindistanceLabel.text = "??"
@@ -91,6 +90,7 @@ class OtherProfileViewController: ProfileViewController {
         }
         self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
         self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
+        self.scoreLabel.text = "内在: \(tenUser.InnerScore)   外在: \(tenUser.OuterScore)   能量： \(tenUser.Energy)"
     }
 
     override func didReceiveMemoryWarning() {
