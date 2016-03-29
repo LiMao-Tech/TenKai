@@ -25,9 +25,9 @@ class OtherProfileMasterViewController: ProfileMasterViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        chatBtn.action = Selector("pushChatView")
-        toAlbumBtn.action = Selector("toAlbum")
-        toProfileBtn.action = Selector("toProfile")
+        chatBtn.action = #selector(OtherProfileMasterViewController.pushChatView)
+        toAlbumBtn.action = #selector(OtherProfileMasterViewController.toAlbum)
+        toProfileBtn.action = #selector(OtherProfileMasterViewController.toProfile)
         
         self.navigationItem.rightBarButtonItem = chatBtn;
 

@@ -76,7 +76,7 @@ class ScoreView: UIView {
         contentView.addSubview(scoreLabel)
         var w = contentL-gap*2-headImageView.frame.width-scoreLabel.frame.width-gap
         scoreSlider = TenSlider(frame: CGRectMake(CGRectGetMaxX(headImageView.frame)+10,y,w,20))
-        scoreSlider.addTarget(self, action: "scoreChange", forControlEvents: .ValueChanged)
+        scoreSlider.addTarget(self, action: #selector(ScoreView.scoreChange), forControlEvents: .ValueChanged)
         scoreSlider.maximumValue = 10
         scoreSlider.minimumValue = 1
         contentView.addSubview(scoreSlider)
@@ -89,7 +89,7 @@ class ScoreView: UIView {
         w = (contentL-1)/2
         cancelBtn = UIButton(frame: CGRectMake(0,y,w,39))
         cancelBtn.setTitle("取消", forState: .Normal)
-        cancelBtn.addTarget(self, action: "cancelClicked", forControlEvents: .TouchUpInside)
+        cancelBtn.addTarget(self, action: #selector(ScoreView.cancelClicked), forControlEvents: .TouchUpInside)
         contentView.addSubview(cancelBtn)
         let splitLineMid = UIView(frame: CGRectMake(w,y,1,39))
         splitLineMid.backgroundColor = UIColor.whiteColor()
@@ -97,7 +97,7 @@ class ScoreView: UIView {
         contentView.addSubview(splitLineMid)
         okBtn = UIButton(frame: CGRectMake(w+1,y,w,39))
         okBtn.setTitle("确认", forState: .Normal)
-        okBtn.addTarget(self, action: "okClicked", forControlEvents: .TouchUpInside)
+        okBtn.addTarget(self, action: #selector(ScoreView.okClicked), forControlEvents: .TouchUpInside)
         contentView.addSubview(okBtn)
     }
     

@@ -32,7 +32,7 @@ class OtherProfileViewController: ProfileViewController {
         outerBar.minimumValue = MinBarValue
         outerBar.maximumValue = MaxBarValue
         
-        outerBar.addTarget(self, action: "outerBarChanged", forControlEvents: UIControlEvents.ValueChanged)
+        outerBar.addTarget(self, action: #selector(OtherProfileViewController.outerBarChanged), forControlEvents: UIControlEvents.ValueChanged)
         
         outerValue = UILabel(frame: CGRectMake(SCREEN_WIDTH*4/5, SCREEN_HEIGHT*11/12, SCREEN_WIDTH/2, SCREEN_HEIGHT/12))
         outerValue.text = String(tenUser.OuterScore)

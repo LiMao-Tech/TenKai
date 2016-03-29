@@ -47,7 +47,7 @@ class MeChatCell: ChatBaseCell {
         self.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
         self.textView.backgroundColor = UIColor.clearColor()
         content.titleLabel?.numberOfLines = 0
-        lockBtn.addTarget(self, action: "lockBtnClicked", forControlEvents: .TouchUpInside)
+        lockBtn.addTarget(self, action: #selector(MeChatCell.lockBtnClicked), forControlEvents: .TouchUpInside)
         // Initialization code
     }
 

@@ -249,7 +249,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func refreshControl(){
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
+        refresh.addTarget(self, action: #selector(ChatViewController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
         
         self.userList.addSubview(refresh)
     }
@@ -279,7 +279,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         itemActive.setBackgroundImage(itemActive.seletedImage, forState: UIControlState.Normal)
         itemActive.setTitle(titleActive, forState: .Normal)
         itemActive.backgroundColor = tabBgc
-        itemActive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
+        itemActive.addTarget(self, action: #selector(ChatViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
         
         itemInactive.normalImage = nil
         itemInactive.seletedImage = UIImage(named: "tabBar_bg_chat")
@@ -288,7 +288,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         itemInactive.setBackgroundImage(itemInactive.normalImage, forState: UIControlState.Normal)
         itemInactive.setTitle(titleInActive, forState: .Normal)
         itemInactive.backgroundColor = tabBgc
-        itemInactive.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
+        itemInactive.addTarget(self, action: #selector(ChatViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
         
         
         tabView.addSubview(itemActive)

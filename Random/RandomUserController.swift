@@ -33,7 +33,7 @@ class RandomUserController: UIViewController,
         userListView.separatorStyle = .None
         
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "refreshList:", forControlEvents: .ValueChanged)
+        refresh.addTarget(self, action: #selector(RandomUserController.refreshList(_:)), forControlEvents: .ValueChanged)
         
         self.view.addSubview(userListView)
         self.userListView.addSubview(refresh)

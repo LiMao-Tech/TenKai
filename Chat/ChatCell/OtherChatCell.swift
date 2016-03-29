@@ -62,7 +62,7 @@ class OtherChatCell: ChatBaseCell {
         context.titleLabel?.numberOfLines = 0
                 // Initialization code
         self.lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
-        lockBtn.addTarget(self, action: "lockBtnClicked", forControlEvents: .TouchUpInside)
+        lockBtn.addTarget(self, action: #selector(OtherChatCell.lockBtnClicked), forControlEvents: .TouchUpInside)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

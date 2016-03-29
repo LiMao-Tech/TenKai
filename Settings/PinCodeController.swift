@@ -82,7 +82,7 @@ class PinCodeController: UIViewController {
         
         deleteBtn = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,SCREEN_HEIGHT-50,80,50))
         deleteBtn.setTitle("删  除", forState: .Normal)
-        deleteBtn.addTarget(self, action: "deleteBtnClick", forControlEvents: .TouchUpInside)
+        deleteBtn.addTarget(self, action: #selector(PinCodeController.deleteBtnClick), forControlEvents: .TouchUpInside)
         self.view.addSubview(deleteBtn)
         self.view.addSubview(lightView)
         
@@ -109,7 +109,7 @@ class PinCodeController: UIViewController {
             numberBtn.setImage(UIImage(named: "icon\(i)"), forState: .Normal)
             numberBtn.setImage(UIImage(named: "icon\(i)_click"), forState: .Highlighted)
             numberBtn.tag = i
-            numberBtn.addTarget(self, action: "numberClick:", forControlEvents: UIControlEvents.TouchUpInside)
+            numberBtn.addTarget(self, action: #selector(PinCodeController.numberClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.numberView.addSubview(numberBtn)
         }
         
@@ -117,7 +117,7 @@ class PinCodeController: UIViewController {
         numberBtn.tag = 0
         numberBtn.setImage(UIImage(named: "icon0"), forState: .Normal)
         numberBtn.setImage(UIImage(named: "icon0_click"), forState: .Highlighted)
-        numberBtn.addTarget(self, action: "numberClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        numberBtn.addTarget(self, action: #selector(PinCodeController.numberClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.numberView.addSubview(numberBtn)
     }
     

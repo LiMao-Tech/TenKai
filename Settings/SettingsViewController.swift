@@ -31,7 +31,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
         let y = CGRectGetMaxY(settingList.frame) + (SCREEN_HEIGHT - CGRectGetMaxY(settingList.frame) - h)/2
         logoutBtn = UIButton(frame: CGRectMake(x, y, w, h))
         logoutBtn.setImage(UIImage(named: "btn_logout"), forState: .Normal)
-        logoutBtn.addTarget(self, action: "logout", forControlEvents: .TouchUpInside)
+        logoutBtn.addTarget(self, action: #selector(SettingsViewController.logout), forControlEvents: .TouchUpInside)
         
         self.view.addSubview(settingList)
         self.view.addSubview(logoutBtn)

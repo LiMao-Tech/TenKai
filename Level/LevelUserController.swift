@@ -36,7 +36,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     func refreshControl(){
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
+        refresh.addTarget(self, action: #selector(LevelUserController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
         
         self.userList.addSubview(refresh)
     }

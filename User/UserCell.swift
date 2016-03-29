@@ -74,14 +74,14 @@ class UserCell: UITableViewCell {
                 bottomView.frame = frame
                 infoBtn = UIButton(frame: CGRectMake(0,0,len,85))
                 infoBtn.setImage(UIImage(named: "btn_chat_info"), forState: .Normal)
-                infoBtn.addTarget(self, action: "infoBtnClicked", forControlEvents: .TouchUpInside)
+                infoBtn.addTarget(self, action: #selector(UserCell.infoBtnClicked), forControlEvents: .TouchUpInside)
                 bottomView.addSubview(infoBtn)
                 let midSplit = UIView(frame: CGRectMake(len,0,1,85))
                 midSplit.backgroundColor = UIColor.whiteColor()
                 bottomView.addSubview(midSplit)
                 deleteBtn = UIButton(frame: CGRectMake(len+1,0,len,85))
                 deleteBtn.setImage(UIImage(named: "btn_chat_delete"), forState: .Normal)
-                deleteBtn.addTarget(self, action: "deleteBtnClicked", forControlEvents: .TouchUpInside)
+                deleteBtn.addTarget(self, action: #selector(UserCell.deleteBtnClicked), forControlEvents: .TouchUpInside)
                 bottomView.addSubview(deleteBtn)
             }else{
                 bottomLen = SCREEN_WIDTH/2
@@ -90,21 +90,21 @@ class UserCell: UITableViewCell {
                 bottomView.frame = frame
                 infoBtn = UIButton(frame: CGRectMake(0,0,len,85))
                 infoBtn.setImage(UIImage(named: "btn_chat_info"), forState: .Normal)
-                infoBtn.addTarget(self, action: "infoBtnClicked", forControlEvents: .TouchUpInside)
+                infoBtn.addTarget(self, action: #selector(UserCell.infoBtnClicked), forControlEvents: .TouchUpInside)
                 bottomView.addSubview(infoBtn)
                 let leftSplit = UIView(frame: CGRectMake(len,34,1,17))
                 leftSplit.backgroundColor = UIColor.whiteColor()
                 bottomView.addSubview(leftSplit)
                 midLockBtn = UIButton(frame: CGRectMake(len+1,0,len,85))
                 midLockBtn!.setImage(UIImage(named: "btn_chat_lock_25"), forState: .Normal)
-                midLockBtn!.addTarget(self, action: "midLockBtnClicked", forControlEvents: .TouchUpInside)
+                midLockBtn!.addTarget(self, action: #selector(UserCell.midLockBtnClicked), forControlEvents: .TouchUpInside)
                 bottomView.addSubview(midLockBtn!)
                 let rightSplit = UIView(frame: CGRectMake(len*2+1,34,1,17))
                 rightSplit.backgroundColor = UIColor.whiteColor()
                 bottomView.addSubview(rightSplit)
                 deleteBtn = UIButton(frame: CGRectMake((len+1)*2,0,len,85))
                 deleteBtn.setImage(UIImage(named: "btn_chat_delete"), forState: .Normal)
-                deleteBtn.addTarget(self, action: "deleteBtnClicked", forControlEvents: .TouchUpInside)
+                deleteBtn.addTarget(self, action: #selector(UserCell.deleteBtnClicked), forControlEvents: .TouchUpInside)
                 bottomView.addSubview(deleteBtn)
             }
         }
@@ -144,7 +144,7 @@ class UserCell: UITableViewCell {
         // Initialization code
         self.contentView.backgroundColor = COLOR_BG
         lockBtn.setImage(UIImage(named: "icon_chat_circle"), forState: UIControlState.Normal)
-        lockBtn.addTarget(self, action: "lockBtnDidClicked", forControlEvents: .TouchUpInside)
+        lockBtn.addTarget(self, action: #selector(UserCell.lockBtnDidClicked), forControlEvents: .TouchUpInside)
         headImage.setImage(UIImage(named: "user_pic_radar"), forState: UIControlState.Normal)
         badgeView = JSBadgeView(parentView: headImage, alignment: .BottomLeft)
         nameLabel = UILabel()
@@ -164,7 +164,7 @@ class UserCell: UITableViewCell {
         self.addSubview(bottomView)
         self.bringSubviewToFront(self.contentView)
         
-        panG = UIPanGestureRecognizer(target: self, action: "pan:")
+        panG = UIPanGestureRecognizer(target: self, action: #selector(UserCell.pan(_:)))
         panG.delegate = self
         self.addGestureRecognizer(panG)
     }

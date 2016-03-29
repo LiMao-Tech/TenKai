@@ -38,7 +38,7 @@ class PCoinPurchaseCell: UITableViewCell {
         buyButton.setTitle("购买", forState: .Normal)
         buyButton.titleLabel?.textColor = UIColor.whiteColor()
         buyButton.titleLabel?.font = UIFont.systemFontOfSize(17)
-        buyButton.addTarget(self, action: "buyButtonClicked", forControlEvents: .TouchUpInside)
+        buyButton.addTarget(self, action: #selector(PCoinPurchaseCell.buyButtonClicked), forControlEvents: .TouchUpInside)
         //splitLine
         splitLine = UIView(frame:CGRectMake(54, 63, SCREEN_WIDTH-54, 1))
         splitLine.backgroundColor = UIColor.whiteColor()

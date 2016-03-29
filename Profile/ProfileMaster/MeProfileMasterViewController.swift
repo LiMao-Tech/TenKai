@@ -26,10 +26,10 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         super.viewDidLoad()
 
         // add btn targets
-        addImageBtn.action = Selector("addImage")
-        toAlbumBtn.action = Selector("toAlbum")
-        toSettingsBtn.action = Selector("toSettings")
-        toProfileBtn.action = Selector("toProfile")
+        addImageBtn.action = #selector(MeProfileMasterViewController.addImage)
+        toAlbumBtn.action = #selector(MeProfileMasterViewController.toAlbum)
+        toSettingsBtn.action = #selector(MeProfileMasterViewController.toSettings)
+        toProfileBtn.action = #selector(MeProfileMasterViewController.toProfile)
 
         self.navigationItem.rightBarButtonItems = [toSettingsBtn, toAlbumBtn]
 

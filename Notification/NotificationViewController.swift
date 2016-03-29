@@ -54,7 +54,7 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
     
     func refreshControl(){
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
+        refresh.addTarget(self, action: #selector(NotificationViewController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
         self.infoList.addSubview(refresh)
     }
     
@@ -111,8 +111,8 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         itemNotification.seletedImage = UIImage(named: "tab_notification_notification_highlight")
         itemSystem.setImage(itemSystem.seletedImage, forState: UIControlState.Normal)
         itemNotification.setImage(itemNotification.normalImage, forState: UIControlState.Normal)
-        itemSystem.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
-        itemNotification.addTarget(self, action: "itemClicked:", forControlEvents: .TouchUpInside)
+        itemSystem.addTarget(self, action: #selector(NotificationViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
+        itemNotification.addTarget(self, action: #selector(NotificationViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
         itemSystem.systemModel = .System
         itemNotification.systemModel = .Notification
         

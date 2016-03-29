@@ -100,15 +100,15 @@ class RegistProfileViewController: UIViewController,
         button = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,43))
         button.setTitle("完成", forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(15)
-        button.addTarget(self, action: "toRadarPage", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(RegistProfileViewController.toRadarPage), forControlEvents: .TouchUpInside)
         
         let backBtn = UIButton(frame: CGRectMake(0,20,80,43))
         backBtn.setTitle("返回", forState: .Normal)
         backBtn.titleLabel?.font = UIFont.systemFontOfSize(15)
-        backBtn.addTarget(self, action: "viewBack", forControlEvents: .TouchUpInside)
+        backBtn.addTarget(self, action: #selector(RegistProfileViewController.viewBack), forControlEvents: .TouchUpInside)
         
         // init buttons
-        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 70, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar", targetAction: "toImagePicker")
+        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 70, btnWidth: 140/3*2, btnHeight: 140/3*2, imageName: "user_pic_radar", targetAction: #selector(RegistProfileViewController.toImagePicker))
         buttonProfile.layer.masksToBounds = true
         buttonProfile.layer.cornerRadius = buttonProfile.bounds.width*0.5
         
@@ -135,11 +135,11 @@ class RegistProfileViewController: UIViewController,
         
         let picker = UIDatePicker()
         picker.datePickerMode = .Date
-        picker.addTarget(self, action: "dataDidChange:", forControlEvents: .ValueChanged)
+        picker.addTarget(self, action: #selector(RegistProfileViewController.dataDidChange(_:)), forControlEvents: .ValueChanged)
         birthDate.inputView = picker
         
         let accessoryView = UIToolbar(frame: CGRectMake(0, 0, SCREEN_WIDTH, 35))
-        let doneBtn = UIBarButtonItem(title: "完成", style: .Done, target: self, action: "doneClicked")
+        let doneBtn = UIBarButtonItem(title: "完成", style: .Done, target: self, action: #selector(RegistProfileViewController.doneClicked))
         let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         accessoryView.setItems([space,doneBtn], animated: true)
         birthDate.inputAccessoryView = accessoryView
@@ -147,12 +147,12 @@ class RegistProfileViewController: UIViewController,
         birthLine.backgroundColor = UIColor.whiteColor()
         let sexLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*5/12, labelWidth: labelLen, labelHeight: 100, labelText: "性别＊")
         
-        feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "    女    ", action: "sexBtnClicked:")
-        maleBtn = initChooseBtn(CGRectMake(textX+100, SCREEN_HEIGHT*5/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "    男    ", action: "sexBtnClicked:")
+        feMaleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*5/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "    女    ", action: #selector(RegistProfileViewController.sexBtnClicked(_:)))
+        maleBtn = initChooseBtn(CGRectMake(textX+100, SCREEN_HEIGHT*5/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "    男    ", action: #selector(RegistProfileViewController.sexBtnClicked(_:)))
         
         let marriageLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*6/12, labelWidth: labelLen, labelHeight: 100, labelText: "婚姻＊")
-        singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身  ", action: "marriageBtnClicked:")
-        marriedBtn = initChooseBtn(CGRectMake(textX+100, SCREEN_HEIGHT*6/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚  ", action: "marriageBtnClicked:")
+        singleBtn = initChooseBtn(CGRectMake(textX, SCREEN_HEIGHT*6/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身  ", action: #selector(RegistProfileViewController.marriageBtnClicked(_:)))
+        marriedBtn = initChooseBtn(CGRectMake(textX+100, SCREEN_HEIGHT*6/12+40, 60, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚  ", action: #selector(RegistProfileViewController.marriageBtnClicked(_:)))
         
         // Email Label
         let emailLabel = initLabel(posX: marginX, posY: SCREEN_HEIGHT*7/12, labelWidth: labelLen, labelHeight: 100, labelText: "邮箱")
@@ -194,7 +194,7 @@ class RegistProfileViewController: UIViewController,
         innerBar = TenSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*12/12+40, lineLength-30, 20))
         innerBar.minimumValue = 1
         innerBar.maximumValue = 10
-        innerBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
+        innerBar.addTarget(self, action: #selector(RegistProfileViewController.barChanged), forControlEvents: UIControlEvents.ValueChanged)
         innerValue = UILabel(frame: CGRectMake(CGRectGetMaxX(innerBar.frame)+10, SCREEN_HEIGHT*12/12+40, 20, 20))
         innerValue.text = "0"
         innerValue.textColor = UIColor.whiteColor()
@@ -203,7 +203,7 @@ class RegistProfileViewController: UIViewController,
         outerBar = TenSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*13/12+40, lineLength-30, 20))
         outerBar.minimumValue = 1
         outerBar.maximumValue = 10
-        outerBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
+        outerBar.addTarget(self, action: #selector(RegistProfileViewController.barChanged), forControlEvents: UIControlEvents.ValueChanged)
         outerValue = UILabel(frame: CGRectMake(CGRectGetMaxX(outerBar.frame)+10, SCREEN_HEIGHT*13/12+40, 20, 20))
         outerValue.text = "0"
         outerValue.textColor = UIColor.whiteColor()
@@ -212,7 +212,7 @@ class RegistProfileViewController: UIViewController,
         energyBar = TenSlider(frame: CGRectMake(textX, SCREEN_HEIGHT*14/12+40, lineLength-30, 20))
         energyBar.minimumValue = 1
         energyBar.maximumValue = 10
-        energyBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
+        energyBar.addTarget(self, action: #selector(RegistProfileViewController.barChanged), forControlEvents: UIControlEvents.ValueChanged)
         energyValue = UILabel(frame: CGRectMake(CGRectGetMaxX(energyBar.frame)+10, SCREEN_HEIGHT*14/12+40, 20, 20))
         energyValue.text = "0"
         energyValue.textColor = UIColor.whiteColor()

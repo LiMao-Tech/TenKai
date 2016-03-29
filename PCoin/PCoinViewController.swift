@@ -52,10 +52,10 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         item1.setImage(item1.normalImage, forState: .Normal)
         item2.setImage(item2.normalImage, forState: .Normal)
         item3.setImage(item3.normalImage, forState: .Normal)
-        item0.addTarget(self, action: "changeModel:", forControlEvents: .TouchUpInside)
-        item1.addTarget(self, action: "changeModel:", forControlEvents: .TouchUpInside)
-        item2.addTarget(self, action: "changeModel:", forControlEvents: .TouchUpInside)
-        item3.addTarget(self, action: "changeModel:", forControlEvents: .TouchUpInside)
+        item0.addTarget(self, action: #selector(PCoinViewController.changeModel(_:)), forControlEvents: .TouchUpInside)
+        item1.addTarget(self, action: #selector(PCoinViewController.changeModel(_:)), forControlEvents: .TouchUpInside)
+        item2.addTarget(self, action: #selector(PCoinViewController.changeModel(_:)), forControlEvents: .TouchUpInside)
+        item3.addTarget(self, action: #selector(PCoinViewController.changeModel(_:)), forControlEvents: .TouchUpInside)
         item0.model = .Pcoin
         item1.model = .History
         item2.model = .Transfer
@@ -97,7 +97,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     func refreshControl(){
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
+        refresh.addTarget(self, action: #selector(PCoinViewController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
         self.pcoinItemList.addSubview(refresh)
         refreshStateChange(refresh)
     }

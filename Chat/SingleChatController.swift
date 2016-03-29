@@ -86,8 +86,8 @@ class SingleChatController : UIViewController,
         if(otherUnreadNum == 0){
             unreadNum = ""
         }
-        leftItem = UIBarButtonItem(title: "返回"+unreadNum, style: .Done, target: self, action: "backClicked")
-        let rightItem = UIBarButtonItem(image: UIImage(named:"btn_navBarIcon_caht_more"), style: .Done, target: self, action: "moreBtnClicked")
+        leftItem = UIBarButtonItem(title: "返回"+unreadNum, style: .Done, target: self, action: #selector(SingleChatController.backClicked))
+        let rightItem = UIBarButtonItem(image: UIImage(named:"btn_navBarIcon_caht_more"), style: .Done, target: self, action: #selector(SingleChatController.moreBtnClicked))
         self.navigationItem.setLeftBarButtonItem(leftItem, animated: true)
         self.navigationItem.setRightBarButtonItem(rightItem, animated: true)
         setup()
@@ -153,7 +153,7 @@ class SingleChatController : UIViewController,
     
     func refreshControl(){
         let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "refreshStateChange:", forControlEvents: .ValueChanged)
+        refresh.addTarget(self, action: #selector(SingleChatController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
         self.messageList.addSubview(refresh)
     }
     
@@ -653,15 +653,15 @@ class SingleChatController : UIViewController,
         
         addBtn = UIButton(frame: CGRectMake(margin, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
         addBtn.setImage(UIImage(named: "btn_chat_plus"), forState:UIControlState.Normal)
-        addBtn.addTarget(self, action: "addBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        addBtn.addTarget(self, action: #selector(SingleChatController.addBtnClicked), forControlEvents: UIControlEvents.TouchUpInside)
         
         faceBtn = UIButton(frame: CGRectMake(CGRectGetMaxX(addBtn.frame) + margin, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
         faceBtn.setImage(UIImage(named: "btn_chat_emoji"), forState:UIControlState.Normal)
-        faceBtn.addTarget(self, action: "faceBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        faceBtn.addTarget(self, action: #selector(SingleChatController.faceBtnClicked), forControlEvents: UIControlEvents.TouchUpInside)
         
         sendBtn = UIButton(frame: CGRectMake(SCREEN_WIDTH-35, bottom.bounds.height - iconSize - 7.0, iconSize, iconSize))
         sendBtn.setImage(UIImage(named: "btn_chat_sendsmg"), forState:UIControlState.Normal)
-        sendBtn.addTarget(self, action: "sendBtnClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        sendBtn.addTarget(self, action: #selector(SingleChatController.sendBtnClicked), forControlEvents: UIControlEvents.TouchUpInside)
         
         contentText = UITextView(frame: CGRectMake(CGRectGetMaxX(faceBtn.frame) + margin, 6, SCREEN_WIDTH-3*iconSize-5*margin, 32))
 //        contentText.text = " "
@@ -694,8 +694,8 @@ class SingleChatController : UIViewController,
         // getMessages()
         self.rollToLastRow()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SingleChatController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SingleChatController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     //delegete funcs for scoreView
     func scoreViewOkBtnClicked() {

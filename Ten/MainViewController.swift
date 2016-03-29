@@ -77,7 +77,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 //        }else{
 //            portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
 //        }
-        portraitBtn.addTarget(self, action: "pushUserProfileVC", forControlEvents: .TouchUpInside)
+        portraitBtn.addTarget(self, action: #selector(MainViewController.pushUserProfileVC), forControlEvents: .TouchUpInside)
         
         // set circularMenu
         self.circularMenuVC.circularMenuDelegate = self
@@ -97,34 +97,34 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         // add location observer
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "locationChanged:",
+            selector: Selector("locationChanged:"),
             name: LocationNotiName,
             object: nil)
     
         // config buttons
         menuButton.setImage(UIImage(named: "btn_menu"), forState: UIControlState.Normal)
-        menuButton.addTarget(self, action: "menuButtonAction", forControlEvents: UIControlEvents.TouchUpInside)
+        menuButton.addTarget(self, action: #selector(MainViewController.menuButtonAction), forControlEvents: UIControlEvents.TouchUpInside)
         
         randomButton.setImage(UIImage(named: "btn_radar_random"), forState: UIControlState.Normal)
-        randomButton.addTarget(self, action: "randomButtonAction", forControlEvents: UIControlEvents.TouchUpInside)
+        randomButton.addTarget(self, action: #selector(MainViewController.randomButtonAction), forControlEvents: UIControlEvents.TouchUpInside)
         
         let distanceY = CGRectGetMinY(menuButton.frame) - 80
         distance = TenSlider(frame: CGRectMake(45, distanceY, SCREEN_WIDTH - 90, 24))
         distance.minimumValue = 0
         distance.maximumValue = 3
-        distance.addTarget(self, action: "distanceChange", forControlEvents: UIControlEvents.ValueChanged)
+        distance.addTarget(self, action: #selector(MainViewController.distanceChange), forControlEvents: UIControlEvents.ValueChanged)
         
         let minus = UIButton(frame: CGRectMake(10,distanceY,24,24))
         minus.setImage(UIImage(named: "btn_radar_minus"), forState: .Normal)
-        minus.addTarget(self, action: "minusClicked", forControlEvents: .TouchUpInside)
+        minus.addTarget(self, action: #selector(MainViewController.minusClicked), forControlEvents: .TouchUpInside)
         
         let plus = UIButton(frame: CGRectMake(SCREEN_WIDTH - 34,distanceY,24,24))
         plus.setImage(UIImage(named: "btn_radar_plus"), forState: .Normal)
-        plus.addTarget(self, action: "plusClicked", forControlEvents: .TouchUpInside)
+        plus.addTarget(self, action: #selector(MainViewController.plusClicked), forControlEvents: .TouchUpInside)
         
         refreshBtn.center = CGPointMake(SCREEN_WIDTH/2,menuButton.center.y)
         refreshBtn.setImage(UIImage(named: "btn_radar_refresh"), forState: .Normal)
-        refreshBtn.addTarget(self, action: "refreshBtnClicked", forControlEvents: .TouchUpInside)
+        refreshBtn.addTarget(self, action: #selector(MainViewController.refreshBtnClicked), forControlEvents: .TouchUpInside)
         
         self.view.addSubview(portraitBtn)
         self.view.addSubview(menuButton)
@@ -229,14 +229,14 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             
             let levelBtn = LevelButton(frame: CGRectMake(x + CGFloat(col)*(marginw+iconw), y + CGFloat(row)*(marginh+iconh), iconw, iconh))
             levelBtn.level = i
-            levelBtn.addTarget(self, action: "levelSelect:", forControlEvents: UIControlEvents.TouchUpInside)
+            levelBtn.addTarget(self, action: #selector(MainViewController.levelSelect(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.circularMenuVC.view.addSubview(levelBtn)
             btnArray.append(levelBtn)
         }
         
       let lvtenBtn = LevelButton(frame: CGRectMake(x+marginw+iconw, y + 3*(marginh+iconh), iconw, iconh))
         lvtenBtn.level = 10
-        lvtenBtn.addTarget(self, action: "levelSelect:", forControlEvents: UIControlEvents.TouchUpInside)
+        lvtenBtn.addTarget(self, action: #selector(MainViewController.levelSelect(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.circularMenuVC.view.addSubview(lvtenBtn)
         btnArray.append(lvtenBtn)
         
@@ -400,7 +400,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                 completion: {(finished) -> Void in
                     NSThread.sleepForTimeInterval(0.1)
             })
-            btn.addTarget(self, action: "toTargetUser:", forControlEvents: .TouchUpInside)
+            btn.addTarget(self, action: #selector(MainViewController.toTargetUser(_:)), forControlEvents: .TouchUpInside)
             
         }
     }

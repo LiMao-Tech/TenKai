@@ -42,7 +42,7 @@ public class DKCamera: UIViewController {
     
     private lazy var flashButton: UIButton = {
         let flashButton = UIButton()
-        flashButton.addTarget(self, action: "switchFlashMode", forControlEvents: .TouchUpInside)
+        flashButton.addTarget(self, action: #selector(DKCamera.switchFlashMode), forControlEvents: .TouchUpInside)
         
         return flashButton
     }()
@@ -124,7 +124,7 @@ public class DKCamera: UIViewController {
         // switch button
         let cameraSwitchButton: UIButton = {
             let cameraSwitchButton = UIButton()
-            cameraSwitchButton.addTarget(self, action: "switchCamera", forControlEvents: .TouchUpInside)
+            cameraSwitchButton.addTarget(self, action: #selector(DKCamera.switchCamera), forControlEvents: .TouchUpInside)
             cameraSwitchButton.setImage(DKCameraResource.cameraSwitchImage(), forState: .Normal)
             cameraSwitchButton.sizeToFit()
             
@@ -161,7 +161,7 @@ public class DKCamera: UIViewController {
             }
             
             let captureButton = CaptureButton()
-            captureButton.addTarget(self, action: "takePicture", forControlEvents: .TouchUpInside)
+            captureButton.addTarget(self, action: #selector(DKCamera.takePicture), forControlEvents: .TouchUpInside)
             captureButton.bounds.size = CGSizeApplyAffineTransform(CGSize(width: bottomViewHeight,
                 height: bottomViewHeight), CGAffineTransformMakeScale(0.9, 0.9))
             captureButton.layer.cornerRadius = captureButton.bounds.height / 2
@@ -179,7 +179,7 @@ public class DKCamera: UIViewController {
         // cancel button
         let cancelButton: UIButton = {
             let cancelButton = UIButton()
-            cancelButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+            cancelButton.addTarget(self, action: #selector(DKCamera.dismiss), forControlEvents: .TouchUpInside)
             cancelButton.setImage(DKCameraResource.cameraCancelImage(), forState: .Normal)
             cancelButton.sizeToFit()
             

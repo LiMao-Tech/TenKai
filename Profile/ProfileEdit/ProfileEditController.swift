@@ -44,11 +44,11 @@ class EditProfileController : UIViewController,
         print(SHARED_USER.Marriage)
         self.view.backgroundColor = COLOR_BG
         self.title = ProfileTitle
-        button = UIBarButtonItem(title: "完成", style: .Done, target: self, action: "editDone")
+        button = UIBarButtonItem(title: "完成", style: .Done, target: self, action: #selector(EditProfileController.editDone))
         self.navigationItem.rightBarButtonItem = button
         
         chosenImage = UIImage()
-        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 104, btnWidth: 70, btnHeight: 70, imageName: "user_pic_radar", targetAction: "toImagePicker")
+        buttonProfile = initButton(posX: SCREEN_WIDTH/2, posY: 104, btnWidth: 70, btnHeight: 70, imageName: "user_pic_radar", targetAction: #selector(EditProfileController.toImagePicker))
         if(SHARED_USER.PortraitImage != nil){
             buttonProfile.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
         }else{
@@ -78,9 +78,9 @@ class EditProfileController : UIViewController,
         y = CGRectGetMaxY(sexLabel.frame)+margin
         let marriageLabel = initLabel(posX: 15, posY: y, labelWidth: 100, labelHeight: 20, labelText: "Marriage")
         singleBtn = initChooseBtn(CGRectMake(textX, y, 55, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  单身")
-        singleBtn.addTarget(self, action: "marriageBtnClicked:", forControlEvents: .TouchUpInside)
+        singleBtn.addTarget(self, action: #selector(EditProfileController.marriageBtnClicked(_:)), forControlEvents: .TouchUpInside)
         marriedBtn = initChooseBtn(CGRectMake(textX+80, y, 65, 20), selectedImage: UIImage(named: "icon_checkbox")!, normalImage: UIImage(named: "icon_checkcircle")!, title: "  已婚")
-        marriedBtn.addTarget(self, action: "marriageBtnClicked:", forControlEvents: .TouchUpInside)
+        marriedBtn.addTarget(self, action: #selector(EditProfileController.marriageBtnClicked(_:)), forControlEvents: .TouchUpInside)
         if(SHARED_USER.Marriage == 0){
             singleBtn.setImage(singleBtn.seletedImage, forState: .Normal)
         }else{
@@ -110,7 +110,7 @@ class EditProfileController : UIViewController,
         energyBar.minimumValue = 1
         energyBar.maximumValue = 10
         energyBar.setValue(Float(SHARED_USER.Energy), animated: false)
-        energyBar.addTarget(self, action: "barChanged", forControlEvents: UIControlEvents.ValueChanged)
+        energyBar.addTarget(self, action: #selector(EditProfileController.barChanged), forControlEvents: UIControlEvents.ValueChanged)
         energyValue = UILabel(frame: CGRectMake(CGRectGetMaxX(energyBar.frame)+10, y, 20, 20))
         energyValue.text = String(SHARED_USER.Energy)
         energyValue.textColor = UIColor.whiteColor()

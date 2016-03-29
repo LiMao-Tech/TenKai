@@ -69,7 +69,7 @@ class ProfileViewController: UIViewController,
         albumBtn.title = "相簿"
         albumBtn.style = .Plain
         albumBtn.target = self
-        albumBtn.action = "pushPictureCollectionView"
+        albumBtn.action = #selector(ProfileViewController.pushPictureCollectionView)
         self.navigationItem.rightBarButtonItem = albumBtn
         
         // level
