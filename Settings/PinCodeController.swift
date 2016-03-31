@@ -52,7 +52,7 @@ class PinCodeController: UIViewController {
         textLabel.font = UIFont.systemFontOfSize(17)
         self.view.addSubview(textLabel)
         textLabel.font = UIFont.systemFontOfSize(15)
-        if(NSUserDefaults.standardUserDefaults().valueForKey("PinCode") == nil){
+        if(SHARED_USER.pincode == 0){
             textLabel.text = "设置PIN"
             pinModel = .Set
         }else{
@@ -141,7 +141,7 @@ class PinCodeController: UIViewController {
             print("pinTemp:")
             print(pinTemp)
             if(pinModel == .Unlock){
-                if( pinTemp == NSUserDefaults.standardUserDefaults().valueForKey("PinCode") as! Int){
+                if( pinTemp == SHARED_USER.pincode){
                     //解锁成功，回到主界面
                     pinTemp = 0
                 }else{
@@ -155,7 +155,7 @@ class PinCodeController: UIViewController {
                 }
             }
             else if(pinModel == .ReSet){
-                if( pinTemp == NSUserDefaults.standardUserDefaults().valueForKey("PinCode") as! Int){
+                if( pinTemp == SHARED_USER.pincode){
                     pinModel = .Set
                     self.textLabel.text = "设置PIN"
                     self.pinTemp = 0
@@ -188,7 +188,8 @@ class PinCodeController: UIViewController {
                     }
                 }else{
                     if(pin == pinTemp){
-                        NSUserDefaults.standardUserDefaults().setValue(pin, forKey: "PinCode")
+                        SHARED_USER.pincode = pin
+                        //保存pin并上传
                         let successAlert = UIAlertController(title: "PIN设置成功", message: nil, preferredStyle: .Alert)
                         let okAction = UIAlertAction(title: "确定", style: .Cancel, handler:nil)
                         successAlert.addAction(okAction)

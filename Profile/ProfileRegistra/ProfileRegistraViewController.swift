@@ -29,7 +29,7 @@ class RegistProfileViewController: UIViewController,
     var marriage:Int = -1
     
     // Image Picker Variables
-    var chosenImage : UIImage = UIImage()
+    var chosenImage : UIImage?
     var imageUrl : String?
     var counter : Int?
 
@@ -393,7 +393,7 @@ class RegistProfileViewController: UIViewController,
         let sex = maleBtn.enabled || feMaleBtn.enabled
         let marriage = singleBtn.enabled || marriedBtn.enabled
         
-        if(username.text!.isEmpty || birthDate.text!.isEmpty || !sex || !marriage) {
+        if(username.text!.isEmpty || birthDate.text!.isEmpty || !sex || !marriage || chosenImage == nil) {
             let cancelAction = UIAlertAction(title: "确定", style: .Cancel) { action -> Void in
                 self.button.enabled = true
                 self.scrollView.scrollRectToVisible(CGRectMake(0, 0, 100, 100), animated: true)
@@ -479,7 +479,7 @@ class RegistProfileViewController: UIViewController,
     
     func postImage() {
 
-        let image = UIImageJPEGRepresentation(chosenImage, 0.75)
+        let image = UIImageJPEGRepresentation(chosenImage!, 0.75)
         if image != nil {
             SHARED_USER.Portrait = image!
             let params : NSDictionary = ["id": SHARED_USER.UserIndex]

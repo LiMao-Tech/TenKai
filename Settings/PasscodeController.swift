@@ -57,7 +57,7 @@ class PasscodeController: UIViewController,LockViewDelegate {
         let passcodeTemp = Int(path)
         print("pathTemp:\(passcodeTemp)")
         if(passcodeModel == .Unlock){
-            if (passcodeTemp == NSUserDefaults.standardUserDefaults().valueForKey("passcode") as? Int){
+            if (passcodeTemp == SHARED_USER.passcode){
                 //TODO: 解锁成功
                 ChatLockState = false
             }else{
@@ -75,7 +75,7 @@ class PasscodeController: UIViewController,LockViewDelegate {
                 print("passcode:\(passcode)")
                 titleLabel.text = "重置滑动解锁"
                 if(passcode == passcodeTemp!){
-                    NSUserDefaults.standardUserDefaults().setValue(passcode, forKey: "passcode")
+                    SHARED_USER.passcode = passcode
                     let successAlert = UIAlertController(title: "滑动解锁设置成功", message: nil, preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
                         self.delegate?.passcodeDidSet(self)
@@ -93,7 +93,7 @@ class PasscodeController: UIViewController,LockViewDelegate {
                 }
             }
         }else{
-            if(passcodeTemp == NSUserDefaults.standardUserDefaults().valueForKey("passcode") as? Int){
+            if(passcodeTemp == SHARED_USER.passcode){
                 passcodeModel = .Set
                 titleLabel.text = "设置滑动解锁"
             }else{

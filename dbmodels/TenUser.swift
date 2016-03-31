@@ -29,6 +29,9 @@ class TenUser: NSObject {
     var Longi : Double = -1
     var ProfileUrl = ""
     
+    var passcode = 0
+    var pincode = 0
+    
     //mobile end properties
     
     var isRatered = false
