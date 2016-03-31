@@ -16,7 +16,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
-    let userListAlert = UIAlertController(title: "获取周围用户", message: "正在加载，请稍后。", preferredStyle: .Alert)
+    var userListAlert = UIAlertController(title: "获取周围用户", message: "正在加载，请稍后。", preferredStyle: .Alert)
     
     // buttons
     let menuButton = UIButton(frame: CGRectMake(5, SCREEN_HEIGHT*(BUTTON_DENO-1)/BUTTON_DENO-5, SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
@@ -43,9 +43,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     // view loading
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.navigationBar.barStyle = .Black
-        self.navigationController?.navigationBar.backgroundColor = COLOR_NAV_BAR
         self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
 
         TenOtherUsersJSONManager.SharedInstance.getUserList(self)
@@ -82,6 +79,10 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         // set circularMenu
         self.circularMenuVC.circularMenuDelegate = self
         self.circularMenuVC.view.frame = UIScreen.mainScreen().bounds
+        let hiddenBtn = UIButton(frame: UIScreen.mainScreen().bounds)
+        circularMenuVC.view.addSubview(hiddenBtn)
+        hiddenBtn.addTarget(self, action: #selector(MainViewController.dismissCircularMenu), forControlEvents: .TouchUpInside)
+
         
         //distanceLabel
         distanceLabel = UILabel(frame: CGRectMake(0,80,SCREEN_WIDTH,20))
@@ -92,14 +93,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         //setupButtons
         setupButtons()
         refreshLevelButton()
-        
-        
-        // add location observer
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: Selector("locationChanged:"),
-            name: LocationNotiName,
-            object: nil)
     
         // config buttons
         menuButton.setImage(UIImage(named: "btn_menu"), forState: UIControlState.Normal)
@@ -141,6 +134,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
+        
         updateLocation()
         print("unreadNum:\(unReadNum)")
         if(SHARED_USER.PortraitImage == nil){
@@ -208,9 +202,13 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func refreshBtnClicked() {
         self.refreshBtn.enabled = false
+        if TenOtherUsersJSONManager.SharedInstance.isUserListEmpty() {
+            self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
+            TenOtherUsersJSONManager.SharedInstance.getUserList(self)
+        }
+        
         TenMainGridManager.SharedInstance.clearNodes()
         generateNodes()
-        view.bringSubviewToFront(portraitBtn)
         refreshBtn.enabled = true
     }
     
@@ -343,10 +341,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func circularMenuClickedButtonAtIndex(buttonIndex: Int32) {
         
-        //TODO: add more pos to different pages
-        self.navigationController?.navigationBar.hidden = false
-        self.navigationController?.navigationBar.backgroundColor = UIColor.blackColor()
-        
         switch buttonIndex {
         case 0:
             generateNodesByGender(1)
@@ -355,9 +349,11 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         case 1:
             generateNodesByGender(0)
             circularMenuVC.removeViewWithAnimation()
+
         case 2:
             refreshBtnClicked()
             circularMenuVC.removeViewWithAnimation()
+
         case 3:
             pushUserProfileVC()
             circularMenuVC.removeViewWithAnimation()
@@ -386,6 +382,10 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         let pVC = MeProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
         pVC.userID = SHARED_USER.UserIndex
         self.navigationController?.pushViewController(pVC, animated: true)
+    }
+
+    func dismissCircularMenu() {
+        circularMenuVC.removeViewWithAnimation()
     }
 
     private func showBtns(gridBtns: [TenGridButton]) {
@@ -433,10 +433,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
             let targetUrl = Url_User + String(SHARED_USER.UserIndex)
 
-            ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON) .responseJSON
-            {
-                    response in
-            }
+            ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON)
         }
     }
 }

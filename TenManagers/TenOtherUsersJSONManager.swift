@@ -17,14 +17,16 @@ class TenOtherUsersJSONManager: NSObject {
     private let MaxUsersOnGrid = 24
     
     private var userList: [AnyObject] = [AnyObject]()
-
-    private var userListLv: [AnyObject]?
     
     override init() {
         super.init()
     }
     
-   
+
+    func isUserListEmpty() -> Bool {
+        return userList.count == 0
+    }
+
     func selectGridUsers() -> [AnyObject] {
         
         var gridUsers = [AnyObject]()
@@ -79,22 +81,26 @@ class TenOtherUsersJSONManager: NSObject {
     }
     
     func getUserList(mainVC: MainViewController) {
-        ALAMO_MANAGER.request(.GET, Url_User, parameters: nil) .responseJSON { response in
+        let targetUrl = Url_User + "\(SHARED_USER.UserIndex)?level=\(SHARED_USER.AVG)"
+
+        ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
 
             if let values = response.result.value {
-                self.userList = (values as? [AnyObject])!
-                
-                for i in 0..<self.userList.count {
-                    let userJSON = JSON(self.userList[i] as! [String: AnyObject])
-                    let avg = (userJSON["OuterScore"].intValue + userJSON["InnerScore"].intValue)/2
-                    if userJSON["UserIndex"].intValue == SHARED_USER.UserIndex || SHARED_USER.Average < avg {
-                        self.userList.removeAtIndex(i)
-                        break
-                    }
-                }
-                
                 mainVC.userListAlert.dismissViewControllerAnimated(true, completion: nil)
+                self.userList = (values as? [AnyObject])!
+
                 mainVC.refreshBtnClicked()
+            }
+            else {
+                mainVC.userListAlert.title = "加载失败"
+                mainVC.userListAlert.message = "请检查网络连接后重试。"
+                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: {
+                    alert in
+                    mainVC.userListAlert = UIAlertController(title: "获取周围用户", message: "正在加载，请稍后。", preferredStyle: .Alert)
+                })
+                if mainVC.userListAlert.actions.count == 0 {
+                    mainVC.userListAlert.addAction(cancelAction)
+                }
             }
         }
     }

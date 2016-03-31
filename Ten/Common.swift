@@ -22,9 +22,6 @@ print("result: \(response.result)")   // result of response serialization
 // Location Mangager
 let DISTANCE_FILTER: Double = 100 // CLLocationDistance
 
-// urls
-let LocationNotiName = "LocationNotification"
-
 
 let MinBarValue : Float = 0
 let MaxBarValue : Float = 10
