@@ -18,7 +18,7 @@ class PasscodeController: UIViewController,LockViewDelegate {
     
     var passcodeModel:passcodeType = .Set
     var times  = 0
-    var passcode = 0
+    var passcode = ""
     var titleLabel:UILabel!
     
     var delegate:TenPasscodeDelegate?
@@ -54,10 +54,8 @@ class PasscodeController: UIViewController,LockViewDelegate {
     }
     
     func lockView(lockView: LockView!, didFinish path: String!) {
-        let passcodeTemp = Int(path)
-        print("pathTemp:\(passcodeTemp)")
         if(passcodeModel == .Unlock){
-            if (passcodeTemp == SHARED_USER.passcode){
+            if (path == SHARED_USER.GesturePin){
                 //TODO: 解锁成功
                 ChatLockState = false
             }else{
@@ -67,15 +65,15 @@ class PasscodeController: UIViewController,LockViewDelegate {
         }else if(passcodeModel == .Set){
             if(times == 0){
                 print("set 0")
-                passcode = passcodeTemp!
+                passcode = path
                 times = 1
                 titleLabel.text = "确认滑动解锁"
             }else{
                 print("set 1")
                 print("passcode:\(passcode)")
                 titleLabel.text = "重置滑动解锁"
-                if(passcode == passcodeTemp!){
-                    SHARED_USER.passcode = passcode
+                if(passcode == path){
+                    SHARED_USER.GesturePin = path
                     let successAlert = UIAlertController(title: "滑动解锁设置成功", message: nil, preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
                         self.delegate?.passcodeDidSet(self)
@@ -93,7 +91,7 @@ class PasscodeController: UIViewController,LockViewDelegate {
                 }
             }
         }else{
-            if(passcodeTemp == SHARED_USER.passcode){
+            if(path == SHARED_USER.GesturePin){
                 passcodeModel = .Set
                 titleLabel.text = "设置滑动解锁"
             }else{

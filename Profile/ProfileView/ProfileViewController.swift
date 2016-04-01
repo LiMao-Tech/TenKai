@@ -97,14 +97,20 @@ class ProfileViewController: UIViewController,
     
     func getProfileImages() -> Void {
         if let json = image1JSON {
-
+            print("imagejson")
             if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
                 self.profileIV1?.image = image
+                print("getfile")
+                if(self.userID != nil && self.userID != SHARED_USER.UserIndex){
+                    self.tenUser.Portrait = UIImagePNGRepresentation(image)
+                    UsersCacheTool().upDateUsersPortrait(self.tenUser.UserIndex, portrait: image)
+                }
             }
             else {
                 let targetUrl = Url_Image + json["ID"].stringValue
                 ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
                     if let image = response.result.value {
+                        print("getnet")
                         self.profileIV1?.image = image
                         SHARED_IMAGE_CACHE.addImage(image, withIdentifier: json["FileName"].stringValue)
                         if(self.userID != nil && self.userID != SHARED_USER.UserIndex){

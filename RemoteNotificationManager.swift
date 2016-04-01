@@ -12,24 +12,25 @@ class RemoteNotificationManager: NSObject {
     class func getInfos(){
         if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
             //notification
-            let notiParams = ["receiver":0,"currIndex":SHARED_USER.MsgIndex]
-            AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg, parameters: notiParams, success: { (task, response) -> Void in
+            let urlNoti = Url_Msg+"?receiver=0&currIndex=\(SHARED_USER.MsgIndex)"
+            let charSetNoti = NSCharacterSet(charactersInString: urlNoti)
+            let urlNotiNew = urlNoti.stringByAddingPercentEncodingWithAllowedCharacters(charSetNoti)
+            AFJSONManager.SharedInstance.getMethod(urlNotiNew!, success: { (task, response) -> Void in
                 print("get notification response:")
                 print(response)
                 let userInfoArray = response as! NSArray
-                if userInfoArray.count == 0{
-                    return
-                }
-                for info in userInfoArray{
-                    let noti = Notification(dict: info as! NSDictionary)
-                    let notiFrame = NotificationFrame()
-                    notiFrame.notification = noti
-                    //add notification to notifications
-                    SHARED_CHATS.notifications.append(notiFrame)
-                    SHARED_USER.MsgIndex = noti.MsgIndex
-                    // save to db
-                    UserCacheTool().upDateUserMsgIndex()
-                    NotificationCacheTool().addNotificationInfo(noti)
+                if userInfoArray.count != 0{
+                    for info in userInfoArray{
+                        let noti = Notification(dict: info as! NSDictionary)
+                        let notiFrame = NotificationFrame()
+                        notiFrame.notification = noti
+                        //add notification to notifications
+                        SHARED_CHATS.notifications.append(notiFrame)
+                        SHARED_USER.MsgIndex = noti.MsgIndex
+                        // save to db
+                        UserCacheTool().upDateUserMsgIndex()
+                        NotificationCacheTool().addNotificationInfo(noti)
+                    }
                 }
                 },failure: { (task, error) -> Void in
                     print("get notification failed")
@@ -37,14 +38,16 @@ class RemoteNotificationManager: NSObject {
             })
             
             //msg
-            let msgParams = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
-            AFJSONManager.SharedInstance.getMethodWithParams(Url_Msg,parameters: msgParams, success: { (task, response) -> Void in
-                let userInfoArray = response as! NSArray
-                if userInfoArray.count == 0{
-                    return
-                }
+//            let msgParams = ["receiver": SHARED_USER.UserIndex, "currIndex": SHARED_USER.MsgIndex]
+            let url = Url_Msg+"?receiver=\(SHARED_USER.UserIndex)&currIndex=\(SHARED_USER.MsgIndex)"
+            let charSet = NSCharacterSet(charactersInString: url)
+            let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+            AFJSONManager.SharedInstance.getMethod(urlNew!,success: { (task, response) -> Void in
                 print("get msg array:")
+                let userInfoArray = response as! NSArray
                 print(userInfoArray)
+                if userInfoArray.count != 0{
+                
                 for info in userInfoArray{
                     let senderIndex = info["Sender"] as! Int
                     //                print("senderIndex:\(senderIndex)")
@@ -146,13 +149,12 @@ class RemoteNotificationManager: NSObject {
                 let msgIndex = (userInfoArray.lastObject as! NSDictionary)["MsgIndex"] as! Int
                 SHARED_USER.MsgIndex = msgIndex
                 UserCacheTool().upDateUserMsgIndex()
-                
+                    }
                 },failure:  { (task, error) -> Void in
                     print("get msg failed:")
                     print(error.localizedDescription)
             })
             
-
         }
     }
 }

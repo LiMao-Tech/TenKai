@@ -14,7 +14,6 @@ class OtherProfileViewController: ProfileViewController {
     var outerBar: TenSlider!
     var outerValue: UILabel!
     
-//    var tenUser: TenUser!
     
     override func viewDidLoad() {
         super.viewDidLoad()

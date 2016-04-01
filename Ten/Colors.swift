@@ -13,6 +13,7 @@ import Foundation
 let COLOR_BG = UIColor(red: 29.0/255.0, green: 29.0/255.0, blue: 29.0/255.0, alpha: 1.0)
 let COLOR_NAV_BAR = UIColor(red: 25.0/255.0, green: 25.0/255.0, blue: 25.0/255.0, alpha: 1.0)
 let COLOR_ORANGE = UIColor(red: 255.0/255.0, green: 90.0/255.0, blue: 85.0/255.0, alpha: 1.0) //ff5a55
+let COLOR_TAP = UIColor(red: 41.0/255.0, green: 43.0/255.0, blue: 45.0/255.0, alpha: 1.0)
 let COLOR_WHITEGRAY = UIColor(red: 95.0/255.0, green: 95.0/255.0, blue: 95.0/255.0, alpha: 1.0)
 
 // Profile Pics

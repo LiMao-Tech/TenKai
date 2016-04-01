@@ -64,9 +64,9 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
     }
     
     func itemClicked(sender:SettingButton){
-        selectedBtn.setImage(selectedBtn.normalImage, forState: .Normal)
+        selectedBtn.setBackgroundImage(selectedBtn.normalImage, forState: .Normal)
         selectedBtn = sender
-        sender.setImage(sender.seletedImage, forState: .Normal)
+        sender.setBackgroundImage(sender.seletedImage, forState: .Normal)
         modelType = sender.systemModel
         self.infoList.reloadData()
     }
@@ -105,12 +105,16 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         let itemSystem = SettingButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
         let itemNotification = SettingButton(frame: CGRectMake(CGRectGetMaxX(itemSystem.frame), 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
         
-        itemSystem.normalImage = UIImage(named: "tab_notification_system_normal")
-        itemSystem.seletedImage = UIImage(named: "tab_notification_system_highlight")
-        itemNotification.normalImage = UIImage(named: "tab_notification_notification_normal")
-        itemNotification.seletedImage = UIImage(named: "tab_notification_notification_highlight")
-        itemSystem.setImage(itemSystem.seletedImage, forState: UIControlState.Normal)
-        itemNotification.setImage(itemNotification.normalImage, forState: UIControlState.Normal)
+        itemSystem.normalImage = nil
+        itemSystem.seletedImage = UIImage(named: "tabBar_bg_chat")
+        itemSystem.setTitle("系统", forState: .Normal)
+        itemSystem.backgroundColor = COLOR_TAP
+        itemNotification.normalImage = nil
+        itemNotification.seletedImage = UIImage(named: "tabBar_bg_chat")
+        itemNotification.setTitle("通知", forState: .Normal)
+        itemNotification.backgroundColor = COLOR_TAP
+        itemSystem.setBackgroundImage(itemSystem.seletedImage, forState: UIControlState.Normal)
+        itemNotification.setBackgroundImage(itemNotification.normalImage, forState: UIControlState.Normal)
         itemSystem.addTarget(self, action: #selector(NotificationViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
         itemNotification.addTarget(self, action: #selector(NotificationViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
         itemSystem.systemModel = .System

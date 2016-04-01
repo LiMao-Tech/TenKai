@@ -21,7 +21,8 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     // buttons
     let menuButton = UIButton(frame: CGRectMake(5, SCREEN_HEIGHT*(BUTTON_DENO-1)/BUTTON_DENO-5, SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
     let randomButton = UIButton(frame: CGRectMake(SCREEN_WIDTH-SCREEN_HEIGHT/BUTTON_DENO-5, SCREEN_HEIGHT*(BUTTON_DENO-1)/BUTTON_DENO-5, SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
-    let refreshBtn = UIButton(frame: CGRectMake(0,0,22.5,21))
+//    let refreshBtn = UIButton(frame: CGRectMake(0,0,22.5,21))
+    let refreshBtn = UIButton(frame: CGRectMake(0,0,SCREEN_HEIGHT/BUTTON_DENO, SCREEN_HEIGHT/BUTTON_DENO))
     
     // circular menu
     let circularMenuVC = ADCircularMenuViewController(frame: UIScreen.mainScreen().bounds)
@@ -39,15 +40,17 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     let distances = [50, 100, 500, 1000]
     var index = 0
     
+    var loading:TenLoadingView = TenLoadingView()
+    
     
     // view loading
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
-
-        TenOtherUsersJSONManager.SharedInstance.getUserList(self)
-
+//        self.presentViewController(userListAlert, animated: true, completion: nil)
         self.view.backgroundColor = COLOR_BG
+        
+        loading.loadingTitle = "加载中..."
+        refreshBtnClicked()
         
         print(SHARED_USER.UserIndex)
 
@@ -69,11 +72,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 
         //protraitBtn
         portraitBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-//        if(SHARED_USER.PortraitImage == nil){
-//            portraitBtn.setImage(UIImage(named: "user_pic_radar")!, forState: .Normal)
-//        }else{
-//            portraitBtn.setImage(Tools.toCirclurImage(SHARED_USER.PortraitImage!), forState: .Normal)
-//        }
         portraitBtn.addTarget(self, action: #selector(MainViewController.pushUserProfileVC), forControlEvents: .TouchUpInside)
         
         // set circularMenu
@@ -127,6 +125,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(plus)
         self.view.addSubview(refreshBtn)
         self.view.addSubview(distanceLabel)
+        self.view.addSubview(loading)
         distanceChange()
         
         
@@ -134,7 +133,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
-        
         updateLocation()
         print("unreadNum:\(unReadNum)")
         if(SHARED_USER.PortraitImage == nil){
@@ -202,13 +200,13 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func refreshBtnClicked() {
         self.refreshBtn.enabled = false
-        if TenOtherUsersJSONManager.SharedInstance.isUserListEmpty() {
-            self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
-            TenOtherUsersJSONManager.SharedInstance.getUserList(self)
-        }
-        
-        TenMainGridManager.SharedInstance.clearNodes()
-        generateNodes()
+        TenOtherUsersJSONManager.SharedInstance.getUserList(self)
+//        if TenOtherUsersJSONManager.SharedInstance.isUserListEmpty() {
+//            self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
+//            self.view.addSubview(loading)
+//        }
+//        TenMainGridManager.SharedInstance.clearNodes()
+//        generateNodes()
         refreshBtn.enabled = true
     }
     
@@ -273,7 +271,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
                 }else{
                     //同步服务器数据，获得相应的等级
                     let url = Url_User + "/\(SHARED_USER.UserIndex)?pcoin=\(sender.level*10)&level=\(sender.level)"
-//                    let urlComplete = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
                     let charSet = NSCharacterSet(charactersInString: url)
                     let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
                     AFJSONManager.SharedInstance.putMethod(newUrl!, success: { (task, response) -> Void in
@@ -363,14 +360,17 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             circularMenuVC.removeViewWithAnimation()
         case 5:
             let cVC = ChatViewController()
+            self.navigationController?.navigationBar.hidden = false
             self.navigationController?.pushViewController(cVC, animated: true)
             circularMenuVC.removeViewWithAnimation()
         case 6:
             let nVC = NotificationViewController()
+            self.navigationController?.navigationBar.hidden = false
             self.navigationController?.pushViewController(nVC, animated: true)
             circularMenuVC.removeViewWithAnimation()
         case 7:
             let sVC = SettingsViewController()
+            self.navigationController?.navigationBar.hidden = false
             self.navigationController?.pushViewController(sVC, animated: true)
             circularMenuVC.removeViewWithAnimation()
         default:

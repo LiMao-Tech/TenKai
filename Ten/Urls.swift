@@ -29,7 +29,7 @@ let Url_Purchase = Url_Api + "Purchase/"
 // Image related
 let Url_Unlocker = Url_Api + "ImageUnlocker/"
 
-let Url_ImageMaster = "http://www.limao-tech.com/Ten/TenImage/"
+let Url_ImageMaster = Url_Home + "TenImage/"
 
 let Url_ImagesJSON = Url_ImageMaster + "GetImagesByUser?id="
 let Url_Image = Url_ImageMaster + "?id="

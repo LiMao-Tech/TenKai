@@ -81,22 +81,37 @@ class TenOtherUsersJSONManager: NSObject {
     }
     
     func getUserList(mainVC: MainViewController) {
+        /* self.refreshBtn.enabled = false
+         if TenOtherUsersJSONManager.SharedInstance.isUserListEmpty() {
+         self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
+         TenOtherUsersJSONManager.SharedInstance.getUserList(self)
+         }
+         
+         TenMainGridManager.SharedInstance.clearNodes()
+         generateNodes()
+         */
         let targetUrl = Url_User + "\(SHARED_USER.UserIndex)?level=\(SHARED_USER.AVG)"
-
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
 
             if let values = response.result.value {
-                mainVC.userListAlert.dismissViewControllerAnimated(true, completion: nil)
-                self.userList = (values as? [AnyObject])!
-
-                mainVC.refreshBtnClicked()
+                print("values:")
+                print(values)
+//                mainVC.userListAlert.dismissViewControllerAnimated(true, completion: nil)
+                mainVC.loading.removeFromSuperview()
+                if let valuesArray = values as? [AnyObject]{
+                    self.userList = valuesArray
+                }
+//                mainVC.refreshBtnClicked()
+                TenMainGridManager.SharedInstance.clearNodes()
+                mainVC.generateNodes()
             }
             else {
+                mainVC.loading.removeFromSuperview()
                 mainVC.userListAlert.title = "加载失败"
                 mainVC.userListAlert.message = "请检查网络连接后重试。"
                 let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: {
                     alert in
-                    mainVC.userListAlert = UIAlertController(title: "获取周围用户", message: "正在加载，请稍后。", preferredStyle: .Alert)
+                    mainVC.view.addSubview(mainVC.loading)
                 })
                 if mainVC.userListAlert.actions.count == 0 {
                     mainVC.userListAlert.addAction(cancelAction)

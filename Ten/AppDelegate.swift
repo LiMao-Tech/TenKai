@@ -113,7 +113,6 @@ class AppDelegate: UIResponder,
         print("Token: \(DEVICE_TOKEN!)")
         if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
             let url = Url_Api + "TenLogins?userindex=\(SHARED_USER.UserIndex)&devicetoken=\(DEVICE_TOKEN!)"
-//            let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
             let charSet = NSCharacterSet(charactersInString: url)
             let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
             AFJSONManager.SharedInstance.postMethod(urlNew!, parameters: nil, success: { (task, response) -> Void in

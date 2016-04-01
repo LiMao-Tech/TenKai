@@ -103,7 +103,7 @@ class Tools : NSObject{
         if(array.count > 0){
             isString = false
             let len = text.length - (array[array.count-1].range.location + array[array.count-1].range.length)
-            for(var i = array.count - 1; i >= 0; i -= 1){
+            for i in array.count-1...0{
                 let attr = NSMutableAttributedString(attributedString: text)
                 let temp = Str.substringWithRange((array[i].range)) as NSString
                 let temp0 = attr.attributedSubstringFromRange(NSMakeRange(0, array[i].range.location))

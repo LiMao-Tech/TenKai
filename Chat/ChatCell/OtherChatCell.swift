@@ -18,7 +18,12 @@ class OtherChatCell: ChatBaseCell {
     @IBOutlet weak var timeLabel: UILabel!
     override var tenUser:TenUser!{
         didSet{
-            let image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            var image:UIImage!
+            if(tenUser.PortraitImage != nil){
+                image = Tools.toCirclurImage(tenUser.PortraitImage!)
+            }else{
+                image = UIImage(named: "user_pic")
+            }
             headImage.setImage(image, forState: .Normal)
         }
     }

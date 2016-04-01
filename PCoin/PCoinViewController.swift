@@ -40,18 +40,26 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
         item1 = SettingButton(frame: CGRectMake(len, 0, len, TAP_BAR_HEIGHT))
         item2 = SettingButton(frame: CGRectMake(2*len, 0, len, TAP_BAR_HEIGHT))
         item3 = SettingButton(frame: CGRectMake(3*len, 0, len, TAP_BAR_HEIGHT))
-        item0.normalImage = UIImage(named: "tab_pcoin_purchase_normal")
-        item0.seletedImage = UIImage(named: "tab_pcoin_purchase_highlight")
-        item1.normalImage = UIImage(named: "tab_pcoin_history_normal")
-        item1.seletedImage = UIImage(named: "tab_pcoin_history_highlight")
-        item2.normalImage = UIImage(named: "tab_pcoin_transfer_normal")
-        item2.seletedImage = UIImage(named: "tab_pcoin_transfer_highlight")
-        item3.normalImage = UIImage(named: "tab_pcoin_unlock_normal")
-        item3.seletedImage = UIImage(named: "tab_pcoin_unlock_highlight")
-        item0.setImage(item0.seletedImage, forState: .Normal)
-        item1.setImage(item1.normalImage, forState: .Normal)
-        item2.setImage(item2.normalImage, forState: .Normal)
-        item3.setImage(item3.normalImage, forState: .Normal)
+        item0.normalImage = nil
+        item0.seletedImage = UIImage(named: "tabBar_bg_chat")
+        item0.backgroundColor = COLOR_TAP
+        item0.setTitle("购买P币", forState: .Normal)
+        item1.normalImage = nil
+        item1.seletedImage = UIImage(named: "tabBar_bg_chat")
+        item1.backgroundColor = COLOR_TAP
+        item1.setTitle("购买记录", forState: .Normal)
+        item2.normalImage = nil
+        item2.seletedImage = UIImage(named: "tabBar_bg_chat")
+        item2.backgroundColor = COLOR_TAP
+        item2.setTitle("交易记录", forState: .Normal)
+        item3.normalImage = nil
+        item3.seletedImage = UIImage(named: "tabBar_bg_chat")
+        item3.backgroundColor = COLOR_TAP
+        item3.setTitle("解锁记录", forState: .Normal)
+        item0.setBackgroundImage(item0.seletedImage, forState: .Normal)
+        item1.setBackgroundImage(item1.normalImage, forState: .Normal)
+        item2.setBackgroundImage(item2.normalImage, forState: .Normal)
+        item3.setBackgroundImage(item3.normalImage, forState: .Normal)
         item0.addTarget(self, action: #selector(PCoinViewController.changeModel(_:)), forControlEvents: .TouchUpInside)
         item1.addTarget(self, action: #selector(PCoinViewController.changeModel(_:)), forControlEvents: .TouchUpInside)
         item2.addTarget(self, action: #selector(PCoinViewController.changeModel(_:)), forControlEvents: .TouchUpInside)
@@ -153,9 +161,9 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func changeModel(sender:SettingButton){
-        selectedBtn.setImage(selectedBtn.normalImage, forState: .Normal)
+        selectedBtn.setBackgroundImage(selectedBtn.normalImage, forState: .Normal)
         selectedBtn = sender
-        sender.setImage(sender.seletedImage, forState: .Normal)
+        sender.setBackgroundImage(sender.seletedImage, forState: .Normal)
         modelType = sender.model
         pcoinItemList.reloadData()
     }

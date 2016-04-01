@@ -268,7 +268,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func setup(){
         tabView = UIView(frame: CGRectMake(0, 64, SCREEN_WIDTH, TAP_BAR_HEIGHT))
-        let tabBgc = UIColor(red: 41.0/255.0, green: 43.0/255.0, blue: 45.0/255.0, alpha: 1.0)
+        
         itemActive = SettingButton(frame: CGRectMake(0, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
         itemInactive = SettingButton(frame: CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, TAP_BAR_HEIGHT))
         
@@ -278,7 +278,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         itemActive.contentMode = .ScaleAspectFit
         itemActive.setBackgroundImage(itemActive.seletedImage, forState: UIControlState.Normal)
         itemActive.setTitle(titleActive, forState: .Normal)
-        itemActive.backgroundColor = tabBgc
+        itemActive.backgroundColor = COLOR_TAP
         itemActive.addTarget(self, action: #selector(ChatViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
         
         itemInactive.normalImage = nil
@@ -287,7 +287,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         itemInactive.contentMode = .ScaleAspectFill
         itemInactive.setBackgroundImage(itemInactive.normalImage, forState: UIControlState.Normal)
         itemInactive.setTitle(titleInActive, forState: .Normal)
-        itemInactive.backgroundColor = tabBgc
+        itemInactive.backgroundColor = COLOR_TAP
         itemInactive.addTarget(self, action: #selector(ChatViewController.itemClicked(_:)), forControlEvents: .TouchUpInside)
         
         

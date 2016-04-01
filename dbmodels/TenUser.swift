@@ -29,8 +29,8 @@ class TenUser: NSObject {
     var Longi : Double = -1
     var ProfileUrl = ""
     
-    var passcode = 0
-    var pincode = 0
+    var GesturePin = ""
+    var DevicePin = 0
     
     //mobile end properties
     

@@ -22,29 +22,42 @@ class UserCacheTool: NSObject {
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERINFO (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,MARRIAGE INTEGER,BIRTHDAY INTEGER,JOINEDDATE INTEGER,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,MSGINDEX INTEGER,EXPIRE INTEGER,AVG INTEGER)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS USERINFO (ID INTEGER PRIMARY KEY,USERINDEX INTEGER , USERNAME TEXT,PHONETYPE INTEGER,GENDER INTEGER,MARRIAGE INTEGER,BIRTHDAY INTEGER,JOINEDDATE INTEGER,PCOIN REAL,OUTERSCORE INTEGER,INNERSCORE INTEGER,ENERGY INTEGER,HOBBY TEXT,QUOTE TEXT,LATI REAL,LONGI REAL,PORTRAIT BLOB,PROFILEURL TEXT,MSGINDEX INTEGER,EXPIRE INTEGER,AVG INTEGER,PASSCODE TEXT,PIN INTEGER)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
-                print("创表失败！")
+                print("创建USERINFO失败！")
             }
-
         }
     }
     
-    func updateUserInfo(dict:NSDictionary) {
-        dbq.inDatabase { (db) -> Void in
-            let sql_insert = "UPDATE USERINFO SET GENDER = ?,MARRIAGE = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
-            
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["Gender"]!,dict["Marriage"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["UserIndex"]!,dict["AVG"]!,dict["Expire"]!]){                  print("修改失败")
-            }
-        }
-    }
+//    func updateUserInfo(dict:NSDictionary) {
+//        dbq.inDatabase { (db) -> Void in
+//            let sql_insert = "UPDATE USERINFO SET GENDER = ?,MARRIAGE = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
+//            
+//            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["Gender"]!,dict["Marriage"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["UserIndex"]!,dict["AVG"]!,dict["Expire"]!]){                  print("修改失败")
+//            }
+//        }
+//    }
     
     func updateUserInfo(){
         let sql_update = "UPDATE USERINFO SET GENDER = ?,MARRIAGE = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
             db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.Gender,SHARED_USER.Marriage,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.AVG,SHARED_USER.Expire, SHARED_USER.UserIndex])
         }
+    }
+    func updateUserPinCode(){
+        let sql_update = "UPDATE USERINFO SET PIN WHERE USERINDEX = ?"
+        dbq.inDatabase { (db) -> Void in
+            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.DevicePin])
+        }
+
+    }
+    func updateUserPassCode(){
+        let sql_update = "UPDATE USERINFO SET PASSCODE WHERE USERINDEX = ?"
+        dbq.inDatabase { (db) -> Void in
+            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.GesturePin])
+        }
+        
     }
     
     func upDateUserPortrait(){
@@ -69,8 +82,8 @@ class UserCacheTool: NSObject {
     
     func addUserInfoByUser(){
         dbq.inDatabase { (db) -> Void in
-            let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,MARRIAGE,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX,AVG,EXPIRE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            if !db.executeUpdate(sql_insert, withArgumentsInArray: [SHARED_USER.UserIndex,SHARED_USER.UserName,SHARED_USER.PhoneType,SHARED_USER.Gender,SHARED_USER.Marriage,SHARED_USER.Birthday,SHARED_USER.JoinedDate,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.Portrait!,SHARED_USER.ProfileUrl,SHARED_USER.MsgIndex,SHARED_USER.AVG,SHARED_USER.Expire]){
+            let sql_insert = "INSERT INTO USERINFO(USERINDEX,USERNAME,PHONETYPE,GENDER,MARRIAGE,BIRTHDAY,JOINEDDATE,PCOIN,OUTERSCORE,INNERSCORE,ENERGY,HOBBY,QUOTE,LATI,LONGI,PORTRAIT,PROFILEURL,MSGINDEX,AVG,EXPIRE,PASSCODE,PIN) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [SHARED_USER.UserIndex,SHARED_USER.UserName,SHARED_USER.PhoneType,SHARED_USER.Gender,SHARED_USER.Marriage,SHARED_USER.Birthday,SHARED_USER.JoinedDate,SHARED_USER.PCoin,SHARED_USER.OuterScore,SHARED_USER.InnerScore,SHARED_USER.Energy,SHARED_USER.Hobby,SHARED_USER.Quote,SHARED_USER.Lati,SHARED_USER.Longi,SHARED_USER.Portrait!,SHARED_USER.ProfileUrl,SHARED_USER.MsgIndex,SHARED_USER.AVG,SHARED_USER.Expire,SHARED_USER.GesturePin,SHARED_USER.DevicePin]){
                 print("插入失败")
             }
         }
@@ -104,6 +117,8 @@ class UserCacheTool: NSObject {
                     SHARED_USER.Portrait = rs.dataForColumn("PORTRAIT")//读取到的是插入时候已经将图片转成的NSData
                     SHARED_USER.Expire = Int(rs.intForColumn("EXPIRE"))
                     SHARED_USER.AVG = Int(rs.intForColumn("AVG"))
+                    SHARED_USER.GesturePin = rs.stringForColumn("PASSCODE")
+                    SHARED_USER.DevicePin = Int(rs.intForColumn("PIN"))
                     inDB = true
                 }
             }

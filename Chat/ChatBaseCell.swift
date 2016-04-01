@@ -11,6 +11,11 @@ import UIKit
 protocol ChatBaseCellDelegate:class{
     func unlockBtnClicked(cell:ChatBaseCell)
 }
+#if DEVELOPMENT
+    let index = 8
+#else
+    let index = 4
+#endif
 
 class ChatBaseCell: UITableViewCell {
     var chatFrame :SingleChatMessageFrame!
@@ -19,7 +24,7 @@ class ChatBaseCell: UITableViewCell {
     
     class func loadFromNib() -> ChatBaseCell {
         var path : NSString = NSStringFromClass(self.classForCoder())
-        path = path.substringFromIndex(4)
+        path = path.substringFromIndex(index)
         return NSBundle.mainBundle().loadNibNamed("\(path)", owner: self, options: nil).last as! ChatBaseCell
     }
 }
