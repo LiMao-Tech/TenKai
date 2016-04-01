@@ -192,7 +192,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
                 SHARED_CHATS.outerRaterIndex = outerRaters
                 UserRaterCache().addUserRaterByArray(outerRaters, type: 1)
             }
-            self.getMsgIndex()
+            self.getPinCode()
             },failure: { (task, error) -> Void in
                 print("get raterIndex failed")
                 print(error.localizedDescription)
@@ -203,9 +203,29 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         })
     }
     
+    func getPinCode(){
+        let url = Url_Pin+"??userIndex=\(SHARED_USER.UserIndex)"
+        let charSet = NSCharacterSet(charactersInString: url)
+        let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+        AFJSONManager.SharedInstance.getMethod(newUrl!, success: { (task, response) in
+            let pinDict = response as! NSDictionary
+            SHARED_USER.GesturePin = pinDict["GesturePin"] as! String
+            SHARED_USER.DevicePin = pinDict["DevicePin"] as! Int
+            UserCacheTool().updateUserPinCode()
+            UserCacheTool().updateUserPassCode()
+            self.getMsgIndex()
+            },failure:  { (task, error) in
+                print("get pinCode failed")
+                print(error.localizedDescription)
+                self.loginBtn.enabled = true
+                self.loading?.removeFromSuperview()
+                self.unmatchedLB.textColor = UIColor.redColor()
+                self.unmatchedLB.text = "网络异常请重新登陆"
+        })
+    }
+    
     func getMsgIndex(){
         let url = Url_Api+"TenMsgs?userIndex=\(SHARED_USER.UserIndex)"
-//        let newUrl = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         let charSet = NSCharacterSet(charactersInString: url)
         let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
         

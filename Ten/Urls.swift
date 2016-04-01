@@ -46,7 +46,8 @@ let Url_PutImageJSON = Url_ImageMaster + "PutTenImage"
 
 let Url_SendImage = Url_Home+"TenImage/SendImage"
 
-
+//pincode
+let Url_Pin = Url_Api + "TenPin"
 
 let Url_DeviceToken = ""
 

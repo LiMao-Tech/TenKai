@@ -20,8 +20,10 @@ class PasscodeController: UIViewController,LockViewDelegate {
     var times  = 0
     var passcode = ""
     var titleLabel:UILabel!
+    var firstSet = false
+    weak var delegate:TenPasscodeDelegate?
     
-    var delegate:TenPasscodeDelegate?
+    let successAlert = UIAlertController(title: "滑动解锁设置成功", message: nil, preferredStyle: .Alert)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,11 @@ class PasscodeController: UIViewController,LockViewDelegate {
     }
     
     func setup(){
+        let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
+            self.delegate?.passcodeDidSet(self)
+        })
+        successAlert.addAction(okAction)
+        
         let lock = LockView(frame: CGRectMake(0,64,SCREEN_WIDTH,SCREEN_HEIGHT-64))
         lock.delegate = self
         self.view.addSubview(lock)
@@ -73,13 +80,26 @@ class PasscodeController: UIViewController,LockViewDelegate {
                 print("passcode:\(passcode)")
                 titleLabel.text = "重置滑动解锁"
                 if(passcode == path){
-                    SHARED_USER.GesturePin = path
-                    let successAlert = UIAlertController(title: "滑动解锁设置成功", message: nil, preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
-                        self.delegate?.passcodeDidSet(self)
-                    })
-                    successAlert.addAction(okAction)
-                    self.presentViewController(successAlert, animated: true, completion: nil)
+                    
+                    if(!firstSet){
+                        let url = Url_Pin+"?userIndex=\(SHARED_USER.UserIndex)&devicePin=-1&gesturePin="+passcode
+                        let charSet = NSCharacterSet(charactersInString: url)
+                        let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+                        AFJSONManager.SharedInstance.putMethod(urlNew!, success: { (task, response) in
+                            SHARED_USER.GesturePin = path
+                            UserCacheTool().updateUserPassCode()
+                            self.presentViewController(self.successAlert, animated: true, completion: nil)
+                            }, failure: { (task, error) in
+                                let failedAlert = UIAlertController(title: "设置失败，请重新尝试！", message: nil, preferredStyle: .Alert)
+                                let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                                failedAlert.addAction(okAction)
+                                self.presentViewController(failedAlert, animated: true, completion: nil)
+                        })
+                    }else{
+                        SHARED_USER.GesturePin = passcode
+                        self.presentViewController(self.successAlert, animated: true, completion: nil)
+                    }
+                    
                     
                 }else{
                     times = 0

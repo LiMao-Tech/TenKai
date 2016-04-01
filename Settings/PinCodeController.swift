@@ -12,6 +12,10 @@ enum PinCodeMode:Int{
     case Set,ReSet,Unlock
 }
 
+protocol TenPinCodeDelegate:class {
+    func PinCodeDidSet(pVC:PinCodeController)
+}
+
 class PinCodeController: UIViewController {
     
     var textLabel = UILabel(frame: CGRectMake(0,64,SCREEN_WIDTH,40))
@@ -33,6 +37,12 @@ class PinCodeController: UIViewController {
     var numberView:UIView!
     
     var deleteBtn:UIButton!
+    
+    var firstSet = false
+    
+    weak var delegate:TenPinCodeDelegate?
+    
+    let successAlert = UIAlertController(title: "PIN设置成功", message: nil, preferredStyle: .Alert)
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +57,11 @@ class PinCodeController: UIViewController {
     }
     
     func setUp(){
+        let okAction = UIAlertAction(title: "确定", style: .Cancel, handler:{ (ac) -> Void in
+            self.delegate?.PinCodeDidSet(self)
+        })
+        successAlert.addAction(okAction)
+        
         textLabel.textColor = UIColor.whiteColor()
         textLabel.textAlignment = .Center
         textLabel.font = UIFont.systemFontOfSize(17)
@@ -188,11 +203,37 @@ class PinCodeController: UIViewController {
                     }
                 }else{
                     if(pin == pinTemp){
-                        SHARED_USER.DevicePin = pin
                         //保存pin并上传
-                        let successAlert = UIAlertController(title: "PIN设置成功", message: nil, preferredStyle: .Alert)
-                        let okAction = UIAlertAction(title: "确定", style: .Cancel, handler:nil)
-                        successAlert.addAction(okAction)
+                        if(firstSet){
+                            let params = ["UserIndex": SHARED_USER.UserIndex,
+                                          "DevicePin": pin,
+                                          "GesturePin": SHARED_USER.GesturePin]
+                            AFJSONManager.SharedInstance.postMethod(Url_Pin, parameters:params as? [String : AnyObject] , success: { (task, response) in
+                                    SHARED_USER.DevicePin = self.pin
+                                    UserCacheTool().updateUserPassCode()
+                                    UserCacheTool().updateUserPinCode()
+                                    self.presentViewController(self.successAlert, animated: true, completion: nil)
+                                }, failure: { (task, error) in
+                                    let failedAlert = UIAlertController(title: "设置失败，请重新尝试！", message: nil, preferredStyle: .Alert)
+                                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                                    failedAlert.addAction(okAction)
+                                    self.presentViewController(failedAlert, animated: true, completion: nil)
+                            })
+                        }else{
+                            let url = Url_Pin+"?userIndex=\(SHARED_USER.UserIndex)&devicePin=\(pin)&gesturePin=-1"
+                            let charSet = NSCharacterSet(charactersInString: url)
+                            let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+                            AFJSONManager.SharedInstance.putMethod(urlNew!, success: { (task, reponse) in
+                                SHARED_USER.DevicePin = self.pin
+                                UserCacheTool().updateUserPinCode()
+                                }, failure: { (task, error) in
+                                    let failedAlert = UIAlertController(title: "设置失败，请重新尝试！", message: nil, preferredStyle: .Alert)
+                                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                                    failedAlert.addAction(okAction)
+                                    self.presentViewController(failedAlert, animated: true, completion: nil)
+                            })
+                        }
+                        
                         self.presentViewController(successAlert, animated: true, completion: nil)
                     }else{
                         let failAlert = UIAlertController(title: "两次输入的密码不一致，请重新设置", message: nil, preferredStyle: .Alert)

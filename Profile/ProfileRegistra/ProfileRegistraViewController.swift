@@ -17,7 +17,8 @@ class RegistProfileViewController: UIViewController,
                                     UITextViewDelegate,
                                     UITextFieldDelegate,
                                     UIScrollViewDelegate,
-                                    TenPasscodeDelegate
+                                    TenPasscodeDelegate,
+                                    TenPinCodeDelegate
 {
     let lineLength:CGFloat = SCREEN_WIDTH*0.6
     
@@ -528,6 +529,7 @@ class RegistProfileViewController: UIViewController,
                 let pVC = PasscodeController()
                 pVC.passcodeModel = passcodeType.Set
                 pVC.delegate = self
+                pVC.firstSet = true
                 self.presentViewController(pVC, animated: true, completion: nil)
             })
             },failure:  { (task, error) -> Void in
@@ -557,6 +559,15 @@ class RegistProfileViewController: UIViewController,
     }
     
     func passcodeDidSet(pVC: PasscodeController) {
+        pVC.dismissViewControllerAnimated(true, completion: nil)
+        let pVC = PinCodeController()
+        pVC.pinModel = .Set
+        pVC.delegate = self
+        pVC.firstSet = true
+        self.presentViewController(pVC, animated: true, completion: nil)
+    }
+    
+    func PinCodeDidSet(pVC: PinCodeController) {
         pVC.dismissViewControllerAnimated(true, completion: nil)
         let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
