@@ -200,6 +200,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     
     func refreshBtnClicked() {
         self.refreshBtn.enabled = false
+        self.view.addSubview(loading)
         TenOtherUsersJSONManager.SharedInstance.getUserList(self)
 //        if TenOtherUsersJSONManager.SharedInstance.isUserListEmpty() {
 //            self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
