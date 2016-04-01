@@ -182,6 +182,7 @@ class AppDelegate: UIResponder,
 
             
         }
+        
         RemoteNotificationManager.getInfos()
         
         // clear notification badge

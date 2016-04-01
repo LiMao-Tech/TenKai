@@ -104,6 +104,7 @@ class TenOtherUsersJSONManager: NSObject {
 //                mainVC.refreshBtnClicked()
                 TenMainGridManager.SharedInstance.clearNodes()
                 mainVC.generateNodes()
+                mainVC.refreshBtn.enabled = true
             }
             else {
                 mainVC.loading.removeFromSuperview()
@@ -116,6 +117,7 @@ class TenOtherUsersJSONManager: NSObject {
                 if mainVC.userListAlert.actions.count == 0 {
                     mainVC.userListAlert.addAction(cancelAction)
                 }
+                mainVC.refreshBtn.enabled = true
             }
         }
     }

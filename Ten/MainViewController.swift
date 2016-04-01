@@ -207,7 +207,7 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
 //        }
 //        TenMainGridManager.SharedInstance.clearNodes()
 //        generateNodes()
-        refreshBtn.enabled = true
+        
     }
     
     

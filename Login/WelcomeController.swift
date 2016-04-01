@@ -84,6 +84,8 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserChatModel.removeAll()
+        
         self.unmatchedLB.textColor = COLOR_BG
         self.cancelAction = UIAlertAction(title: "取消", style: .Cancel) { action -> Void in
             self.unmatchedLB.textColor = COLOR_BG
@@ -204,10 +206,11 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     }
     
     func getPinCode(){
-        let url = Url_Pin+"??userIndex=\(SHARED_USER.UserIndex)"
+        let url = Url_Pin+"?userIndex=\(SHARED_USER.UserIndex)"
         let charSet = NSCharacterSet(charactersInString: url)
         let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
         AFJSONManager.SharedInstance.getMethod(newUrl!, success: { (task, response) in
+            print(response)
             let pinDict = response as! NSDictionary
             SHARED_USER.GesturePin = pinDict["GesturePin"] as! String
             SHARED_USER.DevicePin = pinDict["DevicePin"] as! Int

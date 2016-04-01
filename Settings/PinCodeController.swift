@@ -42,7 +42,7 @@ class PinCodeController: UIViewController {
     
     weak var delegate:TenPinCodeDelegate?
     
-    let successAlert = UIAlertController(title: "PIN设置成功", message: nil, preferredStyle: .Alert)
+    let successAlert = UIAlertController(title: "设置成功", message: nil, preferredStyle: .Alert)
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,8 +233,6 @@ class PinCodeController: UIViewController {
                                     self.presentViewController(failedAlert, animated: true, completion: nil)
                             })
                         }
-                        
-                        self.presentViewController(successAlert, animated: true, completion: nil)
                     }else{
                         let failAlert = UIAlertController(title: "两次输入的密码不一致，请重新设置", message: nil, preferredStyle: .Alert)
                         let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in

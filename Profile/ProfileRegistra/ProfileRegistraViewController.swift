@@ -560,11 +560,11 @@ class RegistProfileViewController: UIViewController,
     
     func passcodeDidSet(pVC: PasscodeController) {
         pVC.dismissViewControllerAnimated(true, completion: nil)
-        let pVC = PinCodeController()
-        pVC.pinModel = .Set
-        pVC.delegate = self
-        pVC.firstSet = true
-        self.presentViewController(pVC, animated: true, completion: nil)
+        let pcVC = PinCodeController()
+        pcVC.pinModel = .Set
+        pcVC.delegate = self
+        pcVC.firstSet = true
+        self.presentViewController(pcVC, animated: true, completion: nil)
     }
     
     func PinCodeDidSet(pVC: PinCodeController) {

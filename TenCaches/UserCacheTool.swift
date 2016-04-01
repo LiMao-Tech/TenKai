@@ -46,16 +46,16 @@ class UserCacheTool: NSObject {
         }
     }
     func updateUserPinCode(){
-        let sql_update = "UPDATE USERINFO SET PIN WHERE USERINDEX = ?"
+        let sql_update = "UPDATE USERINFO SET PIN = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.DevicePin])
+            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.DevicePin,SHARED_USER.UserIndex])
         }
 
     }
     func updateUserPassCode(){
-        let sql_update = "UPDATE USERINFO SET PASSCODE WHERE USERINDEX = ?"
+        let sql_update = "UPDATE USERINFO SET PASSCODE = ? WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
-            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.GesturePin])
+            db.executeUpdate(sql_update, withArgumentsInArray: [SHARED_USER.GesturePin,SHARED_USER.UserIndex])
         }
         
     }

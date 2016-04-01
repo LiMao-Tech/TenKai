@@ -33,6 +33,7 @@ class UserChatModel: NSObject {
         Chats.inActiveUserIndex = [Int]()
         Chats.raterIndex = [Int]()
         Chats.outerRaterIndex = [Int]()
+        Chats.outerRaterIndex = [Int]()
     }
    
 }
