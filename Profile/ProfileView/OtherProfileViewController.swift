@@ -38,6 +38,7 @@ class OtherProfileViewController: ProfileViewController {
         outerValue.textColor = UIColor.whiteColor()
 
         // get location
+        print("Lati: \(tenUser.Lati), Longi: \(tenUser.Longi)")
         let loc = CLLocation(latitude: tenUser.Lati, longitude: tenUser.Longi)
         GEO_DECODER.reverseGeocodeLocation(loc) {
             (placemarks, error) -> Void in
@@ -64,7 +65,10 @@ class OtherProfileViewController: ProfileViewController {
         }
 
         // set distance
-        if let distDouble = LOC_MANAGER.location?.distanceFromLocation(loc) {
+        if loc.altitude == 0 && loc.coordinate.longitude == 0 {
+            self.pcoindistanceLabel.text = "??"
+        }
+        else if let distDouble = LOC_MANAGER.location?.distanceFromLocation(loc) {
             if distDouble > 1000 {
                 let dist = String(Int(distDouble/1000))
                 self.pcoindistanceLabel.text = "\(dist) kM"

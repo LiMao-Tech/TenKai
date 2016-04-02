@@ -19,8 +19,7 @@ var DEVICE_TOKEN : String?
 
 @UIApplicationMain
 class AppDelegate: UIResponder,
-                    UIApplicationDelegate,
-                    CLLocationManagerDelegate {
+                    UIApplicationDelegate {
     
     var window: UIWindow?
     
@@ -28,8 +27,7 @@ class AppDelegate: UIResponder,
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         print(Url_Home)
         
-        // set Managers delegate
-        LOC_MANAGER.delegate = self
+        // set Managers
         LOC_MANAGER.desiredAccuracy = kCLLocationAccuracyBest
         LOC_MANAGER.distanceFilter = DISTANCE_FILTER
         
@@ -90,12 +88,6 @@ class AppDelegate: UIResponder,
             window = FBTweakShakeWindow(frame: UIScreen.mainScreen().bounds)
             window!.rootViewController = rootViewController
         }
-        
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
-            LOC_MANAGER.requestWhenInUseAuthorization()
-        }
-        
-        print([SCREEN_WIDTH, SCREEN_HEIGHT])
     
         return true
     }
@@ -162,9 +154,7 @@ class AppDelegate: UIResponder,
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        LOC_MANAGER.startUpdatingLocation()
-        
+
         print("in Will Enter Foreground State")
     }
 

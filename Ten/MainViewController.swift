@@ -12,7 +12,9 @@ import CoreLocation
 import SwiftyJSON
 
 
-class MainViewController: UIViewController, ADCircularMenuDelegate {
+class MainViewController: UIViewController,
+                            CLLocationManagerDelegate,
+                            ADCircularMenuDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
@@ -46,7 +48,10 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
     // view loading
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.presentViewController(userListAlert, animated: true, completion: nil)
+
+        // location
+        LOC_MANAGER.delegate = self
+
         self.view.backgroundColor = COLOR_BG
         
         loading.loadingTitle = "加载中..."
@@ -127,8 +132,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.view.addSubview(distanceLabel)
         self.view.addSubview(loading)
         distanceChange()
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -145,6 +148,32 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
             chatBtn.setImage(UIImage(named: "btn_menu_chat_normal"), forState: .Normal)
         }else{
             chatBtn.setImage(UIImage(named: "btn_menu_chat_not"), forState: .Normal)
+        }
+
+        switch CLLocationManager.authorizationStatus() {
+        case .AuthorizedWhenInUse, .AuthorizedAlways:
+            break
+
+        case .NotDetermined:
+            LOC_MANAGER.requestAlwaysAuthorization()
+
+        case .Restricted, .Denied:
+            let alertController = UIAlertController(
+                title: "Ten无法使用定位功能",
+                message: "请打开定位功能以发现附近的朋友。",
+                preferredStyle: .Alert)
+
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+
+            let openAction = UIAlertAction(title: "设定", style: .Default) { (action) in
+                if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            }
+            alertController.addAction(openAction)
+
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
 
@@ -202,13 +231,6 @@ class MainViewController: UIViewController, ADCircularMenuDelegate {
         self.refreshBtn.enabled = false
         self.view.addSubview(loading)
         TenOtherUsersJSONManager.SharedInstance.getUserList(self)
-//        if TenOtherUsersJSONManager.SharedInstance.isUserListEmpty() {
-//            self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
-//            self.view.addSubview(loading)
-//        }
-//        TenMainGridManager.SharedInstance.clearNodes()
-//        generateNodes()
-        
     }
     
     

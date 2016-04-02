@@ -81,27 +81,15 @@ class TenOtherUsersJSONManager: NSObject {
     }
     
     func getUserList(mainVC: MainViewController) {
-        /* self.refreshBtn.enabled = false
-         if TenOtherUsersJSONManager.SharedInstance.isUserListEmpty() {
-         self.navigationController?.presentViewController(userListAlert, animated: true, completion: nil)
-         TenOtherUsersJSONManager.SharedInstance.getUserList(self)
-         }
-         
-         TenMainGridManager.SharedInstance.clearNodes()
-         generateNodes()
-         */
+
         let targetUrl = Url_User + "\(SHARED_USER.UserIndex)?level=\(SHARED_USER.AVG)"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
 
             if let values = response.result.value {
-                print("values:")
-                print(values)
-//                mainVC.userListAlert.dismissViewControllerAnimated(true, completion: nil)
                 mainVC.loading.removeFromSuperview()
                 if let valuesArray = values as? [AnyObject]{
                     self.userList = valuesArray
                 }
-//                mainVC.refreshBtnClicked()
                 TenMainGridManager.SharedInstance.clearNodes()
                 mainVC.generateNodes()
                 mainVC.refreshBtn.enabled = true

@@ -34,7 +34,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The way you can find out how other people near you!</string>
+	<string>找到附近的新朋友哦！</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>PT_Sans-Web-Regular.ttf</string>
