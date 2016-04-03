@@ -18,9 +18,8 @@ class SharedUser: TenUser {
         }
     }
     
-    static let SharedInstance = SharedUser()
-    
-//    class func changeValue(dict:[String:AnyObject]){
-//        SharedInstance.setValuesForKeysWithDictionary(dict)
-//    }
+    private static let sharedUser = SharedUser()
+    class func SharedInstance() -> SharedUser{
+        return sharedUser
+    }
 }

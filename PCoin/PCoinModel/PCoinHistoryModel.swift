@@ -13,7 +13,7 @@ class PCoinHistoryModel: NSObject {
     var UserId = ""
     var PurchaseDate:NSTimeInterval = 3
     var ModifiedDate:NSTimeInterval = 4
-    var Content = 0
+    var Content = ""
     var Status = ""
     var PurchaseType = 0
     var Note = ""

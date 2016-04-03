@@ -157,9 +157,11 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
         }
         self.view.addSubview(loading!)
         AFJSONManager.SharedInstance.getMethod(urlComplete!, success: { (task, response) -> Void in
-            print(response)
-            let dict = response as! NSDictionary
-            SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
+            
+            let dict = response as! [String : AnyObject]
+            print(dict)
+            SHARED_USER.ValueWithDict(dict)
+            print(Tools.getSinceTime(NSDate()))
             self.getRaterUserIndexs()
         },
         failure: { (task, error) -> Void in
@@ -240,7 +242,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             let index = response as! NSData
             SHARED_USER.MsgIndex = Int(String.init(data: index, encoding: NSUTF8StringEncoding)!)!
             print(SHARED_USER.MsgIndex)
-            let getResult = UserCacheTool().getUserInfo(SHARED_USER.UserIndex)
+            let getResult = UserCacheTool().isUserInDB(SHARED_USER.UserIndex)
             if getResult {
                 UserCacheTool().updateUserInfo()
             }
@@ -252,6 +254,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 NSUserDefaults.standardUserDefaults().setValue(self.emailTF.text!, forKey: "LoginEmail")
+                print("avg:\(SHARED_USER.AVG)")
                 self.loginBtn.enabled = true
                 self.loading?.removeFromSuperview()
                 let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())

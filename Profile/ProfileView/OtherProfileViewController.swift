@@ -87,7 +87,7 @@ class OtherProfileViewController: ProfileViewController {
         self.view.addSubview(outerValue)
 
         // level colors
-        var avg = (tenUser.OuterScore + tenUser.InnerScore)/2
+        var avg = tenUser.Average
         if avg == 0 {
             avg = 1
         }

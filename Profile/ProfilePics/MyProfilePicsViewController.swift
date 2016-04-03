@@ -148,7 +148,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970:SHARED_USER.Birthday)))
         
         // level colors
-        let avg = Int(ceil((Double(SHARED_USER.OuterScore) + Double(SHARED_USER.InnerScore))/2))
+        let avg = SHARED_USER.Average
         self.levelCircleImageView.image = UIImage(named: "icon_profile_circle_l\(avg)")
         self.levelBarImageView.backgroundColor = LEVEL_COLORS[avg-1]
     }

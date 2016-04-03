@@ -135,6 +135,9 @@ class MainViewController: UIViewController,
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("average:\(SHARED_USER.Average)")
+        print(SHARED_USER.Expire)
+        print(Tools.getSinceTime(NSDate()))
         self.navigationController?.navigationBar.hidden = true
         updateLocation()
         print("unreadNum:\(unReadNum)")
@@ -262,7 +265,7 @@ class MainViewController: UIViewController,
     }
     
     func refreshLevelButton(){
-        let index = SHARED_USER.AVG
+        let index = SHARED_USER.Average
         for btn in btnArray{
             if(btn.level <= index){
                 btn.lockState = .UnLock

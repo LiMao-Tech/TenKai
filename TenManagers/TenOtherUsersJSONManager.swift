@@ -82,7 +82,7 @@ class TenOtherUsersJSONManager: NSObject {
     
     func getUserList(mainVC: MainViewController) {
 
-        let targetUrl = Url_User + "\(SHARED_USER.UserIndex)?level=\(SHARED_USER.AVG)"
+        let targetUrl = Url_User + "\(SHARED_USER.UserIndex)?level=\(SHARED_USER.Average)"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
 
             if let values = response.result.value {

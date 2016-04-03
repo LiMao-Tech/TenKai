@@ -27,6 +27,7 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     var selectedBtn:SettingButton!
     let pcoinNum = [10,20,50,100]
     var purchaseIndex = 0
+    var unlockImageIndex = 0
     var transIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,8 +96,14 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
             for info in results.infos{
                 if (info.PurchaseType == 0){
                     pcoinPurchaseHistory.append(info)
+                    purchaseIndex = (purchaseIndex > info.ID) ? purchaseIndex : info.ID
                 }else{
                     pcoinPurchaseLevelHistory.append(info)
+                    if(info.PurchaseType == 1){
+                        purchaseIndex = (purchaseIndex > info.ID) ? purchaseIndex : info.ID
+                    }else{
+                        unlockImageIndex = (unlockImageIndex > info.ID) ? unlockImageIndex : info.ID
+                    }
                 }
             }
         }
@@ -116,19 +123,24 @@ class PCoinViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     func getPcoinHistory(refresh:UIRefreshControl){
         print("get history")
-        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseIndex":purchaseIndex], success: { (task, response) -> Void in
+        AFJSONManager.SharedInstance.getMethodWithParams(Url_Purchase, parameters: ["userIndex":SHARED_USER.UserIndex,"purchaseIndex":purchaseIndex,"unlockImageIndex":unlockImageIndex], success: { (task, response) -> Void in
             print("purchase history done")
             print(response)
             let historyArray = response as! NSArray
             if(historyArray.count > 0){
                 for info in historyArray{
                     let history = PCoinHistoryModel(dict: info as! NSDictionary)
-                    self.purchaseIndex = history.ID
                     PcoinPurchaseHistoryCache().addPurchaseHistoryInfo(history)
                     if(history.PurchaseType == 0){
-                    self.pcoinPurchaseHistory.append(history)
+                        self.pcoinPurchaseHistory.append(history)
+                        self.purchaseIndex = history.ID
                     }else{
                     self.pcoinPurchaseLevelHistory.append(history)
+                        if(history.PurchaseType == 1){
+                            self.purchaseIndex = history.ID
+                        }else{
+                            self.unlockImageIndex = history.ID
+                        }
                     }
                 }
                 self.pcoinItemList.reloadData()

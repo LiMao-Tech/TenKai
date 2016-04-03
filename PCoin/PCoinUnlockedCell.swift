@@ -14,7 +14,12 @@ class PCoinUnlockedCell: UITableViewCell {
     var splitLine:UIView!
     var pcoinHistoryModel:PCoinHistoryModel!{
         didSet{
-            unlockedLabel.text = "您花费了 \(pcoinHistoryModel.Content) P币解锁等级\(pcoinHistoryModel.Content/10)"
+            if(pcoinHistoryModel.PurchaseType == 1){
+                unlockedLabel.text = "您花费了 \(pcoinHistoryModel.Content) P币解锁等级\(Int(pcoinHistoryModel.Content)!/10)"
+            }else{
+                unlockedLabel.text = pcoinHistoryModel.Content
+            }
+            
             timeLabel.text = "\(Tools.toDisplayTime(pcoinHistoryModel.PurchaseDate))"
         }
     }

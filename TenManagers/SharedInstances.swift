@@ -18,7 +18,7 @@ let LOC_MANAGER = CLLocationManager()
 let GEO_DECODER = CLGeocoder()
 
 let SHARED_APP = UIApplication.sharedApplication()
-let SHARED_USER = SharedUser.SharedInstance
+let SHARED_USER = SharedUser.SharedInstance()
 
 let SHARED_PICKER = LMImagePicker()
 

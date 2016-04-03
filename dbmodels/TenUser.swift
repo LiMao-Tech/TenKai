@@ -41,19 +41,17 @@ class TenUser: NSObject {
     
     var Average :Int {
         get{
-            return (self.OuterScore+self.InnerScore)/2
+            if(Int(Tools.getSinceTime(NSDate())) > self.Expire){
+                return (self.OuterScore+self.InnerScore)/2
+            }
+            return AVG
         }
     }
     
     var Expire = 0
     
-    var AVG: Int = 0 {
-        didSet{
-            if(Int(Tools.getSinceTime(NSDate())) > self.Expire){
-                AVG = self.Average
-            }
-        }
-    }
+    var AVG: Int = 0
+    
     var listType = chatType.InActive
     
     var Portrait = UIImagePNGRepresentation(UIImage(named: "user_pic_radar")!) {

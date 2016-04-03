@@ -30,14 +30,14 @@ class UserCacheTool: NSObject {
         }
     }
     
-//    func updateUserInfo(dict:NSDictionary) {
-//        dbq.inDatabase { (db) -> Void in
-//            let sql_insert = "UPDATE USERINFO SET GENDER = ?,MARRIAGE = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
-//            
-//            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["Gender"]!,dict["Marriage"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["UserIndex"]!,dict["AVG"]!,dict["Expire"]!]){                  print("修改失败")
-//            }
-//        }
-//    }
+    func updateUserInfo(dict:NSDictionary) {
+        dbq.inDatabase { (db) -> Void in
+            let sql_insert = "UPDATE USERINFO SET GENDER = ?,MARRIAGE = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
+            
+            if !db.executeUpdate(sql_insert, withArgumentsInArray: [dict["Gender"]!,dict["Marriage"]!,dict["PCoin"]!,dict["OuterScore"]!,dict["InnerScore"]!,dict["Energy"]!,dict["Hobby"]!,dict["Quote"]!,dict["Lati"]!,dict["Longi"]!,dict["UserIndex"]!,dict["AVG"]!,dict["Expire"]!]){                  print("修改失败")
+            }
+        }
+    }
     
     func updateUserInfo(){
         let sql_update = "UPDATE USERINFO SET GENDER = ?,MARRIAGE = ?,PCOIN = ?,OUTERSCORE = ?,INNERSCORE = ?,ENERGY = ?,HOBBY = ?,QUOTE = ?,LATI = ?,LONGI = ?,AVG = ?,EXPIRE = ? WHERE USERINDEX = ?"
@@ -90,12 +90,10 @@ class UserCacheTool: NSObject {
 
     }
     
-    func getUserInfo(userIndex:Int) -> Bool{
-        var inDB = false
+    func getUserInfo(userIndex:Int){
         dbq.inDatabase { (db) -> Void in
             let sql_select = "SELECT * FROM USERINFO WHERE USERINDEX = ?"
             if let rs = db.executeQuery(sql_select, withArgumentsInArray: [userIndex]){  //可选绑定
-                
                 while rs.next(){
                     SHARED_USER.UserIndex = userIndex
                     SHARED_USER.UserName = rs.stringForColumn("USERNAME")
@@ -119,6 +117,17 @@ class UserCacheTool: NSObject {
                     SHARED_USER.AVG = Int(rs.intForColumn("AVG"))
                     SHARED_USER.GesturePin = rs.stringForColumn("PASSCODE")
                     SHARED_USER.DevicePin = Int(rs.intForColumn("PIN"))
+                }
+            }
+        }
+    }
+    
+    func isUserInDB(userIndex:Int) -> Bool{
+        var inDB = false
+        dbq.inDatabase { (db) -> Void in
+            let sql_select = "SELECT * FROM USERINFO WHERE USERINDEX = ?"
+            if let rs = db.executeQuery(sql_select, withArgumentsInArray: [userIndex]){  //可选绑定
+                while rs.next(){
                     inDB = true
                 }
             }

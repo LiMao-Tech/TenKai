@@ -21,7 +21,7 @@ class PcoinPurchaseHistoryCache: NSObject {
         NSFileManager.defaultManager().fileExistsAtPath(databasePath)
         dbq = FMDatabaseQueue(path: databasePath)
         dbq.inDatabase { (db) -> Void in
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS PURCHASEHISTORYINFO_\(SHARED_USER.UserIndex) (NEWID INTEGER PRIMARY KEY,ID INTEGER,CONTENT INTEGER,MODIFIEDDATE INTEGER,PURCHASEDATE INTEGER,PUCHASETYPE INTEGER,STATUS TEXT,USERID TEXT)"
+            let sql_stmt = "CREATE TABLE IF NOT EXISTS PURCHASEHISTORYINFO_\(SHARED_USER.UserIndex) (NEWID INTEGER PRIMARY KEY,ID INTEGER,CONTENT TEXT,MODIFIEDDATE INTEGER,PURCHASEDATE INTEGER,PUCHASETYPE INTEGER,STATUS TEXT,USERID TEXT)"
             //如果创表失败打印创表失败
             if !db.executeUpdate(sql_stmt, withArgumentsInArray: nil){
                 print("创表失败！")
@@ -49,7 +49,7 @@ class PcoinPurchaseHistoryCache: NSObject {
                 while rs.next(){
                     let info = PCoinHistoryModel()
                     info.ID = Int(rs.intForColumn("ID"))
-                    info.Content = Int(rs.intForColumn("CONTENT"))
+                    info.Content = rs.stringForColumn("CONTENT")
                     info.ModifiedDate = NSTimeInterval(rs.intForColumn("MODIFIEDDATE"))
                     info.PurchaseDate = NSTimeInterval(rs.intForColumn("PURCHASEDATE"))
                     info.PurchaseType = Int(rs.intForColumn("PUCHASETYPE"))

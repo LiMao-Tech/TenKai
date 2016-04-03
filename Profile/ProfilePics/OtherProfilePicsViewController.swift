@@ -129,7 +129,7 @@ class OtherProfilePicsViewController: ProfilePicsViewController,
         ageLabel.text = String(TenTimeManager.SharedInstance.getAge(NSDate(timeIntervalSince1970: tenUser.Birthday)))
 
         // level colors
-        var avg = (tenUser.OuterScore + tenUser.InnerScore)/2
+        var avg = tenUser.Average
         if avg == 0 {
             avg = 1
         }

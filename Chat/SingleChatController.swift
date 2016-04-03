@@ -79,6 +79,8 @@ class SingleChatController : UIViewController,
     
     var otherUnreadNum = 0
     
+    private var endIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getOtherUnreadNum()
@@ -183,31 +185,66 @@ class SingleChatController : UIViewController,
         let url = Url_Api + "TenMsgs?sender=\(SHARED_USER.UserIndex)&receiver=\(tenUser.UserIndex)&msgIndx=\(index)&amount=20"
         let  charSet = NSCharacterSet(charactersInString: url)
         let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+        var hasPic = false
         AFJSONManager.SharedInstance.getMethod(newUrl!, success: { (task, response) -> Void in
             print(response)
             var msgTemp = [SingleChatMessageFrame]()
             let msgArray = response as! NSArray
+            if(msgArray.count == 0){
+                refresh.endRefreshing()
+                return
+            }
             for msg in msgArray{
                 let dict = msg as! NSDictionary
                 let singleCMF = SingleChatMessageFrame()
                 let sCM = SingleChatMessage(dict: dict)
-                singleCMF.chatMessage = sCM
-                msgTemp.append(singleCMF)
-                MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: sCM)
-            }
-            
-                SHARED_CHATS.message[self.tenUser.UserIndex] = msgTemp + self.messages
-                self.messageList.reloadData()
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                if(msgArray.count == 0){
-                    self.rollToRow(0)
+                if(sCM.MsgType == 1){
+                    self.endIndex = sCM.MsgIndex
+                    hasPic = true
+                    ALAMO_MANAGER.request(.GET, sCM.MsgContent) .responseImage { response in
+                        if let image = response.result.value {
+                            sCM.MsgImage = image
+                            singleCMF.chatMessage = sCM
+                            msgTemp.append(singleCMF)
+                            MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg:sCM )
+                            if(!hasPic && (sCM.MsgIndex == self.endIndex)){
+                                let index = (self.messages.count == 0) ? SHARED_USER.MsgIndex + 1 : self.messages.first?.chatMessage.MsgIndex
+                                let result = MessageCacheTool(userIndex: self.tenUser.UserIndex).loadMessage(self.tenUser.UserIndex, msgIndex: index!)
+                                SHARED_CHATS.message[self.tenUser.UserIndex] = result.messageFrames + self.messages
+                                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                                    self.messageList.reloadData()
+                                    refresh.endRefreshing()
+                                    if(msgArray.count != 0){
+                                        self.rollToRow(msgArray.count-1)
+                                    }
+                                })
+                            }
+                        }
+                        else {
+                            print(response.result.error?.localizedDescription)
+                        }
+                    }
+                    
                 }else{
-                    self.rollToRow(msgArray.count-1)
+                    singleCMF.chatMessage = sCM
+                    msgTemp.append(singleCMF)
+                    MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg: sCM)
                 }
                
-            })
-           
-            refresh.endRefreshing()
+            }
+            if(!hasPic){
+                let index = (self.messages.count == 0) ? SHARED_USER.MsgIndex + 1 : self.messages.first?.chatMessage.MsgIndex
+                let result = MessageCacheTool(userIndex: self.tenUser.UserIndex).loadMessage(self.tenUser.UserIndex, msgIndex: index!)
+                SHARED_CHATS.message[self.tenUser.UserIndex] = result.messageFrames + self.messages
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.messageList.reloadData()
+                    refresh.endRefreshing()
+                    if(msgArray.count != 0){
+                        self.rollToRow(msgArray.count-1)
+                    }
+                })
+            }
+            hasPic = false
             }, failure: { (task, error) -> Void in
                 print("sgvc get msg failed")
                 print(error.localizedDescription)
