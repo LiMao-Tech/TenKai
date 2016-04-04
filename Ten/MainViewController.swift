@@ -135,9 +135,6 @@ class MainViewController: UIViewController,
     }
     
     override func viewWillAppear(animated: Bool) {
-        print("average:\(SHARED_USER.Average)")
-        print(SHARED_USER.Expire)
-        print(Tools.getSinceTime(NSDate()))
         self.navigationController?.navigationBar.hidden = true
         updateLocation()
         print("unreadNum:\(unReadNum)")
@@ -151,6 +148,12 @@ class MainViewController: UIViewController,
             chatBtn.setImage(UIImage(named: "btn_menu_chat_normal"), forState: .Normal)
         }else{
             chatBtn.setImage(UIImage(named: "btn_menu_chat_not"), forState: .Normal)
+        }
+        let notiBtn = circularMenuVC.arrButtons[6] as! UIButton
+        if(unReadNotiNum == 0){
+            notiBtn.setImage(UIImage(named: "btn_menu_notification_normal"), forState: .Normal)
+        }else{
+            notiBtn.setImage(UIImage(named: "btn_menu_notification_not"), forState: .Normal)
         }
 
         switch CLLocationManager.authorizationStatus() {
@@ -304,7 +307,6 @@ class MainViewController: UIViewController,
                         SHARED_USER.Expire = info["Expire"] as! Int
                         SHARED_USER.AVG = info["AVG"] as! Int
                         SHARED_USER.PCoin -= Double(sender.level*10)
-                        print(SHARED_USER.AVG)
                         self.refreshLevelButton()
                         UserCacheTool().updateUserInfo()
                         let insufficientAlert = UIAlertController(title: "解锁成功", message: nil, preferredStyle: .Alert)
@@ -344,6 +346,12 @@ class MainViewController: UIViewController,
                 chatBtn.setImage(UIImage(named: "btn_menu_chat_normal"), forState: .Normal)
             }else{
                 chatBtn.setImage(UIImage(named: "btn_menu_chat_not"), forState: .Normal)
+            }
+            let notiBtn = circularMenuVC.arrButtons[6] as! UIButton
+            if(unReadNotiNum == 0){
+                notiBtn.setImage(UIImage(named: "btn_menu_notification_normal"), forState: .Normal)
+            }else{
+                notiBtn.setImage(UIImage(named: "btn_menu_notification_not"), forState: .Normal)
             }
         }else{
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)

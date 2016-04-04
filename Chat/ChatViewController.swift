@@ -107,9 +107,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     continue
                 }
                 if(count > 1 && !ChatFocusState){
-                    print(count)
                     for index in 1...(count!-1){
-                        print(SHARED_CHATS.message[userIndex]![index].chatMessage.Sender)
                         if(SHARED_CHATS.message[userIndex]![index].chatMessage.Sender != SHARED_CHATS.message[userIndex]![index-1].chatMessage.Sender){
                             let user = SHARED_CHATS.tenUsers[userIndex]
                             user!.listType = .Active

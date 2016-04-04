@@ -9,6 +9,7 @@
 import UIKit
 
 class SettingsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+    var loading = TenLoadingView()
     var settingList:UITableView!
     var logoutBtn:UIButton!
     let itemNames = ["个人信息","滑动解锁","更改PIN","P   币","","服务条款","隐私声明"]
@@ -96,11 +97,26 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
     
     
     func logout(){
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
-        let wVC = WelcomeController()
-        UserChatModel.removeAll()
-        self.presentViewController(wVC, animated: true, completion: nil)
+        loading.loadingTitle = "登出中..."
+        self.view.addSubview(loading)
+        let url = Url_Login+"?userIndex=\(SHARED_USER.UserIndex)"
+        let charSet = NSCharacterSet(charactersInString: url)
+        let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+        AFJSONManager.SharedInstance.postMethod(urlNew!, parameters: nil, success: { (task, response) in
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
+            NSOperationQueue.mainQueue().addOperationWithBlock({
+                self.loading.removeFromSuperview()
+                let wVC = WelcomeController()
+                UserChatModel.removeAll()
+                self.presentViewController(wVC, animated: true, completion: nil)
+            })
+            
+            },failure:  { (task, error) in
+                self.loading.removeFromSuperview()
+                print("log out failed")
+                print(error.localizedDescription)
+        })
     }
 
     /*

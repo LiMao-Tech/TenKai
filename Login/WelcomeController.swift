@@ -17,6 +17,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     var loading:TenLoadingView?
     //忘记密码
     @IBAction func forgetPassword(sender: AnyObject) {
+        
         print("forgotPassword")
     }
     @IBOutlet weak var emailTF: UITextField!

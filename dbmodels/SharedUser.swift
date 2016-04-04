@@ -22,4 +22,5 @@ class SharedUser: TenUser {
     class func SharedInstance() -> SharedUser{
         return sharedUser
     }
+
 }

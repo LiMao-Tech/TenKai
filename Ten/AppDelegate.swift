@@ -169,8 +169,6 @@ class AppDelegate: UIResponder,
             let pvc = PasscodeController()
             pvc.passcodeModel = .Unlock
             nvc.presentViewController(pvc, animated: false, completion: nil)
-
-            
         }
         
         RemoteNotificationManager.getInfos()

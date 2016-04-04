@@ -8,6 +8,10 @@
 
 import UIKit
 
+var unReadNum = 0
+
+var unReadNotiNum = 0
+
 class RemoteNotificationManager: NSObject {
     class func getInfos(){
         if(NSUserDefaults.standardUserDefaults().valueForKey("Logined") != nil){
@@ -21,6 +25,7 @@ class RemoteNotificationManager: NSObject {
                 let userInfoArray = response as! NSArray
                 if userInfoArray.count != 0{
                     for info in userInfoArray{
+                        unReadNotiNum += 1
                         let noti = Notification(dict: info as! NSDictionary)
                         let notiFrame = NotificationFrame()
                         notiFrame.notification = noti
@@ -53,6 +58,7 @@ class RemoteNotificationManager: NSObject {
                     //                print("senderIndex:\(senderIndex)")
                     //notification
                     if(senderIndex == 0){
+                        unReadNotiNum += 1
                         let noti = Notification(dict: info as! NSDictionary)
                         let notiFrame = NotificationFrame()
                         notiFrame.notification = noti

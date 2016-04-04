@@ -8,7 +8,6 @@
 
 import UIKit
 
-var unReadNum = 0
 
 class DataInitializerTool: NSObject {
     class func initialiseInfo() {
