@@ -27,10 +27,6 @@ class AppDelegate: UIResponder,
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         print(Url_Home)
         
-        // set Managers
-        LOC_MANAGER.desiredAccuracy = kCLLocationAccuracyBest
-        LOC_MANAGER.distanceFilter = DISTANCE_FILTER
-        
         //remember User
         let userIndex = NSUserDefaults.standardUserDefaults().valueForKey("Logined") as? Int
         if userIndex != nil {

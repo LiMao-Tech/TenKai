@@ -49,8 +49,10 @@ class MainViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // location
+        // location manager
         LOC_MANAGER.delegate = self
+        LOC_MANAGER.desiredAccuracy = kCLLocationAccuracyBest
+        LOC_MANAGER.distanceFilter = DISTANCE_FILTER
 
         self.view.backgroundColor = COLOR_BG
         
@@ -158,12 +160,15 @@ class MainViewController: UIViewController,
 
         switch CLLocationManager.authorizationStatus() {
         case .AuthorizedWhenInUse, .AuthorizedAlways:
+            print("Authorized")
             break
 
         case .NotDetermined:
-            LOC_MANAGER.requestAlwaysAuthorization()
+            print("Not Determined")
+            LOC_MANAGER.requestWhenInUseAuthorization()
 
         case .Restricted, .Denied:
+            print("restricted or denied")
             let alertController = UIAlertController(
                 title: "Ten无法使用定位功能",
                 message: "请打开定位功能以发现附近的朋友。",
@@ -181,6 +186,11 @@ class MainViewController: UIViewController,
 
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+        LOC_MANAGER.startUpdatingLocation()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        LOC_MANAGER.stopUpdatingLocation()
     }
 
     deinit{
