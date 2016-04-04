@@ -97,13 +97,15 @@ class Tools : NSObject{
         let expression=try! NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
         expression.enumerateMatchesInString(matchString, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, matchString.characters.count)) { (result, flag, stop) -> Void in
             if((result) != nil){
-                array.append(result!)
+//                array.append(result!)
+                array.insert(result!, atIndex: 0)
             }
         }
+        print(array.count)
         if(array.count > 0){
             isString = false
-            let len = text.length - (array[array.count-1].range.location + array[array.count-1].range.length)
-            for i in array.count-1...0{
+            let len = text.length - (array[0].range.location + array[0].range.length)
+            for i in 0...array.count-1{
                 let attr = NSMutableAttributedString(attributedString: text)
                 let temp = Str.substringWithRange((array[i].range)) as NSString
                 let temp0 = attr.attributedSubstringFromRange(NSMakeRange(0, array[i].range.location))

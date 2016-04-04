@@ -166,7 +166,7 @@ class AppDelegate: UIResponder,
             nvc.presentViewController(pvc, animated: false, completion: nil)
         }
         
-        RemoteNotificationManager.getInfos()
+//        RemoteNotificationManager.getInfos()
         
         // clear notification badge
         SHARED_APP.applicationIconBadgeNumber = 0

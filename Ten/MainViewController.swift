@@ -410,6 +410,7 @@ class MainViewController: UIViewController,
         case 6:
             let nVC = NotificationViewController()
             self.navigationController?.navigationBar.hidden = false
+            unReadNotiNum = 0
             self.navigationController?.pushViewController(nVC, animated: true)
             circularMenuVC.removeViewWithAnimation()
         case 7:

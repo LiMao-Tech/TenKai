@@ -93,10 +93,9 @@ class RegistProfileViewController: UIViewController,
         self.view.addSubview(splitLine)
         
         scrollView = UIScrollView(frame: CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64))
-        scrollView!.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT*1.3+30)
-        scrollView!.bounces = false
+        scrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT*1.3+30)
+        scrollView.bounces = false
         scrollView.delegate = self
-        
         
         button = UIButton(frame: CGRectMake(SCREEN_WIDTH-80,20,80,43))
         button.setTitle("完成", forState: .Normal)
@@ -252,12 +251,11 @@ class RegistProfileViewController: UIViewController,
         
         self.view.addSubview(button)
         self.view.addSubview(backBtn)
-        self.view.addSubview(self.scrollView!)
+        self.view.addSubview(scrollView)
         
         /*----------- ELCImagePicker Edition -----------*/
         
     }
-    
     //scrollView delegate
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
