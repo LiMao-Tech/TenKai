@@ -70,10 +70,10 @@
     
 }
 -(UIButton *)buttonWithPosX:(int)posX posY:(int)posY tag:(int)tag{
-    self.iconLen = 25;
+    self.iconLen = 22;
     CGFloat x = [UIScreen mainScreen].bounds.size.width/2;
     CGFloat y = self.bounds.size.height/2;
-    CGFloat lenX = (x*2-40)/6;
+    CGFloat lenX = (x*2- 80)/6;
     CGFloat lenY = lenX+10;
     CGFloat centerX = x+posY*lenX;
     CGFloat centerY = y+posX*lenY;
@@ -81,7 +81,7 @@
     btn.frame = CGRectMake(0, 0, self.iconLen, self.iconLen);
     btn.center = CGPointMake(centerX, centerY);
     btn.userInteractionEnabled = NO;
-    [btn setImage:[UIImage imageNamed:@"icon_passcode_circle"] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"icon_passcode_circle"] forState:UIControlStateNormal];
     btn.tag = tag;
     return btn;
 }
@@ -93,6 +93,7 @@
     UIButton *btn = [self buttonWithPoint:pos];
     if (btn && btn.selected == NO) {
         btn.selected = YES;
+        [btn setBackgroundImage:[UIImage imageNamed:@"icon_checkcircle"] forState:UIControlStateNormal];
         [self.selectedBtns addObject:btn];
     }
     [self setNeedsDisplay];
@@ -106,6 +107,7 @@
     
     if (btn && btn.selected == NO) {
         btn.selected = YES;
+        [btn setBackgroundImage:[UIImage imageNamed:@"icon_checkcircle"] forState:UIControlStateNormal];
         [self.selectedBtns addObject:btn];
     } else {
         self.currentPos = pos;
@@ -118,14 +120,15 @@
     NSMutableString * temp= [[NSMutableString alloc] init];
     for (UIButton *btn in self.selectedBtns) {
         [btn setSelected:NO];
+        [btn setBackgroundImage:[UIImage imageNamed:@"icon_passcode_circle"] forState:UIControlStateNormal];
         [temp appendString:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
     }
     NSString *path = temp;
-    if (self.delegate) {
+    if (self.selectedBtns.count > 0 && self.delegate) {
         [self.delegate lockView:self didFinish:path];
+        [self.selectedBtns removeAllObjects];
+        [self setNeedsDisplay];
     }
-    [self.selectedBtns removeAllObjects];
-    [self setNeedsDisplay];
 }
 
 -(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

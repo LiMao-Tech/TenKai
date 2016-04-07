@@ -27,7 +27,8 @@ class RandomAndLevelUserCell: UITableViewCell {
             nameLabel.text = "\(user.UserName)"
             innerLabel.text = "内在 \(user.InnerScore)"
             outerLabel.text = "外在 \(user.OuterScore)"
-            avgLabel.text = "AVG \(user.Average)"
+            let avg = (user.OuterScore + user.InnerScore)/2
+            avgLabel.text = "AVG \(avg)"
             energyLabel.text = "能量 \(user.Energy)"
             distanceLabel.text = "\(user.distance) m"
         }

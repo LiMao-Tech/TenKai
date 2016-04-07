@@ -163,8 +163,7 @@ class PinCodeController: UIViewController {
                     //解锁失败
                     let failedAction = UIAlertController(title: "解锁失败，请重新尝试", message:nil , preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
-                        self.count = 0
-                        self.pinCodes.removeAll()
+                        self.pinStateReset(nil)
                     })
                     failedAction.addAction(okAction)
                 }
@@ -181,8 +180,7 @@ class PinCodeController: UIViewController {
                     //解锁失败
                     let failedAlert = UIAlertController(title: "请输入正确的PIN", message:nil , preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
-                        self.count = 0
-                        self.pinCodes.removeAll()
+                        self.pinStateReset("重置PIN")
                     })
                     failedAlert.addAction(okAction)
                     self.presentViewController(failedAlert, animated: true, completion: nil)
@@ -190,16 +188,16 @@ class PinCodeController: UIViewController {
             }
             else{
                 if(times == 0){
-                    let time: NSTimeInterval = 0.7
+                    self.times = 1
+                    self.pin = self.pinTemp
+                    self.count = 0
+                    self.pinTemp = 0
+                    let time: NSTimeInterval = 0.2
                     let delay = dispatch_time(DISPATCH_TIME_NOW,
                         Int64(time * Double(NSEC_PER_SEC)))
                     dispatch_after(delay, dispatch_get_main_queue()) {
-                        self.times = 1
-                        self.pin = self.pinTemp
                         self.textLabel.text = "确认PIN"
-                        self.count = 0
                         self.pinCodes.removeAll()
-                        self.pinTemp = 0
                     }
                 }else{
                     if(pin == pinTemp){
@@ -215,7 +213,9 @@ class PinCodeController: UIViewController {
                                     self.presentViewController(self.successAlert, animated: true, completion: nil)
                                 }, failure: { (task, error) in
                                     let failedAlert = UIAlertController(title: "设置失败，请重新尝试！", message: nil, preferredStyle: .Alert)
-                                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: {(ac) -> Void in
+                                        self.pinStateReset(nil)
+                                    })
                                     failedAlert.addAction(okAction)
                                     self.presentViewController(failedAlert, animated: true, completion: nil)
                             })
@@ -226,9 +226,18 @@ class PinCodeController: UIViewController {
                             AFJSONManager.SharedInstance.putMethod(urlNew!, success: { (task, reponse) in
                                 SHARED_USER.DevicePin = self.pin
                                 UserCacheTool().updateUserPinCode()
+                                let putSuccessAlert = UIAlertController(title: "设置成功", message: nil, preferredStyle: .Alert)
+                                let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: {(ac) -> Void in
+                                    self.pinStateReset("重置PIN")
+                                    self.pinModel = .ReSet
+                                })
+                                putSuccessAlert.addAction(okAction)
+                                self.presentViewController(putSuccessAlert, animated: true, completion: nil)
                                 }, failure: { (task, error) in
                                     let failedAlert = UIAlertController(title: "设置失败，请重新尝试！", message: nil, preferredStyle: .Alert)
-                                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                                    let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
+                                        self.pinStateReset(nil)
+                                    })
                                     failedAlert.addAction(okAction)
                                     self.presentViewController(failedAlert, animated: true, completion: nil)
                             })
@@ -236,17 +245,7 @@ class PinCodeController: UIViewController {
                     }else{
                         let failAlert = UIAlertController(title: "两次输入的密码不一致，请重新设置", message: nil, preferredStyle: .Alert)
                         let okAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (ac) -> Void in
-                            let time: NSTimeInterval = 0.5
-                            let delay = dispatch_time(DISPATCH_TIME_NOW,
-                                Int64(time * Double(NSEC_PER_SEC)))
-                            dispatch_after(delay, dispatch_get_main_queue()) {
-                                self.times = 0
-                                self.count = 0
-                                self.pinTemp=0
-                                self.pinCodes.removeAll()
-                                self.pin = 0
-                                self.textLabel.text = "设置PIN"
-                            }
+                            self.pinStateReset(nil)
                         })
                         failAlert.addAction(okAction)
                         self.presentViewController(failAlert, animated: true, completion: nil)
@@ -291,7 +290,24 @@ class PinCodeController: UIViewController {
             
         }
     }
-
+    
+    func pinStateReset(title:String?){
+        self.times = 0
+        self.count = 0
+        self.pinTemp=0
+        self.pin = 0
+        let time: NSTimeInterval = 0.2
+        let delay = dispatch_time(DISPATCH_TIME_NOW,Int64(time * Double(NSEC_PER_SEC)))
+        dispatch_after(delay, dispatch_get_main_queue()) {
+            if(title == nil){
+                self.textLabel.text = "设置PIN"
+            }else{
+                self.textLabel.text = title!
+            }
+            
+            self.pinCodes.removeAll()
+        }
+    }
 
     /*
     // MARK: - Navigation

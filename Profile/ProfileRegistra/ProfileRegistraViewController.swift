@@ -518,7 +518,6 @@ class RegistProfileViewController: UIViewController,
             SHARED_USER.ValueWithDict(dict as! [String : AnyObject])
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.button.enabled = true
-                NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
                 UserCacheTool().addUserInfoByUser()
                 DataInitializerTool.initialiseInfo()
                 self.button.enabled = true
@@ -567,6 +566,8 @@ class RegistProfileViewController: UIViewController,
     
     func PinCodeDidSet(pVC: PinCodeController) {
         pVC.dismissViewControllerAnimated(true, completion: nil)
+        NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
+        NSUserDefaults.standardUserDefaults().setValue(email, forKey: "LoginEmail")
         let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
         self.presentViewController(nVC, animated: true, completion: nil)

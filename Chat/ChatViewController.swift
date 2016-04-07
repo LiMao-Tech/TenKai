@@ -144,7 +144,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             SHARED_CHATS.activeUserIndex.removeAtIndex(index)
         }else{
             index = SHARED_CHATS.inActiveUserIndex.indexOf(user.UserIndex)!
-            SHARED_CHATS.inActiveUserIndex.removeAtIndex(user.UserIndex)
+            SHARED_CHATS.inActiveUserIndex.removeAtIndex(index)
         }
         UsersCacheTool().deleteUserInfo(user.UserIndex)
         UserListCache().updateUserList()
