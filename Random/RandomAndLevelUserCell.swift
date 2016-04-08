@@ -28,9 +28,14 @@ class RandomAndLevelUserCell: UITableViewCell {
             innerLabel.text = "内在 \(user.InnerScore)"
             outerLabel.text = "外在 \(user.OuterScore)"
             let avg = (user.OuterScore + user.InnerScore)/2
-            avgLabel.text = "AVG \(avg)"
+            avgLabel.text = "平均 \(avg)"
             energyLabel.text = "能量 \(user.Energy)"
             distanceLabel.text = "\(user.distance) m"
+            if(user.PortraitImage == nil){
+                headImage.setImage(UIImage(named: "user_pic"), forState: UIControlState.Normal)
+            }else{
+                headImage.setImage(Tools.toCirclurImage(user.PortraitImage!), forState: UIControlState.Normal)
+            }
         }
     }
     
@@ -39,7 +44,6 @@ class RandomAndLevelUserCell: UITableViewCell {
         
         headImage = UIButton(frame: CGRectMake(10, 10, 55, 55))
         headImage.layer.cornerRadius = 55/2
-        headImage.setImage(UIImage(named: "user_pic"), forState: UIControlState.Normal)
         
         //nameLabel
         let namex = CGRectGetMaxX(headImage.frame) + 5

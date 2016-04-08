@@ -87,14 +87,16 @@ class RandomUserController: UIViewController,
         }
         
         let user = users[indexPath.row]
-        
-        let imageIndex = user.UserIndex.description
-        let targetUrl = Url_GetHeadImage + imageIndex
-        ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
-            if let image = response.result.value {
-                cell!.headImage.setImage(Tools.toCirclurImage(image), forState: .Normal)
-                user.Portrait = UIImagePNGRepresentation(image)
+        if(user.PortraitImage == nil){
+            let imageIndex = user.UserIndex.description
+            let targetUrl = Url_GetHeadImage + imageIndex
+            ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
+                if let image = response.result.value {
+                    user.Portrait = UIImagePNGRepresentation(image)
+                    self.userListView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                }
             }
+
         }
         cell!.user = user
         

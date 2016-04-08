@@ -12,7 +12,7 @@ import SwiftyJSON
 class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var userList:UITableView!
     var level = 0
-    var usersList: [AnyObject] = [AnyObject]()
+    var usersList = [TenUser]()
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -20,7 +20,12 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
                 // Do any additionalsetup after loading the view.
     }
     override func viewWillAppear(animated: Bool) {
-        self.usersList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        let users = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        for userinfo in users{
+            let userDict = userinfo as! [String:AnyObject]
+            let user = TenUser(dict: userDict)
+            usersList.append(user)
+        }
         self.userList.reloadData()
     }
     
@@ -42,7 +47,12 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
-        self.usersList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        let users = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        for userinfo in users{
+            let userDict = userinfo as! [String:AnyObject]
+            let user = TenUser(dict: userDict)
+            usersList.append(user)
+        }
         self.userList.reloadData()
         refresh.endRefreshing()
         print("refreshed")
@@ -65,30 +75,20 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
         if(cell == nil){
             cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
         }
-        let user = JSON(usersList[indexPath.row] as! [String: AnyObject])
-        let imageIndex = user["UserIndex"].stringValue
-        let targetUrl = Url_GetHeadImage + imageIndex
-        ALAMO_MANAGER.request(.GET, targetUrl)
-            .responseImage { response in
-                if let image = response.result.value {
-                    cell!.headImage.setImage(image, forState: .Normal)
-                }
+        let user = usersList[indexPath.row]
+        if(user.PortraitImage == nil){
+            let imageIndex = user.UserIndex
+            let targetUrl = Url_GetHeadImage + String(imageIndex)
+            ALAMO_MANAGER.request(.GET, targetUrl)
+                .responseImage { response in
+                    if let image = response.result.value {
+                        user.Portrait = UIImagePNGRepresentation(image)
+                        self.userList.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    }
+            }
+
         }
-        
-        
-        cell!.nameLabel.text = user["UserName"].stringValue
-        
-        let inner = user["InnerScore"].intValue
-        let outer = user["OuterScore"].intValue
-        let energy = user["Energy"].intValue
-        let avg = (inner+outer)/2
-        
-        cell!.innerLabel.text = "内在 \(inner)"
-        cell!.outerLabel.text = "外在 \(outer)"
-        cell!.energyLabel.text = "能量 \(energy)"
-        cell!.avgLabel.text = "平均 \(avg)"
-        
-        cell!.distanceLabel.text = "距离 0"
+        cell?.user = user
         
         return cell!
 
