@@ -15,7 +15,7 @@ import Foundation
 
 var DEVICE_TOKEN : String?
 
-
+var byNotification = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder,
@@ -129,7 +129,7 @@ class AppDelegate: UIResponder,
         
         print(userInfo["aps"])
         print("appdelegate in")
-        
+        byNotification = true
         RemoteNotificationManager.getInfos()
     }
     
@@ -166,7 +166,10 @@ class AppDelegate: UIResponder,
             nvc.presentViewController(pvc, animated: false, completion: nil)
         }
         
-//        RemoteNotificationManager.getInfos()
+        if(!byNotification){
+            RemoteNotificationManager.getInfos()
+            byNotification = false
+        }
         
         // clear notification badge
         SHARED_APP.applicationIconBadgeNumber = 0
