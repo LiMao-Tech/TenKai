@@ -11,7 +11,7 @@ import UIKit
 import SwiftyJSON
 
 enum BlockDim: CGFloat {
-    case Std = 1, L
+    case Std = 1, L, XL
 }
 
 class ProfilePicsViewController: UIViewController {

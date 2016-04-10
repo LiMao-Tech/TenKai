@@ -246,7 +246,7 @@ class MainViewController: UIViewController,
     func refreshBtnClicked() {
         self.refreshBtn.enabled = false
         self.view.addSubview(loading)
-        TenOtherUsersJSONManager.SharedInstance.getUserList(self)
+        TenOtherUsersJSONManager.SharedInstance.getUserListRandom(self)
     }
     
     

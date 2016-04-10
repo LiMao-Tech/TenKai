@@ -41,44 +41,71 @@ class MyProfilePicsViewController: ProfilePicsViewController,
     
     
     @IBAction func optionBarBtn(sender: AnyObject) {
-        self.unlockBarBtn.enabled = false
-        self.lockBarBtn.enabled = false
-        self.deleteBarBtn.enabled = false
+        if MyProfilePicsViewController.optionMode != 0 {
+            recoverOptionState()
+            optionBarBtn.image = UIImage(named: "btn_tabBarIcon_option")
+        } else {
+            optionBarBtn.image = UIImage(named: "Delete")
+            self.unlockBarBtn.enabled = false
+            self.lockBarBtn.enabled = false
+            self.deleteBarBtn.enabled = false
 
-        self.lmCollectionView.alpha = 0.5
+            self.lmCollectionView.alpha = 0.5
 
-        presentViewController(picOptionsController, animated: true, completion: nil)
+            presentViewController(picOptionsController, animated: true, completion: nil)
+        }
+
     }
 
     @IBAction func unlockBarBtn(sender: AnyObject) {
-        self.unlockMode = true
-        
-        self.optionBarBtn.enabled = false
-        self.lockBarBtn.enabled = false
-        self.deleteBarBtn.enabled = false
+        if self.unlockMode {
+            unlockBarBtn.image = UIImage(named: "btn_tabBarIcon_unlock")
+            recoverOptionState()
+        } else {
+            unlockBarBtn.image = UIImage(named: "Delete")
+            self.unlockMode = true
 
-        self.lmCollectionView.alpha = 0.5
+            self.optionBarBtn.enabled = false
+            self.lockBarBtn.enabled = false
+            self.deleteBarBtn.enabled = false
+
+            self.lmCollectionView.alpha = 0.5
+        }
         
     }
     
     @IBAction func lockBarBtn(sender: AnyObject) {
-        self.lockMode = true
-        
-        self.optionBarBtn.enabled = false
-        self.unlockBarBtn.enabled = false
-        self.deleteBarBtn.enabled = false
-        
-        self.lmCollectionView.alpha = 0.5
+        if self.lockMode {
+            lockBarBtn.image = UIImage(named: "btn_tabBarIcon_lock")
+            recoverOptionState()
+        }
+        else {
+            lockBarBtn.image = UIImage(named: "Delete")
+            self.lockMode = true
+
+            self.optionBarBtn.enabled = false
+            self.unlockBarBtn.enabled = false
+            self.deleteBarBtn.enabled = false
+
+            self.lmCollectionView.alpha = 0.5
+        }
     }
     
     @IBAction func deleteBarBtn(sender: AnyObject) {
-        self.deleteMode = true
+        if self.deleteMode {
+            deleteBarBtn.image = UIImage(named: "btn_tabBarIcon_delete")
+            recoverOptionState()
+        }
+        else {
+            deleteBarBtn.image = UIImage(named: "Delete")
+            self.deleteMode = true
 
-        self.optionBarBtn.enabled = false
-        self.unlockBarBtn.enabled = false
-        self.lockBarBtn.enabled = false
+            self.optionBarBtn.enabled = false
+            self.unlockBarBtn.enabled = false
+            self.lockBarBtn.enabled = false
 
-        self.lmCollectionView.alpha = 0.5
+            self.lmCollectionView.alpha = 0.5
+        }
     }
 
     var pVC: MyProfileViewController!
@@ -107,6 +134,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         optionMode = 3
     })
 
+
     static var optionMode: Int = 0
     var lockMode: Bool = false
     var unlockMode: Bool = false
@@ -121,6 +149,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         picOptionsController.addAction(setPic1)
         picOptionsController.addAction(setPic2)
         picOptionsController.addAction(setPic3)
+
 //        picOptionsController.addAction(cancelAction)
 
         deleteFirstPicErrorController.addAction(cancelAction)
@@ -186,10 +215,12 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             }
         }
         else if lockMode {
+            lockBarBtn.image = UIImage(named: "btn_tabBarIcon_lock")
             postLockStatus(selectedCell!, id: id, status: true)
         }
 
         else if unlockMode {
+            unlockBarBtn.image = UIImage(named: "btn_tabBarIcon_unlock")
             postLockStatus(selectedCell!, id: id, status: false)
         }
         else if deleteMode {
@@ -208,7 +239,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
         else {
             magnifyCellAtIndexPath(indexPath)
         }
-
+        deleteBarBtn.image = UIImage(named: "btn_tabBarIcon_delete")
         recoverOptionState()
     }
     
@@ -300,6 +331,12 @@ class MyProfilePicsViewController: ProfilePicsViewController,
                 self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
 
                 self.dims.insert(BlockDim.L, atIndex: indexPath.row)
+                self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
+            } else if self.dims[indexPath.row] == BlockDim.L {
+                self.dims.removeAtIndex(indexPath.row)
+                self.lmCollectionView?.deleteItemsAtIndexPaths([indexPath])
+
+                self.dims.insert(BlockDim.XL, atIndex: indexPath.row)
                 self.lmCollectionView?.insertItemsAtIndexPaths([indexPath])
             }
             else {
@@ -427,7 +464,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
 
     private func setLockStatus(cell: MyProfilePicCollectionViewCell, status: Bool) {
         if status {
-            cell.picIV.alpha = 0.8
+            cell.picIV.alpha = 0.85
         }
         else {
             cell.picIV.alpha = 1.0
