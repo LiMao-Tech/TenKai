@@ -69,6 +69,7 @@ class RemoteNotificationManager: NSObject {
                         continue
                     }
                     //if user not exist get userInfo
+                    print("senderIndex:\(senderIndex)")
                     if(SHARED_CHATS.tenUsers[senderIndex] == nil){
                         print("get chat user")
                         SHARED_CHATS.tenUsers[senderIndex] = TenUser()

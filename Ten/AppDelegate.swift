@@ -132,7 +132,6 @@ class AppDelegate: UIResponder,
         byNotification = true
         RemoteNotificationManager.getInfos()
     }
-    
     // ---------------------------- END for remote notification -----------------------------//
 
     func applicationWillResignActive(application: UIApplication) {
@@ -157,6 +156,12 @@ class AppDelegate: UIResponder,
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         print("*********** in Did Become Active *************")
         
+        if(!byNotification){
+            RemoteNotificationManager.getInfos()
+        }
+        
+        byNotification = false
+        
         let vc = self.window?.rootViewController
         if(vc!.isKindOfClass(UINavigationController)){
             let nvc = vc as! UINavigationController
@@ -164,11 +169,6 @@ class AppDelegate: UIResponder,
             let pvc = PasscodeController()
             pvc.passcodeModel = .Unlock
             nvc.presentViewController(pvc, animated: false, completion: nil)
-        }
-        
-        if(!byNotification){
-            RemoteNotificationManager.getInfos()
-            byNotification = false
         }
         
         // clear notification badge
