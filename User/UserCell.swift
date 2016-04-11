@@ -20,6 +20,7 @@ class UserCell: UITableViewCell {
     var splitLine:UIView!
     var panG:UIPanGestureRecognizer!
     var menuIsShow = false
+    var menuShouldShow = false
     var initialX:CGFloat = 0
     var delegate:UserCellDelegate?
     var badgeView:JSBadgeView!
@@ -138,6 +139,7 @@ class UserCell: UITableViewCell {
     var deleteBtn:UIButton!
     var infoBtn:UIButton!
     var midLockBtn:UIButton?
+    var usercellView:UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -165,39 +167,43 @@ class UserCell: UITableViewCell {
         self.bringSubviewToFront(self.contentView)
         
         panG = UIPanGestureRecognizer(target: self, action: #selector(UserCell.pan(_:)))
+        panG.maximumNumberOfTouches = 1
         panG.delegate = self
         self.addGestureRecognizer(panG)
     }
     
     func pan(gesture:UIPanGestureRecognizer){
-        let currentTouchPoint = gesture.locationInView(self.contentView)
-        let ctpX = currentTouchPoint.x
-        let velocity = gesture.velocityInView(self.contentView)
-        if(gesture.state == .Began){
-            initialX = ctpX
-            if(velocity.x > 0){
-                //delegate will hidden
-            }else{
-                //delegate didShow
+        if(gesture.isKindOfClass(UIPanGestureRecognizer)){
+            let currentTouchPoint = gesture.locationInView(self)
+            let ctpX = currentTouchPoint.x
+            let velocity = gesture.velocityInView(self)
+            if(gesture.state == .Began){
+                initialX = ctpX
+                if(velocity.x > 0){
+                    //delegate will hidden
+                }else{
+                    //delegate didShow
+                }
+            }else if (gesture.state == .Changed){
+                let panAmount = ctpX - self.initialX
+                self.initialX = ctpX
+                let minOriginX:CGFloat = -bottomLen
+                let maxOriginX:CGFloat = 0
+                var originX = CGRectGetMinX(self.contentView.frame) + panAmount
+                originX = maxOriginX < originX ? maxOriginX : originX
+                originX = minOriginX > originX ? minOriginX : originX
+                if( (originX < -bottomView.frame.width/2 && velocity.x < 0) || velocity.x < -100){
+                    menuIsShow = false
+                    self.bottomView.hidden = false
+                }else if((originX < -bottomView.frame.width/2 && velocity.x < 0) || velocity.x > 100){
+                    menuIsShow = true
+                }
+                self.contentView.frame = CGRectMake(originX, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))
+                
+            }else if(gesture.state == .Ended || gesture.state == .Cancelled){
+                endFrameChange()
             }
-        }else if (gesture.state == .Changed){
-            let panAmount = ctpX - self.initialX
-            self.initialX = ctpX
-            let minOriginX:CGFloat = -bottomLen
-            let maxOriginX:CGFloat = 0
-            var originX = CGRectGetMinX(self.contentView.frame) + panAmount
-            originX = maxOriginX < originX ? maxOriginX : originX
-            originX = minOriginX > originX ? minOriginX : originX
-            if(velocity.x < 0){
-                menuIsShow = false
-                self.bottomView.hidden = false
-            }else{
-                menuIsShow = true
-            }
-            self.contentView.frame = CGRectMake(originX, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))
-            
-        }else if(gesture.state == .Ended || gesture.state == .Cancelled){
-            endFrameChange()
+
         }
     }
     
@@ -207,9 +213,19 @@ class UserCell: UITableViewCell {
         UIView.animateWithDuration(0.25, delay: 0, options: .BeginFromCurrentState, animations: { () -> Void in
             self.contentView.frame = frame
             }, completion: { (finishi) -> Void in
-
+                if(self.menuIsShow){
+                    self.bottomView.hidden = true
+                }
             })
-        
+    }
+    
+    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if(gestureRecognizer.isKindOfClass(UIPanGestureRecognizer)){
+            let pan = gestureRecognizer as! UIPanGestureRecognizer
+            let point = pan.translationInView(self)
+            return fabs(point.x) > fabs(point.y)
+        }
+        return true
     }
 
     
@@ -242,5 +258,4 @@ class UserCell: UITableViewCell {
     func midLockBtnClicked(){
         self.delegate?.menuMidLockBtnDidClicked(self)
     }
-
 }
