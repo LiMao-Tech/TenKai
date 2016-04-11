@@ -107,7 +107,7 @@ class UsersCacheTool: NSObject {
     }
     
     func deleteUserInfo(userIndex:Int){
-        let sql_delete = "DELETE FROM USERINFO WHERE USERINDEX = ?"
+        let sql_delete = "DELETE FROM USERSINFO_\(SHARED_USER.UserIndex) WHERE USERINDEX = ?"
         dbq.inDatabase { (db) -> Void in
             db.executeUpdate(sql_delete, withArgumentsInArray: [userIndex])
         }

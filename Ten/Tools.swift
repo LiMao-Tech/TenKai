@@ -101,7 +101,6 @@ class Tools : NSObject{
                 array.insert(result!, atIndex: 0)
             }
         }
-        print(array.count)
         if(array.count > 0){
             isString = false
             let len = text.length - (array[0].range.location + array[0].range.length)

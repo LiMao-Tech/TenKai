@@ -103,17 +103,27 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
         let charSet = NSCharacterSet(charactersInString: url)
         let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
         AFJSONManager.SharedInstance.postMethod(urlNew!, parameters: nil, success: { (task, response) in
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
-//            NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
-//            NSOperationQueue.mainQueue().addOperationWithBlock({
-//                self.loading.removeFromSuperview()
-//                let wVC = WelcomeController()
-//                UserChatModel.removeAll()
-//                self.presentViewController(wVC, animated: true, completion: nil)
-//            })
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
+            NSOperationQueue.mainQueue().addOperationWithBlock({
+                self.loading.removeFromSuperview()
+                let wVC = WelcomeController()
+                UserChatModel.removeAll()
+                self.presentViewController(wVC, animated: true, completion: nil)
+            })
             
             },failure:  { (task, error) in
-                self.loading.removeFromSuperview()
+                let opera = task?.response as! NSHTTPURLResponse
+                if(opera.statusCode == 403){
+                    NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
+                    NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
+                    NSOperationQueue.mainQueue().addOperationWithBlock({
+                        self.loading.removeFromSuperview()
+                        let wVC = WelcomeController()
+                        UserChatModel.removeAll()
+                        self.presentViewController(wVC, animated: true, completion: nil)
+                    })
+                }
                 print("log out failed")
                 print(error.localizedDescription)
         })

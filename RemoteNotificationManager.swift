@@ -81,14 +81,14 @@ class RemoteNotificationManager: NSObject {
                             let userDict = response as! NSDictionary
                             SHARED_CHATS.tenUsers[senderIndex]?.ValueWithDict(userDict as! [String : AnyObject])
                             UsersCacheTool().addUserInfoByUser(SHARED_CHATS.tenUsers[senderIndex]!)
-                            SHARED_CHATS.inActiveUserIndex.insert(senderIndex, atIndex: 0)
-                            UserListCache().updateUserList()
                             
                             //get tenUser portrait
                             ALAMO_MANAGER.request(.GET, SHARED_CHATS.tenUsers[senderIndex]!.ProfileUrl) .responseImage { response in
                                 if let image = response.result.value {
                                     SHARED_CHATS.tenUsers[senderIndex]!.Portrait = UIImagePNGRepresentation(image)
                                     UsersCacheTool().upDateUsersPortrait(SHARED_CHATS.tenUsers[senderIndex]!.UserIndex, portrait: image)
+                                    SHARED_CHATS.inActiveUserIndex.insert(senderIndex, atIndex: 0)
+                                    UserListCache().updateUserList()
                                 }
                                 else {
                                     print("get \(SHARED_CHATS.tenUsers[senderIndex]!.UserName) portrait failed")

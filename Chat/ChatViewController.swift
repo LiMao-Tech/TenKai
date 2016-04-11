@@ -82,6 +82,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         SHARED_CHATS.addObserver(self, forKeyPath: "activeUserIndex", options: NSKeyValueObservingOptions.New, context: nil)
          SHARED_CHATS.addObserver(self, forKeyPath: "inActiveUserIndex", options: NSKeyValueObservingOptions.New, context: nil)
         SHARED_CHATS.addObserver(self, forKeyPath: "message", options: NSKeyValueObservingOptions.New, context: nil)
+        SHARED_CHATS.addObserver(self, forKeyPath: "tenUsers", options: NSKeyValueObservingOptions.New, context: nil)
         
         if(NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") != nil){
             ChatFocusState = true
@@ -122,6 +123,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+        freshInfo()
+    }
+    
+    func freshInfo(){
         self.itemActive.setTitle(titleActive, forState: .Normal)
         self.itemInactive.setTitle(titleInActive, forState: .Normal)
         self.userList.reloadData()
@@ -132,12 +137,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         SHARED_CHATS.inActiveUserIndex.removeAtIndex(index!)
         SHARED_CHATS.activeUserIndex.insert(userIndex, atIndex: 0)
         UserListCache().updateUserList()
+        freshInfo()
     }
     
     //UserCellDelegate func
     func menuDeleteBtnDidClicked(cell: UserCell) {
         let user = cell.tenUser
         print(user.UserIndex)
+        unReadNum = unReadNum - user.badgeNum
         var index = 0
         if(user.listType == .Active){
             index = SHARED_CHATS.activeUserIndex.indexOf(user.UserIndex)!
@@ -148,7 +155,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         UsersCacheTool().deleteUserInfo(user.UserIndex)
         UserListCache().updateUserList()
-        self.userList.reloadData()
+        SHARED_CHATS.tenUsers.removeValueForKey(user.UserIndex)
+        freshInfo()
     }
     
     func menuInfoBtnDidClicked(cell: UserCell) {
@@ -163,16 +171,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.lockBtnDidClicked()
     }
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        print("receive observer")
+        print("keyPath:\(keyPath)")
         if(keyPath == "activeUserIndex"){
-            self.userList.reloadData()
+            freshInfo()
         }else if(keyPath == "inActiveUserIndex"){
-            self.userList.reloadData()
-        }else if(keyPath == "message"){
-            self.itemActive.setTitle(titleActive, forState: .Normal)
-            self.itemInactive.setTitle(titleInActive, forState: .Normal)
-            self.userList.reloadData()
+            freshInfo()
+        }else
+            if(keyPath == "message"){
+            freshInfo()
         }else{
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
 
     }
@@ -248,11 +257,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func refreshControl(){
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(ChatViewController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
-        
         self.userList.addSubview(refresh)
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
+        self.itemActive.setTitle(titleActive, forState: .Normal)
+        self.itemInactive.setTitle(titleInActive, forState: .Normal)
+        self.userList.reloadData()
         refresh.endRefreshing()
     }
 

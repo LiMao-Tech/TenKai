@@ -21,7 +21,6 @@ class DataInitializerTool: NSObject {
         let usersInfo = UsersCacheTool().getUserInfo()
         if(!usersInfo.isEmpty){
             for user in usersInfo.users{
-                print(user.UserName)
                 unReadNum += user.badgeNum
                 SHARED_CHATS.tenUsers[user.UserIndex] = user
                 SHARED_CHATS.message[user.UserIndex] = MessageCacheTool(userIndex: user.UserIndex).loadMessage(user.UserIndex, msgIndex:SHARED_USER.MsgIndex+1).messageFrames
