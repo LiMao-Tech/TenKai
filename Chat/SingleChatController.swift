@@ -448,7 +448,7 @@ class SingleChatController : UIViewController,
                 msgFrame.chatMessage = message
                 self.messages.append(msgFrame)
                 self.messageList.reloadData()
-                let data = UIImageJPEGRepresentation(message.MsgImage!,0.75)!
+                let data = UIImageJPEGRepresentation(message.MsgImage!,1)!
                 let params = ["sender":SHARED_USER.UserIndex,"receiver":self.tenUser.UserIndex,"phoneType":0]
                 AFImageManager.SharedInstance.postUserImage(Url_SendImage,image: data, parameters: params, success: { (task, response) -> Void in
                         print("postImage success")

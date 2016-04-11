@@ -363,7 +363,7 @@ class EditProfileController : UIViewController,
     }
     
     func updatePortrait(){
-        let image = UIImageJPEGRepresentation(chosenImage!, 0.75)
+        let image = UIImageJPEGRepresentation(chosenImage!, 1)
         if image != nil {
             let params : NSDictionary = ["id": SHARED_USER.UserIndex]
             

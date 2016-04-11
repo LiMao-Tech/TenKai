@@ -478,7 +478,7 @@ class RegistProfileViewController: UIViewController,
     
     func postImage() {
 
-        let image = UIImageJPEGRepresentation(chosenImage!, 0.75)
+        let image = UIImageJPEGRepresentation(chosenImage!, 1)
         if image != nil {
             SHARED_USER.Portrait = image!
             let params : NSDictionary = ["id": SHARED_USER.UserIndex]

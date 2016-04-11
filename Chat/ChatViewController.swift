@@ -144,6 +144,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func menuDeleteBtnDidClicked(cell: UserCell) {
         let user = cell.tenUser
         print(user.UserIndex)
+        if(ChatFocusState){
+            if NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") as! Int == user.UserIndex{
+                ChatFocusState = false
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("ChatFocusState")
+            }
+        }
         unReadNum = unReadNum - user.badgeNum
         var index = 0
         if(user.listType == .Active){
