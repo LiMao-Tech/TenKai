@@ -71,23 +71,10 @@ class TenOtherUsersJSONManager: NSObject {
         
         return levelUsers
     }
-    
-    func selectRandomUsers() -> [TenUser] {
-        
-        var randomUsers = [TenUser]()
-        
-        for entity in userListRandom {
 
-            let user = TenUser(dict: entity as! [String : AnyObject])
-            randomUsers.append(user)
-        }
-        
-        return randomUsers
-    }
-    
     func getUserListNearBy(mainVC: MainViewController) {
 
-        let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)&mLati=\(SHARED_USER.Lati)&mLongi=\(SHARED_USER.Longi)&range=10"
+        let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)&level=\(SHARED_USER.Average)&mLati=\(SHARED_USER.Lati)&mLongi=\(SHARED_USER.Longi)&range=10000"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
 
             if let values = response.result.value {
@@ -115,32 +102,21 @@ class TenOtherUsersJSONManager: NSObject {
         }
     }
 
-    func getUserListRandom(mainVC: MainViewController) {
-
-        let targetUrl = Url_User + "\(SHARED_USER.UserIndex)?level=\(SHARED_USER.Average)"
+    func getUserListRandom(randomVC: RandomUserController, refresh: UIRefreshControl) {
+        let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)?level=\(SHARED_USER.Average)&random=true"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
 
             if let values = response.result.value {
-                mainVC.loading.removeFromSuperview()
                 if let valuesArray = values as? [AnyObject]{
-                    self.userListNearBy = valuesArray
+                    self.userListRandom = valuesArray
+                    for entity in self.userListRandom {
+
+                        let user = TenUser(dict: entity as! [String : AnyObject])
+                        randomVC.users.append(user)
+                    }
+                    randomVC.userListView.reloadData()
+                    refresh.endRefreshing()
                 }
-                TenMainGridManager.SharedInstance.clearNodes()
-                mainVC.generateNodes()
-                mainVC.refreshBtn.enabled = true
-            }
-            else {
-                mainVC.loading.removeFromSuperview()
-                mainVC.userListAlert.title = "加载失败"
-                mainVC.userListAlert.message = "请检查网络连接后重试。"
-                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: {
-                    alert in
-                    mainVC.view.addSubview(mainVC.loading)
-                })
-                if mainVC.userListAlert.actions.count == 0 {
-                    mainVC.userListAlert.addAction(cancelAction)
-                }
-                mainVC.refreshBtn.enabled = true
             }
         }
     }

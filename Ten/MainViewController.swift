@@ -32,8 +32,8 @@ class MainViewController: UIViewController,
     var distanceLabel:UILabel!
     
     var btnArray = [LevelButton]()
-    var distance : TenSlider!
-    var gap : Int!
+    var distance: TenSlider!
+    var gap: Int!
     
     var menuBtnImageHighlight = ["btn_menu_chat_not","btn_menu_notification_not"]
     
@@ -160,15 +160,15 @@ class MainViewController: UIViewController,
 
         switch CLLocationManager.authorizationStatus() {
         case .AuthorizedWhenInUse, .AuthorizedAlways:
-            print("Authorized")
+
             break
 
         case .NotDetermined:
-            print("Not Determined")
+
             LOC_MANAGER.requestWhenInUseAuthorization()
 
         case .Restricted, .Denied:
-            print("restricted or denied")
+
             let alertController = UIAlertController(
                 title: "Ten无法使用定位功能",
                 message: "请打开定位功能以发现附近的朋友。",
@@ -244,9 +244,17 @@ class MainViewController: UIViewController,
     }
     
     func refreshBtnClicked() {
-        self.refreshBtn.enabled = false
-        self.view.addSubview(loading)
-        TenOtherUsersJSONManager.SharedInstance.getUserListRandom(self)
+        switch CLLocationManager.authorizationStatus() {
+        case .AuthorizedWhenInUse, .AuthorizedAlways:
+            self.refreshBtn.enabled = false
+            self.view.addSubview(loading)
+            TenOtherUsersJSONManager.SharedInstance.getUserListNearBy(self)
+
+        default:
+            TenMainGridManager.SharedInstance.clearNodes()
+
+        }
+
     }
     
     

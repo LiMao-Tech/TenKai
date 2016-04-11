@@ -15,9 +15,11 @@ class RandomUserController: UIViewController,
                             UITableViewDelegate,
                             UITableViewDataSource
 {
+
+    let refresh = UIRefreshControl()
+
     // Declarations
     var userListView: UITableView!
-    var userList: [AnyObject] = [AnyObject]()
     var users = [TenUser]()
 
     
@@ -32,7 +34,7 @@ class RandomUserController: UIViewController,
         userListView.backgroundColor = COLOR_BG
         userListView.separatorStyle = .None
         
-        let refresh = UIRefreshControl()
+
         refresh.addTarget(self, action: #selector(RandomUserController.refreshList(_:)), forControlEvents: .ValueChanged)
         
         self.view.addSubview(userListView)
@@ -40,7 +42,8 @@ class RandomUserController: UIViewController,
     }
     
     override func viewWillAppear(animated: Bool) {
-        randomizeDisplayedUsers()
+        refresh.beginRefreshing()
+        TenOtherUsersJSONManager.SharedInstance.getUserListRandom(self, refresh: refresh)
     }
     
 
@@ -53,11 +56,7 @@ class RandomUserController: UIViewController,
     }
     
     func refreshList(refresh: UIRefreshControl){
-
-        self.userList = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
-        self.userListView.reloadData()
-        
-        refresh.endRefreshing()
+        TenOtherUsersJSONManager.SharedInstance.getUserListRandom(self, refresh: refresh)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -101,12 +100,5 @@ class RandomUserController: UIViewController,
         cell!.user = user
         
         return cell!
-    }
-
-
-    private func randomizeDisplayedUsers() {
-        users.removeAll()
-        users = TenOtherUsersJSONManager.SharedInstance.selectRandomUsers()
-        userListView.reloadData()
     }
 }
