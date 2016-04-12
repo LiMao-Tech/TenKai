@@ -112,8 +112,10 @@ class UserCell: UITableViewCell {
     }
     var message = [SingleChatMessageFrame](){
         didSet{
+            print("usercell message:\(message)")
             let msg = message.last
             if(msg != nil){
+                print("msg is nil")
                 if(msg!.chatMessage.messageType.rawValue == 1){
                     lastMessage.text = "[图片]"
                 }else if(msg!.chatMessage.messageType.rawValue == 0){
@@ -124,8 +126,10 @@ class UserCell: UITableViewCell {
                 timeLabel.text = "\(Tools.toDisplayTime((message.last?.chatMessage.MsgTime)!))"
             }
             else{
-                timeLabel.text = "\(Tools.toDisplayTime(Tools.getSinceTime(NSDate())))"
-                lastMessage.text = "[系统]嘻嘻，快来和你的小伙伴聊天吧！"
+//                timeLabel.text = "\(Tools.toDisplayTime(Tools.getSinceTime(NSDate())))"
+//                lastMessage.text = "[系统]嘻嘻，快来和你的小伙伴聊天吧！"
+                timeLabel.text = ""
+                lastMessage.text = ""
             }
         }
     }

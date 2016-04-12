@@ -57,7 +57,6 @@ class MainViewController: UIViewController,
         self.view.backgroundColor = COLOR_BG
         
         loading.loadingTitle = "加载中..."
-        refreshBtnClicked()
         
         print(SHARED_USER.UserIndex)
 
@@ -133,6 +132,8 @@ class MainViewController: UIViewController,
         self.view.addSubview(refreshBtn)
         self.view.addSubview(distanceLabel)
         distanceChange()
+        
+        refreshBtnClicked()
     }
     
     override func viewWillAppear(animated: Bool) {
