@@ -57,8 +57,6 @@ class AppDelegate: UIResponder,
                 categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(pushSettings)
             UIApplication.sharedApplication().registerForRemoteNotifications()
-//            UIApplication.sharedApplication().registerForRemoteNotificationTypes(
-//                [UIRemoteNotificationType.Badge, UIRemoteNotificationType.Sound, UIRemoteNotificationType.Alert])
             
         case 8:
             let pushSettings: UIUserNotificationSettings = UIUserNotificationSettings(

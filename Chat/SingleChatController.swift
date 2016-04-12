@@ -41,6 +41,7 @@ class SingleChatController : UIViewController,
         didSet{
             if(!SHARED_CHATS.activeUserIndex.contains(tenUser.UserIndex) && !SHARED_CHATS.inActiveUserIndex.contains(tenUser.UserIndex)){
                 print("add new user")
+                print(SHARED_CHATS.inActiveUserIndex)
                 SHARED_CHATS.tenUsers[tenUser.UserIndex] = tenUser
                 SHARED_CHATS.inActiveUserIndex.insert(tenUser.UserIndex, atIndex: 0)
                 UserListCache().updateUserList()
