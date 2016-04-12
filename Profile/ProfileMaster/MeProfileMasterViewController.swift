@@ -100,9 +100,9 @@ class MeProfileMasterViewController: ProfileMasterViewController,
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         picker.dismissViewControllerAnimated(true, completion: nil)
 
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
 
-        let imageRepre = UIImageJPEGRepresentation(image, 0.75)
+        let imageRepre = UIImageJPEGRepresentation(image, 1)
         let params: [String: AnyObject] = ["id": SHARED_USER.UserIndex]
 
         if let imageData = imageRepre {
