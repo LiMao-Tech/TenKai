@@ -132,7 +132,6 @@ class MainViewController: UIViewController,
         self.view.addSubview(plus)
         self.view.addSubview(refreshBtn)
         self.view.addSubview(distanceLabel)
-        self.view.addSubview(loading)
         distanceChange()
     }
     
@@ -164,7 +163,7 @@ class MainViewController: UIViewController,
             break
 
         case .NotDetermined:
-
+            
             LOC_MANAGER.requestWhenInUseAuthorization()
 
         case .Restricted, .Denied:
@@ -187,6 +186,7 @@ class MainViewController: UIViewController,
             self.presentViewController(alertController, animated: true, completion: nil)
         }
         LOC_MANAGER.startUpdatingLocation()
+        
     }
 
     override func viewWillDisappear(animated: Bool) {

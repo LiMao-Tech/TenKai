@@ -99,7 +99,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
     func logout(){
         loading.loadingTitle = "登出中..."
         self.view.addSubview(loading)
-        let url = Url_Login+"?userIndex=\(SHARED_USER.UserIndex)"
+        let url = Url_Api+"TenLogins?userIndex=\(SHARED_USER.UserIndex)"
         let charSet = NSCharacterSet(charactersInString: url)
         let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
         AFJSONManager.SharedInstance.postMethod(urlNew!, parameters: nil, success: { (task, response) in
@@ -114,7 +114,7 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
             
             },failure:  { (task, error) in
                 let opera = task?.response as! NSHTTPURLResponse
-                if(opera.statusCode == 403){
+                if(opera.statusCode == 404){
                     NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
                     NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
                     NSOperationQueue.mainQueue().addOperationWithBlock({
@@ -126,14 +126,6 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
                 }
                 print("log out failed")
                 print(error.localizedDescription)
-        })
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("Logined")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("LoginEmail")
-        NSOperationQueue.mainQueue().addOperationWithBlock({
-            self.loading.removeFromSuperview()
-            let wVC = WelcomeController()
-            UserChatModel.removeAll()
-            self.presentViewController(wVC, animated: true, completion: nil)
         })
 
     }
