@@ -112,10 +112,8 @@ class UserCell: UITableViewCell {
     }
     var message = [SingleChatMessageFrame](){
         didSet{
-            print("usercell message:\(message)")
             let msg = message.last
             if(msg != nil){
-                print("msg is nil")
                 if(msg!.chatMessage.messageType.rawValue == 1){
                     lastMessage.text = "[图片]"
                 }else if(msg!.chatMessage.messageType.rawValue == 0){

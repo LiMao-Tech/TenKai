@@ -19,7 +19,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
         setup()
         refreshControl()
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
         self.usersTV.reloadData()
     }
@@ -37,7 +37,6 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     func refreshControl(){
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(LevelUserController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
-        
         self.usersTV.addSubview(refresh)
     }
     

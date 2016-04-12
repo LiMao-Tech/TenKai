@@ -65,12 +65,10 @@ class TenOtherUsersJSONManager: NSObject {
         
         for entity in userListNearBy {
             let user = TenUser(dict: entity as! [String : AnyObject])
-
             if user.Average == level {
                 levelUsers.append(user)
             }
         }
-        
         return levelUsers
     }
 
