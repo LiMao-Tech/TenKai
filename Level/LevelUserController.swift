@@ -42,6 +42,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
+        userList.removeAll()
         userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
         self.usersTV.reloadData()
         refresh.endRefreshing()
@@ -80,6 +81,16 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
         cell?.user = user
         
         return cell!
+
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let otherPVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
+        let user = userList[indexPath.row]
+        otherPVC.tenUser = user
+        otherPVC.userID = user.UserIndex
+        self.navigationController?.pushViewController(otherPVC, animated: true)
+        self.usersTV.deselectRowAtIndexPath(indexPath, animated: true)
 
     }
 }

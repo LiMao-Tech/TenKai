@@ -67,6 +67,8 @@ class RandomUserController: UIViewController,
         otherPVC.tenUser = user
         otherPVC.userID = user.UserIndex
         self.navigationController?.pushViewController(otherPVC, animated: true)
+        self.userListView.deselectRowAtIndexPath(indexPath, animated: true)
+        
     }
     
     

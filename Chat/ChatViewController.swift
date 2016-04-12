@@ -82,7 +82,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         SHARED_CHATS.addObserver(self, forKeyPath: "activeUserIndex", options: NSKeyValueObservingOptions.New, context: nil)
          SHARED_CHATS.addObserver(self, forKeyPath: "inActiveUserIndex", options: NSKeyValueObservingOptions.New, context: nil)
         SHARED_CHATS.addObserver(self, forKeyPath: "message", options: NSKeyValueObservingOptions.New, context: nil)
-        SHARED_CHATS.addObserver(self, forKeyPath: "tenUsers", options: NSKeyValueObservingOptions.New, context: nil)
         
         if(NSUserDefaults.standardUserDefaults().valueForKey("ChatFocusState") != nil){
             ChatFocusState = true

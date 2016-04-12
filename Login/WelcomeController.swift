@@ -131,6 +131,9 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
     }
     
     func login() {
+        if(DEVICE_TOKEN == nil){
+            return
+        }
         let cancelAction = UIAlertAction(title: "确定", style: .Cancel) { (ac) -> Void in
             self.loginBtn.enabled = true
         }

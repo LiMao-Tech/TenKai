@@ -60,12 +60,13 @@ class TenOtherUsersJSONManager: NSObject {
     }
     
     func selectLevelUsers(level: Int) -> [TenUser] {
+        
         var levelUsers = [TenUser]()
         
         for entity in userListNearBy {
             let user = TenUser(dict: entity as! [String : AnyObject])
 
-            if user.AVG == level {
+            if user.Average == level {
                 levelUsers.append(user)
             }
         }
@@ -74,12 +75,17 @@ class TenOtherUsersJSONManager: NSObject {
     }
 
     func getUserListNearBy(mainVC: MainViewController) {
-
+        
+        print(SHARED_USER.Average)
+        print(SHARED_USER.Lati)
+        print(SHARED_USER.Longi)
         let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)&level=\(SHARED_USER.Average)&mLati=\(SHARED_USER.Lati)&mLongi=\(SHARED_USER.Longi)&range=10000"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
-
+            
             if let values = response.result.value {
                 mainVC.loading.removeFromSuperview()
+                print("user values:")
+                print(values)
                 if let valuesArray = values as? [AnyObject]{
                     self.userListNearBy = valuesArray
                 }
@@ -106,7 +112,7 @@ class TenOtherUsersJSONManager: NSObject {
     func getUserListRandom(randomVC: RandomUserController, refresh: UIRefreshControl) {
         let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)?level=\(SHARED_USER.Average)&random=true"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
-
+            randomVC.users.removeAll()
             if let values = response.result.value {
                 if let valuesArray = values as? [AnyObject]{
 

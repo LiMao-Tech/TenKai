@@ -451,7 +451,7 @@ class MainViewController: UIViewController,
                 },
 
                 completion: {(finished) -> Void in
-                    NSThread.sleepForTimeInterval(0.1)
+//                    NSThread.sleepForTimeInterval(0.1)
             })
             btn.addTarget(self, action: #selector(MainViewController.toTargetUser(_:)), forControlEvents: .TouchUpInside)
             
@@ -461,7 +461,9 @@ class MainViewController: UIViewController,
 
     private func updateLocation() {
         if let loc = LOC_MANAGER.location {
-
+            SHARED_USER.Lati = loc.coordinate.latitude
+            SHARED_USER.Longi = loc.coordinate.longitude
+            UserCacheTool().updateUserInfo()
             // Location Manager
             let params = [
                 "UserIndex": SHARED_USER.UserIndex,
@@ -480,8 +482,8 @@ class MainViewController: UIViewController,
                 "Quote" : SHARED_USER.Quote,
                 "Expire":SHARED_USER.Expire,
                 "AVG":SHARED_USER.AVG,
-                "Lati" : loc.coordinate.latitude,
-                "Longi" : loc.coordinate.longitude
+                "Lati" : SHARED_USER.Lati,
+                "Longi" : SHARED_USER.Longi
             ]
 
             let targetUrl = Url_User + String(SHARED_USER.UserIndex)
