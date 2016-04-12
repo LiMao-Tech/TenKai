@@ -10,52 +10,41 @@ import UIKit
 import SwiftyJSON
 
 class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-    var userList:UITableView!
+    var usersTV: UITableView!
     var level = 0
-    var usersList = [TenUser]()
+    var userList = [TenUser]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         refreshControl()
-                // Do any additionalsetup after loading the view.
     }
     override func viewWillAppear(animated: Bool) {
-        let users = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
-        for userinfo in users{
-            let userDict = userinfo as! [String:AnyObject]
-            let user = TenUser(dict: userDict)
-            usersList.append(user)
-        }
-        self.userList.reloadData()
+        userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        self.usersTV.reloadData()
     }
     
     func setup(){
         self.title = "等级\(level)"
-        userList = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
-        userList.dataSource = self
-        userList.delegate = self
-        userList.separatorStyle = .None
-        userList.backgroundColor = COLOR_BG
-        self.view.addSubview(userList)
+        usersTV = UITableView(frame: CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
+        usersTV.dataSource = self
+        usersTV.delegate = self
+        usersTV.separatorStyle = .None
+        usersTV.backgroundColor = COLOR_BG
+        self.view.addSubview(usersTV)
 
     }
     func refreshControl(){
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(LevelUserController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
         
-        self.userList.addSubview(refresh)
+        self.usersTV.addSubview(refresh)
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
-        let users = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
-        for userinfo in users{
-            let userDict = userinfo as! [String:AnyObject]
-            let user = TenUser(dict: userDict)
-            usersList.append(user)
-        }
-        self.userList.reloadData()
+        userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        self.usersTV.reloadData()
         refresh.endRefreshing()
-        print("refreshed")
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -67,15 +56,15 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usersList.count
+        return userList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = userList.dequeueReusableCellWithIdentifier("RALUserCell") as? RandomAndLevelUserCell
+        var cell = usersTV.dequeueReusableCellWithIdentifier("RALUserCell") as? RandomAndLevelUserCell
         if(cell == nil){
             cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
         }
-        let user = usersList[indexPath.row]
+        let user = userList[indexPath.row]
         if(user.PortraitImage == nil){
             let imageIndex = user.UserIndex
             let targetUrl = Url_GetHeadImage + String(imageIndex)
@@ -83,7 +72,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
                 .responseImage { response in
                     if let image = response.result.value {
                         user.Portrait = UIImagePNGRepresentation(image)
-                        self.userList.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                        self.usersTV.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                     }
             }
 

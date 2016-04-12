@@ -59,12 +59,13 @@ class TenOtherUsersJSONManager: NSObject {
         return gridUsers
     }
     
-    func selectLevelUsers(level:Int) -> [AnyObject]{
-        var levelUsers = [AnyObject]()
+    func selectLevelUsers(level: Int) -> [TenUser] {
+        var levelUsers = [TenUser]()
         
-        for user in userListNearBy{
-            let userJSON = user as! [String: AnyObject]
-            if(userJSON["AVG"] as! Int == level){
+        for entity in userListNearBy {
+            let user = TenUser(dict: entity as! [String : AnyObject])
+
+            if user.AVG == level {
                 levelUsers.append(user)
             }
         }
@@ -108,6 +109,7 @@ class TenOtherUsersJSONManager: NSObject {
 
             if let values = response.result.value {
                 if let valuesArray = values as? [AnyObject]{
+
                     self.userListRandom = valuesArray
                     for entity in self.userListRandom {
 
