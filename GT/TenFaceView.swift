@@ -26,7 +26,7 @@ class TenFaceView: UIView {
         faceView.showsHorizontalScrollIndicator = false
         faceView.showsVerticalScrollIndicator = false
         faceView.bounces = false
-        super.init(frame: CGRectMake(0, 0, screen.width, 224))
+        super.init(frame: CGRectMake(0, 0, screen.width, 240))
         
         let column: Int = 7
         let row: Int = 4
@@ -54,7 +54,7 @@ class TenFaceView: UIView {
         
         //pagecontrol
         self.backgroundColor = UIColor(red: 236.0/255.0, green: 236.0/255.0, blue: 236.0/255.0, alpha: 1.0)
-        let backBtn = UIButton(frame: CGRectMake(screen.width-48,4*(h+margin)+10,38,28))
+        let backBtn = UIButton(frame: CGRectMake(screen.width-48,4*(h+margin),38,28))
         backBtn.setImage(UIImage(named: "del_emoji_select"), forState: .Normal)
         backBtn.addTarget(self, action: #selector(TenFaceView.backBtnClicked), forControlEvents: .TouchUpInside)
         self.addSubview(backBtn)
