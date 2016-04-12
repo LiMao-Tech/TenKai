@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import CoreLocation
 class RandomAndLevelUserCell: UITableViewCell {
     
     var headImage : UIButton!
@@ -30,12 +30,14 @@ class RandomAndLevelUserCell: UITableViewCell {
             let avg = (user.OuterScore + user.InnerScore)/2
             avgLabel.text = "平均 \(avg)"
             energyLabel.text = "能量 \(user.Energy)"
-            distanceLabel.text = "\(user.distance) m"
+            distanceLabel.text = user.distance
             if(user.PortraitImage == nil){
                 headImage.setImage(UIImage(named: "user_pic"), forState: UIControlState.Normal)
             }else{
                 headImage.setImage(Tools.toCirclurImage(user.PortraitImage!), forState: UIControlState.Normal)
             }
+                        
+
         }
     }
     

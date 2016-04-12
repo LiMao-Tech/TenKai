@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class TenUser: NSObject {
     
@@ -37,8 +38,7 @@ class TenUser: NSObject {
     var isRatered = false
     var isLocked = false
     
-    var distance = 0
-    
+    var distance : String = ""
     var Average :Int {
         get{
             if(Int(Tools.getSinceTime(NSDate())) > self.Expire){
@@ -75,14 +75,31 @@ class TenUser: NSObject {
     // this needs to be explicit
     func ValueWithDict(dict:[String : AnyObject]) {
         self.setValuesForKeysWithDictionary(dict)
-        if(Int(Tools.getSinceTime(NSDate())) > self.Expire){
-            AVG = self.Average
-        }
+        self.distance = getDistance()
+        
     }
     
     func updateCoordinates(lati : Double, longi : Double) -> Bool {
         self.Lati = lati
         self.Longi = longi
         return true
+    }
+    
+    func getDistance() -> String{
+        let loc = CLLocation(latitude: Lati, longitude: Longi)
+        if loc.altitude == 0 && loc.coordinate.longitude == 0 {
+            return "??"
+        }
+        else if let distDouble = LOC_MANAGER.location?.distanceFromLocation(loc) {
+            if distDouble > 1000 {
+                let dist = String(Int(distDouble/1000))
+                return "\(dist) kM"
+            }
+            else {
+                let dist = String(Int(distDouble))
+                return "\(dist) m"
+            }
+        }
+        return "??"
     }
 }

@@ -21,6 +21,8 @@ class RandomUserController: UIViewController,
     // Declarations
     var userListView: UITableView!
     var users = [TenUser]()
+    
+    let maxDisplayUsersAmount = 50
 
     
     // View Controls
@@ -77,7 +79,8 @@ class RandomUserController: UIViewController,
         return SCREEN_HEIGHT/8
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+        let count = self.users.count > maxDisplayUsersAmount ? maxDisplayUsersAmount : self.users.count
+        return count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
