@@ -82,8 +82,8 @@ class RandomAndLevelUserCell: UITableViewCell {
         self.energyLabel.font = afont
         
         //distanceLabel
-        let distancew:CGFloat = 60
-        distanceLabel = UILabel(frame: CGRectMake(SCREEN_WIDTH - 65, 10, distancew-10, innerh))
+        let distancew:CGFloat = 100
+        distanceLabel = UILabel(frame: CGRectMake(SCREEN_WIDTH - 105, 10, distancew-10, innerh))
         distanceLabel.textAlignment = .Right
         distanceLabel.font = UIFont.systemFontOfSize(13)
         distanceLabel.textColor = UIColor.whiteColor()
