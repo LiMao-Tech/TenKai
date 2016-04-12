@@ -29,7 +29,7 @@ class UserCell: UITableViewCell {
     var tenUser = TenUser(){
         didSet{
             nameLabel.text = tenUser.UserName
-            var temp = [SingleChatMessageFrame()]
+            var temp = [SingleChatMessageFrame]()
             if(ChatLockState){
                 for msg in SHARED_CHATS.message[tenUser.UserIndex]!{
                     if(!msg.chatMessage.IsLocked){
