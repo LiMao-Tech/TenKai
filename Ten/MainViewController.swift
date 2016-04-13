@@ -138,7 +138,6 @@ class MainViewController: UIViewController,
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
-        updateLocation()
         print("unreadNum:\(unReadNum)")
         if(SHARED_USER.PortraitImage == nil){
             portraitBtn.setImage(UIImage(named: "user_pic_radar")!, forState: .Normal)
@@ -160,15 +159,15 @@ class MainViewController: UIViewController,
 
         switch CLLocationManager.authorizationStatus() {
         case .AuthorizedWhenInUse, .AuthorizedAlways:
+            updateLocation(true)
 
-            break
 
         case .NotDetermined:
-            
+            updateLocation(false)
             LOC_MANAGER.requestWhenInUseAuthorization()
 
         case .Restricted, .Denied:
-
+            updateLocation(false)
             let alertController = UIAlertController(
                 title: "Ten无法使用定位功能",
                 message: "请打开定位功能以发现附近的朋友。",
@@ -187,7 +186,6 @@ class MainViewController: UIViewController,
             self.presentViewController(alertController, animated: true, completion: nil)
         }
         LOC_MANAGER.startUpdatingLocation()
-        
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -253,9 +251,7 @@ class MainViewController: UIViewController,
 
         default:
             TenMainGridManager.SharedInstance.clearNodes()
-
         }
-
     }
     
     
@@ -460,36 +456,74 @@ class MainViewController: UIViewController,
     }
 
 
-    private func updateLocation() {
-        if let loc = LOC_MANAGER.location {
-            SHARED_USER.Lati = loc.coordinate.latitude
-            SHARED_USER.Longi = loc.coordinate.longitude
-            UserCacheTool().updateUserInfo()
-            // Location Manager
-            let params = [
-                "UserIndex": SHARED_USER.UserIndex,
-                "UserName" : SHARED_USER.UserName,
-                "PhoneType" : SHARED_USER.PhoneType,
-                "Gender" : SHARED_USER.Gender,
-                "Marrige" : SHARED_USER.Marriage,
-                "Birthday" : SHARED_USER.Birthday,
-                "JoinedDate" : SHARED_USER.JoinedDate,
-                "PCoin" : SHARED_USER.PCoin,
-                "ProfileUrl":SHARED_USER.ProfileUrl,
-                "OuterScore" : SHARED_USER.OuterScore,
-                "InnerScore" : SHARED_USER.InnerScore,
-                "Energy" : SHARED_USER.Energy,
-                "Hobby" : SHARED_USER.Hobby,
-                "Quote" : SHARED_USER.Quote,
-                "Expire":SHARED_USER.Expire,
-                "AVG":SHARED_USER.AVG,
-                "Lati" : SHARED_USER.Lati,
-                "Longi" : SHARED_USER.Longi
-            ]
+    private func updateLocation(valid: Bool)
+    {
+        if valid {
+            if let loc = LOC_MANAGER.location {
+                SHARED_USER.Lati = loc.coordinate.latitude
+                SHARED_USER.Longi = loc.coordinate.longitude
+                UserCacheTool().updateUserInfo()
+                // Location Manager
+                let params = [
+                    "UserIndex": SHARED_USER.UserIndex,
+                    "UserName" : SHARED_USER.UserName,
+                    "PhoneType" : SHARED_USER.PhoneType,
+                    "Gender" : SHARED_USER.Gender,
+                    "Marrige" : SHARED_USER.Marriage,
+                    "Birthday" : SHARED_USER.Birthday,
+                    "JoinedDate" : SHARED_USER.JoinedDate,
+                    "PCoin" : SHARED_USER.PCoin,
+                    "ProfileUrl":SHARED_USER.ProfileUrl,
+                    "OuterScore" : SHARED_USER.OuterScore,
+                    "InnerScore" : SHARED_USER.InnerScore,
+                    "Energy" : SHARED_USER.Energy,
+                    "Hobby" : SHARED_USER.Hobby,
+                    "Quote" : SHARED_USER.Quote,
+                    "Expire":SHARED_USER.Expire,
+                    "AVG":SHARED_USER.AVG,
+                    "Lati" : SHARED_USER.Lati,
+                    "Longi" : SHARED_USER.Longi
+                ]
 
-            let targetUrl = Url_User + String(SHARED_USER.UserIndex)
+                let targetUrl = Url_User + String(SHARED_USER.UserIndex)
 
-            ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON)
+                ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON)
+            }
+
         }
+        else {
+            if let loc = LOC_MANAGER.location {
+                SHARED_USER.Lati = loc.coordinate.latitude
+                SHARED_USER.Longi = loc.coordinate.longitude
+                UserCacheTool().updateUserInfo()
+                // Location Manager
+                let params = [
+                    "UserIndex": SHARED_USER.UserIndex,
+                    "UserName" : SHARED_USER.UserName,
+                    "PhoneType" : SHARED_USER.PhoneType,
+                    "Gender" : SHARED_USER.Gender,
+                    "Marrige" : SHARED_USER.Marriage,
+                    "Birthday" : SHARED_USER.Birthday,
+                    "JoinedDate" : SHARED_USER.JoinedDate,
+                    "PCoin" : SHARED_USER.PCoin,
+                    "ProfileUrl":SHARED_USER.ProfileUrl,
+                    "OuterScore" : SHARED_USER.OuterScore,
+                    "InnerScore" : SHARED_USER.InnerScore,
+                    "Energy" : SHARED_USER.Energy,
+                    "Hobby" : SHARED_USER.Hobby,
+                    "Quote" : SHARED_USER.Quote,
+                    "Expire":SHARED_USER.Expire,
+                    "AVG":SHARED_USER.AVG,
+                    "Lati" : -999,
+                    "Longi" : -999
+                ]
+
+                let targetUrl = Url_User + String(SHARED_USER.UserIndex)
+
+                ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON)
+            }
+
+        }
+
     }
 }

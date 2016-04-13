@@ -39,7 +39,7 @@ class ProfileViewController: UIViewController,
     
     var userID: Int!
     
-    var tenUser:TenUser!
+    var tenUser: TenUser!
 
     var image1JSON: JSON?
     var image2JSON: JSON?
