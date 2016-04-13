@@ -39,6 +39,7 @@ class RandomUserController: UIViewController,
 
         refresh.addTarget(self, action: #selector(RandomUserController.refreshList(_:)), forControlEvents: .ValueChanged)
         
+
         self.view.addSubview(userListView)
         self.userListView.addSubview(refresh)
     }
@@ -46,6 +47,7 @@ class RandomUserController: UIViewController,
     override func viewWillAppear(animated: Bool) {
         refresh.beginRefreshing()
         TenOtherUsersJSONManager.SharedInstance.getUserListRandom(self, refresh: refresh)
+        
     }
     
 
@@ -91,17 +93,7 @@ class RandomUserController: UIViewController,
         }
         
         let user = users[indexPath.row]
-        if(user.PortraitImage == nil){
-            let imageIndex = user.UserIndex.description
-            let targetUrl = Url_GetHeadImage + imageIndex
-            ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
-                if let image = response.result.value {
-                    user.Portrait = UIImagePNGRepresentation(image)
-                    self.userListView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-                }
-            }
-
-        }
+        
         cell!.user = user
         
         return cell!

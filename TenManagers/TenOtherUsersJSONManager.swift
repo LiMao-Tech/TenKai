@@ -59,7 +59,7 @@ class TenOtherUsersJSONManager: NSObject {
         return gridUsers
     }
     
-    func selectLevelUsers(level: Int) -> [TenUser] {
+    func selectLevelUsers(levelVC:LevelUserController,level: Int) -> [TenUser] {
         
         var levelUsers = [TenUser]()
         
@@ -67,6 +67,16 @@ class TenOtherUsersJSONManager: NSObject {
             let user = TenUser(dict: entity as! [String : AnyObject])
             if user.Average == level {
                 levelUsers.append(user)
+                let imageIndex = user.UserIndex
+                let targetUrl = Url_GetHeadImage + String(imageIndex)
+                ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
+                    if let image = response.result.value {
+                        user.Portrait = UIImageJPEGRepresentation(image, 0.6)
+                        NSOperationQueue.mainQueue().addOperationWithBlock({ 
+                            levelVC.usersTV.reloadData()
+                        })
+                    }
+                }
             }
         }
         return levelUsers
@@ -74,16 +84,11 @@ class TenOtherUsersJSONManager: NSObject {
 
     func getUserListNearBy(mainVC: MainViewController) {
         
-        print(SHARED_USER.Average)
-        print(SHARED_USER.Lati)
-        print(SHARED_USER.Longi)
         let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)&level=\(SHARED_USER.Average)&mLati=\(SHARED_USER.Lati)&mLongi=\(SHARED_USER.Longi)&range=10000"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
             
             if let values = response.result.value {
                 mainVC.loading.removeFromSuperview()
-                print("user values:")
-                print(values)
                 if let valuesArray = values as? [AnyObject]{
                     self.userListNearBy = valuesArray
                 }
@@ -108,7 +113,7 @@ class TenOtherUsersJSONManager: NSObject {
     }
 
     func getUserListRandom(randomVC: RandomUserController, refresh: UIRefreshControl) {
-        let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)?level=\(SHARED_USER.Average)&random=true"
+        let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)&level=\(SHARED_USER.Average)&random=true"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
             randomVC.users.removeAll()
             if let values = response.result.value {
@@ -116,12 +121,23 @@ class TenOtherUsersJSONManager: NSObject {
 
                     self.userListRandom = valuesArray
                     for entity in self.userListRandom {
-
                         let user = TenUser(dict: entity as! [String : AnyObject])
                         randomVC.users.append(user)
                     }
                     randomVC.userListView.reloadData()
                     refresh.endRefreshing()
+                    for user in randomVC.users{
+                        let imageIndex = user.UserIndex.description
+                        let targetUrl = Url_GetHeadImage + imageIndex
+                        ALAMO_MANAGER.request(.GET, targetUrl).responseImage { response in
+                            if let image = response.result.value {
+                                user.Portrait = UIImageJPEGRepresentation(image, 0.6)
+                                NSOperationQueue.mainQueue().addOperationWithBlock({
+                                    randomVC.userListView.reloadData()
+                                })
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -36,7 +36,7 @@ class AppDelegate: UIResponder,
             UserCacheTool().getUserInfo(userIndex!)
             //datainitialise
             DataInitializerTool.initialiseInfo()
-            
+            print(SCREEN_HEIGHT)
             self.window?.rootViewController = nVC
         }else{
             let wVC = WelcomeController()

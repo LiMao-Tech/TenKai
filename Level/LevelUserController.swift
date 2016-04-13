@@ -13,15 +13,23 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     var usersTV: UITableView!
     var level = 0
     var userList = [TenUser]()
+    let refresh = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         refreshControl()
+        refresh.tintColor = UIColor.whiteColor()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        refresh.beginRefreshing()
+    }
+    
     override func viewDidAppear(animated: Bool) {
-        userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(self, level: level)
         self.usersTV.reloadData()
+        refresh.endRefreshing()
     }
     
     func setup(){
@@ -35,14 +43,13 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
 
     }
     func refreshControl(){
-        let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(LevelUserController.refreshStateChange(_:)), forControlEvents: .ValueChanged)
         self.usersTV.addSubview(refresh)
     }
     
     func refreshStateChange(refresh:UIRefreshControl){
         userList.removeAll()
-        userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(level)
+        userList = TenOtherUsersJSONManager.SharedInstance.selectLevelUsers(self, level: level)
         self.usersTV.reloadData()
         refresh.endRefreshing()
     }
@@ -65,18 +72,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
             cell = RandomAndLevelUserCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "RALUserCell")
         }
         let user = userList[indexPath.row]
-        if(user.PortraitImage == nil){
-            let imageIndex = user.UserIndex
-            let targetUrl = Url_GetHeadImage + String(imageIndex)
-            ALAMO_MANAGER.request(.GET, targetUrl)
-                .responseImage { response in
-                    if let image = response.result.value {
-                        user.Portrait = UIImagePNGRepresentation(image)
-                        self.usersTV.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-                    }
-            }
-
-        }
+    
         cell?.user = user
         
         return cell!

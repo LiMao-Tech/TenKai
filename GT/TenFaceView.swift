@@ -17,16 +17,17 @@ class TenFaceView: UIView {
     var faceMap = NSDictionary()
     var faceView : UIScrollView
     var delegate : TenFaceViewDelegate?
+    let height = SCREEN_HEIGHT*0.36
     
     let screen = UIScreen.mainScreen().bounds.size
     init() {
         faceMap = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("_expression_en", ofType: "plist")!)!
-        faceView = UIScrollView(frame: CGRectMake(0, 0, screen.width, 200))
+        faceView = UIScrollView(frame: CGRectMake(0, 0, screen.width, height*0.84))
         faceView.pagingEnabled = true
         faceView.showsHorizontalScrollIndicator = false
         faceView.showsVerticalScrollIndicator = false
         faceView.bounces = false
-        super.init(frame: CGRectMake(0, 0, screen.width, 240))
+        super.init(frame: CGRectMake(0, 0, screen.width, height))
         
         let column: Int = 7
         let row: Int = 4
