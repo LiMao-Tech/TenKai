@@ -240,6 +240,7 @@ class MyProfilePicsViewController: ProfilePicsViewController,
             magnifyCellAtIndexPath(indexPath)
         }
         deleteBarBtn.image = UIImage(named: "btn_tabBarIcon_delete")
+        optionBarBtn.image = UIImage(named: "btn_tabBarIcon_option")
         recoverOptionState()
     }
     
