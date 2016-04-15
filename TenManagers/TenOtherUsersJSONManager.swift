@@ -84,7 +84,7 @@ class TenOtherUsersJSONManager: NSObject {
 
     func getUserListNearBy(mainVC: MainViewController) {
         
-        let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)&level=\(SHARED_USER.Average)&mLati=\(SHARED_USER.Lati)&mLongi=\(SHARED_USER.Longi)&range=10000"
+        let targetUrl = Url_User + "?userIndex=\(SHARED_USER.UserIndex)&level=\(SHARED_USER.Average)&mLati=\(SHARED_USER.Lati)&mLongi=\(SHARED_USER.Longi)&range=\(mainVC.distances[mainVC.index])"
         ALAMO_MANAGER.request(.GET, targetUrl, parameters: nil) .responseJSON { response in
             
             if let values = response.result.value {

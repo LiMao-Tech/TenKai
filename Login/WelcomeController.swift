@@ -14,11 +14,44 @@ import AFNetworking
 class WelcomeController: UIViewController,UITextFieldDelegate {
     
     var cancelAction: UIAlertAction?
+    var okAction : UIAlertAction?
     var loading:TenLoadingView?
     //忘记密码
     @IBAction func forgetPassword(sender: AnyObject) {
+        okAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+        if(emailTF.text!.isEmpty){
+            let emptyAlertController = UIAlertController(title: "请输入邮箱", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            self.presentViewController(emptyAlertController, animated: true, completion: nil)
+            emptyAlertController.addAction(self.okAction!)
+        }else if(!isValidEmail(emailTF.text!)){
+            //TODO:发送回邮箱的请求
+            let emptyAlertController = UIAlertController(title: "请输入正确的邮箱", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            self.presentViewController(emptyAlertController, animated: true, completion: nil)
+            emptyAlertController.addAction(self.okAction!)
+        }else{
+            let url = Url_BundInfo + "?email=\(emailTF.text!)"
+            let charSet = NSCharacterSet(charactersInString: url)
+            let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+            AFJSONManager.SharedInstance.getMethod(urlNew!, success: { (task, response) in
+                    let emptyAlertController = UIAlertController(title: "已将找回密码连接发送至邮箱，请注意查收", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                    self.presentViewController(emptyAlertController, animated: true, completion: nil)
+                    emptyAlertController.addAction(self.okAction!)
+                }, failure: { (task, error) in
+                    let opera = task?.response as! NSHTTPURLResponse
+                    switch opera.statusCode {
+                    case 403:
+                        self.unmatchedLB.textColor = UIColor.redColor()
+                        self.unmatchedLB.text = "您的帐号没有绑定相关邮箱"
+                    case 404:
+                        self.unmatchedLB.textColor = UIColor.redColor()
+                        self.unmatchedLB.text = "用户不存在"
+                    default:
+                        break
+                    }
+            })
+            
+        }
         
-        print("forgotPassword")
     }
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
@@ -169,9 +202,9 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             self.getRaterUserIndexs()
         },
         failure: { (task, error) -> Void in
-            let opera = task?.response as! NSHTTPURLResponse
             self.loginBtn.enabled = true
             self.loading?.removeFromSuperview()
+            let opera = task?.response as! NSHTTPURLResponse
             switch opera.statusCode {
                 case 401:
                     self.unmatchedLB.textColor = UIColor.redColor()

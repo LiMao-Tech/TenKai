@@ -110,6 +110,7 @@ class MainViewController: UIViewController,
         distance.minimumValue = 0
         distance.maximumValue = 3
         distance.addTarget(self, action: #selector(MainViewController.distanceChange), forControlEvents: UIControlEvents.ValueChanged)
+        distance.addTarget(self, action: #selector(MainViewController.distanceDidChanged), forControlEvents: .TouchUpInside)
         
         let minus = UIButton(frame: CGRectMake(10,distanceY,24,24))
         minus.setImage(UIImage(named: "btn_radar_minus"), forState: .Normal)
@@ -240,6 +241,11 @@ class MainViewController: UIViewController,
         index = Int(distance.value+0.5)
         distance.setValue(Float(index), animated: true)
         distanceLabel.text = "\(distances[index]) m"
+    }
+    
+    func distanceDidChanged(){
+        print("didChange")
+        refreshBtnClicked()
     }
     
     func refreshBtnClicked() {
