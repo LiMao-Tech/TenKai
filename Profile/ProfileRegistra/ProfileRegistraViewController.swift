@@ -569,7 +569,6 @@ class RegistProfileViewController: UIViewController,
         let url = Url_BundInfo + "?loginIndex=\((tenLogin?.LoginIndex)!)&email=\(email)"
         let charSet = NSCharacterSet(charactersInString: url)
         let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
-        let params = ["loginIndex":(tenLogin?.LoginIndex)!,"email":email] as [String:AnyObject]
         AFJSONManager.SharedInstance.postMethod(urlNew!, parameters: nil, success: { (task, response) in
             print("bindInfo:\(response)")
             },failure: { (task, error) in
