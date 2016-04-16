@@ -99,6 +99,7 @@ class WelcomeController: UIViewController,UITextFieldDelegate {
             passwordAlertController.addAction(self.cancelAction!)
             passwordAlertController.addAction(nextAction)
             passwordAlertController.addTextFieldWithConfigurationHandler { textField -> Void in
+                textField.secureTextEntry = true
                 pwdTF = textField
             }
             self.presentViewController(passwordAlertController, animated: true, completion: nil)

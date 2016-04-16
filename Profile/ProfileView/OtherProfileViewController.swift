@@ -64,23 +64,6 @@ class OtherProfileViewController: ProfileViewController {
             }
         }
 
-        // set distance
-//        if loc.altitude == 0 && loc.coordinate.longitude == 0 {
-//            self.pcoindistanceLabel.text = "??"
-//        }
-//        else if let distDouble = LOC_MANAGER.location?.distanceFromLocation(loc) {
-//            if distDouble > 1000 {
-//                let dist = String(Int(distDouble/1000))
-//                self.pcoindistanceLabel.text = "\(dist) kM"
-//            }
-//            else {
-//                let dist = String(Int(distDouble))
-//                self.pcoindistanceLabel.text = "\(dist) m"
-//            }
-//        }
-//        else {
-//            self.pcoindistanceLabel.text = "??"
-//        }
         self.pcoindistanceLabel.text = tenUser.distance
 
 

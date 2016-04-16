@@ -31,7 +31,7 @@ let Url_Unlocker = Url_Api + "ImageUnlocker/"
 
 let Url_ImageMaster = Url_Home + "TenImage/"
 
-let Url_ImagesJSON = Url_ImageMaster + "GetImagesByUser?id="
+let Url_ImagesJSON = Url_ImageMaster + "GetAlbumImages?id="
 let Url_Image = Url_ImageMaster + "?id="
 let Url_DeletePic = Url_ImageMaster + "DeletePhoto"
 
