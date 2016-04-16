@@ -566,8 +566,19 @@ class RegistProfileViewController: UIViewController,
     
     func PinCodeDidSet(pVC: PinCodeController) {
         pVC.dismissViewControllerAnimated(true, completion: nil)
+        let url = Url_BundInfo + "?loginIndex=\((tenLogin?.LoginIndex)!)&email=\(email)"
+        let charSet = NSCharacterSet(charactersInString: url)
+        let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+        let params = ["loginIndex":(tenLogin?.LoginIndex)!,"email":email] as [String:AnyObject]
+        AFJSONManager.SharedInstance.postMethod(urlNew!, parameters: nil, success: { (task, response) in
+            print("bindInfo:\(response)")
+            },failure: { (task, error) in
+                print("bindfailed")
+                print(error.localizedDescription)
+        })
         NSUserDefaults.standardUserDefaults().setValue(SHARED_USER.UserIndex, forKey: "Logined")
         NSUserDefaults.standardUserDefaults().setValue(email, forKey: "LoginEmail")
+
         let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         let nVC = storyBoard.instantiateViewControllerWithIdentifier("NavController") as! UINavigationController
         self.presentViewController(nVC, animated: true, completion: nil)
