@@ -498,37 +498,36 @@ class MainViewController: UIViewController,
 
         }
         else {
-            if let loc = LOC_MANAGER.location {
-                SHARED_USER.Lati = loc.coordinate.latitude
-                SHARED_USER.Longi = loc.coordinate.longitude
-                UserCacheTool().updateUserInfo()
-                // Location Manager
-                let params = [
-                    "UserIndex": SHARED_USER.UserIndex,
-                    "UserName" : SHARED_USER.UserName,
-                    "PhoneType" : SHARED_USER.PhoneType,
-                    "Gender" : SHARED_USER.Gender,
-                    "Marrige" : SHARED_USER.Marriage,
-                    "Birthday" : SHARED_USER.Birthday,
-                    "JoinedDate" : SHARED_USER.JoinedDate,
-                    "PCoin" : SHARED_USER.PCoin,
-                    "ProfileUrl":SHARED_USER.ProfileUrl,
-                    "OuterScore" : SHARED_USER.OuterScore,
-                    "InnerScore" : SHARED_USER.InnerScore,
-                    "Energy" : SHARED_USER.Energy,
-                    "Hobby" : SHARED_USER.Hobby,
-                    "Quote" : SHARED_USER.Quote,
-                    "Expire":SHARED_USER.Expire,
-                    "AVG":SHARED_USER.AVG,
-                    "Lati" : -999,
-                    "Longi" : -999
-                ]
 
-                let targetUrl = Url_User + String(SHARED_USER.UserIndex)
+            SHARED_USER.Lati = -999
+            SHARED_USER.Longi = -999
 
-                ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON)
-            }
+            UserCacheTool().updateUserInfo()
 
+            let params = [
+                "UserIndex": SHARED_USER.UserIndex,
+                "UserName" : SHARED_USER.UserName,
+                "PhoneType" : SHARED_USER.PhoneType,
+                "Gender" : SHARED_USER.Gender,
+                "Marrige" : SHARED_USER.Marriage,
+                "Birthday" : SHARED_USER.Birthday,
+                "JoinedDate" : SHARED_USER.JoinedDate,
+                "PCoin" : SHARED_USER.PCoin,
+                "ProfileUrl":SHARED_USER.ProfileUrl,
+                "OuterScore" : SHARED_USER.OuterScore,
+                "InnerScore" : SHARED_USER.InnerScore,
+                "Energy" : SHARED_USER.Energy,
+                "Hobby" : SHARED_USER.Hobby,
+                "Quote" : SHARED_USER.Quote,
+                "Expire":SHARED_USER.Expire,
+                "AVG": SHARED_USER.AVG,
+                "Lati" : -999,
+                "Longi" : -999
+            ]
+
+            let targetUrl = Url_User + String(SHARED_USER.UserIndex)
+
+            ALAMO_MANAGER.request(.PUT, targetUrl, parameters: params as? [String : AnyObject], encoding: .JSON)
         }
 
     }

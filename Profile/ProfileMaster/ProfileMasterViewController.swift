@@ -15,8 +15,6 @@ class ProfileMasterViewController: UIViewController,
 
     @IBOutlet weak var profileSV: UIScrollView!
 
-    
-
     var userID: Int!
     var imagesJSON: [AnyObject]?
 
