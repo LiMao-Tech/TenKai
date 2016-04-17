@@ -484,10 +484,28 @@ class SingleChatController : UIViewController,
     
     func showProfile(){
         let pVC = OtherProfileMasterViewController(nibName: "ProfileMasterViewController", bundle: nil)
-        pVC.tenUser = tenUser
-        pVC.userID = tenUser.UserIndex
-        pVC.pushVCType = 1
-        self.navigationController?.pushViewController(pVC, animated: true)
+
+        let url = Url_User+"\(tenUser.UserIndex)"
+        let charSet = NSCharacterSet(charactersInString: url)
+        let urlNew = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
+        AFJSONManager.SharedInstance.getMethod(urlNew!, success: { (task, response) in
+            print("get user response")
+            print(response)
+            let userDict = response as! [String:AnyObject]
+            self.tenUser.ValueWithDict(userDict)
+            pVC.tenUser = self.tenUser
+            pVC.userID = self.tenUser.UserIndex
+            pVC.pushVCType = 1
+            self.navigationController?.pushViewController(pVC, animated: true)
+            },failure:  { (task, error) in
+                print("get user response failed")
+                print(error.localizedDescription)
+                pVC.tenUser = self.tenUser
+                pVC.userID = self.tenUser.UserIndex
+                pVC.pushVCType = 1
+                self.navigationController?.pushViewController(pVC, animated: true)
+        })
+        
     }
     
     func deleteConversation(){

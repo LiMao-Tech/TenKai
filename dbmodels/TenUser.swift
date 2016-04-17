@@ -87,7 +87,7 @@ class TenUser: NSObject {
     
     func getDistance() -> String{
         let loc = CLLocation(latitude: Lati, longitude: Longi)
-        if loc.altitude == 0 && loc.coordinate.longitude == 0 {
+        if (loc.altitude == 0 && loc.coordinate.longitude == 0) || (Lati == -999 && Longi == -999)  {
             return "??"
         }
         else if let distDouble = LOC_MANAGER.location?.distanceFromLocation(loc) {
