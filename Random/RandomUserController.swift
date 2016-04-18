@@ -45,6 +45,7 @@ class RandomUserController: UIViewController,
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = false
         refresh.beginRefreshing()
         TenOtherUsersJSONManager.SharedInstance.getUserListRandom(self, refresh: refresh)
         

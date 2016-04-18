@@ -38,6 +38,10 @@ class SettingsViewController: UIViewController,UITableViewDataSource,UITableView
         self.view.addSubview(logoutBtn)
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = false
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -23,6 +23,7 @@ class LevelUserController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = false
         refresh.beginRefreshing()
     }
     

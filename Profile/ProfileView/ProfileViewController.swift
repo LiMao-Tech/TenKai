@@ -101,7 +101,7 @@ class ProfileViewController: UIViewController,
             if let image = SHARED_IMAGE_CACHE.imageWithIdentifier(json["FileName"].stringValue) {
                 self.profileIV1?.image = image
                 print("getfile")
-                if(self.userID != nil && self.userID != SHARED_USER.UserIndex){
+                if(json["UserIndex"].intValue != SHARED_USER.UserIndex){
                     self.tenUser.Portrait = UIImagePNGRepresentation(image)
                     UsersCacheTool().upDateUsersPortrait(self.tenUser.UserIndex, portrait: image)
                 }
@@ -113,7 +113,7 @@ class ProfileViewController: UIViewController,
                         print("getnet")
                         self.profileIV1?.image = image
                         SHARED_IMAGE_CACHE.addImage(image, withIdentifier: json["FileName"].stringValue)
-                        if(self.userID != nil && self.userID != SHARED_USER.UserIndex){
+                        if(json["UserIndex"].intValue != SHARED_USER.UserIndex){
                             self.tenUser.Portrait = UIImagePNGRepresentation(image)
                             UsersCacheTool().upDateUsersPortrait(self.tenUser.UserIndex, portrait: image)
                         }

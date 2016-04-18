@@ -31,6 +31,10 @@ class NotificationViewController: UIViewController,UITableViewDataSource,UITable
         UserChatModel.allChats().addObserver(self, forKeyPath: "notifications", options: .New, context: nil)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = false
+    }
+    
     func seperateNotification(){
         system.removeAll()
         notification.removeAll()

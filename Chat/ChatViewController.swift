@@ -94,6 +94,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = false
         if(!ChatFocusState){
             for userIndex in SHARED_CHATS.inActiveUserIndex{
                 let count = SHARED_CHATS.message[userIndex]?.count
