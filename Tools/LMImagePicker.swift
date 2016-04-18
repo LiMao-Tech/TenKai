@@ -18,12 +18,12 @@ class LMImagePicker: NSObject {
         let alert:UIAlertController = UIAlertController(title: "选择图片来源", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let cameraAction = UIAlertAction(title: "相机", style: UIAlertActionStyle.Default)
-            {
+        {
                 UIAlertAction in
                 self.openCamera(viewController)
         }
         let gallaryAction = UIAlertAction(title: "相册", style: UIAlertActionStyle.Default)
-            {
+        {
                 UIAlertAction in
                 self.openGallary(viewController)
         }

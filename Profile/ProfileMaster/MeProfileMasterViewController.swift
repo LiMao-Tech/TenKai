@@ -20,6 +20,7 @@ class MeProfileMasterViewController: ProfileMasterViewController,
     let uploadController = UIAlertController(title: "上传中", message: "请稍后。", preferredStyle: .Alert)
 
 
+    var fromAddImage: Bool = false
     
 
     override func viewDidLoad() {
@@ -57,6 +58,13 @@ class MeProfileMasterViewController: ProfileMasterViewController,
         self.navigationController?.navigationBar.hidden = false
         self.navigationController?.navigationBar.translucent = false
 
+        if fromAddImage {
+            self.profileSV.contentOffset = CGPointMake(0, pPCVC.view.frame.origin.y)
+            fromAddImage = false
+        }
+        else {
+            self.profileSV.contentOffset = CGPointMake(0, pVC.view.frame.origin.y)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,6 +91,7 @@ class MeProfileMasterViewController: ProfileMasterViewController,
     }
 
     func addImage() {
+        fromAddImage = true
         SHARED_PICKER.toImagePicker(self)
     }
 
