@@ -80,7 +80,7 @@ class SingleChatController : UIViewController,
     
     var otherUnreadNum = 0
     
-    private var endIndex = 0
+//    private var endIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,10 +183,10 @@ class SingleChatController : UIViewController,
     }
     
     func getMessageByNet(refresh:UIRefreshControl,index:Int){
-        let url = Url_Api + "TenMsgs?sender=\(SHARED_USER.UserIndex)&receiver=\(tenUser.UserIndex)&msgIndx=\(index)&amount=20"
+        let url = Url_Api + "TenMsgs?sender=\(SHARED_USER.UserIndex)&receiver=\(tenUser.UserIndex)&msgIndx=\(index)&amount=18"
         let  charSet = NSCharacterSet(charactersInString: url)
         let newUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(charSet)
-        var hasPic = false
+        var hasPic = 0
         AFJSONManager.SharedInstance.getMethod(newUrl!, success: { (task, response) -> Void in
             print(response)
             var msgTemp = [SingleChatMessageFrame]()
@@ -195,20 +195,22 @@ class SingleChatController : UIViewController,
                 refresh.endRefreshing()
                 return
             }
+            print(msgArray.count)
             for msg in msgArray{
                 let dict = msg as! NSDictionary
                 let singleCMF = SingleChatMessageFrame()
                 let sCM = SingleChatMessage(dict: dict)
                 if(sCM.MsgType == 1){
-                    self.endIndex = sCM.MsgIndex
-                    hasPic = true
+//                    self.endIndex = sCM.MsgIndex
+                    hasPic += 1
                     ALAMO_MANAGER.request(.GET, sCM.MsgContent) .responseImage { response in
                         if let image = response.result.value {
                             sCM.MsgImage = image
                             singleCMF.chatMessage = sCM
                             msgTemp.append(singleCMF)
+                            hasPic -= 1
                             MessageCacheTool(userIndex: self.tenUser.UserIndex).addMessageInfo(self.tenUser.UserIndex, msg:sCM )
-                            if(!hasPic && (sCM.MsgIndex == self.endIndex)){
+                            if(hasPic == 0){
                                 let index = (self.messages.count == 0) ? SHARED_USER.MsgIndex + 1 : self.messages.first?.chatMessage.MsgIndex
                                 let result = MessageCacheTool(userIndex: self.tenUser.UserIndex).loadMessage(self.tenUser.UserIndex, msgIndex: index!)
                                 SHARED_CHATS.message[self.tenUser.UserIndex] = result.messageFrames + self.messages
@@ -233,7 +235,7 @@ class SingleChatController : UIViewController,
                 }
                
             }
-            if(!hasPic){
+            if(hasPic == 0){
                 let index = (self.messages.count == 0) ? SHARED_USER.MsgIndex + 1 : self.messages.first?.chatMessage.MsgIndex
                 let result = MessageCacheTool(userIndex: self.tenUser.UserIndex).loadMessage(self.tenUser.UserIndex, msgIndex: index!)
                 SHARED_CHATS.message[self.tenUser.UserIndex] = result.messageFrames + self.messages
@@ -245,7 +247,6 @@ class SingleChatController : UIViewController,
                     }
                 })
             }
-            hasPic = false
             }, failure: { (task, error) -> Void in
                 print("sgvc get msg failed")
                 print(error.localizedDescription)
